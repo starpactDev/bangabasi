@@ -7,24 +7,26 @@
                     <h3 class="font-bold text-xl">News Letter</h3>
                     <div id="emailFormDiv">
                         <p class="text-sm min-h-10">Sign up for our newsletter to get the latest updates</p>
-                        <form class="border px-4 py-2 my-4 flex justify-between bg-white" action="{{ route('newsletter.subscribe') }}" method="POST" id="newsletter">
-                            @csrf
-                            <input type="text" name="email" placeholder="Enter your email" class="focus:outline-none w-3/4">
-                            <button class="bg-orange-500 text-white px-4 py-2 hover:bg-orange-700">
-                                <img src="{{ asset('images/icons/mail_bangabasi.png') }}" alt="" class="w-4 invert">
-                            </button>
-                        </form>
+                        <form class="border px-4 py-2 my-4 flex justify-between bg-white" action="{{ route('newsletter.subscribe') }}" method="POST" id="newsletter" autocomplete="on">
+    @csrf
+    <input type="email" name="email" placeholder="Enter your email" class="focus:outline-none w-3/4" autocomplete="email">
+    <button class="bg-orange-500 text-white px-4 py-2 hover:bg-orange-700">
+        <img src="{{ asset('images/icons/mail_bangabasi.png') }}" alt="" class="w-4 invert">
+    </button>
+</form>
+
                     </div>
                     <!-- New form for first name and last name (hidden initially) -->
                     <p class="text-sm hidden" id="responseMessage"></p>
                     <div class="hidden" id="nameForm">
                         
-                        <form class="border px-2 py-2 my-2 flex justify-between bg-white" action="{{ route('newsletter.subscribe_complete') }}" method="POST" id="nameDetailsForm">
-                            @csrf
-                            <input type="text" name="first_name" placeholder="First Name" class="px-2 focus:outline-none w-3/4" required>
-                            <input type="text" name="last_name" placeholder="Last Name" class="px-2 focus:outline-none w-3/4" required>
-                            <button class="bg-orange-500 text-white px-4 py-2 hover:bg-orange-700 ">Subscribe</button>
-                        </form>
+                    <form class="border px-2 py-2 my-2 flex justify-between bg-white" action="{{ route('newsletter.subscribe_complete') }}" method="POST" id="nameDetailsForm" autocomplete="on">
+    @csrf
+    <input type="text" name="first_name" placeholder="First Name" class="px-2 focus:outline-none w-3/4" required autocomplete="given-name">
+    <input type="text" name="last_name" placeholder="Last Name" class="px-2 focus:outline-none w-3/4" required autocomplete="family-name">
+    <button class="bg-orange-500 text-white px-4 py-2 hover:bg-orange-700 ">Subscribe</button>
+</form>
+
                     </div>
                 </div>
 
