@@ -318,7 +318,6 @@
 <script id="authResetSubmit">
     // Add an event listener to the form to handle form submission
     document.getElementById('Reset').addEventListener('submit', function(event) {
-        alert('hello');
         event.preventDefault(); // Prevent the default form submission
 
         // Get the email input value
@@ -463,6 +462,7 @@
         event.preventDefault();
         const otpForm = document.getElementById('otp-form');
         const formData = new FormData(otpForm); // Collect form data
+        const authReset = document.getElementById('authReset');
 
         fetch('/verify-otp', { // Adjust the route if necessary
                 method: 'POST',
@@ -474,17 +474,60 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert('OTP verified successfully');
-                    // Handle success (e.g., redirect or show success message)
+
+
+                    // Clear the OTP form
+                    document.getElementById('authReset').innerHTML = '';
+
+                    // Create a new form to set the new password
+                    const newPasswordForm = `
+                                    <form id="new-password-form" method="POST">
+                                        <h2 class="text-lg font-medium border-b-2 py-2 mb-2">
+                                            <span class="border-b-4 border-orange-500 px-4 py-2">Set New Password</span>
+                                        </h2>
+                                        <div class="w-fit border leading-10 rounded">
+                                            <label for="new-password" class="px-2 text-orange-500">
+                                                <img src="/images/icons/password.svg" alt="" class="inline w-4 h-4">
+                                            </label>
+                                            <input id="new-password" name="new-password" type="password" class="w-72 inline focus:outline-none" placeholder="Enter your new password" autocomplete="off">
+                                        </div>
+                                        <div class="w-fit border leading-10 rounded mt-4">
+                                            <label for="confirm-password" class="px-2 text-orange-500">
+                                                <img src="/images/icons/password.svg" alt="" class="inline w-4 h-4">
+                                            </label>
+                                            <input id="confirm-password" name="confirm-password" type="password" class="w-72 inline focus:outline-none" placeholder="Confirm your new password" autocomplete="off">
+                                        </div>
+                                        <div class="w-full leading-16 rounded my-4">
+                                            <input type="submit" class="w-full h-12 cursor-pointer border-orange-600 border-2 bg-orange-500 hover:bg-orange-600 text-white leading-16" value="Set New Password">
+                                        </div>
+                                    </form>
+                                `;
+
+                    // Insert the new form into the 'authReset' element
+                    authReset.innerHTML = newPasswordForm;
                 } else {
-                    alert('Invalid OTP');
-                    // Handle failure (e.g., show an error message)
+                    
+                    let errorMessage = document.getElementById('otp-error'); // Look for an existing error message
+
+                    if (errorMessage) {
+                        // If the error message element exists, just update its textContent
+                        errorMessage.textContent = data.message;
+                    } else {
+                        // If no error message exists, create and append a new one
+                        errorMessage = Object.assign(document.createElement('div'), {
+                            textContent: data.message,
+                            className: 'text-red-600 text-center mt-4',
+                            id: 'otp-error'
+                        });
+                        authReset.appendChild(errorMessage);
+                    }
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('There was an error submitting the OTP');
+                alert('There was an error verifying the OTP');
             });
+
     }
 </script>
 
