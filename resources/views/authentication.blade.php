@@ -126,13 +126,12 @@
 
 
             <div id="authReset" class="auth-cont hidden">
-                <form action="" method="POST" id="Reset" autocomplete="on">
+                <form action="{{ route('send-otp') }}" method="POST" id="Reset" autocomplete="on">
                     @csrf
                     <h2 class="w-full text-lg font-medium border-b-2 py-2 hover:text-orange-500 mb-2">
                         <span class="border-b-4 border-orange-500 px-4 py-2">Forgot Password?</span>
                     </h2>
-
-                    <p class="text-sm text-neutral-700 my-2">Enter the email address associated with your account</p>
+                    <p class="text-sm text-neutral-700 mt-2 mb-4">Enter the email address associated with your account</p>
                     <div class="w-fit border leading-10 rounded">
                         <label for="email-reset" class="px-2 text-orange-500">
                             <img src="/images/icons/email.svg" alt="" class="inline text-range-500 w-4 h-4">
@@ -315,5 +314,179 @@
         })
     }
 </script>
+
+<script id="authResetSubmit">
+    // Add an event listener to the form to handle form submission
+    document.getElementById('Reset').addEventListener('submit', function(event) {
+        alert('hello');
+        event.preventDefault(); // Prevent the default form submission
+
+        // Get the email input value
+        const email = document.getElementById('email-reset').value;
+        const authReset = document.getElementById('authReset');
+
+        const resetForm = document.getElementById('Reset');
+
+        // Create an object to hold the data to be sent
+        const formData = new FormData();
+        formData.append('email', email);
+        formData.append('_token', document.querySelector('input[name="_token"]').value); // CSRF token
+
+        // Use fetch to send the data
+        fetch(resetForm.action, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json()) // Assuming the server returns JSON
+            .then(data => {
+                if (data.success) {
+                    // Handle success: Show OTP form, timer, and resend option
+                    authReset.innerHTML = '';
+                    showOtpForm(data);
+                    console.log(data);
+                } else {
+                    // Handle failure: Display error message
+                    alert('Something went wrong. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            });
+    });
+
+    function showOtpForm(data) {
+        // Get the DOM holder where we will display the OTP form
+        const otpHolder = document.createElement('div');
+        otpHolder.classList.add('otp-holder');
+
+        // Create OTP input form and other elements
+        otpHolder.innerHTML = `
+            <div class="otp-form">
+                <h2 class="text-lg font-medium border-b-2 py-2 mb-2">
+                    <span class="border-b-4 border-orange-500 px-4 py-2">Enter OTP</span>
+                </h2>
+                <p class="text-sm text-green-600 mt-2 mb-4">OTP has sent successfully, OTP is ${data.otp}. </p>
+                
+    <!-- OTP Form -->
+    <form id="otp-form" action="" method="POST" onsubmit="submitOtpForm(event)">
+        <div class="w-fit border leading-10 rounded">
+            <label for="otp-input" class="px-2 text-orange-500">
+                <img src="/images/icons/email.svg" alt="" class="inline w-4 h-4">
+            </label>
+            <input id="otp-input" name="otp" type="text" class="w-72 inline focus:outline-none" placeholder="Enter OTP sent to your email" autocomplete="off">
+        </div>
+        <div class="w-full leading-16 rounded my-4">
+            <input type="submit" class="w-full h-12 cursor-pointer border-orange-600 border-2 bg-orange-500 hover:bg-orange-600 text-white leading-16" value="Submit OTP">
+        </div>
+    </form>
+            </div>
+            <div class="timer-and-resend">
+                <p id="timer" class="text-sm text-neutral-700">You can request a new OTP in <span id="countdown">60</span> seconds.</p>
+                <button id="resend-btn" class="w-full h-12 cursor-pointer border-orange-600 border-2 hover:bg-orange-600 hover:text-white leading-16 mt-2 hidden">Resend OTP</button>
+            </div>
+        `;
+
+        // Append the OTP form holder to the DOM (to the existing parent element)
+        document.getElementById('authReset').appendChild(otpHolder);
+
+        // Start the countdown timer
+        startCountdown();
+
+        // Set up resend OTP button behavior
+        document.getElementById('resend-btn').addEventListener('click', function() {
+            // Send a request to resend OTP, similar to the first OTP request
+            resendOtp(data);
+        });
+    }
+
+    function startCountdown() {
+        let timeLeft = 5;
+
+        const timer = document.getElementById('timer');
+        const countdownElement = document.getElementById('countdown');
+        const resendButton = document.getElementById('resend-btn');
+
+        const timerInterval = setInterval(function() {
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                countdownElement.textContent = '0';
+                resendButton.classList.remove('hidden');
+                timer.remove();
+            } else {
+                countdownElement.textContent = timeLeft;
+                timeLeft--;
+            }
+        }, 1000);
+    }
+
+    function resendOtp(data) {
+        const email = data.email; // Retrieve email from the data object
+        const authReset = document.getElementById('authReset');
+
+        // Send a fetch request to the same route to trigger the OTP resend
+        fetch('/send-otp', { // Use the appropriate route (e.g., /send-otp)
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'), // CSRF token for Laravel
+                },
+                body: JSON.stringify({
+                    email: email,
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Handle success: Show a success message, reset the timer, and hide the resend button
+
+                    // Reset the timer and hide the resend button
+                    const resendButton = document.getElementById('resend-btn');
+                    resendButton.classList.add('hidden'); // Hide the resend button
+
+                    authReset.innerHTML = '',
+                        showOtpForm(data);
+                    // Restart the countdown
+                    startCountdown();
+                } else {
+                    // Handle failure: Show an error message
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while resending OTP. Please try again.');
+            });
+    }
+
+    function submitOtpForm() {
+        event.preventDefault();
+        const otpForm = document.getElementById('otp-form');
+        const formData = new FormData(otpForm); // Collect form data
+
+        fetch('/verify-otp', { // Adjust the route if necessary
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'), // CSRF token for Laravel
+                },
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('OTP verified successfully');
+                    // Handle success (e.g., redirect or show success message)
+                } else {
+                    alert('Invalid OTP');
+                    // Handle failure (e.g., show an error message)
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('There was an error submitting the OTP');
+            });
+    }
+</script>
+
 
 @endpush

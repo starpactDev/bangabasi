@@ -156,6 +156,9 @@ Route::get('/check-auth', function () {
     }
 });
 
+Route::post('/send-otp', [AuthController::class, 'sendOTP'])->name('send-otp');
+Route::post('/verify-otp', [AuthController::class, 'verifyOTP'])->name('verify-otp');
+
 //Guest Middleware
 Route::middleware(GuestMiddleware::class)->group(function () {
 
