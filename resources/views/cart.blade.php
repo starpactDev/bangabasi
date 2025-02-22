@@ -223,7 +223,6 @@
 <script id="countDown">
 let diffInSeconds = {{ $diffInSeconds }};
 
-
 // Element to display the countdown or message
 const countdownElement = document.getElementById('timer-message');
 
