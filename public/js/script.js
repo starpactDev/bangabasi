@@ -162,8 +162,8 @@ function authLoad(xyz){
 function toggleCoupon(xyz){
     const sub = document.getElementById(xyz+'Cont')
     sub.classList.toggle('hidden')
-
 }
+
 if(typeof Swiper !== 'undefined'){
 
     const swiper = new Swiper(".popular-picks", {
