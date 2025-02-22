@@ -67,7 +67,7 @@ class AdminBlogController extends Controller
                 'status' => 'success',
                 'message' => 'Blog created successfully',
                 'data' => $blog
-            ]);
+            ], 200);
 
         } catch (\Exception $e) {
             \Log::error('Error creating blog: ' . $e->getMessage(), [
