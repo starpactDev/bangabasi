@@ -1,0 +1,86 @@
+{
+	"products": [
+	  {
+		"name": "Traditional Dhuti",
+		"category": "Men's Clothing",
+		"image": "1.png",
+		"details": "A traditional Bengali garment worn by men, ideal for cultural occasions.",
+		"rating": 4.5,
+		"originalPrice": 45.00,
+		"discountedPrice": 40.00
+	  },
+	  {
+		"name": "Bengali Thali",
+		"category": "Food Item",
+		"image": "2.png",
+		"details": "A traditional platter featuring a variety of Bengali dishes served together.",
+		"rating": 3,
+		"originalPrice": 15.00,
+		"discountedPrice": 12.00
+	  },
+	  {
+		"name": "Agabarti",
+		"category": "Dashakarma",
+		"image": "3.png",
+		"details": "A type of incense stick used in various ceremonial rituals.",
+		"rating": 2,
+		"originalPrice": 5.00,
+		"discountedPrice": 4.00
+	  },
+	  {
+		"name": "Clay Pot",
+		"category": "Handmade",
+		"image": "4.png",
+		"details": "A handcrafted clay pot, perfect for cooking and serving traditional dishes.",
+		"rating": 1,
+		"originalPrice": 30.00,
+		"discountedPrice": 25.00
+	  },
+	  {
+		"name": "Jutebag",
+		"category": "Handcrafts",
+		"image": "5.png",
+		"details": "Eco-friendly and stylish jute bag, great for shopping and daily use.",
+		"rating": 5,
+		"originalPrice": 12.00,
+		"discountedPrice": 10.00
+	  },
+	  {
+		"name": "Steel Wrench",
+		"category": "Machinery",
+		"image": "6.png",
+		"details": "A durable steel wrench used for various mechanical and engineering tasks.",
+		"rating": 4,
+		"originalPrice": 20.00,
+		"discountedPrice": 18.00
+	  },
+	  {
+		"name": "Washing Machine",
+		"category": "Electronics",
+		"image": "7.png",
+		"details": "A modern washing machine equipped with multiple wash cycles and energy-saving features.",
+		"rating": 3,
+		"originalPrice": 350.00,
+		"discountedPrice": 320.00
+	  },
+	  {
+		"name": "Wooden Chair",
+		"category": "Furniture",
+		"image": "8.png",
+		"details": "A classic wooden chair with elegant design and comfortable seating.",
+		"rating": 2,
+		"originalPrice": 80.00,
+		"discountedPrice": 70.00
+	  },
+	  {
+		"name": "Casual Shoes",
+		"category": "Men's Clothing",
+		"image": "9.png",
+		"details": "Comfortable and stylish casual shoes suitable for everyday wear.",
+		"rating": 5,
+		"originalPrice": 60.00,
+		"discountedPrice": 50.00
+	  }
+	]
+}
+  

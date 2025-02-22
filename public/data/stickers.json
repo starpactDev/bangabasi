@@ -1,0 +1,26 @@
+[
+    {
+        "image": "menu_1.png",
+        "title": "Clothing"
+    },
+    {
+        "image": "menu_2.png",
+        "title": "Food Item "
+    },
+    {
+        "image": "menu_3.png",
+        "title": "Dashakarma"
+    },
+    {
+        "image": "menu_4.png",
+        "title": "Handcrafts"
+    },
+    {
+        "image": "menu_5.png",
+        "title": "Men's Grooming"
+    },
+    {
+        "image": "menu_6.png",
+        "title": "Machinery"
+    }
+]

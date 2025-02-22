@@ -1,0 +1,11 @@
+input[name=OTP]::-webkit-outer-spin-button,
+input[name=OTP]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+.alert-danger{
+  color : #721c24 !important;
+}

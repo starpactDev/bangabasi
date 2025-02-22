@@ -1,0 +1,6 @@
+<svg class="order-icon h-4 inline mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+	<path d="M6 6h15l1.5 9H7.5L6 6z"/>
+	<circle cx="8" cy="21" r="1"/>
+	<circle cx="17" cy="21" r="1"/>
+	<path d="M1 1h4l1 4h14l1 4H4l-1-4H1V1z"/>
+</svg>

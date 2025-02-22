@@ -1,0 +1,17 @@
+@keyframes swipeAnimation {
+    0% {
+        background: linear-gradient(90deg, rgba(89,89,89,1) 0%, rgba(191,191,191,1) 10%, rgba(112,112,112,1) 20%, rgba(255,255,255,1) 100%);
+    }
+	25%{
+		background: linear-gradient(90deg, rgba(89,89,89,1) 0%, rgba(112,112,112,1) 20%, rgba(191,191,191,1) 30%, rgba(112,112,112,1) 40%, rgba(255,255,255,1) 100%);
+	}
+    50% {
+        background: linear-gradient(90deg, rgba(89,89,89,1) 0%, rgba(112,112,112,1) 40%, rgba(191,191,191,1) 50%, rgba(112,112,112,1) 60%, rgba(255,255,255,1) 100%);
+    }
+	75% {
+		background: linear-gradient(90deg, rgba(89,89,89,1) 0%, rgba(112,112,112,1) 60%, rgba(191,191,191,1) 70%, rgba(112,112,112,1) 80%, rgba(255,255,255,1) 100%);
+	}
+    100% {
+        background: linear-gradient(90deg, rgba(89,89,89,1) 0%, rgba(112,112,112,1) 80%, rgba(191,191,191,1) 90%, rgba(112,112,112,1) 100%);
+    }
+}

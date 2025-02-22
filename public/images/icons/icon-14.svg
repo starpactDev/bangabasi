@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="56.467" height="48" viewBox="0 0 56.467 48">
+  <g id="Group_10647" data-name="Group 10647" transform="translate(7507.617 -1262)">
+    <path id="Subtraction_9" data-name="Subtraction 9" d="M24,48A24,24,0,0,1,7.029,7.029,24,24,0,0,1,40.97,40.97,23.842,23.842,0,0,1,24,48ZM24,4A20,20,0,1,0,44,24,20.023,20.023,0,0,0,24,4Z" transform="translate(-7503 1262)" fill="#7871ff"/>
+    <g id="Group_10647-2" data-name="Group 10647" transform="translate(-20 -204.936)">
+      <g id="Group_10632" data-name="Group 10632" transform="translate(-5.617 -2.216)">
+        <rect id="Rectangle_4444" data-name="Rectangle 4444" width="56.467" height="26.431" rx="2" transform="translate(-7482 1480)" fill="#f43397"/>
+        <path id="Subtraction_8" data-name="Subtraction 8" d="M45.067,19.223H4.193a3.209,3.209,0,0,0-1.23-2.47A4.62,4.62,0,0,0,0,15.728V3.5c2.314,0,4.193-1.569,4.193-3.5H45.067A3.211,3.211,0,0,0,46.3,2.471,4.619,4.619,0,0,0,49.26,3.5V15.728c-2.313,0-4.192,1.568-4.193,3.494Z" transform="translate(-7478.396 1483.604)" fill="#fff"/>
+        <circle id="Ellipse_770" data-name="Ellipse 770" cx="7.209" cy="7.209" r="7.209" transform="translate(-7460.374 1486.007)" fill="#f43397"/>
+      </g>
+    </g>
+    <rect id="Rectangle_4447" data-name="Rectangle 4447" width="4" height="45" transform="translate(-7465.097 1267.569) rotate(42)" fill="#7871ff"/>
+  </g>
+</svg>

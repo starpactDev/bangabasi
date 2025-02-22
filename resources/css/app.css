@@ -1,0 +1,42 @@
+/* Authentication Page */
+
+.authentication{
+    background: radial-gradient(circle at top left, #c44601, transparent 30%),
+                radial-gradient(circle at bottom right, #f57600, transparent 30%),
+                radial-gradient(circle at center, #8babf1, transparent 40%),
+                radial-gradient(circle at center, #0073e6, transparent 60%);
+
+	background-blend-mode: overlay;
+
+	.auth-container{
+		backdrop-filter: blur(10px);
+		background: rgba(255, 255, 255, 0.25);
+		border-radius: 12px;
+		border: 1px solid rgba(255, 255, 255, 0.3);
+
+		border-image-slice: 1;
+		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+		.signin, .signup{
+			input[type=text], input[type=password], input[type=tel], input[type=email]{
+				border : 1px solid #0000001e;
+				background: #ffffff6b;
+				&:focus{
+					border: 1px solid #0000001e;
+					background: #ffffffb8;
+					outline: 1px solid transparent;
+				}
+
+			}
+			input::placeholder{
+				color : #000;
+			}
+
+		}
+	}
+
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
