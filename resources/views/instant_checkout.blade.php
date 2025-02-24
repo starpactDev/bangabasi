@@ -418,6 +418,7 @@
         formData.append("payment_type", payment_type);
         formData.append("additional_info", document.getElementById("additional_info").value);
         formData.append("total_amount", "{{ $total_amount }}");
+        formData.append("total_price", "{{ $total_price }}");
 
         fetch("{{ route('order.place.instant') }}", {
             method: "POST",
@@ -434,6 +435,7 @@
             payment_type: payment_type,
             additional_info: document.getElementById("additional_info").value,
             total_amount: "{{ $total_amount }}",
+            total_price: "{{ $total_price }}",
             address_type: "old",
             _token: '{{ csrf_token() }}'
         };

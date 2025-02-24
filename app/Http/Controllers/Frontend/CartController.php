@@ -208,7 +208,7 @@ class CartController extends Controller
             ]
         ];
 
-        $original_price = round(1499 * $product_quantity);
+        $original_price = round($product->original_price * $product_quantity);
 
         // Total price
         $total_price = round($products[0]['subtotal'], 2);

@@ -21,7 +21,6 @@ class OrderController extends Controller
 
     public function myOrder()
     {
-
         // Get the currently authenticated user
         $user = Auth::user();
 
@@ -129,6 +128,7 @@ class OrderController extends Controller
             return response()->json(['message' => 'An error occurred. Please try again later.'], 500);
         }
     }
+
     public function instantplaceOrder(Request $request)
     {
         
@@ -145,6 +145,7 @@ class OrderController extends Controller
             "city" => "required",
             "phone" => "required|digits:10",
             "total_amount" => "required|numeric",
+            "total_price" => "required|numeric",
             "pin" => "required|digits:6",
             "state" => "required",
         ];
