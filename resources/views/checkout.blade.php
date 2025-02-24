@@ -156,6 +156,7 @@
 				</style>
                 <table class="w-full bg-white my-4">
 					<thead class="border-b">
+                        <tr>
 							<th class="p-2 text-left">Thumbnail</th>
 							<th class="p-2 text-center">Price</th>
 							<th class="p-2 text-center">Size</th>

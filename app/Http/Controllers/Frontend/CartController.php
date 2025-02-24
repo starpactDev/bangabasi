@@ -208,15 +208,35 @@ class CartController extends Controller
             ]
         ];
 
+        $original_price = round(1499 * $product_quantity);
+
         // Total price
         $total_price = round($products[0]['subtotal'], 2);
+
+        $platform_fee = 20;
+
+        $shipping_fee = 0;
+
+        if ($total_price > 50 && $total_price <= 299) {
+            $shipping_fee = 10;
+        } else if ($total_price > 300 && $total_price <= 599) {
+            $shipping_fee = 15;
+        } else if ($total_price > 600 && $total_price <= 899) {
+            $shipping_fee = 20;
+        } else if ($total_price > 900) {
+            $shipping_fee = 25;
+        } else {
+            $shipping_fee = 5;
+        }
+
+        $total_amount = $total_price + $platform_fee + $shipping_fee;
 
         // User addresses
         $user_addresses = UserAddress::where('user_id', $user->id)->get();
         $address_type = $user_addresses->isEmpty() ? "new" : "old";
 
         // Pass data to the view
-        return view('instant_checkout', compact('products', 'total_price', 'user_addresses', 'address_type'));
+        return view('instant_checkout', compact('products', 'original_price', 'total_price', 'platform_fee', 'shipping_fee', 'total_amount', 'user_addresses', 'address_type'));
     }
 
 

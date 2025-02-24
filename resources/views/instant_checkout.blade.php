@@ -10,16 +10,13 @@
     <x-bread-crumb :page="$xpage" :previousHref="$xprv" />
     <div class="flex flex-wrap justify-center gap-x-4 p-8 bg-slate-50 my-4">
         <div class="min-w-80 text-center py-4">
-            <a class="uppercase text-2xl text-gray-500 font-normal hover:text-gray-600"><span
-                    class="inline-block border rounded-full w-8 mx-4">1</span>Shopping Cart</a>
+            <a class="uppercase text-2xl text-gray-500 font-normal hover:text-gray-600"><span class="inline-block border rounded-full w-8 mx-4">1</span>Shopping Cart</a>
         </div>
         <div class="min-w-80 text-center py-4 ">
-            <a class="uppercase text-2xl font-normal hover:text-gray-600"><span
-                    class="inline-block bg-black text-white rounded-full w-8 mx-4">2</span>Checkout</a>
+            <a class="uppercase text-2xl font-normal hover:text-gray-600"><span class="inline-block bg-black text-white rounded-full w-8 mx-4">2</span>Checkout</a>
         </div>
         <div class="min-w-80 text-center py-4 ">
-            <a class="uppercase text-2xl font-normal text-gray-500 hover:text-gray-600"><span
-                    class="inline-block border rounded-full w-8 mx-4">3</span>Order Status</a>
+            <a class="uppercase text-2xl font-normal text-gray-500 hover:text-gray-600"><span class="inline-block border rounded-full w-8 mx-4">3</span>Order Status</a>
         </div>
     </div>
 
@@ -30,13 +27,10 @@
     </div>
 
     <div class="container">
-        <h6 class="">Have you a coupon? <span class="underline text-gray-700" onClick="toggleCoupon('coupon')">Click
-                here to enter</span></h6>
+        <h6 class="">Have you a coupon? <span class="underline text-gray-700" onClick="toggleCoupon('coupon')">Click here to enter</span></h6>
         <div class="py-4 " id="couponCont">
-            <input type="text" class="w-72 md:w-96 px-4 leading-10 border focus:outline-none focus:border-black"
-                placeholder="Coupon Code">
-            <input type="submit" value="Apply"
-                class="mx-2 leading-10 bg-gray-400 hover:bg-orange-600 hover:text-slate-50 px-6">
+            <input type="text" class="w-72 md:w-96 px-4 leading-10 border focus:outline-none focus:border-black" placeholder="Coupon Code">
+            <input type="submit" value="Apply" class="mx-2 leading-10 bg-gray-400 hover:bg-orange-600 hover:text-slate-50 px-6">
         </div>
     </div>
 
@@ -50,13 +44,9 @@
 
                 <div class="flex justify-between w-full">
                     <div>
-                        <h3 class="text-lg uppercase font-medium py-2 border-b"><span
-                                class="border-b border-black py-2">Biling
-                                Details</span></h3>
-
+                        <h3 class="text-lg uppercase font-medium py-2 border-b"><span class="border-b border-black py-2">Biling Details</span></h3>
                     </div>
-                    <button id="saved_address" class=" bg-gray-400 hover:bg-gray-600 hover:text-slate-50 px-6 "> Select from
-                        saved addresses </button>
+                    <button id="saved_address" class=" bg-gray-400 hover:bg-gray-600 hover:text-slate-50 px-6 "> Select from saved addresses </button>
                 </div>
 
                 <form id="new_address_form" action=" {{ route('order.place.instant') }} " method="POST">
@@ -78,29 +68,19 @@
                         {{-- <option value="" class="">Country Name</option> --}}
                         <option value="India" class="" selected> India </option>
                     </select>
-                    <input type="text" name="street_name" id="" value = "{{ old('street_name') }}"
-                        class="w-full my-4 px-4 leading-8 border focus:outline-none"
-                        placeholder="House number and street name">
+                    <input type="text" name="street_name" id="" value = "{{ old('street_name') }}" class="w-full my-4 px-4 leading-8 border focus:outline-none" placeholder="House number and street name">
                     <p id="street_name_error" class="text-red-500 text-sm "></p>
-                    <input type="text" name="apartment" id="" value = "{{ old('apartment') }}"
-                        class="w-full my-4 px-4 leading-8 border focus:outline-none"
-                        placeholder="Apartment, suite, unit, etc (optional)">
+                    <input type="text" name="apartment" id="" value = "{{ old('apartment') }}" class="w-full my-4 px-4 leading-8 border focus:outline-none" placeholder="Apartment, suite, unit, etc (optional)">
 
-                    <input type="text" name="city" id="" value = "{{ old('city') }}"
-                        class="w-full my-4 px-4 leading-8 border focus:outline-none" placeholder="Town / City">
+                    <input type="text" name="city" id="" value = "{{ old('city') }}" class="w-full my-4 px-4 leading-8 border focus:outline-none" placeholder="Town / City">
                     <p id="city_error" class="text-red-500 text-sm "></p>
-                    {{-- <input type="text" name="apartment" id=""
-                    class="w-full my-4 px-4 leading-8 border focus:outline-none" placeholder="Country (optional)"> --}}
-                    <input type="tel" name="phone" id="" value = "{{ old('phone') }}"
-                        class="w-full my-4 px-4 leading-8 border focus:outline-none" placeholder="Phone">
+                    {{-- <input type="text" name="apartment" id="" class="w-full my-4 px-4 leading-8 border focus:outline-none" placeholder="Country (optional)"> --}}
+                    <input type="tel" name="phone" id="" value = "{{ old('phone') }}" class="w-full my-4 px-4 leading-8 border focus:outline-none" placeholder="Phone">
                     <p id="phone_error" class="text-red-500 text-sm "></p>
-                    <input type="number" name="pin" id="" value = "{{ old('pin') }}"
-                        class="w-full my-4 px-4 leading-8 border focus:outline-none" placeholder="Postcode">
+                    <input type="number" name="pin" id="" value = "{{ old('pin') }}" class="w-full my-4 px-4 leading-8 border focus:outline-none" placeholder="Postcode">
                     <p id="pin_error" class="text-red-500 text-sm "></p>
-                    <input type="text" name="state" id="" value = "{{ old('state') }}"
-                        class="w-full my-4 px-4 leading-8 border focus:outline-none" placeholder="State">
-                    <input type="email" name="email" id="" value = "{{ old('email') }}"
-                        class="w-full my-4 px-4 leading-8 border focus:outline-none" placeholder="Email">
+                    <input type="text" name="state" id="" value = "{{ old('state') }}" class="w-full my-4 px-4 leading-8 border focus:outline-none" placeholder="State">
+                    <input type="email" name="email" id="" value = "{{ old('email') }}" class="w-full my-4 px-4 leading-8 border focus:outline-none" placeholder="Email">
                     <p id="email_error" class="text-red-500 text-sm "></p>
                 </form>
             </div>
@@ -108,20 +88,16 @@
             <div id="old_address" class=" {{ $address_type == 'old' ? 'block' : 'hidden' }}">
                 <div class="flex justify-between w-full">
                     <div>
-
-                        <h3 class="text-lg uppercase font-medium py-2 border-b"><span class="border-b border-black py-2">
-                                Select a Delivery Address </span></h3>
+                        <h3 class="text-lg uppercase font-medium py-2 border-b"><span class="border-b border-black py-2"> Select a Delivery Address </span></h3>
                     </div>
-                    <button id="add_address" class=" bg-gray-400 hover:bg-gray-600 hover:text-slate-50 px-6 "> Add Address
-                    </button>
+                    <button id="add_address" class=" bg-gray-400 hover:bg-gray-600 hover:text-slate-50 px-6 "> Add Address</button>
                 </div>
 
                 @if ($user_addresses->isNotEmpty())
                     @foreach ($user_addresses as $k => $ad)
                         <div class="mt-4 p-8 w-full shadow-md">
                             <label class="flex gap-8 text-sm items-start">
-                                <input type="radio" name="address" id="" value="{{ $ad->id }}"
-                                    class="old_ad mt-1" {{ $k == 0 ? 'checked' : '' }}>
+                                <input type="radio" name="address" id="" value="{{ $ad->id }}" class="old_ad mt-1" {{ $k == 0 ? 'checked' : '' }}>
                                 <div>
                                     <p> {{ $ad->firstname . ' ' . $ad->lastname }} </p>
                                     <p> {{ $ad->street_name }} </p>
@@ -131,24 +107,16 @@
                                     <p> {{ $ad->country }} </p>
                                     <p> {{ $ad->pin }} </p>
                                     <p> {{ $ad->phone . ' | ' . $ad->email }} </p>
-
                                 </div>
-
                             </label>
                         </div>
                     @endforeach
                 @endif
-
-
             </div>
 
             <div class="mt-4">
-                <h3 class="text-lg Capitalize font-medium py-2 border-b"><span
-                        class="border-b border-black py-2">Additional
-                        Information</span></h3>
-                <textarea name="" id="additional_info"
-                    class="w-full min-h-32 my-4 p-4 border focus:outline-none focus:border-b "
-                    placeholder="Notes about your order e.g. special notes for delivery"></textarea>
+                <h3 class="text-lg Capitalize font-medium py-2 border-b"><span class="border-b border-black py-2">Additional Information</span></h3>
+                <textarea name="" id="additional_info" class="w-full min-h-32 my-4 p-4 border focus:outline-none focus:border-b " placeholder="Notes about your order e.g. special notes for delivery"></textarea>
             </div>
         </div>
         <div class="col-span-12 lg:col-span-5">
@@ -171,6 +139,7 @@
 				</style>
                 <table class="w-full bg-white my-4">
 					<thead class="border-b">
+                        <tr>
 							<th class="p-2 text-left">Thumbnail</th>
 							<th class="p-2 text-center">Price</th>
 							<th class="p-2 text-center">Size</th>
@@ -202,9 +171,29 @@
 						@endforeach
 					</tbody>
 					<tfoot class="border-t-2">
-						<tr>
-							<td class="p-2 text-left text-lg font-medium uppercase" colspan="4">Total</td>
-							<td class="p-2 text-right text-lg"> {{ ' ₹ ' . $total_price }} </td>
+                        <tr>
+                            <td class="text-sm text-neutral-700" colspan="4">Price <span>({{count($products) }} {{ (count($products) > 1) ? 'items' : 'item'}})</span></td>
+                            <td class="py-1 px-2 text-right text-sm text-neutral-800"> {{ '₹' . $original_price }} </td>
+                        </tr>
+                        <tr>
+                            <td class="text-sm text-neutral-700" colspan="4">Discount</td>
+                            <td class="py-1 px-2 text-right text-sm text-green-600">{{ '- ₹' .$original_price - $total_price}}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-sm text-neutral-700" colspan="4">Coupons for you </td>
+                            <td class="py-1 px-2 text-right text-sm text-green-600"> {{ '-₹' . 0 }} </td>
+                        </tr>
+                        <tr>
+                            <td class="text-sm text-neutral-700" colspan="4">Secured Packaging Fee</td>
+                            <td class="py-1 px-2 text-right text-sm text-neutral-800"> {{ '₹' . $shipping_fee }} </td>
+                        </tr>
+                        <tr>
+                            <td class="text-sm text-neutral-700" colspan="4">Platform Fee</td>
+                            <td class="py-1 px-2 text-right text-sm text-neutral-800"> {{ '₹' . $platform_fee }} </td>
+                        </tr>
+						<tr class="border-t-2 border-neutral-300 border-dotted">
+							<td class="p-2 text-left text-lg font-medium uppercase" colspan="4">Total Amount</td>
+							<td class="p-2 text-right text-lg"> {{ ' ₹' . $total_amount }} </td>
 						</tr>
 					</tfoot>
 				</table>
@@ -214,9 +203,7 @@
                 <br />
                 <input type="radio" name="payments" id="postPaid" value="postPaid" class="my-2 mx-2" checked>
                 <label for="postPaid">Cash on Delivery</label>
-                <button id="place_order" class="w-full my-4 bg-neutral-800 text-white leading-10 hover:bg-neutral-950">
-                    Place Order
-                </button>
+                <button id="place_order" class="w-full my-4 bg-neutral-800 text-white leading-10 hover:bg-neutral-950"> Place Order </button>
             </div>
         </div>
 
@@ -430,7 +417,7 @@
         const formData = new FormData(document.getElementById("new_address_form"));
         formData.append("payment_type", payment_type);
         formData.append("additional_info", document.getElementById("additional_info").value);
-        formData.append("total_price", "{{ $total_price }}");
+        formData.append("total_amount", "{{ $total_amount }}");
 
         fetch("{{ route('order.place.instant') }}", {
             method: "POST",
@@ -446,7 +433,7 @@
             address_id: old_address_id,
             payment_type: payment_type,
             additional_info: document.getElementById("additional_info").value,
-            total_price: "{{ $total_price }}",
+            total_amount: "{{ $total_amount }}",
             address_type: "old",
             _token: '{{ csrf_token() }}'
         };

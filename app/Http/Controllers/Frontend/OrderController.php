@@ -144,7 +144,7 @@ class OrderController extends Controller
             "street_name" => "required",
             "city" => "required",
             "phone" => "required|digits:10",
-            "total_price" => "required|numeric",
+            "total_amount" => "required|numeric",
             "pin" => "required|digits:6",
             "state" => "required",
         ];
@@ -176,7 +176,7 @@ class OrderController extends Controller
             $order->user_id = $user->id;
             $order->address_id = $delivery_address->id;
             $order->unique_id = $unique_order_id;
-            $order->price = $request->total_price;
+            $order->price = $request->total_amount;
             $order->additional_info = $request->additional_info;
             $order->payment_method = $request->payment_type;
             $order->status = "pending";
