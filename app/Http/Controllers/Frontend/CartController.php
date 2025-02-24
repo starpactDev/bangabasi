@@ -96,6 +96,12 @@ class CartController extends Controller
                              ->with('productImages') // Eager load product images
                              ->get();
 
+        $original_price = 0;
+        foreach ($products as $item) {
+            $original_price += $item->original_price * $item->quantity;
+        }
+        $original_price = round($original_price, 2);
+
         $total_price = 0;
         foreach ($products as $item) {
             $total_price += $item->unit_price * $item->quantity;
@@ -103,12 +109,28 @@ class CartController extends Controller
         }
         $total_price = round($total_price, 2);
 
+        $platform_fee = 20;
+
+        $shipping_fee = 0;
+
+        if ($total_price > 50 && $total_price <= 299) {
+            $shipping_fee = 10;
+        } else if ($total_price > 300 && $total_price <= 599) {
+            $shipping_fee = 15;
+        } else if ($total_price > 600 && $total_price <= 899) {
+            $shipping_fee = 20;
+        } else if ($total_price > 900) {
+            $shipping_fee = 25;
+        } else {
+            $shipping_fee = 5;
+        }
+
         $user_addresses = UserAddress::where('user_id', $user->id)->get();
 
 
         $address_type = $user_addresses->isEmpty() ? "new" : "old";
 
-        return view('checkout', compact('products', 'total_price', 'user_addresses', 'address_type'));
+        return view('checkout', compact('products', 'total_price', 'original_price', 'platform_fee', 'shipping_fee', 'user_addresses', 'address_type'));
     }
 
     public function checkStock(Request $request)
@@ -128,6 +150,7 @@ class CartController extends Controller
 
         return response()->json(['error' => 'Product size not found'], 404);
     }
+
     public function checkAvailability(Request $request)
     {
         $productData = $request->input('products'); // Expecting an array of product data

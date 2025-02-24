@@ -188,9 +188,29 @@
 						@endforeach
 					</tbody>
 					<tfoot class="border-t-2">
-						<tr>
+                        <tr>
+                            <td class="text-sm text-neutral-700" colspan="4">Price <span>({{count($products) }} {{ (count($products) > 1) ? 'items' : 'item'}})</span></td>
+                            <td class="py-1 px-2 text-right text-sm text-neutral-800"> {{ '₹' . $original_price }} </td>
+                        </tr>
+                        <tr>
+                            <td class="text-sm text-neutral-700" colspan="4">Discount</td>
+                            <td class="py-1 px-2 text-right text-sm text-green-600">{{ '- ₹' .$original_price - $total_price}}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-sm text-neutral-700" colspan="4">Coupons for you </td>
+                            <td class="py-1 px-2 text-right text-sm text-green-600"> {{ '-₹' . 0 }} </td>
+                        </tr>
+                        <tr>
+                            <td class="text-sm text-neutral-700" colspan="4">Secured Packaging Fee</td>
+                            <td class="py-1 px-2 text-right text-sm text-neutral-800"> {{ '₹' . $shipping_fee }} </td>
+                        </tr>
+                        <tr>
+                            <td class="text-sm text-neutral-700" colspan="4">Platform Fee</td>
+                            <td class="py-1 px-2 text-right text-sm text-neutral-800"> {{ '₹' . $platform_fee }} </td>
+                        </tr>
+						<tr class="border-t-2 border-neutral-300 border-dotted">
 							<td class="p-2 text-left text-lg font-medium uppercase" colspan="4">Total</td>
-							<td class="p-2 text-right text-lg"> {{ ' ₹ ' . $total_price }} </td>
+							<td class="p-2 text-right text-lg"> {{ ' ₹' . $total_price }} </td>
 						</tr>
 					</tfoot>
 				</table>
@@ -199,9 +219,7 @@
                 <br />
                 <input type="radio" name="payments" id="postPaid" value="postPaid" class="my-2 mx-2" checked>
                 <label for="postPaid">Cash on Delivery</label>
-                <button id="place_order" class="w-full my-4 bg-neutral-800 text-white leading-10 hover:bg-neutral-950">
-                    Place Order
-                </button>
+                <button id="place_order" class="w-full my-4 bg-neutral-800 text-white leading-10 hover:bg-neutral-950">Place Order</button>
             </div>
         </div>
 
