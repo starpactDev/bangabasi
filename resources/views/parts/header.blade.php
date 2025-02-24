@@ -95,13 +95,13 @@ $products = $subCategories;
 
             <div class="w-[20%] min-w-32 order-2 md:order-3">
                 <div class="w-full flex justify-between items-center text-white py-1 md:py-2 px-4 font-bold text-lg">
-                    <div class=" relative hover:cursor-pointer hover:text-gray-200"> <span class="hidden lg:inline">Track Order</span> <i class="fa-regular fa-clock"></i></div>
+                    <div class=" relative hover:cursor-pointer hover:text-gray-200"> <span class="hidden xl:inline">Track Order</span> <i class="fa-regular fa-clock"></i></div>
                     @php
-                    // Check if the user is authenticated and fetch the wishlist count
-                    $wishlistCount = Auth::check()
-                    ? \App\Models\Wishlist::where('user_id', Auth::id())->count()
-                    : 0;
-                    $cartCount = Auth::check() ? \App\Models\Cart::where('user_id', Auth::id())->count() : 0;
+                        // Check if the user is authenticated and fetch the wishlist count
+                        $wishlistCount = Auth::check()
+                        ? \App\Models\Wishlist::where('user_id', Auth::id())->count()
+                        : 0;
+                        $cartCount = Auth::check() ? \App\Models\Cart::where('user_id', Auth::id())->count() : 0;
                     @endphp
                     <div class="relative hover:cursor-pointer hover:text-gray-200">
                         <a href="{{ route('wishlist') }}">

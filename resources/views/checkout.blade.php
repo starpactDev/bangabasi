@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('head')
-    <title>Bangabasi | </title>
+    <title>Bangabasi | Order Checkout</title>
 @endsection
 @section('content')
     @php
@@ -26,8 +26,7 @@
         </div>
     </div>
 
-    <div class="container flex justify-between gap-4 border-l-4 border-green-700 bg-green-600 leading-10 text-white my-8 py-2 px-2 md:px-6">
-        <h6 class="truncate font-medium"> <span class="mx-2">&#10004;</span>Your items are ready to checkout! </h6>
+    <div class="container flex justify-between gap-4 border-l-4 border-green-700 bg-green-600 text-white my-4 md:my-8 py-2 px-2 md:px-6">
         <p id="timer-message"></p>
         <a href="{{ route('cart') }}" class="min-w-fit underline hover:text-gray-100">Back to Cart</a>
     </div>
@@ -133,12 +132,8 @@
             </div>
 
             <div class="mt-4">
-                <h3 class="text-lg Capitalize font-medium py-2 border-b"><span
-                        class="border-b border-black py-2">Additional
-                        Information</span></h3>
-                <textarea name="" id="additional_info"
-                    class="w-full min-h-32 my-4 p-4 border focus:outline-none focus:border-b "
-                    placeholder="Notes about your order e.g. special notes for delivery"></textarea>
+                <h3 class="text-lg Capitalize font-medium py-2 border-b"><span class="border-b border-black py-2">Additional Information</span></h3>
+                <textarea name="" id="additional_info" class="w-full min-h-32 my-4 p-4 border focus:outline-none focus:border-b " placeholder="Notes about your order e.g. special notes for delivery"></textarea>
             </div>
         </div>
         <div class="col-span-12 lg:col-span-5">
@@ -216,43 +211,43 @@
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
-let diffInSeconds = {{ $diffInSeconds }};
+    let diffInSeconds = {{ $diffInSeconds }};
 
 
-// Element to display the countdown or message
-const countdownElement = document.getElementById('timer-message');
+    // Element to display the countdown or message
+    const countdownElement = document.getElementById('timer-message');
 
-// If the time difference is within 5 minutes (300 seconds)
-if (diffInSeconds <= 900) {
-    // Timer countdown logic
-    let countdown = setInterval(() => {
-        // Calculate remaining time
-        let remainingTime = 900 - diffInSeconds;
+    // If the time difference is within 5 minutes (300 seconds)
+    if (diffInSeconds <= 900) {
+        // Timer countdown logic
+        let countdown = setInterval(() => {
+            // Calculate remaining time
+            let remainingTime = 900 - diffInSeconds;
 
-        // If time is up
-        if (remainingTime <= 0) {
-            countdownElement.innerHTML = "You are out of time! Checkout now to avoid losing your order!";
-            clearInterval(countdown); // Stop the countdown
-        } else {
-            // Calculate minutes and seconds
-            const minutes = Math.floor(remainingTime / 60);
-            let seconds = remainingTime % 60;
+            // If time is up
+            if (remainingTime <= 0) {
+                countdownElement.innerHTML = "You are out of time! Checkout now to avoid losing your order!";
+                clearInterval(countdown); // Stop the countdown
+            } else {
+                // Calculate minutes and seconds
+                const minutes = Math.floor(remainingTime / 60);
+                let seconds = remainingTime % 60;
 
-            // Format minutes and seconds to always show two digits
-            const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
-            const formattedSeconds = seconds < 10 ? `0${Math.round(seconds)}` : Math.round(seconds);
+                // Format minutes and seconds to always show two digits
+                const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+                const formattedSeconds = seconds < 10 ? `0${Math.round(seconds)}` : Math.round(seconds);
 
-            // Update the countdown element with formatted time (MM:SS)
-            countdownElement.innerHTML = ` Hurry up, these products are limited, checkout within ${formattedMinutes}:${formattedSeconds}`;
-        }
+                // Update the countdown element with formatted time (MM:SS)
+                countdownElement.innerHTML = ` Hurry up, these products are limited, checkout within ${formattedMinutes}:${formattedSeconds}`;
+            }
 
-        // Decrease the remaining time every second
-        diffInSeconds++;
-    }, 1000); // Update every second
-} else {
-    // If the time has passed 5 minutes, show the message directly
-    countdownElement.innerHTML = "You are out of time! Checkout now to avoid losing your order!";
-}
+            // Decrease the remaining time every second
+            diffInSeconds++;
+        }, 1000); // Update every second
+    } else {
+        // If the time has passed 5 minutes, show the message directly
+        countdownElement.innerHTML = "You are out of time! Checkout now to avoid losing your order!";
+    }
 
 
 </script>

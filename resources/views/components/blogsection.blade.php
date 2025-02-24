@@ -7,8 +7,6 @@
 		</div>
 		<div class="swiper6 blog relative overflow-hidden ">
 			<div class="swiper-wrapper">
-                   
-
 				@foreach($blogs as $blog)
 				<div class="swiper-slide ">
 					@php
