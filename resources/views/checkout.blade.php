@@ -209,8 +209,8 @@
                             <td class="py-1 px-2 text-right text-sm text-neutral-800"> {{ '₹' . $platform_fee }} </td>
                         </tr>
 						<tr class="border-t-2 border-neutral-300 border-dotted">
-							<td class="p-2 text-left text-lg font-medium uppercase" colspan="4">Total</td>
-							<td class="p-2 text-right text-lg"> {{ ' ₹' . $total_price }} </td>
+							<td class="p-2 text-left text-lg font-medium uppercase" colspan="4">Total Amount</td>
+							<td class="p-2 text-right text-lg"> {{ ' ₹' . $total_amount }} </td>
 						</tr>
 					</tfoot>
 				</table>
@@ -340,7 +340,7 @@
                         var new_address = $("#new_address_form").serialize();
                         new_address += "&payment_type=" + payment_type;
                         new_address += "&additional_info=" + $("#additional_info").val();
-                        new_address += "&total_price=" + "{{ $total_price }}";
+                        new_address += "&total_amount=" + "{{ $total_amount }}";
                         $.ajax({
                             url: "{{ route('order.place') }}",
                             type: "POST",
@@ -384,7 +384,7 @@
                         var old_address = "address_id=" + old_address_id;
                         old_address += "&payment_type=" + payment_type;
                         old_address += "&additional_info=" + $("#additional_info").val();
-                        old_address += "&total_price=" + "{{ $total_price }}";
+                        old_address += "&total_amount=" + "{{ $total_amount }}";
                         old_address += "&address_type=old";
                         old_address += "&_token={{ csrf_token() }}";
                         $.ajax({
@@ -450,7 +450,7 @@
                         currency: data.order.currency,
                         name: "Bangabasi",
                         description: "Order Payment",
-                        image: "https://example.com/your_logo.png",
+                        image: "/images/bangabasi_logo_short.png",
                         order_id: data.order.id,
                         handler: function(response) {
                             // Payment successful, send payment details to backend for verification
