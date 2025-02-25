@@ -26,6 +26,10 @@ class CartController extends Controller
 
                             
         $total_price = 0;
+        if($products->isEmpty()){
+            return view('cart', compact('products', 'total_price'));
+        }
+
         foreach ($products as $item) {
             $total_price += $item->unit_price * $item->quantity;
         }
