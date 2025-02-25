@@ -6,6 +6,10 @@
     @php
         $xpage = 'Check Out';
         $xprv = 'home';
+        use Carbon\Carbon;
+        $currentTime = Carbon::now();
+        $cartAdded = $products[0]->updated_at;
+        $diffInSeconds = $cartAdded->diffInSeconds($currentTime);
     @endphp
     <x-bread-crumb :page="$xpage" :previousHref="$xprv" />
     <div class="flex flex-wrap justify-center gap-x-4 p-8 bg-slate-50 my-4">
@@ -20,9 +24,8 @@
         </div>
     </div>
 
-    <div
-        class="container flex justify-between gap-4 border-l-4 border-green-700 bg-green-600 leading-10 text-white my-8 py-2 px-2 md:px-6">
-        <h6 class="truncate font-medium"> <span class="mx-2">&#10004;</span>Your items are ready to checkout!</h6>
+    <div class="container flex justify-between gap-4 border-l-4 border-green-700 bg-green-600 leading-10 text-white my-8 py-2 px-2 md:px-6">
+        <p id="timer-message"></p>
         <a href="{{ route('cart') }}" class="min-w-fit underline hover:text-gray-100">Back to Cart</a>
     </div>
 
@@ -213,6 +216,47 @@
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
+<script id="countDownScript">
+    let diffInSeconds = {{ $diffInSeconds }};
+
+
+    // Element to display the countdown or message
+    const countdownElement = document.getElementById('timer-message');
+
+    // If the time difference is within 5 minutes (300 seconds)
+    if(countdownElement){
+        if (diffInSeconds <= 900 ) {
+            // Timer countdown logic
+            let countdown = setInterval(() => {
+                // Calculate remaining time
+                let remainingTime = 900 - diffInSeconds;
+
+                // If time is up
+                if (remainingTime <= 0) {
+                    countdownElement.innerHTML = "You are out of time! Checkout now to avoid losing your order!";
+                    clearInterval(countdown); // Stop the countdown
+                } else {
+                    // Calculate minutes and seconds
+                    const minutes = Math.floor(remainingTime / 60);
+                    let seconds = remainingTime % 60;
+
+                    // Format minutes and seconds to always show two digits
+                    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+                    const formattedSeconds = seconds < 10 ? `0${Math.round(seconds)}` : Math.round(seconds);
+
+                    // Update the countdown element with formatted time (MM:SS)
+                    countdownElement.innerHTML = ` Hurry up, these products are limited, checkout within ${formattedMinutes}:${formattedSeconds}`;
+                }
+
+                // Decrease the remaining time every second
+                diffInSeconds++;
+            }, 1000); // Update every second
+        } else {
+            // If the time has passed 5 minutes, show the message directly
+            countdownElement.innerHTML = "You are out of time! Checkout now to avoid losing your order!";
+        }
+    }
+</script>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <script>

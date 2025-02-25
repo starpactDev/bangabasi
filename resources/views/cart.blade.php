@@ -8,8 +8,10 @@
         $xprv = 'home';
         use Carbon\Carbon;
         $currentTime = Carbon::now();
-        $cartAdded = $products[0]->updated_at;
-        $diffInSeconds = $cartAdded->diffInSeconds($currentTime)
+        if($products->count() > 0){
+            $cartAdded = $products[0]->updated_at;
+            $diffInSeconds = $cartAdded->diffInSeconds($currentTime);
+        }
     @endphp
     <x-bread-crumb :page="$xpage" :previousHref="$xprv" />
     <div class="flex flex-wrap justify-center gap-4 p-8 bg-slate-50 my-4">
@@ -220,45 +222,50 @@
 @endsection
 
 @push('scripts')
+
+//if products array is not empty
+@if($products->count() > 0)
 <script id="countDown">
-let diffInSeconds = {{ $diffInSeconds }};
+    let diffInSeconds = {{ $diffInSeconds }};
 
-// Element to display the countdown or message
-const countdownElement = document.getElementById('timer-message');
+    // Element to display the countdown or message
+    const countdownElement = document.getElementById('timer-message');
 
-// If the time difference is within 5 minutes (300 seconds)
-if (diffInSeconds <= 900) {
-    // Timer countdown logic
-    let countdown = setInterval(() => {
-        // Calculate remaining time
-        let remainingTime = 900 - diffInSeconds;
+    // If the time difference is within 5 minutes (300 seconds)
+    if (diffInSeconds <= 900) {
+        // Timer countdown logic
+        let countdown = setInterval(() => {
+            // Calculate remaining time
+            let remainingTime = 900 - diffInSeconds;
 
-        // If time is up
-        if (remainingTime <= 0) {
-            countdownElement.innerHTML = "You are out of time! Checkout now to avoid losing your order!";
-            clearInterval(countdown); // Stop the countdown
-        } else {
-            // Calculate minutes and seconds
-            const minutes = Math.floor(remainingTime / 60);
-            let seconds = remainingTime % 60;
+            // If time is up
+            if (remainingTime <= 0) {
+                countdownElement.innerHTML = "You are out of time! Checkout now to avoid losing your order!";
+                clearInterval(countdown); // Stop the countdown
+            } else {
+                // Calculate minutes and seconds
+                const minutes = Math.floor(remainingTime / 60);
+                let seconds = remainingTime % 60;
 
-            // Format minutes and seconds to always show two digits
-            const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
-            const formattedSeconds = seconds < 10 ? `0${Math.round(seconds)}` : Math.round(seconds);
-            // Update the countdown element with formatted time (MM:SS)
-            countdownElement.innerHTML = ` Hurry up, these products are limited, checkout within ${formattedMinutes}:${formattedSeconds}`;
-        }
+                // Format minutes and seconds to always show two digits
+                const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+                const formattedSeconds = seconds < 10 ? `0${Math.round(seconds)}` : Math.round(seconds);
+                // Update the countdown element with formatted time (MM:SS)
+                countdownElement.innerHTML = ` Hurry up, these products are limited, checkout within ${formattedMinutes}:${formattedSeconds}`;
+            }
 
-        // Decrease the remaining time every second
-        diffInSeconds++;
-    }, 1000); // Update every second
-} else {
-    // If the time has passed 5 minutes, show the message directly
-    countdownElement.innerHTML = "You are out of time! Checkout now to avoid losing your order!";
-}
+            // Decrease the remaining time every second
+            diffInSeconds++;
+        }, 1000); // Update every second
+    } else {
+        // If the time has passed 5 minutes, show the message directly
+        countdownElement.innerHTML = "You are out of time! Checkout now to avoid losing your order!";
+    }
 
 
 </script>
+@endif
+
     <script>
         var debounce = null;
 
