@@ -197,11 +197,11 @@
                         </tr>
                         <tr>
                             <td class="text-sm text-neutral-700" colspan="4">Discount</td>
-                            <td class="py-1 px-2 text-right text-sm text-green-600">{{ '- ₹' .$original_price - $total_price}}</td>
+                            <td class="py-1 px-2 text-right text-sm text-green-600">{{ '- ₹' .$original_price - $total_price }}</td>
                         </tr>
                         <tr>
                             <td class="text-sm text-neutral-700" colspan="4">Coupons for you </td>
-                            <td class="py-1 px-2 text-right text-sm text-green-600"> {{ '-₹' . 0 }} </td>
+                            <td class="py-1 px-2 text-right text-sm text-green-600"> {{ '-₹' . $coupon_discount }} </td>
                         </tr>
                         <tr>
                             <td class="text-sm text-neutral-700" colspan="4">Secured Packaging Fee</td>
@@ -223,6 +223,7 @@
                 <input type="radio" name="payments" id="postPaid" value="postPaid" class="my-2 mx-2" checked>
                 <label for="postPaid">Cash on Delivery</label>
                 <button id="place_order" class="w-full my-4 bg-neutral-800 text-white leading-10 hover:bg-neutral-950">Place Order</button>
+                <p class="text-sm text-green-500">You have saved {{ '₹' .$original_price - $total_price + $coupon_discount }} on this order.</p>
             </div>
         </div>
 

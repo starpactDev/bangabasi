@@ -3,17 +3,20 @@
 namespace App\View\Components;
 
 use Closure;
-use Illuminate\Contracts\View\View;
+use App\Models\Cart;
 use Illuminate\View\Component;
+use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
 
 class Navbar extends Component
 {
+    public $cartCount;
     /**
      * Create a new component instance.
      */
     public function __construct()
     {
-        //
+        $this->cartCount = Auth::check() ? Cart::where('user_id', Auth::id())->count() : 0;
     }
 
     /**

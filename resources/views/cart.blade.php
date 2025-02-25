@@ -223,7 +223,7 @@
 
 @push('scripts')
 
-    //if products array is not empty
+    
     @if($products->isNotEmpty())
         <script id="countDown">
             let diffInSeconds = {{ $diffInSeconds }};

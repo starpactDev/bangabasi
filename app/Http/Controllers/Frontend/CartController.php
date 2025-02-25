@@ -113,6 +113,8 @@ class CartController extends Controller
         }
         $total_price = round($total_price, 2);
 
+        $coupon_discount = 30;
+
         $platform_fee = 20;
 
         $shipping_fee = 0;
@@ -129,14 +131,14 @@ class CartController extends Controller
             $shipping_fee = 5;
         }
 
-        $total_amount = $total_price + $platform_fee + $shipping_fee;
+        $total_amount = $total_price - $coupon_discount + $platform_fee + $shipping_fee;
 
         $user_addresses = UserAddress::where('user_id', $user->id)->get();
 
 
         $address_type = $user_addresses->isEmpty() ? "new" : "old";
 
-        return view('checkout', compact('products', 'total_price', 'original_price', 'platform_fee', 'shipping_fee', 'total_amount', 'user_addresses', 'address_type'));
+        return view('checkout', compact('products', 'total_price', 'original_price', 'coupon_discount', 'platform_fee', 'shipping_fee', 'total_amount', 'user_addresses', 'address_type'));
     }
 
     public function checkStock(Request $request)
