@@ -280,8 +280,8 @@
             </div>
             <div class="col-span-12 my-12">
                 <ul class=" md:flex ">
-                    <li onclick=tabToggle(description) class="px-4 py-2 hover:bg-slate-100 border">Description</li>
-                    <li onclick=tabToggle(qna) class="px-4 py-2 hover:bg-slate-100 border">Full Deatils</li>
+                    <li onclick="descriptionToggle(event)" data-target="description" class="tab-link px-4 py-2 bg-slate-200 hover:bg-slate-100 border">Description</li>
+                    <li onclick="descriptionToggle(event)" data-target="qna" class="tab-link px-4 py-2 hover:bg-slate-100 border">Full Deatils</li>
                 </ul>
                 <div class="border min-h-64 p-8 tabs " id="description">
                     <p class="py-4 text-slate-700">
@@ -483,6 +483,24 @@
 @endsection
 
 @push('scripts')
+    <script id="descriptionToggle">
+        function descriptionToggle(event) {
+            const clickedTab = event.currentTarget; // The clicked <li> element
+            const targetId = clickedTab.getAttribute("data-target"); // Get target content ID
+
+            // Hide all tab content sections
+            document.querySelectorAll(".tabs").forEach(tab => tab.classList.add("hidden"));
+
+            // Remove active class from all tabs
+            document.querySelectorAll(".tab-link").forEach(tab => tab.classList.remove("bg-slate-200"));
+
+            // Show the targeted tab content
+            document.getElementById(targetId)?.classList.remove("hidden");
+
+            // Add active class to the clicked tab
+            clickedTab.classList.add("bg-slate-200");
+        }
+    </script>
     <script>
         function submitWishlistToCart(id, discountedPrice) {
             const selectedSize = document.querySelector('input[name="size"]:checked');

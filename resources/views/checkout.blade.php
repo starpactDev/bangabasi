@@ -109,7 +109,13 @@
                     </div>
                     <button id="add_address" class=" bg-gray-400 hover:bg-gray-600 hover:text-slate-50 px-6 ">Add Address</button>
                 </div>
-
+                <div class="my-4">
+                    <label >
+                        <input type="checkbox" name="sameAddress" id="sameAddress" checked disabled class="text-blue-500">
+                        Your shipping address and billing address will be the same.
+                    </label>
+                </div>
+                
                 @if ($user_addresses->isNotEmpty())
                     @foreach ($user_addresses as $k => $ad)
                         <div class="mt-4 p-8 w-full shadow-md">

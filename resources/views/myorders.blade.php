@@ -161,7 +161,10 @@
                 @endforeach
                 <div class="flex justify-between items-center px-4 py-2 ">
                     <div title="{{ $order->created_at->format('d-m-Y H:i') }}"> {{ formatTimeAgo($order->created_at) }} </div>
-                    <div class="capitalize"> {{ $order->payment_method == 'prePaid' ? 'Prepaid' : '' }} {{ $order->payment_method == 'postPaid' ? 'Cash On Delivery' : '' }} </div>
+                    <div class="capitalize"> 
+                        <span>Total Amount : ₹{{ $order->price }} | </span>
+                        <span>{{ $order->payment_method == 'prePaid' ? 'Prepaid' : '' }} {{ $order->payment_method == 'postPaid' ? 'Cash On Delivery' : '' }}</span>
+                    </div>
                 </div>
             </div>
         @endforeach
