@@ -532,7 +532,7 @@ $products = $subCategories;
                                 </a>
                                 @endforeach
                             </div>
-                            <a href="mailto:info@starpactglobal.com" class="w-5/6 mx-auto py-4 border hover:bg-neutral-50 text-center"><i class="fa fa-envelope px-4 text-lg "></i>Mail Us</a>
+                            <a href="mailto:info.bangabasi@gmail.com" class="w-5/6 mx-auto py-4 border hover:bg-neutral-50 text-center"><i class="fa fa-envelope px-4 text-lg "></i>Mail Us</a>
                         </div>
 
                         <div class=" relative w-1/3 border h-[340px] shadow-lg hover:cursor-pointer p-holder ">
@@ -542,7 +542,7 @@ $products = $subCategories;
                                     Your Food
                                 </div>
                                 <div class="text-sm ">
-                                    <a href="#" class="text-orange-600"> Show More </a>
+                                    <a href="{{ route('user.products', ['category' => 2]) }}" class="text-orange-600"> Show More </a>
                                 </div>
                             </div>
                         </div>
@@ -555,7 +555,7 @@ $products = $subCategories;
                                     Daily Needed Foods
                                 </div>
                                 <div class="text-sm">
-                                    <a href="#" class="text-orange-600"> Show More </a>
+                                    <a href="{{ route('user.products', ['category' => 2]) }}" class="text-orange-600"> Show More </a>
                                 </div>
                             </div>
                         </div>
