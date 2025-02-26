@@ -106,7 +106,7 @@
 
                         </div>
                         <div class="flex-1  min-w-60 p-4">
-                            <h6 class="text-bold "><span>GSTIN :</span>19EKRPD4832A1Z7</h6>
+                            <h6 class="text-bold "><span>GSTIN : </span>19EKRPD4832A1Z7</h6>
                             <h6 class="text-bold "><span>MSME : </span>UDYAM-WB-03-0025485</h6>
                             <h6 class="text-bold"><span>Trade Reg : </span>SSNOCPZVP36865047N</h6>
                         </div>
