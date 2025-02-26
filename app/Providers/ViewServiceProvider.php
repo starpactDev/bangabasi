@@ -23,7 +23,7 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        View::composer(['parts.header', 'authentication', 'parts.components.footer', 'components.brand-new-footer', 'admin.layouts.sidebar', 'admin.pages.login', 'seller.layouts.sidebar'], function ($view) {
+        View::composer(['parts.header', 'authentication', 'parts.components.footer', 'components.footer', 'admin.layouts.sidebar', 'admin.pages.login', 'seller.layouts.sidebar'], function ($view) {
             // Fetch logos based on location from the database
             $logos = Logo::select('id', 'image_path', 'location')  // Fetch only relevant columns
             ->get()

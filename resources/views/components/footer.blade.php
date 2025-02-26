@@ -1,18 +1,179 @@
-<section class="bg-orange-700 py-12 mt-8">
-    <div class="container grid grid-cols-12 gap-y-4 items-center" >
-        <div class="col-span-12 md:col-span-5 h-6 flex gap-x-4 text-white">
-            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M549.7 124.1c-6.3-23.7-24.8-42.3-48.3-48.6C458.8 64 288 64 288 64S117.2 64 74.6 75.5c-23.5 6.3-42 24.9-48.3 48.6-11.4 42.9-11.4 132.3-11.4 132.3s0 89.4 11.4 132.3c6.3 23.7 24.8 41.5 48.3 47.8C117.2 448 288 448 288 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zm-317.5 213.5V175.2l142.7 81.2-142.7 81.2z"/></svg>
-            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M80 299.3V512H196V299.3h86.5l18-97.8H196V166.9c0-51.7 20.3-71.5 72.7-71.5c16.3 0 29.4 .4 37 1.2V7.9C291.4 4 256.4 0 236.2 0C129.3 0 80 50.5 80 159.4v42.1H14v97.8H80z"/></svg>
-            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg>
-            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z" /></svg>
-            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M204 6.5C101.4 6.5 0 74.9 0 185.6 0 256 39.6 296 63.6 296c9.9 0 15.6-27.6 15.6-35.4 0-9.3-23.7-29.1-23.7-67.8 0-80.4 61.2-137.4 140.4-137.4 68.1 0 118.5 38.7 118.5 109.8 0 53.1-21.3 152.7-90.3 152.7-24.9 0-46.2-18-46.2-43.8 0-37.8 26.4-74.4 26.4-113.4 0-66.2-93.9-54.2-93.9 25.8 0 16.8 2.1 35.4 9.6 50.7-13.8 59.4-42 147.9-42 209.1 0 18.9 2.7 37.5 4.5 56.4 3.4 3.8 1.7 3.4 6.9 1.5 50.4-69 48.6-82.5 71.4-172.8 12.3 23.4 44.1 36 69.3 36 106.2 0 153.9-103.5 153.9-196.8C384 71.3 298.2 6.5 204 6.5z"  /></svg>
-        </div>
-        <div class="col-span-12 md:col-span-7 flex flex-wrap justify-start md:justify-around items-center gap-y-4">
-            <h4 class="text-xl font-bold text-white text-left">Get the latest deals and more.</h4>
-            <div class="w-1/2  flex justify-left min-w-80">
-                <div class="min-h-8 w-3/4 bg-white "></div>
-                <img src="/images/icons/email.png" alt="" class="h-full p-1 aspect-square bg-white">
+<footer class="mt-6">
+    <section class="bg-neutral-50">
+        <div class="container">
+            <div class="grid grid-cols-12 gap-4">
+                <!-- Newsletter Section -->
+                <div class="col-span-12 sm:col-span-6 lg:col-span-4 p-4" id="newsletterHolder">
+                    <h3 class="font-bold text-xl">News Letter</h3>
+                    <div id="emailFormDiv">
+                        <p class="text-sm min-h-10">Sign up for our newsletter to get the latest updates</p>
+                        <form class="border px-4 py-2 my-4 flex justify-between bg-white" action="{{ route('newsletter.subscribe') }}" method="POST" id="newsletter" autocomplete="on">
+                            @csrf
+                            <input type="email" name="email" placeholder="Enter your email" class="focus:outline-none w-3/4" autocomplete="email" required>
+                            <button class="bg-orange-500 text-white px-4 py-2 hover:bg-orange-700">
+                                <img src="{{ asset('images/icons/mail_bangabasi.png') }}" alt="" class="w-4 invert">
+                            </button>
+                        </form>
+
+                    </div>
+                    <!-- New form for first name and last name (hidden initially) -->
+                    <p class="text-sm hidden" id="responseMessage"></p>
+                    <div class="hidden" id="nameForm">
+                        
+                    <form class="border px-2 py-2 my-2 flex justify-between bg-white" action="{{ route('newsletter.subscribe_complete') }}" method="POST" id="nameDetailsForm" autocomplete="on">
+                        @csrf
+                        <input type="text" name="first_name" placeholder="First Name" class="px-2 focus:outline-none w-3/4" required autocomplete="given-name">
+                        <input type="text" name="last_name" placeholder="Last Name" class="px-2 focus:outline-none w-3/4" required autocomplete="family-name">
+                        <button class="bg-orange-500 text-white px-4 py-2 hover:bg-orange-700 ">Subscribe</button>
+                    </form>
+
+                    </div>
+                </div>
+
+                <!-- Follow Us Section -->
+                <div class="col-span-12 sm:col-span-6 lg:col-span-4 p-4">
+                    <h3 class="font-bold text-xl">Follow Us</h3>
+                    <p class="text-sm min-h-10">Find whats happening in the backend.</p>
+                    <div class="my-4 flex justify-start gap-2 py-2 bg-white w-fit px-2">
+                        <a href="https://www.facebook.com/bangabasi.co" class="p-2 bg-orange-500 hover:bg-orange-700" target="_blank">
+                            <img src="{{ asset('images/icons/facebook_bangabasi.png') }}" alt="" class="w-4 invert">
+                        </a>
+                        <a href="https://www.instagram.com/bangabasiindia/" class="p-2 bg-orange-500 hover:bg-orange-700" target="_blank">
+                            <img src="{{ asset('images/icons/instagram_bangabasi.png') }}" alt="" class="w-4 invert">
+                        </a>
+                        <a href="https://www.youtube.com/@Bangabasiindia" class="p-2 bg-orange-500 hover:bg-orange-700" target="_blank">
+                            <img src="{{ asset('images/icons/youtube_bangabasi.png') }}" alt="" class="w-4 invert">
+                        </a>
+                        <a href="https://in.pinterest.com/bangabasiindia/" class="p-2 bg-orange-500 hover:bg-orange-700" target="_blank">
+                            <img src="{{ asset('images/icons/pinterest_bangabasi.png') }}" alt="" class="w-4 invert">
+                        </a>
+                        <a href="https://maps.app.goo.gl/BekqTPMAGE6CqbfC8" class="p-2 bg-orange-500" target="_blank">
+                            <img src="{{ asset('images/icons/location_bangabasi.png') }}" alt="" class="w-4 invert">
+                        </a>
+                        <a href="https://whatsapp.com/channel/0029VakhvrpL2AU4lilJCV3R" class="p-2 bg-orange-500 hover:bg-orange-700" target="_blank">
+                            <img src="{{ asset('images/icons/whatsapp_bangabasi.png') }}" alt="" class="w-4 invert">
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Order via Whatsapp Section -->
+                <div class="col-span-12 sm:hidden md:col-span-6 lg:block lg:col-span-4 p-4">
+                    <h3 class="font-bold text-xl">Order via Whatsapp</h3>
+                    <p class="text-sm min-h-10">Finding it difficult to order via Website?</p>
+                    <div class="my-4 flex justify-start gap-2 text-white">
+                        <a class="bg-green-600 hover:bg-green-800 px-4 py-2" href="https://wa.me/+919476168391">
+                            Order via Whatsapp
+                            <img src="{{ asset('images/icons/whatsapp_bangabasi.png') }}" alt="" class="w-4 invert inline-block mx-4">
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+    <section class="bg-[#c44601] ">
+        <div class="container">
+            <div class="grid grid-cols-12 gap-4  text-white ">
+                <div class="col-span-12 lg:col-span-6  ">
+                    <div class="flex py-4 justify-center gap-4 ">
+                        @if(isset($logos['2']))
+                            <img src="{{ asset('user/uploads/logos/' . $logos['1']->image_path) }}" class="w-40">
+                        @endif
+                        <div class="border-left border border-neutral-200"></div>
+                        <img src="{{ asset('images/svg/msme_icon_circle.png') }}" class="border-left h-fit w-10">
+                    </div>
+                    <div class="text-center">
+                        <p class="w-full md:w-3/4 mx-auto font-light text-sm"><b>Bangabasi.com</b>, a virtual gateway to Bengal’s finest offerings. Our mission is to make the crafts, food, apparel, and more of West Bengal accessible to anyone, anywhere.</p>
+                    </div>
+                    <div class="flex mt-4 gap-4 justify-around flex-wrap">
+                        <div class="w-2/5  min-w-60 p-4">
+                            <ul class="list-none space-y-2">
+                                <li class="flex items-start gap-4">
+                                    <img src="{{ asset('images/icons/pin_bangabasi.png')}}" alt="" class="inline w-4 " style="filter: brightness(10);">
+                                    <address class="text-sm inline">
+                                        0050 Gita Kuthir, Burdwan
+                                        <br> Pin 713125 (WB) India
+                                    </address>
+                                </li>
+                                <li class="flex items-center gap-4">
+                                    <img src="{{ asset('images/icons/phone_bangabasi.png')}}" alt="" class="inline w-4 " style="filter: brightness(10);">
+                                    <a href="tel:+919476168391">+91 9476 168 391</a>
+                                </li>
+                                <li class="flex items-center gap-4">
+                                    <img src="{{ asset('images/icons/mail_bangabasi_1.png')}}" alt="" class="inline w-4 invert">
+                                    <a href="mailto:info.bangabasi@gmail.com">info.bangabasi@gmail.com</a>
+                                </li>
+                            </ul>
+
+                        </div>
+                        <div class="flex-1  min-w-60 p-4">
+                            <h6 class="text-bold "><span>GSTIN : </span>19EKRPD4832A1Z7</h6>
+                            <h6 class="text-bold "><span>MSME : </span>UDYAM-WB-03-0025485</h6>
+                            <h6 class="text-bold"><span>Trade Reg : </span>SSNOCPZVP36865047N</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-span-6 lg:col-span-3 p-4 ">
+                    <h3 class="font-bold text-xl">Quick Links</h3>
+                    <ul class="list-none text-sm py-4 space-y-2">
+                        <li>
+                            <a class="hover:text-orange-500" href="{{ route('myprofile') }}">My Profile</a>
+                        </li>
+                        <li>
+                            <a class="hover:text-orange-500" href="{{ route('cart') }}">Cart</a>
+                        </li>
+                        <li>
+                            <a class="hover:text-orange-500" href="{{ route('sellers.index') }}">Shop</a>
+                        </li>
+                        <li>
+                            <a class="hover:text-orange-500" href="{{ route('wishlist')}}">Wishlist</a>
+                        </li>
+                        <li>
+                            <a class="hover:text-orange-500" href="">Track Order</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-span-6 lg:col-span-3 p-4 ">
+                    <h3 class="font-bold text-xl">Services</h3>
+                    <ul class="list-none text-sm py-4 space-y-2">
+                        <li>
+                            <a href="{{ route('about-us') }}" class="hover:text-orange-500">About Us</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('contact-us') }}" class="hover:text-orange-500">Contact</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('terms') }}" class="hover:text-orange-500">Privacy Policy</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('terms') }}" class="hover:text-orange-500">Return & Refunds</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('terms') }}" class="hover:text-orange-500">Terms & Conditions</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('terms') }}" class="hover:text-orange-500">Delivery Detail & Charges</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="sm:flex justify-center items-center gap-4 space-y-6 sm:space-y-0 text-white pt-0 pb-4 text-center">
+                <h6 class="text-bold text-sm text-neutral-300">Pay With</h6>
+                <div class="border-l-2 border-gray-500 border-r-2 flex justify-around flex-wrap gap-2 px-4 sm:min-w-80">
+                    <img src="{{ asset('/images/svg/visa.png')}}" alt="" class="w-10">
+                    <img src="{{ asset('/images/svg/cirrus.png')}}" alt="" class="w-10">
+                    <img src="{{ asset('/images/svg/american-express.png')}}" alt="" class="w-10 hidden sm:block">
+                    <img src="{{ asset('/images/svg/master-card.png')}}" alt="" class="w-10">
+                    <img src="{{ asset('/images/svg/cirrus.png')}}" alt="" class="w-10">
+                    <img src="{{ asset('/images/svg/paypal.png')}}" alt="" class="w-10">
+                </div>
+                @if(isset($logos['2']))
+                    <img src="{{ asset('user/uploads/logos/' . $logos['1']->image_path) }}" class="w-24 mx-auto sm:mx-0">
+                @endif
+            </div>
+        </div>
+        <div class="text-center border-t-2 border-gray-400 text-neutral-50 space-y-2 text-sm py-4">
+            <p>2024 | Bangabasi</p>
+            <p>Built with ❤️ by <a href="">Starpact Global Services</a></p>
+        </div>
+    </section>
+</footer>
