@@ -56,23 +56,41 @@
     <!-- Contact Form Section -->
     <div class="mt-12">
         <h2 class="text-2xl font-semibold text-blue-600 text-center">Send Us a Message</h2>
-        <div class="max-w-2xl mx-auto mt-6 bg-white p-6 shadow-lg rounded-lg">
-            <form>
-                <div class="mb-4">
-                    <label class="block text-gray-700 font-semibold">Name</label>
-                    <input type="text" class="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:border-blue-600">
-                </div>
-                <div class="mb-4">
-                    <label class="block text-gray-700 font-semibold">Email</label>
-                    <input type="email" class="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:border-blue-600">
-                </div>
-                <div class="mb-4">
-                    <label class="block text-gray-700 font-semibold">Message</label>
-                    <textarea class="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:border-blue-600" rows="5"></textarea>
-                </div>
-                <button class="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600">Send Message</button>
-            </form>
-        </div>
+    
+        <!-- Success Message -->
+        @if(session('success'))
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative my-4">
+                {{ session('success') }}
+            </div>
+        @else
+            <div class="max-w-2xl mx-auto mt-6 bg-white p-6 shadow-lg rounded-lg">
+                <form method="post" action="{{ route('contact.submit') }}">
+                    @csrf
+                    <div class="mb-4">
+                        <label for="name" class="block text-gray-700 font-semibold">Name</label>
+                        <input type="text" id="name" name="name" placeholder="Enter your Name" class="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:border-blue-600" autocomplete="on" value="{{ old('name') }}" required>
+                        @error('name')
+                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="mb-4">
+                        <label for="email" class="block text-gray-700 font-semibold">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email" class="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:border-blue-600" autocomplete="on" value="{{ old('email') }}" required>
+                        @error('email')
+                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="mb-4">
+                        <label for="message" class="block text-gray-700 font-semibold">Message</label>
+                        <textarea id="message" name="message" placeholder="Enter your query" class="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:border-blue-600" rows="5" required>{{ old('message') }}</textarea>
+                        @error('message')
+                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <button type="submit" class="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600">Send Message</button>
+                </form>
+            </div>
+        @endif
     </div>
 
     <!-- Google Map Section -->

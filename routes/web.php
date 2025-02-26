@@ -24,12 +24,13 @@ use App\Http\Controllers\Frontend\AboutController;
 use App\Http\Controllers\Frontend\OrderController;
 use App\Http\Controllers\Frontend\TopbarController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\ProductController;
 use App\Http\Controllers\Frontend\ProfileController;
+
 use App\Http\Controllers\Frontend\SidebarController;
 
 use App\Http\Controllers\Backend\AdminBlogController;
-
 use App\Http\Controllers\Backend\AdminLogoController;
 use App\Http\Controllers\Backend\AdminUserController;
 use App\Http\Controllers\Frontend\WishlistController;
@@ -46,11 +47,11 @@ use App\Http\Controllers\Backend\AdminTopbarController;
 use App\Http\Controllers\Frontend\NewsletterController;
 use App\Http\Controllers\Backend\AdminProductController;
 use App\Http\Controllers\Backend\AdminSidebarController;
+
 use App\Http\Controllers\Backend\AdminHomepageController;
-
 use App\Http\Controllers\ShipRocket\ShipRocketController;
-use App\Http\Controllers\Backend\AdminDashboardController;
 
+use App\Http\Controllers\Backend\AdminDashboardController;
 use App\Http\Controllers\Frontend\FilterProductController;
 use App\Http\Controllers\Seller\SellerDashboardController;
 use App\Http\Controllers\Backend\AdminCollectionController;
@@ -132,7 +133,7 @@ Route::get('/status', function () {
 Route::post('/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
 Route::post('/complete-subscribe', [NewsletterController::class, 'completeSubscription'])->name('newsletter.subscribe_complete');
 
-
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.submit');
 
 Route::get('/our-sellers', [FrontendSellerController::class, 'index'])->name('sellers.index');
 Route::get('/seller/{sellerId}', [FrontendSellerController::class, 'show'])->name('seller.shop');
