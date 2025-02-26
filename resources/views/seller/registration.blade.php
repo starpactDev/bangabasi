@@ -47,6 +47,10 @@
 	</style>
 	<section class="min-h-screen grid grid-cols-12">
 		<!-- Left Section -->
+		@php
+			$otpSent = session('otp_sent', false);
+			$phoneNumber = session('phone_number', '');
+		@endphp
 		<div class="col-span-12 lg:col-span-5 flex items-center justify-center bg-slate-100 max-h-screen overflow-y-auto">
 			<form class="w-full max-w-md p-6" action="{{ route('seller.register') }}" method="POST" enctype="multipart/form-data">
 				@csrf
@@ -61,21 +65,21 @@
 				@endif
 				
 				<!-- Mobile Number Section -->
-				<label class="block text-sm font-medium text-gray-700">Enter Mobile Number</label>
+				<label class="block text-sm font-medium text-gray-700"></label>
 				<div class="flex items-center space-x-2 mt-1">
-					<input type="text" placeholder="Enter Mobile Number" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" name="phone_number"/>
-					<button class="bg-orange-500 text-white px-4 py-2 w-36 rounded-md hover:bg-orange-600" id="send_otp">Send OTP</button>
+					<input type="text" placeholder="Enter Mobile Number" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" name="phone_number" value="{{ $phoneNumber }}"/>
+					<button class="bg-orange-500 text-white px-4 py-2 w-36 rounded-md hover:bg-orange-600" id="send_otp" @if($otpSent) disabled class="bg-green-400 cursor-not-allowed" @endif>{{ $otpSent ? 'OTP Sent!' : 'Send OTP' }}</button>
 				</div>
 				@error('phone_number')
 					<p class="text-xs text-red-500 mt-1 ">{{$message}}</p>
 				@enderror
 
 				<!-- OTP Section -->
-				<div id="otp_section" class="grayscale {{ $errors->has('otp') ? '' : 'hidden'}}">
-					<label class="block text-sm font-medium text-gray-700 mt-4">Enter OTP</label>
+				<div id="otp_section" class="grayscale {{ $errors->has('otp') || $otpSent ? '' : 'hidden' }}">
+					<label class="block text-sm font-medium text-gray-700 mt-4"></label>
 					<div class="flex items-center space-x-2 mt-1 ">
-						<input type="text" id="otp_input" placeholder="Enter OTP" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500 cursor-not-allowed" name="otp"/>
-						<button class="bg-orange-500 text-white px-4 py-2 w-36 rounded-md hover:bg-orange-600 cursor-not-allowed" id="verify_otp" disabled>Verify OTP</button>
+						<input type="text" id="otp_input" placeholder="Enter OTP" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500 {{ $otpSent ? '' :'cursor-not-allowed'}}" name="otp" {{ $otpSent ? '' : 'disabled' }}/>
+						<button class="bg-orange-500 text-white px-4 py-2 w-36 rounded-md hover:bg-orange-600 {{$otpSent ? '' : 'cursor-not-allowed'}}" id="verify_otp" {{ $otpSent ? '' : 'disabled' }}>Verify OTP</button>
 					</div>
 					<p class="text-xs text-red-500 mt-1 hidden" id="otp_error">OTP is not verified.</p>
 					@error('otp')
@@ -84,7 +88,7 @@
 				</div>
 				
 				<!-- Email Section -->
-				<label class="block text-sm font-medium text-gray-700 mt-4">Email Id</label>
+				<label class="block text-sm font-medium text-gray-700 mt-4"></label>
 				<input type="email" placeholder="Email Id" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" name="email"/>
 				@error('email')
 					<p class="text-xs text-red-500 mt-1 ">{{$message}}</p>
@@ -94,7 +98,7 @@
 				<label class="block text-sm font-medium text-gray-700 mt-4">Upload User Image</label>
 				<div class="flex items-center space-x-4 mt-2">
 					<div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden border">
-						<img id="logo_preview" src="https://via.placeholder.com/80x80?text=Logo" alt="Logo Preview" class="object-cover w-full h-full">
+						<img id="logo_preview" src="{{ asset('images/bangabasi_logo_short.png') }}" alt="Logo Preview" class="object-cover w-full h-full">
 					</div>
 					<input type="file" id="logo_input" class="hidden" name="image" accept="image/*">
 					<button type="button" class="bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600" onclick="document.getElementById('logo_input').click()">Choose Image</button>
@@ -106,7 +110,7 @@
 				@enderror
 
 				<!-- Password Section -->
-				<label class="block text-sm font-medium text-gray-700 mt-4">Set Password</label>
+				<label class="block text-sm font-medium text-gray-700 mt-4"></label>
 				<div class="flex items-center space-x-2 mt-1 relative">
 					<input type="password" placeholder="Set Password" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" name="password"/>
 					<button class="text-gray-500 hover:text-orange-500  absolute right-2">👁</button>
@@ -122,7 +126,7 @@
 				@enderror
 
 				<!-- Confirm Password Section -->
-				<label class="block text-sm font-medium text-gray-700 mt-4">Confirm Password</label>
+				<label class="block text-sm font-medium text-gray-700 mt-4"></label>
 				<div class="flex items-center space-x-2 mt-1 relative">
 					<input type="password" name="confirm_password" placeholder="Confirm Password" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" />
 				</div>
@@ -201,67 +205,67 @@
 	</section>
 </body>
 <script id="otpInteraction">
-  document.addEventListener("DOMContentLoaded", function () {
-    const sendOtpButton = document.getElementById('send_otp'); // "Send OTP" button
-    const otpField = document.getElementById('otp_input'); // OTP input field
-    const verifyOtpButton = document.getElementById('verify_otp'); // "Verify OTP" button
-    const otpSection = document.getElementById('otp_section'); // OTP section container
-    const otpErrorMessage = document.getElementById('otp_error'); // OTP error message
-    const otpSuccessMessage = document.createElement('p'); // Create success message
-    otpSuccessMessage.textContent = "OTP Verified!";
-    otpSuccessMessage.classList.add('text-xs', 'text-green-500', 'mt-1'); // Style success message
+	document.addEventListener("DOMContentLoaded", function() {
+		const sendOtpButton = document.getElementById('send_otp'); // "Send OTP" button
+		const otpField = document.getElementById('otp_input'); // OTP input field
+		const verifyOtpButton = document.getElementById('verify_otp'); // "Verify OTP" button
+		const otpSection = document.getElementById('otp_section'); // OTP section container
+		const otpErrorMessage = document.getElementById('otp_error'); // OTP error message
+		const otpSuccessMessage = document.createElement('p'); // Create success message
+		otpSuccessMessage.textContent = "OTP Verified!";
+		otpSuccessMessage.classList.add('text-xs', 'text-green-500', 'mt-1'); // Style success message
 
-    // Hide OTP input field initially
-    otpField.disabled = true;
+		// Hide OTP input field initially
+		//otpField.disabled = true;
 
-    
-    // Handle Send OTP button click
-    sendOtpButton.addEventListener("click", function (event) {
-      event.preventDefault();
 
-      // Simulate sending OTP
-      sendOtpButton.textContent = "OTP Sent!";
-      sendOtpButton.disabled = true;
-      sendOtpButton.classList.add("bg-green-400", "cursor-not-allowed");
+		// Handle Send OTP button click
+		sendOtpButton.addEventListener("click", function(event) {
+			event.preventDefault();
+			// Simulate sending OTP
+			sendOtpButton.textContent = "OTP Sent!";
+			sendOtpButton.disabled = true;
+			sendOtpButton.classList.add("bg-green-400", "cursor-not-allowed");
+			// Animate and enable OTP section
+			otpSection.classList.remove("hidden");
+			otpSection.classList.remove("grayscale", "cursor-not-allowed");
+			otpField.disabled = false;
+			otpField.classList.remove("cursor-not-allowed");
+			verifyOtpButton.disabled = false;
+			verifyOtpButton.classList.remove("cursor-not-allowed", "bg-gray-400");
+		});
 
-      // Animate and enable OTP section
-      otpSection.classList.remove("hidden");
-      otpSection.classList.remove("grayscale", "cursor-not-allowed");
-      otpField.disabled = false;
-      otpField.classList.remove("cursor-not-allowed");
-      verifyOtpButton.disabled = false;
-      verifyOtpButton.classList.remove("cursor-not-allowed", "bg-gray-400");
-    });
 
-    // Handle Verify OTP button click
-    verifyOtpButton.addEventListener("click", function (event) {
-      event.preventDefault();
+		// Handle Verify OTP button click
+		verifyOtpButton.addEventListener("click", function(event) {
+			event.preventDefault();
+			// Check if OTP is correct
+			if (otpField.value === "1234") {
+				// Show success message
+				otpSection.appendChild(otpSuccessMessage);
+				verifyOtpButton.textContent = "Verified!";
+				verifyOtpButton.disabled = true;
+				verifyOtpButton.classList.add("bg-green-500", "cursor-not-allowed");
+				otpErrorMessage.classList.add('hidden'); // Hide error message if OTP is correct
+			} else {
+				// Show error message if OTP is incorrect
+				otpErrorMessage.classList.remove('hidden');
+			}
+		});
 
-      // Check if OTP is correct
-      if (otpField.value === "1234") {
-        // Show success message
-        otpSection.appendChild(otpSuccessMessage);
-        verifyOtpButton.textContent = "Verified!";
-        verifyOtpButton.disabled = true;
-        verifyOtpButton.classList.add("bg-green-500", "cursor-not-allowed");
-        otpErrorMessage.classList.add('hidden'); // Hide error message if OTP is correct
-      } else {
-        // Show error message if OTP is incorrect
-        otpErrorMessage.classList.remove('hidden');
-      }
-    });
-
-    // Interactive feedback on OTP field
-    otpField.addEventListener("input", function () {
-      if (otpField.value.length === 4) {
-        verifyOtpButton.classList.add("bg-green-500");
-        verifyOtpButton.textContent = "Verify";
-      } else {
-        verifyOtpButton.classList.remove("bg-green-500");
-        verifyOtpButton.textContent = "Verify OTP";
-      }
-    });
-  });
+		
+		// Interactive feedback on OTP field
+		otpField.addEventListener("input", function() {
+			if (otpField.value.length === 4) {
+				otpSection.classList.remove("grayscale");
+				verifyOtpButton.classList.add("bg-green-500");
+				verifyOtpButton.textContent = "Verify";
+			} else {
+				verifyOtpButton.classList.remove("bg-green-500");
+				verifyOtpButton.textContent = "Verify OTP";
+			}
+		});
+  	});
 </script>
 
 

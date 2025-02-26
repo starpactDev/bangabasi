@@ -74,11 +74,15 @@
 					<span class="px-2 py-1 border border-orange-600 text-white rounded mr-4 animate-blink">New!</span>Don't have a GSTIN or have a Composition GSTIN?
 					<br />You can still sell on Bangabasi. Click <a href="" class="text-orange-600 hover:text-orange-500 font-semibold">here</a> to know more.
 				</p>
-				<div class="my-6 w-fit border rounded-md overflow-hidden bg-white">
-					<span class="px-2 ">+91</span>
-					<input type="tel" name="phone" id="" placeholder="Enter Your Mobile Number" class="leading-10 px-4 focus:outline-none">
-					<button class="bg-orange-600 text-white px-4 py-2  hover:bg-orange-700">Start Selling</button>
-				</div>
+				<form action="{{ route('seller.phone.submit') }}" method="POST">
+					@csrf
+					<div class="my-6 w-fit border rounded-md overflow-hidden bg-white">
+						<span class="px-2 ">+91</span>
+						<input type="tel" name="phone" placeholder="Enter Your Mobile Number" class="leading-10 px-4 focus:outline-none">
+						<button type="submit" class="bg-orange-600 text-white px-4 py-2 hover:bg-orange-700"> Start Selling </button>
+					</div>
+				</form>
+				
 			</div>
 			<div class="col-span-12 lg:col-span-6  h-96  order-1 lg:order-2 relative">
 				<img src="{{ asset('user/uploads/seller/bangabasi_growth.png') }}" alt="">

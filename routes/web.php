@@ -60,6 +60,50 @@ use App\Http\Controllers\SuperUser\SuperUserProductController;
 use App\Http\Controllers\Backend\AdminProductSectionController;
 use App\Http\Controllers\Frontend\SellerController as FrontendSellerController;
 
+
+//Seller Routes
+Route::get('/seller', function () {
+    return view('seller.index');
+})->name('seller_index');
+
+Route::get('/seller/registration', function(){
+    return view('seller.registration');
+})->name('seller_registration');
+
+Route::get('/seller/login', function(){return view('seller.login');})->name('seller_login');
+Route::post('seller/login', [SellerController::class, 'loginSeller'])->name('seller_login_submit');
+Route::post('/seller/register', [SellerController::class, 'register'])->name('seller.register');
+
+Route::post('/seller/phone-submit', [SellerController::class, 'processPhoneNumber'])->name('seller.phone.submit');
+
+
+Route::get('seller/gstverification', [SellerController::class, 'gstverification'])->name('seller_gstverification');
+Route::post('seller/gstverify', [SellerController::class, 'submitGstDetails'])->name('seller_gstverify');
+
+Route::get('seller/pickupverification', [SellerController::class, 'showPickupVerification'])->name('seller_pickupverification');
+Route::post('seller/pickupverification', [SellerController::class, 'submitPickupAddress'])->name('seller_pickup_submit');
+
+Route::get('seller/bankverification', [SellerController::class, 'showBankVerificationPage'])->name('seller_bankverification');
+Route::post('seller/bankverification', [SellerController::class, 'submitBankDetails'])->name('seller_bankverify');
+
+Route::get('seller/sellerverification', [SellerController::class, 'sellerVerification'])->name('seller_sellerverification');
+Route::post('seller/details', [SellerController::class, 'storeSellerDetails'])->name('seller_verify');
+
+
+    Route::get('seller/success', function(){
+        return view('seller.success');
+    })->name('seller_success');
+
+Route::group(['middleware' =>  [SellerMiddleware::class]], function () {
+
+
+    Route::get('seller/dashboard', [SellerDashboardController::class, 'dashboard'])->name('seller_dashboard');
+    Route::get('/seller/transaction', [SellerOrderController::class, 'transaction'])->name('seller_transaction');
+
+    Route::get('seller/logout', [SellerController::class, 'logout'])->name('seller_logout');
+});
+
+
 //For testing
 Route::get('/home', function () {
     return view('test.home');
@@ -369,38 +413,7 @@ Route::group(['middleware' =>  [AdminCheckMiddleware::class]], function () {
 //Seler Pages
 
 
-Route::get('/seller', function () {return view('seller.index');})->name('seller_index');
-Route::get('/seller/registration', function(){return view('seller.registration');})->name('seller_registration');
 
-Route::get('/seller/login', function(){return view('seller.login');})->name('seller_login');
-Route::post('seller/login', [SellerController::class, 'loginSeller'])->name('seller_login_submit');
-Route::post('/seller/register', [SellerController::class, 'register'])->name('seller.register');
-
-Route::get('seller/gstverification', [SellerController::class, 'gstverification'])->name('seller_gstverification');
-Route::post('seller/gstverify', [SellerController::class, 'submitGstDetails'])->name('seller_gstverify');
-
-Route::get('seller/pickupverification', [SellerController::class, 'showPickupVerification'])->name('seller_pickupverification');
-Route::post('seller/pickupverification', [SellerController::class, 'submitPickupAddress'])->name('seller_pickup_submit');
-
-Route::get('seller/bankverification', [SellerController::class, 'showBankVerificationPage'])->name('seller_bankverification');
-Route::post('seller/bankverification', [SellerController::class, 'submitBankDetails'])->name('seller_bankverify');
-
-Route::get('seller/sellerverification', [SellerController::class, 'sellerVerification'])->name('seller_sellerverification');
-Route::post('seller/details', [SellerController::class, 'storeSellerDetails'])->name('seller_verify');
-
-
-    Route::get('seller/success', function(){
-        return view('seller.success');
-    })->name('seller_success');
-
-Route::group(['middleware' =>  [SellerMiddleware::class]], function () {
-
-
-    Route::get('seller/dashboard', [SellerDashboardController::class, 'dashboard'])->name('seller_dashboard');
-    Route::get('/seller/transaction', [SellerOrderController::class, 'transaction'])->name('seller_transaction');
-
-    Route::get('seller/logout', [SellerController::class, 'logout'])->name('seller_logout');
-});
 
 
 //SuperUser Routes

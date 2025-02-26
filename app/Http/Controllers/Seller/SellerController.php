@@ -49,6 +49,19 @@ class SellerController extends Controller
         return redirect()->route('seller_dashboard')->with('success', 'Welcome back!');
     }
 
+    public function processPhoneNumber(Request $request)
+    {
+        $request->validate([
+            'phone' => 'required|digits:10',
+        ]);
+
+        // Store phone number in session (or database if needed)
+        session(['phone_number' => $request->phone, 'otp_sent' => true]);
+
+        // Redirect to the registration page
+        return redirect()->route('seller_registration');
+    }
+
 
     public function register(Request $request)
     {
@@ -103,6 +116,7 @@ class SellerController extends Controller
         session(['user_id' => $user->id]);
         // Log the user in
         Auth::login($user);
+        session()->forget(['otp_sent', 'phone_number']);
 
         // Redirect with success message
         return redirect()->route('seller_gstverification')->with('success', 'Registration successful!');
