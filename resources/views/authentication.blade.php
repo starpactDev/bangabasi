@@ -134,6 +134,7 @@
                     @csrf
                     <h2 class="w-full text-lg font-medium border-b-2 py-2 hover:text-orange-500 mb-2">
                         <span class="border-b-4 border-orange-500 px-4 py-2">Forgot Password?</span>
+                        
                     </h2>
                     <p class="text-sm text-neutral-700 mt-2 mb-4">Enter the email address associated with your account</p>
                     <div class="w-fit border leading-10 rounded">
