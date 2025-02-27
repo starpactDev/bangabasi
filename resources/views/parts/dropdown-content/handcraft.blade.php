@@ -21,31 +21,29 @@
 
                 <div class=" relative w-2/7  hover:cursor-pointer p-holder">
                     <div class="text-xl font-bold text-black  pl-2">
-                       Handcrafts
+                       <a href="{{ route('user.products' , ['category' => 4]) }}">Handcrafts</a>
                     </div>
 
                     <div class="menu-item1 mt-6">
-                        Holy Jewellery
+                        <a href="{{ route('user.products' , ['category' => 4]) }}">Holy Jewellery</a>
                         <div class="bottom-b"></div>
                     </div>
 
                     <div class="menu-item1">
-                       Handmade
+                       <a href="{{ route('user.products' , ['category' => 4]) }}">Handmade</a>
                         <div class="bottom-b"></div>
                     </div>
 
                     <div class="menu-item1">
-                        Special
+                        <a href="{{ route('user.products' , ['category' => 4]) }}">Special</a>
                         <div class="bottom-b"></div>
                     </div>
 
                 </div>                
 
                 <div class=" relative w-2/7 border h-[340px] shadow-lg  hover:cursor-pointer p-holder">
-                    <img src="{{ asset('images/site-images/home_decor.png') }}" class="h-full w-full p-image "
-                        alt="mens product">
-                    <div
-                        class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text white z-10 w-full bg-white py-4 text-center bg-opacity-80">
+                    <img src="{{ asset('images/site-images/home_decor.png') }}" class="h-full w-full p-image " alt="mens product">
+                    <div class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text white z-10 w-full bg-white py-4 text-center bg-opacity-80">
                         <div class="text-lg font-bold text-black">
                             {{$headerData['secondRow']['handCrafts']['bannerTwo']['head']}}
                         </div>

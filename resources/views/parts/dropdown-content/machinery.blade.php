@@ -10,7 +10,7 @@
                 @endphp
                 <div class=" relative w-1/4 h-[360px] hover:cursor-pointer p-holder">
                     <img src="{{ asset('user/uploads/header/'.$headerData['secondRow']['machinery']['bannerOne']['image']) }}" class="h-full w-full p-image" alt="mens product">
-                    <div class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text white z-10 w-[115%] bg-white py-4 text-center bg-opacity-80">
+                    <a href="{{ $headerData['secondRow']['machinery']['bannerOne']['redirect'] }}" class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text white z-10 w-[115%] bg-white py-4 text-center bg-opacity-80">
                         <div class="text-lg font-bold text-black">
                             {{$subCategories[0]->name}}
                         </div>
@@ -27,13 +27,12 @@
                                 {{$count_product}} products available
                             @endif
                         </div>
-                    </div>
+                    </a>
                 </div>
 
                 <div class=" relative w-1/4 h-[360px] hover:cursor-pointer p-holder">
                     <img src="{{ asset('user/uploads/header/'.$headerData['secondRow']['machinery']['bannerTwo']['image']) }}" class="h-full w-full p-image" alt="mens product">
-                    <div
-                        class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text white z-10 w-[115%] bg-white py-4 text-center bg-opacity-80">
+                    <a href="{{ $headerData['secondRow']['machinery']['bannerTwo']['redirect'] }}" class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text white z-10 w-[115%] bg-white py-4 text-center bg-opacity-80">
                         <div class="text-lg font-bold text-black">
                             {{$subCategories[1]->name}}
                         </div>
@@ -50,12 +49,12 @@
                                 {{$count_product}} products available
                             @endif
                         </div>
-                    </div>
+                    </a>
                 </div>
 
                 <div class=" relative w-1/4 h-[360px] hover:cursor-pointer p-holder">
                     <img src="{{ asset('user/uploads/header/'.$headerData['secondRow']['machinery']['bannerThree']['image'] ) }}" class="h-full w-full p-image" alt="mens product">
-                    <div class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text white z-10 w-[115%] bg-white py-4 text-center bg-opacity-80">
+                    <a href="{{ $headerData['secondRow']['machinery']['bannerThree']['redirect'] }}" class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text white z-10 w-[115%] bg-white py-4 text-center bg-opacity-80">
                         <div class="text-lg font-bold text-black">
                             {{$subCategories[2]->name}}
                         </div>
@@ -72,12 +71,12 @@
                                 {{$count_product}} products available
                             @endif
                         </div>
-                    </div>
+                    </a>
                 </div>
 
                 <div class=" relative w-1/4 h-[360px] hover:cursor-pointer p-holder">
                     <img src="{{ asset('user/uploads/header/'.$headerData['secondRow']['machinery']['bannerFour']['image']) }}" class="h-full w-full p-image" alt="mens product">
-                    <div class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text white z-10 w-[115%] bg-white py-4 text-center bg-opacity-80">
+                    <a href="{{ $headerData['secondRow']['machinery']['bannerFour']['redirect'] }}" class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text white z-10 w-[115%] bg-white py-4 text-center bg-opacity-80">
                         <div class="text-lg font-bold text-black">
                             {{$subCategories[2]->name}}
                         </div>
@@ -94,7 +93,7 @@
                                 {{$count_product}} products available
                             @endif
                         </div>
-                    </div>
+                    </a>
                 </div>
 
             </div>

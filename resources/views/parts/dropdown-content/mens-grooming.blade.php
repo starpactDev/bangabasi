@@ -20,26 +20,26 @@
 
                     <div class=" relative w-1/3 h-[280px] hover:cursor-pointer p-holder">
                         <div class="text-xl text-black font-bold pl-2">
-                           Grooming
+                           <a href="{{ route('user.products', ['category' => 5])}}">Grooming</a>
                         </div>
 
                         <div class="menu-item1 mt-6">
-                            Dark to Bright
+                            <a href="{{ route('user.products', ['category' => 5])}}">Dark to Bright</a>
                             <div class="bottom-b"></div>
                         </div>
     
                         <div class="menu-item1 ">
-                            Poor to Rich
+                            <a href="{{ route('user.products', ['category' => 5])}}">Poor to Rich</a>
                             <div class="bottom-b"></div>
                         </div>
     
                         <div class="menu-item1">
-                            Loafers to Proffessionals
+                            <a href="{{ route('user.products', ['category' => 5])}}">Loafers to Proffessionals</a>
                             <div class="bottom-b"></div>
                         </div>
     
                         <div class="menu-item1">
-                            Gift Items
+                            <a href="{{ route('user.products', ['category' => 5])}}">Gift Items</a>
                             <div class="bottom-b"></div>
                         </div>
     
@@ -50,7 +50,6 @@
                         <div class="absolute bottom-0  left-1/2 -translate-x-1/2  text white z-10 w-[105%] bg-white py-4 text-center bg-opacity-80">
                             <div class="text-lg font-bold text-black">
                                 <a href="{{$headerData['secondRow']['comboOffer']['bannerTwo']['redirect']}}">{{$headerData['secondRow']['comboOffer']['bannerOne']['head']}}</a>
-                               
                             </div>
                         </div>
                     </div>                   

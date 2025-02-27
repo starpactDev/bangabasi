@@ -23,10 +23,10 @@
                         @endforeach
                     </div>
                     @if(count($subCategories) < 4) 
-                        <button class="px-6 py-2 border hover:bg-neutral-100"><i class="fa fa-envelope px-4 text-lg"></i>Mail Us</button>
+                        <a href="mailto:info.bangabasi@gmail.com" class="block text-center px-6 py-2 border hover:bg-neutral-100"><i class="fa fa-envelope px-4 text-lg"></i>Mail Us</a>
                     @endif
                     @if(count($subCategories) < 5) 
-                        <button class="px-6 py-2 border hover:bg-neutral-100"><i class="fa fa-phone px-4 text-lg"></i>Call Us</button>
+                        <a href="tel:+919476168391" class="block text-center px-6 py-2 border hover:bg-neutral-100"><i class="fa fa-phone px-4 text-lg"></i>Call Us</a>
                     @endif
                 </div>
 
@@ -34,29 +34,22 @@
                     <div class=" relative w-5/12 border h-[280px] hover:cursor-pointer p-holder">
                         <img src="{{ asset('user/uploads/header/' . $headerData['secondRow']['electronics']['bannerOne']['image']) }}" class="h-full w-full p-image" alt="mens product">
                         <div class="absolute  bottom-0  left-1/2 -translate-x-1/2 text white z-10 w-[110%] bg-white py-4 text-center bg-opacity-80">
-                            <div class="text-lg font-bold text-black">
-                                {{$subCategories[0]->name}}
-                            </div>
+                            <a href="{{$headerData['secondRow']['electronics']['bannerOne']['redirect']}}" class="text-lg font-bold text-black">{{$subCategories[0]->name}}</a>
 
                         </div>
                     </div>
 
                     <div class=" relative w-1/3  h-[280px] overflow-hidden hover:cursor-pointer p-holder">
-                        <img src="{{ asset('user/uploads/header/' . $headerData['secondRow']['electronics']['bannerTwo']['image']) }}" class="h-full  p-image "
-                            alt="mens product">
+                        <img src="{{ asset('user/uploads/header/' . $headerData['secondRow']['electronics']['bannerTwo']['image']) }}" class="h-full  p-image " alt="mens product">
                         <div class="absolute bottom-0  left-1/2 -translate-x-1/2 z-10 w-[110%] bg-white py-4 text-center bg-opacity-80">
-                            <div class="text-lg font-bold text-black">
-                                {{$subCategories[1]->name}}
-                            </div>
+                            <a href="{{$headerData['secondRow']['electronics']['bannerTwo']['redirect']}}" class="text-lg font-bold text-black">{{$subCategories[1]->name}}</a>
                         </div>
                     </div>                   
     
                     <div class=" relative w-1/3 border h-[280px] hover:cursor-pointer p-holder">
                         <img src="{{ asset('user/uploads/header/' . $headerData['secondRow']['electronics']['bannerThree']['image']) }}" class="h-full w-full p-image " alt="mens product">
                         <div class="absolute bottom-0 left-1/2 -translate-x-1/2 z-10 w-full bg-white py-4 text-center bg-opacity-80">
-                            <div class="text-lg font-bold text-black">
-                                {{$subCategories[2]->name}}
-                            </div>
+                            <a href="{{$headerData['secondRow']['electronics']['bannerThree']['redirect']}}" class="text-lg font-bold text-black">{{$subCategories[2]->name}}</a>
                         </div>
                     </div>
                 </div>

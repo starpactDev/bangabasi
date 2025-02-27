@@ -136,7 +136,7 @@ $products = $subCategories;
         <div class="w-full hidden lg:flex justify-between">
             <div id="all_categories" class="md:w-auto dropdown ">
                 <i class="fa-solid fa-layer-group"></i>
-                <span class="font-bold text-md pl-2"> All Catgories </span>
+                <span class="font-bold text-md pl-2"> All Categories </span>
                 <span>
                     <i class="fa-solid fa-angle-down"></i>
                 </span>

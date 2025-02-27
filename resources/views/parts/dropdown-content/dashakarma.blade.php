@@ -5,7 +5,7 @@
                 <!-- Dynamic Image -->
                 <img src="{{ asset('user/uploads/header/' . $sticker['image']) }}" class="w-18">
                 <!-- Dynamic Subcategory Name -->
-                <div>{{ $sticker['subCategory'] }}</div>
+                <a href="{{ $sticker['redirect'] }}">{{ $sticker['subCategory'] }}</a>
             </div>
         @endforeach
     </div>

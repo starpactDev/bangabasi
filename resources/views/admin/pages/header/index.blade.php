@@ -28,6 +28,7 @@
 						@php
 							$image = $header['secondRow']['clothing']['stickerOne']['image'];
 							$subCategory = $header['secondRow']['clothing']['stickerOne']['subCategory'];
+							$redirect = $header['secondRow']['clothing']['stickerOne']['redirect'];
 						@endphp
 						<form class="form-submit card bg-light p-4" method="POST" enctype="multipart/form-data" action="{{ route('admin.header.update') }}" >
 							<h4 class="pb-4"> Clothing Sticker One </h4>
@@ -46,7 +47,10 @@
 								<label for="head" class="form-label py-2">Head</label>
 								<input type="text" name="clothing.stickerOne.subCategory" id="head" value="{{$subCategory}}" class="form-control" placeholder="Enter head">
 							</div>
-						
+							<div class="py-2">
+								<label for="redirect" class="form-label py-2">Redirect</label>
+								<input type="text" name="clothing.stickerOne.redirect" id="redirect" value="{{$redirect}}" class="form-control" placeholder="Enter head">
+							</div>
 						
 							<div class="py-2">
 								<button type="submit" class="btn btn-primary submit-button">Save</button>
@@ -60,6 +64,7 @@
 						@php
 							$image = $header['secondRow']['clothing']['stickerTwo']['image'];
 							$subCategory = $header['secondRow']['clothing']['stickerTwo']['subCategory'];
+							$redirect = $header['secondRow']['clothing']['stickerTwo']['redirect'];
 						@endphp
 						<form class="form-submit card bg-light p-4" method="POST" enctype="multipart/form-data" action="{{ route('admin.header.update') }}" >
 							<h4 class="pb-4"> Clothing Sticker Two </h4>
@@ -76,6 +81,10 @@
 								<input type="text" name="clothing.stickerTwo.subCategory" id="head" value="{{$subCategory}}" class="form-control" placeholder="Enter head">
 							</div>
 							<div class="py-2">
+								<label for="redirect" class="form-label py-2">Head</label>
+								<input type="text" name="clothing.stickerTwo.redirect" id="redirect" value="{{$redirect}}" class="form-control" placeholder="Enter Redirect Link">
+							</div>
+							<div class="py-2">
 								<button type="submit" class="btn btn-primary submit-button">Save</button>
 							</div>
 						</form>
@@ -86,6 +95,7 @@
 						@php
 							$image = $header['secondRow']['clothing']['stickerThree']['image'];
 							$subCategory = $header['secondRow']['clothing']['stickerThree']['subCategory'];
+							$redirect = $header['secondRow']['clothing']['stickerThree']['redirect'];
 						@endphp
 						<form class="form-submit card bg-light p-4" method="POST" enctype="multipart/form-data" action="{{ route('admin.header.update') }}" >
 							<h4 class="pb-4"> Clothing Sticker Three </h4>
@@ -102,6 +112,11 @@
 								<input type="text" name="clothing.stickerThree.subCategory" id="head" value="{{$subCategory}}" class="form-control" placeholder="Enter head">
 							</div>
 							<div class="py-2">
+								<label for="redirect" class="form-label py-2">Redirect</label>
+								<input type="text" name="clothing.stickerThree.redirect" id="redirect" value="{{$redirect}}" class="form-control" placeholder="Enter redirect link">
+							</div>
+							
+							<div class="py-2">
 								<button type="submit" class="btn btn-primary submit-button">Save</button>
 							</div>
 						</form>
@@ -112,6 +127,7 @@
 						@php
 							$image = $header['secondRow']['clothing']['stickerFour']['image'];
 							$subCategory = $header['secondRow']['clothing']['stickerFour']['subCategory'];
+							$redirect = $header['secondRow']['clothing']['stickerFour']['redirect'];
 						@endphp
 						<form class="form-submit card bg-light p-4" method="POST" enctype="multipart/form-data" action="{{ route('admin.header.update') }}" >
 							<h4 class="pb-4"> Clothing Sticker Four </h4>
@@ -128,6 +144,10 @@
 								<input type="text" name="clothing.stickerFour.subCategory" id="head" value="{{$subCategory}}" class="form-control" placeholder="Enter head">
 							</div>
 							<div class="py-2">
+								<label for="redirect" class="form-label py-2">Redirect</label>
+								<input type="text" name="clothing.stickerFour.redirect" id="redirect" value="{{$redirect}}" class="form-control" placeholder="Enter redirect link">
+							</div>
+							<div class="py-2">
 								<button type="submit" class="btn btn-primary submit-button">Save</button>
 							</div>
 						</form>
@@ -138,6 +158,7 @@
 						@php
 							$image = $header['secondRow']['clothing']['stickerFive']['image'];
 							$subCategory = $header['secondRow']['clothing']['stickerFive']['subCategory'];
+							$redirect = $header['secondRow']['clothing']['stickerFive']['redirect'];
 						@endphp
 						<form class="form-submit card bg-light p-4" method="POST" enctype="multipart/form-data" action="{{ route('admin.header.update') }}" >
 							<h4 class="pb-4"> Clothing Sticker Five </h4>
@@ -154,6 +175,10 @@
 								<input type="text" name="clothing.stickerFive.subCategory" id="head" value="{{$subCategory}}" class="form-control" placeholder="Enter head">
 							</div>
 							<div class="py-2">
+								<label for="redirect" class="form-label py-2">Redirect</label>
+								<input type="text" name="clothing.stickerFive.redirect" id="redirect" value="{{$redirect}}" class="form-control" placeholder="Enter redirect link">
+							</div>
+							<div class="py-2">
 								<button type="submit" class="btn btn-primary submit-button">Save</button>
 							</div>
 						</form>
@@ -164,6 +189,7 @@
 						@php
 							$image = $header['secondRow']['clothing']['stickerSix']['image'];
 							$subCategory = $header['secondRow']['clothing']['stickerSix']['subCategory'];
+							$redirect = $header['secondRow']['clothing']['stickerSix']['redirect'];
 						@endphp
 						<form class="form-submit card bg-light p-4" method="POST" enctype="multipart/form-data" action="{{ route('admin.header.update') }}" >
 							<h4 class="pb-4"> Clothing Sticker Six </h4>
@@ -178,6 +204,10 @@
 							<div class="py-2">
 								<label for="head" class="form-label py-2">Head</label>
 								<input type="text" name="clothing.stickerSix.subCategory" id="head" value="{{$subCategory}}" class="form-control" placeholder="Enter head">
+							</div>
+							<div class="py-2">
+								<label for="redirect" class="form-label py-2">Redirect</label>
+								<input type="text" name="clothing.stickerSix.redirect" id="redirect" value="{{$redirect}}" class="form-control" placeholder="Enter redirect link">
 							</div>
 							<div class="py-2">
 								<button type="submit" class="btn btn-primary submit-button">Save</button>
@@ -300,6 +330,7 @@
 						@php
 							$image = $header['secondRow']['dashaKarma']['stickerOne']['image'];
 							$subCategory = $header['secondRow']['dashaKarma']['stickerOne']['subCategory'];
+							$redirect = $header['secondRow']['dashaKarma']['stickerOne']['redirect'];
 						@endphp
 						<form class="form-submit card bg-light p-4" method="POST" enctype="multipart/form-data" action="{{ route('admin.header.update') }}" >
 							<h4 class="pb-4"> Dasha Karma Sticker One </h4>
@@ -319,6 +350,10 @@
 								<input type="text" name="dashaKarma.stickerOne.subCategory" id="head" value="{{$subCategory}}" class="form-control" placeholder="Enter head">
 							</div>
 							<div class="py-2">
+								<label for="redirect" class="form-label py-2">Redirect</label>
+								<input type="text" name="dashaKarma.stickerOne.redirect" id="redirect" value="{{$redirect}}" class="form-control" placeholder="Enter redirect link">
+							</div>
+							<div class="py-2">
 								<button type="submit" class="btn btn-primary submit-button">Save</button>
 							</div>
 						</form>
@@ -329,6 +364,7 @@
 						@php
 							$image = $header['secondRow']['dashaKarma']['stickerTwo']['image'];
 							$subCategory = $header['secondRow']['dashaKarma']['stickerTwo']['subCategory'];
+							$redirect = $header['secondRow']['dashaKarma']['stickerTwo']['redirect'];
 						@endphp
 						<form class="form-submit card bg-light p-4" method="POST" enctype="multipart/form-data" action="{{ route('admin.header.update') }}" >
 							<h4 class="pb-4"> Dasha Karma Sticker Two </h4>
@@ -345,6 +381,10 @@
 								<input type="text" name="dashaKarma.stickerTwo.subCategory" id="head" value="{{$subCategory}}" class="form-control" placeholder="Enter head">
 							</div>
 							<div class="py-2">
+								<label for="redirect" class="form-label py-2">Redirect</label>
+								<input type="text" name="dashaKarma.stickerTwo.redirect" id="redirect" value="{{$redirect}}" class="form-control" placeholder="Enter redirect link">
+							</div>
+							<div class="py-2">
 								<button type="submit" class="btn btn-primary submit-button">Save</button>
 							</div>
 						</form>
@@ -355,6 +395,7 @@
 						@php
 							$image = $header['secondRow']['dashaKarma']['stickerThree']['image'];
 							$subCategory = $header['secondRow']['dashaKarma']['stickerThree']['subCategory'];
+							$redirect = $header['secondRow']['dashaKarma']['stickerThree']['redirect'];
 						@endphp
 						<form class="form-submit card bg-light p-4" method="POST" enctype="multipart/form-data" action="{{ route('admin.header.update') }}" >
 							<h4 class="pb-4"> Dasha Karma Sticker Three </h4>
@@ -371,6 +412,10 @@
 								<input type="text" name="dashaKarma.stickerThree.subCategory" id="head" value="{{$subCategory}}" class="form-control" placeholder="Enter head">
 							</div>
 							<div class="py-2">
+								<label for="redirect" class="form-label py-2">Redirect</label>
+								<input type="text" name="dashaKarma.stickerThree.redirect" id="redirect" value="{{$redirect}}" class="form-control" placeholder="Enter redirect link">
+							</div>
+							<div class="py-2">
 								<button type="submit" class="btn btn-primary submit-button">Save</button>
 							</div>
 						</form>
@@ -381,6 +426,7 @@
 						@php
 							$image = $header['secondRow']['dashaKarma']['stickerFour']['image'];
 							$subCategory = $header['secondRow']['dashaKarma']['stickerFour']['subCategory'];
+							$redirect = $header['secondRow']['dashaKarma']['stickerFour']['redirect'];
 						@endphp
 						<form class="form-submit card bg-light p-4" method="POST" enctype="multipart/form-data" action="{{ route('admin.header.update') }}" >
 							<h4 class="pb-4"> Dasha Karma Sticker Four </h4>
@@ -395,6 +441,10 @@
 							<div class="py-2">
 								<label for="head" class="form-label py-2">Head</label>
 								<input type="text" name="dashaKarma.stickerFour.subCategory" id="head" value="{{$subCategory}}" class="form-control" placeholder="Enter head">
+							</div>
+							<div class="py-2">
+								<label for="redirect" class="form-label py-2">Redirect</label>
+								<input type="text" name="dashaKarma.stickerFour.redirect" id="redirect" value="{{$redirect}}" class="form-control" placeholder="Enter redirect link">
 							</div>
 							<div class="py-2">
 								<button type="submit" class="btn btn-primary submit-button">Save</button>
