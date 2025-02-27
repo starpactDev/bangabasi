@@ -555,7 +555,7 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    authReset.innerHTML = '<p class="text-green-600 text-center">Password has been successfully reset. You can now log in.</p>';
+                    authReset.innerHTML = '<p class="text-green-600 text-center">Password has been successfully reset. You can now <a href="{{route('login')}}">log in</a>.</p>';
                 } else {
                     let errorMessage = document.getElementById('password-error');
                     if (errorMessage) {
