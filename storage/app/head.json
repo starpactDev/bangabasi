@@ -1,0 +1,153 @@
+{
+    "secondRow": {
+        "clothing": {
+            "stickerOne": {
+                "subCategory": "Men Edited",
+                "image": "male-clothes.png",
+                "redirect": "\/status"
+            },
+            "stickerTwo": {
+                "subCategory": "Women Edited Twice",
+                "image": "woman-clothes.png",
+                "redirect": "\/"
+            },
+            "stickerThree": {
+                "subCategory": "Gopa's Wordrob",
+                "image": "krishna.png",
+                "redirect": "\/"
+            },
+            "stickerFour": {
+                "subCategory": "Kids",
+                "image": "clothes.png",
+                "redirect": "\/"
+            },
+            "stickerFive": {
+                "subCategory": "Tulsi Mala Products",
+                "image": "radha.png",
+                "redirect": "\/"
+            },
+            "stickerSix": {
+                "subCategory": "Tailoring",
+                "image": "sewing.png",
+                "redirect": "\/"
+            }
+        },
+        "foodItem": {
+            "stickerOne": {
+                "subCategory": "Food Items",
+                "image": "food_items.png"
+            },
+            "stickerTwo": {
+                "subCategory": "Muri",
+                "image": "muri.png"
+            },
+            "stickerThree": {
+                "subCategory": "Bakery",
+                "image": "bakery.png"
+            },
+            "stickerFour": {
+                "subCategory": "Ekadashi special",
+                "image": "ekadashi.png"
+            }
+        },
+        "dashaKarma": {
+            "stickerOne": {
+                "subCategory": "Dashakarma",
+                "image": "dashakarma.png",
+                "redirect": "\/status"
+            },
+            "stickerTwo": {
+                "subCategory": "Dashakarma",
+                "image": "puja_samogri.png",
+                "redirect": "\/"
+            },
+            "stickerThree": {
+                "subCategory": "Dashakarma",
+                "image": "puja_thali.png",
+                "redirect": "\/"
+            },
+            "stickerFour": {
+                "subCategory": "Dashakarma",
+                "image": "holy_idols.png",
+                "redirect": "\/"
+            }
+        },
+        "handCrafts": {
+            "bannerOne": {
+                "image": "handcrafts.png",
+                "head": "Traditional Handcrafts",
+                "button": "Show More",
+                "redirect": "\/"
+            },
+            "bannerTwo": {
+                "image": "home_decor.png",
+                "head": "Home Decoration Items",
+                "button": "Show More",
+                "redirect": "\/"
+            }
+        },
+        "comboOffer": {
+            "bannerOne": {
+                "image": "men_grooming.png",
+                "head": "Men's Grooming Kit",
+                "button": "Show More",
+                "redirect": "\/"
+            },
+            "bannerTwo": {
+                "image": "gym_2.png",
+                "head": "Fitness Equipment",
+                "button": "Show More",
+                "redirect": "\/status"
+            },
+            "bannerThree": {
+                "image": "gym_3.png",
+                "head": "Gym Accessories",
+                "button": "Show More",
+                "redirect": "\/"
+            }
+        },
+        "machinery": {
+            "bannerOne": {
+                "image": "machinery_01.jpg",
+                "head": "Industrial Machinery",
+                "button": "Show More",
+                "redirect": "\/"
+            },
+            "bannerTwo": {
+                "image": "machinery_02.jpg",
+                "head": "Agricultural Tools",
+                "button": "Show More",
+                "redirect": "\/"
+            },
+            "bannerThree": {
+                "image": "machinery_03.jpg",
+                "head": "Construction Equipment",
+                "button": "Show More",
+                "redirect": "\/"
+            },
+            "bannerFour": {
+                "image": "machinery_04.jpg",
+                "head": "Workshop Tools",
+                "button": "Show More",
+                "redirect": "\/status"
+            }
+        },
+        "electronics": {
+            "bannerOne": {
+                "image": "elec_1.jpg",
+                "head": "Home Appliances",
+                "redirect": "\/"
+            },
+            "bannerTwo": {
+                "image": "elec_2.jpg",
+                "head": "Kitchen Electronics",
+                "redirect": "\/"
+            },
+            "bannerThree": {
+                "image": "elec_3.jpg",
+                "head": "Smart Devices",
+                "redirect": "\/status"
+            }
+        }
+    }
+}

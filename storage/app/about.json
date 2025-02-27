@@ -1,0 +1,100 @@
+{
+    "breadcrumb": {
+        "image": "Bangabasi_Team.png",
+        "head": "About Us | Bangabasi",
+        "description": "Bengali culture, a vibrant blend of art, music, literature, and cuisine, is celebrated both at home and abroad."
+    },
+    "stories": {
+        "image1": "mens_fashion.jpg",
+        "image2": "clothes_wide.png",
+        "image3": "bb_team.jpg",
+        "image4": "bb_team_2.jpg",
+        "image5": "bb_art.png",
+        "image6": "bb_together.jpg",
+        "image7": "bb_glass.jpg",
+        "image8": "bb_team_3.jpg"
+    },
+    "founder": {
+        "name": "Arnal Das Edited",
+        "role": "Founder of Bangabasi",
+        "image": "teammate_1.jpg",
+        "story1": "Arnal Das is a visionary CAD and 3D Graphic Designer with a passion for elevating Bengali culture through design. With expertise in product design, photography, cinematography, and website management, Arnal brings both creative and technical strengths to Bangabasi. His work experience includes senior design roles Torrent Natural Gas. and Flourish Innovative Pvt. Ltd., where he managed high-impact projects and created over 2,000 designs.",
+        "story2": "Arnal's mission extends beyond design\u2014he is dedicated to creating employment opportunities in West Bengal and bringing global recognition to Bengali handicrafts and artisans. By 2033, he aims to elevate West Bengal's handicrafts industry to new heights, establishing Bengali artistry as a globally admired and accessible cultural treasure."
+    },
+    "member1": {
+        "name": "Arjun",
+        "role": "Team Management",
+        "image": "teammate_2.jpg",
+        "story": "The mighty force behind our team, Arjun leads with the strength and tenacity of Bheem, ensuring every project is organized and every goal met with excellence."
+    },
+    "member2": {
+        "name": "Ari",
+        "role": "Strategy Creation",
+        "image": "teammate_3.jpg",
+        "story": "As our strategic visionary, Ari channels the warrior spirit of Arjun, crafting game-changing plans that keep us ahead and aligned with Bangabasi\u2019s mission."
+    },
+    "member3": {
+        "name": "Subhojit Edited",
+        "role": "Developer",
+        "image": "teammate_4.jpg",
+        "story": "Our tech wizard, Subhojit embodies Sahadeb\u2019s intelligence and skill, bringing Bangabasi\u2019s digital experience to life with flawless functionality and innovation."
+    },
+    "member4": {
+        "name": "Susmita",
+        "role": "Sales & Marketing",
+        "image": "teammate_6.jpg",
+        "story": "The charm and energy of Nakul flow through Susmita, who leads our sales and marketing efforts, connecting Bangabasi with audiences across the globe."
+    },
+    "member5": {
+        "name": "Yash",
+        "role": "System Creation",
+        "image": "teammate_5.jpg",
+        "story": "With wisdom and integrity reminiscent of Yudhisthir, Yash meticulously designs systems and processes that form the backbone of our operations, keeping everything running smoothly."
+    },
+    "ourStory": {
+        "head": "Connecting Bengal's Artisans to the World",
+        "image": "statue_1.jpg",
+        "text1": "Bengali culture, a vibrant blend of art, music, literature, and cuisine, is celebrated both at home and abroad. From Kolkata\u2019s lively streets to Darjeeling\u2019s tranquil hills, each region contributes to Bengal's unique identity. For 'probasi Bangalis' (Bengalis living outside Bengal), staying connected to this heritage can be a challenge, with limited access to authentic products from home. Yet, we\u2019ve found that Bengal\u2019s crafts are not only in demand among Bengalis but are also highly valued by people worldwide who admire our artistry. This collective nostalgia and global interest inspired us to create Bangabasi.com, a virtual gateway to Bengal\u2019s finest offerings. Our mission is to make the crafts, food, apparel, and more of West Bengal accessible to anyone, anywhere. Working directly with artisans and distributors, we ensure premium quality while providing a huge opportunity for Bengal\u2019s talented handicraft artists to share their creations with a global audience. Now, the spirit of Bengal and the rich tradition of its artisans are just a click away, bringing a touch of home and cultural heritage to admirers everywhere.",
+        "text2": "This collective nostalgia and global interest inspired us to create Bangabasi.com, a virtual gateway to Bengal\u2019s finest offerings. Our mission is to make the crafts, food, apparel, and more of West Bengal accessible to anyone, anywhere. Working directly with artisans and distributors, we ensure premium quality while providing a huge opportunity for Bengal\u2019s talented handicraft artists to share their creations with a global audience. Now, the spirit of Bengal and the rich tradition of its artisans are just a click away, bringing a touch of home and cultural heritage to admirers everywhere.",
+        "text3": "\u09ac\u09bf\u09b6\u09cd\u09ac\u09c7\u09b0 \u09a6\u09b0\u09ac\u09be\u09b0\u09c7 \u09ac\u09be\u0982\u09b2\u09be\u09b0 \u09b9\u09b8\u09cd\u09a4\u09b6\u09bf\u09b2\u09cd\u09aa\u0995\u09c7 \u09aa\u09cd\u09b0\u09a4\u09bf\u09b7\u09cd\u09a0\u09be \u0995\u09b0\u09be \u0986\u09ae\u09be\u09a6\u09c7\u09b0 \u0989\u09a6\u09cd\u09a6\u09c7\u09b6\u09cd\u09af ~ \u09b9\u09b8\u09cd\u09a4\u09b6\u09bf\u09b2\u09cd\u09aa \u09b8\u09be\u09ae\u0997\u09cd\u09b0\u09c0 \u09ac\u09bf\u0995\u09cd\u09b0\u09bf \u0995\u09b0\u09c7 \u09b8\u09cd\u09ac\u09a8\u09bf\u09b0\u09cd\u09ad\u09b0 \u09b9\u0993\u09af\u09bc\u09be\u09b0 \u09aa\u09a5 \u09a6\u09c7\u0996\u09be\u099a\u09cd\u099b\u09c7 \u09ac\u0999\u09cd\u0997\u09ac\u09be\u09b8\u09c0 ~ \u09aa\u09b6\u09cd\u099a\u09bf\u09ae\u09ac\u0999\u09cd\u0997 \u09b9\u09b8\u09cd\u09a4\u09b6\u09bf\u09b2\u09cd\u09aa\u09c7\u09b0 \u099c\u09a8\u09cd\u09af \u09b8\u09be\u09b0\u09be \u09aa\u09c3\u09a5\u09bf\u09ac\u09c0\u09a4\u09c7 \u0996\u09cd\u09af\u09be\u09a4 | \u098f\u0987 \u09b0\u09be\u099c\u09cd\u09af\u09c7\u09b0 \u09aa\u09cd\u09b0\u09a4\u09bf\u099f\u09bf \u099c\u09c7\u09b2\u09be\u09b0 \u09b9\u09b8\u09cd\u09a4\u09b6\u09bf\u09b2\u09cd\u09aa \u09b8\u09be\u09ae\u0997\u09cd\u09b0\u09c0 \u09ac\u09c8\u09b6\u09bf\u09b7\u09cd\u099f\u09cd\u09af\u09aa\u09c2\u09b0\u09cd\u09a3 \u0993 \u09b8\u09cd\u09ac\u09a4\u09a8\u09cd\u09a4\u09cd\u09b0 | \u0995\u09bf\u09a8\u09cd\u09a4\u09c1 \u0989\u09aa\u09af\u09c1\u0995\u09cd\u09a4 \u09aa\u09b0\u09bf\u0995\u09be\u09a0\u09be\u09ae\u09cb\u09b0 \u0985\u09ad\u09be\u09ac\u09c7 \u09b9\u09b8\u09cd\u09a4\u09b6\u09bf\u09b2\u09cd\u09aa\u09c0\u09a6\u09c7\u09b0 \u0995\u09be\u099c \u09b8\u0995\u09b2\u09c7\u09b0 \u0995\u09be\u099b\u09c7 \u09b8\u09ac\u09b8\u09ae\u09af\u09bc \u09aa\u09cc\u0981\u099b\u09be\u09a4\u09c7 \u09aa\u09be\u09b0\u09c7 \u09a8\u09be | \u09a4\u09be\u0987 \u09b9\u09b8\u09cd\u09a4\u09b6\u09bf\u09b2\u09cd\u09aa\u0995\u09c7 \u09b8\u09ae\u0997\u09cd\u09b0 \u09ad\u09be\u09b0\u09a4 \u09a4\u09a5\u09be \u09ac\u09bf\u09b6\u09cd\u09ac\u09ac\u09cd\u09af\u09be\u09aa\u09c0\u09b0 \u0995\u09be\u099b\u09c7 \u09aa\u09cc\u0981\u099b\u09c7 \u09a6\u09c7\u0993\u09af\u09bc\u09be\u0987 \u0986\u09ae\u09be\u09a6\u09c7\u09b0 \u09ae\u09c2\u09b2 \u0989\u09a6\u09cd\u09a6\u09c7\u09b6\u09cd\u09af | \u098f\u0987 \u0989\u09a6\u09cd\u09a6\u09c7\u09b6\u09cd\u09af \u09a8\u09bf\u09af\u09bc\u09c7 \u0986\u09ae\u09b0\u09be \u09ac\u0999\u09cd\u0997\u09ac\u09be\u09b8\u09c0 \u0987-\u0995\u09ae\u09be\u09b0\u09cd\u09b8 \u0993\u09af\u09bc\u09c7\u09ac\u09b8\u09be\u0987\u099f \u09b6\u09c1\u09b0\u09c1 \u0995\u09b0\u09bf | \u0995\u09b0\u09cb\u09a8\u09be \u09aa\u09b0\u09bf\u09b8\u09cd\u09a5\u09bf\u09a4\u09bf\u09b0 \u09b8\u09ae\u09af\u09bc \u09a6\u09c7\u0996\u09c7\u099b\u09bf \u09b9\u09b8\u09cd\u09a4\u09b6\u09bf\u09b2\u09cd\u09aa\u09c0\u09a6\u09c7\u09b0 \u09a6\u09c1\u09b0\u09be\u09ac\u09b8\u09cd\u09a5\u09be\u0964 \u09a4\u09be\u09b0\u09be \u0985\u09b8\u09be\u09a7\u09be\u09b0\u09a3 \u09b8\u09ac \u099c\u09bf\u09a8\u09bf\u09b8-\u09aa\u09a4\u09cd\u09b0 \u09a4\u09c8\u09b0\u09bf \u0995\u09b0\u09c7\u09a8 \u0995\u09bf\u09a8\u09cd\u09a4\u09c1 \u09af\u09cb\u0997\u09be\u09af\u09cb\u0997\u09c7\u09b0 \u09ae\u09be\u09a7\u09cd\u09af\u09ae \u09a8\u09be \u09a5\u09be\u0995\u09be\u09af\u09bc \u0995\u09cd\u09b0\u09c7\u09a4\u09be\u09a6\u09c7\u09b0 \u0995\u09be\u099b\u09c7 \u09a0\u09bf\u0995\u09ae\u09a4\u09cb \u09aa\u09cc\u0981\u099b\u09be\u09af\u09bc \u09a8\u09be\u0964 \u09ac\u09be\u0982\u09b2\u09be\u09b0 \u09b9\u09b8\u09cd\u09a4\u09b6\u09bf\u09b2\u09cd\u09aa \u09b8\u09be\u09ae\u0997\u09cd\u09b0\u09c0 \u099a\u09be\u09b9\u09bf\u09a6\u09be \u0986\u099b\u09c7 \u09a6\u09c7\u09b6-\u09ac\u09bf\u09a6\u09c7\u09b6\u09c7, \u0995\u09bf\u09a8\u09cd\u09a4\u09c1 \u09b9\u09b8\u09cd\u09a4\u09b6\u09bf\u09b2\u09cd\u09aa\u09c0\u09b0\u09be \u09aa\u09cd\u09b0\u09be\u09a8\u09cd\u09a4\u09bf\u0995 \u0985\u099e\u09cd\u099a\u09b2\u09c7 \u09a5\u09be\u0995\u09be\u09af\u09bc \u0995\u09cd\u09b0\u09c7\u09a4\u09be\u09a6\u09c7\u09b0 \u09b8\u0999\u09cd\u0997\u09c7 \u09b8\u09b0\u09be\u09b8\u09b0\u09bf \u09af\u09cb\u0997\u09be\u09af\u09cb\u0997 \u0997\u09a1\u09bc\u09c7 \u0993\u09a0\u09c7 \u09a8\u09be\u0964 \u09a4\u09be\u0987 \u0986\u09ae\u09b0\u09be, \u09a6\u09c7\u09b6-\u09ac\u09bf\u09a6\u09c7\u09b6\u09c7\u09b0 \u0995\u09cd\u09b0\u09c7\u09a4\u09be\u09a6\u09c7\u09b0 \u0995\u09be\u099b\u09c7 \u09aa\u09cc\u0981\u099b\u09c7 \u09a6\u09bf\u09a4\u09c7 \u09b8\u09be\u09b9\u09be\u09af\u09cd\u09af \u0995\u09b0\u099b\u09bf \u098f\u09a4\u09c7 \u09b9\u09b8\u09cd\u09a4\u09b6\u09bf\u09b2\u09cd\u09aa\u09c0\u09b0\u09be\u0993 \u0986\u09b0\u09cd\u09a5\u09bf\u0995 \u09b2\u09be\u09ad \u0995\u09b0\u09ac\u09c7\u09a8 | \u0986\u09aa\u09a8\u09bf \u098f\u0995\u099c\u09a8 \u09b9\u09b8\u09cd\u09a4\u09b6\u09bf\u09b2\u09cd\u09aa\u09c0 \u09a8\u09be \u09b9\u09b2\u09c7\u0993 \u0986\u09ae\u09be\u09a6\u09c7\u09b0 \u0993\u09af\u09bc\u09c7\u09ac\u09b8\u09be\u0987\u099f \u09a5\u09c7\u0995\u09c7 \u0986\u09aa\u09a8\u09be\u09b0\u09be \u09aa\u09cd\u09b0\u09cb\u09a1\u09be\u0995\u09cd\u099f \u0995\u09bf\u09a8\u09c7 \u09ac\u09cd\u09af\u09ac\u09b8\u09be \u0995\u09b0\u09a4\u09c7 \u09aa\u09be\u09b0\u09ac\u09c7\u09a8\u0964",
+        "text4": "\u09ac\u09bf\u09b6\u09cd\u09ac\u09c7\u09b0 \u09a6\u09b0\u09ac\u09be\u09b0\u09c7 \u09ac\u09be\u0982\u09b2\u09be\u09b0 \u09b9\u09b8\u09cd\u09a4\u09b6\u09bf\u09b2\u09cd\u09aa\u0995\u09c7 \u09aa\u09cd\u09b0\u09a4\u09bf\u09b7\u09cd\u09a0\u09be \u0995\u09b0\u09be \u0986\u09ae\u09be\u09a6\u09c7\u09b0 \u0989\u09a6\u09cd\u09a6\u09c7\u09b6\u09cd\u09af ~ \u09b9\u09b8\u09cd\u09a4\u09b6\u09bf\u09b2\u09cd\u09aa \u09b8\u09be\u09ae\u0997\u09cd\u09b0\u09c0 \u09ac\u09bf\u0995\u09cd\u09b0\u09bf \u0995\u09b0\u09c7 \u09b8\u09cd\u09ac\u09a8\u09bf\u09b0\u09cd\u09ad\u09b0 \u09b9\u0993\u09af\u09bc\u09be\u09b0 \u09aa\u09a5 \u09a6\u09c7\u0996\u09be\u099a\u09cd\u099b\u09c7 \u09ac\u0999\u09cd\u0997\u09ac\u09be\u09b8\u09c0 ~",
+        "list1": "\u09ae\u09be\u09a4\u09cd\u09b0 1 \u099f\u09be\u0995\u09be \u09ae\u09c2\u09b2\u09cd\u09af\u09c7, \u09ac\u09bf\u0995\u09cd\u09b0\u09bf\u09b0 \u099c\u09a8\u09cd\u09af \u09ac\u0999\u09cd\u0997\u09ac\u09be\u09b8\u09c0\u09a4\u09c7 \u09a8\u09be\u09ae \u09a8\u09a5\u09bf\u09ad\u09c1\u0995\u09cd\u09a4 \u0995\u09b0\u09c1\u09a8\u0964",
+        "list2": "\u09b9\u09cb\u09b2\u09b8\u09c7\u09b2\u09c7 \u099c\u09bf\u09a8\u09bf\u09b8 \u0995\u09bf\u09a8\u09c7 \u09ac\u09cd\u09af\u09ac\u09b8\u09be \u0995\u09b0\u09c1\u09a8\u0964",
+        "list3": "\u09b9\u09b8\u09cd\u09a4\u09b6\u09bf\u09b2\u09cd\u09aa\u09c0\u09b0\u09be \u09ac\u09bf\u0995\u09cd\u09b0\u09bf\u09b0 \u099c\u09a8\u09cd\u09af \u09af\u09cb\u0997\u09be\u09af\u09cb\u0997 \u0995\u09b0\u09c1\u09a8 \u09a8\u09bf\u099a\u09c7 \u09a6\u09c7\u0993\u09af\u09bc\u09be \u09a8\u09be\u09ae\u09cd\u09ac\u09be\u09b0\u09c7\u0964"
+    },
+    "weDo": {
+        "head": "What We Do?",
+        "image": "women_green.png",
+        "text": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. In ipsa quibusdam velit temporibus. Quibusdam dolorum nostrum labore autem minima excepturi iure est provident corrupti repudiandae vitae, optio enim id aspernatur possimus iste? Animi deleniti nesciunt fugit accusamus facilis ipsa accusantium. Reprehenderit fugiat quo dolore adipisci voluptas soluta amet laudantium dolorem qui earum vel suscipit ratione, at illo officia tempore? Perspiciatis placeat cupiditate voluptas nulla amet obcaecati delectus neque quos eum perferendis. Est hic voluptate porro doloribus soluta perferendis inventore sapiente quaerat, delectus deleniti nisi dolor vitae, ea repudiandae possimus ratione suscipit aperiam alias? Numquam provident recusandae distinctio dignissimos at est saepe consectetur cupiditate qui laboriosam ab voluptates dolorum enim doloribus aliquid deserunt nam minima officia magni, explicabo quod aperiam autem ut. Tempora sed commodi quidem, non quaerat modi ea odit in, ratione sint, inventore minima labore placeat dicta. Perferendis, alias corrupti? Voluptas magnam officia praesentium ut ipsam repudiandae sint quasi aperiam. Voluptatem laborum enim voluptatibus quasi possimus quod qui, nobis ad eius quam odit libero voluptatum, eveniet perspiciatis quaerat beatae, quo corrupti! Incidunt possimus alias dolore rem nulla, ab quod. Repellat, consectetur reiciendis debitis rem amet vel dolorum libero tenetur ea nihil accusantium soluta iusto officia unde consequuntur facilis quaerat."
+    },
+    "missionVision": {
+        "head": "What Is Our Mission & Vision?",
+        "image": "women_red.png",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia, sapien a aliquam hendrerit, ante nunc fermentum ligula, nec placerat urna libero id arcu. Curabitur auctor leo at nisi condimentum, a auctor elit gravida."
+    },
+    "history": {
+        "head": "History Of Us",
+        "image": "shirts.jpg",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia, sapien a aliquam hendrerit, ante nunc fermentum ligula, nec placerat urna libero id arcu. Curabitur auctor leo at nisi condimentum, a auctor elit gravida."
+    },
+    "$schema1": {
+        "image": "Icon-5.jpg",
+        "head": "Free Shipping Worldwide",
+        "description": "Our products are free in delivery after shopping on \u20b9999"
+    },
+    "$schema2": {
+        "image": "Icon-1-1.jpg",
+        "head": "Weekly Gifts Members",
+        "description": "We are your one-stop shop for nationwide online store."
+    },
+    "$schema3": {
+        "image": "Icon-2-1.jpg",
+        "head": "Money Edited Guarantee",
+        "description": "Start saving straight away with discount offer on items."
+    },
+    "$schema4": {
+        "image": "Icon-3-1.jpg",
+        "head": "24\/7 Supermarket Help",
+        "description": "We work for all customer to make satisfied shoppers value."
+    }
+}

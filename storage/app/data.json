@@ -1,0 +1,110 @@
+{
+    "heroSection": {
+        "head": "Make Bengal's artistry shine worldwide!",
+        "description": "Starting at \u20b959.99 See what else is new from Decor.",
+        "button": "Start Shopping",
+        "redirect": "\/",
+        "image": "bangabasi_123.jpg"
+    },
+    "heroSideSection": {
+        "head": "Grooming For Men",
+        "description": "Flexible financing on storewide \u20b9299.",
+        "button": "Explore Now Edited",
+        "redirect": "\/",
+        "image": "men_products_4.jpg"
+    },
+    "dontMissSectionDashaKarma": {
+        "head": "Save upto 10% Off on Puja Items Edited",
+        "description": "Save up to \u20b9100 on Puja Thali",
+        "button": "Start Shopping",
+        "redirect": "\/",
+        "image": "agarbati_wider.png"
+    },
+    "dontMissSectionMachinery": {
+        "head": "Save upto 25% on Agricultural Product",
+        "description": "Save up to \u20b91000 on Reaper.",
+        "button": "Start Shopping",
+        "redirect": "\/",
+        "image": "cultivation_wide.png"
+    },
+    "dontMissSectionClothing": {
+        "head": "Save up to 25% Off on women's clothing.",
+        "description": "Save up to \u20b9100 on on women's kurti.",
+        "button": "Start Shopping",
+        "redirect": "\/",
+        "image": "clothes_wider.png"
+    },
+    "dontMissSectionFoodItem": {
+        "head": "Save Upto 25% on Bakery Items",
+        "description": "Save Up To \u20b9100.",
+        "button": "Start Shopping",
+        "redirect": "\/",
+        "image": "bakery_wide.png"
+    },
+    "traditionalSectionLeftSide": {
+        "head": "Women's Kurti Edited",
+        "description": "Starting from \u20b9499 onwards",
+        "button": "Explore Now",
+        "redirect": "\/",
+        "image": "kurti.png"
+    },
+    "traditionalSectionRightSide": {
+        "head": "Women's Saree",
+        "description": "Starting from \u20b9499 onwards",
+        "button": "Explore Now",
+        "redirect": "\/",
+        "image": "dhunuchi.png"
+    },
+    "newestSection": {
+        "head": "Exclusive Puja Samogri",
+        "description": "The store for Holy Things <br> Buy \u20b9299 and up.",
+        "button": "Explore More",
+        "redirect": "\/",
+        "image": "holy_things.png"
+    },
+    "mostWishesSection": {
+        "image": "female.png"
+    },
+    "handpickedSection": {
+        "head": "Holy Items at Bangabasi",
+        "description": "Save Up To \u20b9100 on holy items.",
+        "button": "Discover More",
+        "redirect": "\/",
+        "image": "handicrafts.png"
+    },
+    "subCategorySection": {
+        "head": "You will find a kaleidoscopic of handcrafted trendy garments.",
+        "description": "Give a pinch of aestheticism to your thoughts."
+    },
+    "sub1": {
+        "image": "sub1.png",
+        "redirect": "\/",
+        "title": "Sub Category",
+        "head": "Sub Category Edited"
+    },
+    "sub2": {
+        "image": "sub1.png",
+        "redirect": "\/",
+        "title": "Sub Category"
+    },
+    "sub3": {
+        "image": "sub1.png",
+        "redirect": "\/",
+        "title": "Sub Category"
+    },
+    "sub4": {
+        "image": "sub1.png",
+        "redirect": "\/",
+        "title": "Sub Category"
+    },
+    "sub5": {
+        "image": "sub1.png",
+        "redirect": "\/",
+        "title": "Sub Category"
+    },
+    "sub6": {
+        "image": "sub1.png",
+        "redirect": "\/",
+        "title": "Sub Category"
+    }
+}
