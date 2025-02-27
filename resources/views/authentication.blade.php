@@ -1,5 +1,9 @@
 @extends("layouts.master")
 
+@section('head')
+<title>Bangabasi | Authentication</title>
+@endsection
+
 @section("content")
 
 <section class="auth-body min-h-screen flex justify-center items-center py-8">

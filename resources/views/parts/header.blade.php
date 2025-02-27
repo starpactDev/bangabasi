@@ -32,7 +32,7 @@ $products = $subCategories;
             <div class="min-w-32 order-1 ">
                 <a href="{{ route('home') }}">
                     @if(isset($logos['1']))
-                        <img src={{ asset('user/uploads/logos/' . $logos['1']->image_path) }} class="h-auto max-w-32 lg:max-w-48" />
+                        <img src={{ asset('user/uploads/logos/' . $logos['1']->image_path) }} class="h-auto max-w-32 lg:max-w-48" alt="Bangabasi Main Logo"/>
                     @endif
                 </a>
             </div>
