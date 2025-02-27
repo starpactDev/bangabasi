@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
@@ -144,6 +145,7 @@ class AuthController extends Controller
             // Save the OTP in the session
             session([
                 'otp' => $otp,
+                'email' => $request->email, // Save the email for password reset
                 'otp_expiry' => now()->addMinutes(10), // Set OTP expiry (e.g., 10 minutes)
             ]);
 
@@ -193,6 +195,9 @@ class AuthController extends Controller
 
         // Check if the provided OTP matches the session OTP
         if ($request->otp == $sessionOtp) {
+            
+
+
             // OTP is valid
             return response()->json([
                 'success' => true,
@@ -204,6 +209,67 @@ class AuthController extends Controller
                 'success' => false,
                 'message' => 'Invalid OTP.',
             ], 400); // 400 Bad Request
+        }
+    }
+
+    public function setNewPassword(Request $request)
+    {
+
+        try {
+            // Validate the input
+            $request->validate([
+                'new-password' => 'required|min:6|confirmed',
+            ]);
+
+            // Retrieve the OTP from the session
+            $otp = session('otp');
+            $otpExpiry = session('otp_expiry');
+
+            if (!$otp || now()->greaterThan($otpExpiry)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'OTP has expired. Please request a new one.',
+                ], 422);
+            }
+
+            // Retrieve user from session (assuming email was stored during OTP verification)
+            $email = session('email');
+
+            if (!$email) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Session expired. Please try again.',
+                ], 422);
+            }
+
+            $user = User::where('email', $email)->first();
+
+            if (!$user) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'User not found.',
+                ], 404);
+            }
+
+            // Update user's password
+            $user->password = Hash::make($request->input('new-password'));
+            $user->save();
+
+            // Clear OTP session data
+            session()->forget(['otp', 'otp_expiry', 'email']);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Password reset successfully.',
+            ], 200);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json(["errors" => $e->errors()], 422);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Something went wrong.',
+                'error' => $e->getMessage(),
+            ], 500);
         }
     }
 }

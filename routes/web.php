@@ -203,6 +203,12 @@ Route::get('/check-auth', function () {
 
 Route::post('/send-otp', [AuthController::class, 'sendOTP'])->name('send-otp');
 Route::post('/verify-otp', [AuthController::class, 'verifyOTP'])->name('verify-otp');
+Route::post('/set-new-password', [AuthController::class, 'setNewPassword'])->name('set-new-password');
+
+
+Route::get('/check-csrf', function () {
+    return response()->json(['csrf' => csrf_token()]);
+});
 
 //Guest Middleware
 Route::middleware(GuestMiddleware::class)->group(function () {

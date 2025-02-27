@@ -329,7 +329,7 @@
         // Create an object to hold the data to be sent
         const formData = new FormData();
         formData.append('email', email);
-        formData.append('_token', document.querySelector('input[name="_token"]').value); // CSRF token
+        formData.append('_token', resetForm.querySelector('input[name="_token"]').value); // CSRF token
 
         // Use fetch to send the data
         fetch(resetForm.action, {
@@ -342,7 +342,6 @@
                     // Handle success: Show OTP form, timer, and resend option
                     authReset.innerHTML = '';
                     showOtpForm(data);
-                    console.log(data);
                 } else {
                     // Handle failure: Display error message
                     alert('Something went wrong. Please try again.');
@@ -367,24 +366,24 @@
                 </h2>
                 <p class="text-sm text-green-600 mt-2 mb-4">OTP has sent successfully, OTP is ${data.otp}. </p>
                 
-    <!-- OTP Form -->
-    <form id="otp-form" action="" method="POST" onsubmit="submitOtpForm(event)">
-        <div class="w-fit border leading-10 rounded">
-            <label for="otp-input" class="px-2 text-orange-500">
-                <img src="/images/icons/email.svg" alt="" class="inline w-4 h-4">
-            </label>
-            <input id="otp-input" name="otp" type="text" class="w-72 inline focus:outline-none" placeholder="Enter OTP sent to your email" autocomplete="off">
-        </div>
-        <div class="w-full leading-16 rounded my-4">
-            <input type="submit" class="w-full h-12 cursor-pointer border-orange-600 border-2 bg-orange-500 hover:bg-orange-600 text-white leading-16" value="Submit OTP">
-        </div>
-    </form>
+                <!-- OTP Form -->
+                <form id="otp-form" action="" method="POST" onsubmit="submitOtpForm(event)">
+                    <div class="w-fit border leading-10 rounded">
+                        <label for="otp-input" class="px-2 text-orange-500">
+                            <img src="/images/icons/email.svg" alt="" class="inline w-4 h-4">
+                        </label>
+                        <input id="otp-input" name="otp" type="text" class="w-72 inline focus:outline-none" placeholder="Enter OTP sent to your email" autocomplete="off">
+                    </div>
+                    <div class="w-full leading-16 rounded my-4">
+                        <input type="submit" class="w-full h-12 cursor-pointer border-orange-600 border-2 bg-orange-500 hover:bg-orange-600 text-white leading-16" value="Submit OTP">
+                    </div>
+                </form>
             </div>
             <div class="timer-and-resend">
                 <p id="timer" class="text-sm text-neutral-700">You can request a new OTP in <span id="countdown">60</span> seconds.</p>
                 <button id="resend-btn" class="w-full h-12 cursor-pointer border-orange-600 border-2 hover:bg-orange-600 hover:text-white leading-16 mt-2 hidden">Resend OTP</button>
             </div>
-        `;
+            `;
 
         // Append the OTP form holder to the DOM (to the existing parent element)
         document.getElementById('authReset').appendChild(otpHolder);
@@ -470,54 +469,102 @@
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'), // CSRF token for Laravel
                 },
                 body: formData,
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+
+
+                // Clear the OTP form
+                document.getElementById('authReset').innerHTML = '';
+
+                // Create a new form to set the new password
+                const newPasswordForm = `
+                                <form id="new-password-form" method="POST">
+                                    <h2 class="text-lg font-medium border-b-2 py-2 mb-2">
+                                        <span class="border-b-4 border-orange-500 px-4 py-2">Set New Password</span>
+                                    </h2>
+
+                                    <div class="w-fit border leading-10 rounded">
+                                        <label for="new-password" class="px-2 text-orange-500">
+                                            <img src="/images/icons/email.svg" alt="" class="inline w-4 h-4">
+                                        </label>
+                                        <input id="new-password" name="new-password" type="password" class="w-72 inline focus:outline-none" placeholder="Enter your new password" autocomplete="off">
+                                    </div>
+                                    <div class="w-fit border leading-10 rounded mt-4">
+                                        <label for="confirm-password" class="px-2 text-orange-500">
+                                            <img src="/images/icons/email.svg" alt="" class="inline w-4 h-4">
+                                        </label>
+                                        <input id="new-password_confirmation" name="new-password_confirmation" type="password" class="w-72 inline focus:outline-none" placeholder="Confirm your new password" autocomplete="off">
+                                    </div>
+                                    <div class="w-full leading-16 rounded my-4">
+                                        <input type="submit" class="w-full h-12 cursor-pointer border-orange-600 border-2 bg-orange-500 hover:bg-orange-600 text-white leading-16" value="Set New Password">
+                                    </div>
+                                </form>
+                            `;
+
+                // Insert the new form into the 'authReset' element
+                authReset.innerHTML = newPasswordForm;
+
+            } else {
+                
+                let errorMessage = document.getElementById('otp-error'); // Look for an existing error message
+
+                if (errorMessage) {
+                    // If the error message element exists, just update its textContent
+                    errorMessage.textContent = data.message;
+                } else {
+                    // If no error message exists, create and append a new one
+                    errorMessage = Object.assign(document.createElement('div'), {
+                        textContent: data.message,
+                        className: 'text-red-600 text-center mt-4',
+                        id: 'otp-error'
+                    });
+                    authReset.appendChild(errorMessage);
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('There was an error verifying the OTP');
+        });
+    }
+
+    function submitNewPasswordForm(event) {
+        alert('Submitting new password form');
+        event.preventDefault(); // Prevent default form submission
+
+        setTimeout(() => {
+            const newPasswordForm = document.getElementById('new-password-form');
+            if (!newPasswordForm) {
+                console.error('New password form not found.');
+                return;
+            }
+
+            const formData = new FormData(newPasswordForm);
+            formData.append('_token', document.querySelector('input[name="_token"]').value); // CSRF token
+
+            const authReset = document.getElementById('authReset');
+            console.log(newPasswordForm);
+            console.log(formData);
+
+            fetch('/set-new-password', {
+                method: 'POST',
+                body: formData,
             })
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-
-
-                    // Clear the OTP form
-                    document.getElementById('authReset').innerHTML = '';
-
-                    // Create a new form to set the new password
-                    const newPasswordForm = `
-                                    <form id="new-password-form" method="POST">
-                                        <h2 class="text-lg font-medium border-b-2 py-2 mb-2">
-                                            <span class="border-b-4 border-orange-500 px-4 py-2">Set New Password</span>
-                                        </h2>
-                                        <div class="w-fit border leading-10 rounded">
-                                            <label for="new-password" class="px-2 text-orange-500">
-                                                <img src="/images/icons/password.svg" alt="" class="inline w-4 h-4">
-                                            </label>
-                                            <input id="new-password" name="new-password" type="password" class="w-72 inline focus:outline-none" placeholder="Enter your new password" autocomplete="off">
-                                        </div>
-                                        <div class="w-fit border leading-10 rounded mt-4">
-                                            <label for="confirm-password" class="px-2 text-orange-500">
-                                                <img src="/images/icons/password.svg" alt="" class="inline w-4 h-4">
-                                            </label>
-                                            <input id="confirm-password" name="confirm-password" type="password" class="w-72 inline focus:outline-none" placeholder="Confirm your new password" autocomplete="off">
-                                        </div>
-                                        <div class="w-full leading-16 rounded my-4">
-                                            <input type="submit" class="w-full h-12 cursor-pointer border-orange-600 border-2 bg-orange-500 hover:bg-orange-600 text-white leading-16" value="Set New Password">
-                                        </div>
-                                    </form>
-                                `;
-
-                    // Insert the new form into the 'authReset' element
-                    authReset.innerHTML = newPasswordForm;
+                    authReset.innerHTML = '<p class="text-green-600 text-center">Password has been successfully reset. You can now log in.</p>';
                 } else {
-                    
-                    let errorMessage = document.getElementById('otp-error'); // Look for an existing error message
-
+                    let errorMessage = document.getElementById('password-error');
                     if (errorMessage) {
-                        // If the error message element exists, just update its textContent
                         errorMessage.textContent = data.message;
                     } else {
-                        // If no error message exists, create and append a new one
                         errorMessage = Object.assign(document.createElement('div'), {
                             textContent: data.message,
                             className: 'text-red-600 text-center mt-4',
-                            id: 'otp-error'
+                            id: 'password-error'
                         });
                         authReset.appendChild(errorMessage);
                     }
@@ -525,10 +572,18 @@
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('There was an error verifying the OTP');
+                alert('There was an error setting your new password.');
             });
-
+        }, 100); // Delay execution slightly
     }
+
+
+    // Attach event listener after the form is inserted dynamically
+    document.addEventListener('submit', function(event) {
+        if (event.target && event.target.id === 'new-password-form') {
+            submitNewPasswordForm(event);
+        }
+    });
 </script>
 
 
