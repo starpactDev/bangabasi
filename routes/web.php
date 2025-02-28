@@ -332,7 +332,7 @@ Route::group(['middleware' =>  [AdminCheckMiddleware::class]], function () {
     //Route::get('/admin/product/images/{id}', [AdminProductController::class, 'destroy_image'])->name('admin_product_image.delete');
 
     //Route::post('/admin/product/status-update/{id}', [AdminProductController::class, 'updateStatus'])->name('admin_product.status_update');
-    Route::get('admin/products/export/excel', [AdminProductController::class, 'exportExcel'])->name('products.export.excel');
+    Route::get('/admin/products/export/excel', [AdminProductController::class, 'exportExcel'])->name('products.export.excel');
 
     //Product Section
     Route::get('/manage-product-section', [AdminProductSectionController::class, 'index'])->name('admin.product.section');

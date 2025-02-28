@@ -95,33 +95,11 @@
 
                                         <td>
                                             <div class="btn-group mb-1">
-                                                <a href="{{ route('admin_products.info', $product->id) }}"
-                                                    class="btn btn-outline-success">Info</a>
-                                                <button type="button"
-                                                    class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
-                                                    data-bs-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false" data-display="static">
-                                                    <span class="sr-only">Info</span>
-                                                </button>
-
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item "
-                                                        href="{{ route('admin_products.edit', $product->id) }}">Edit</a>
-
-                                                    <form id="deleteProductForm{{ $product->id }}" action="{{ route('admin_products.delete', $product->id) }}" method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <input type="hidden" id="deleteConfirmation{{ $product->id }}" name="deleteConfirmation" value="">
-                                                        <button type="button" class="dropdown-item deleteButton" data-form-id="{{ $product->id }}">Delete</button>
-                                                    </form>
-
-                                                </div>
+                                                <a href="{{ route('admin_products.info', $product->id) }}" class="btn btn-outline-success">Info</a>
                                             </div>
                                         </td>
                                     </tr>
                                     @endforeach
-
-
 
                                 </tbody>
                             </table>

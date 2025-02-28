@@ -88,16 +88,20 @@ class SuperUserProductController extends Controller
     public function show($id) {
         $user = Auth::user();
 
-        // Retrieve the product and ensure it belongs to the authenticated user
-        $product = Product::where('id', $id)
-            ->where('user_id', $user->id) // Check if the product belongs to the user
-            ->firstOrFail();
+        if($user->usertype == 'admin') {
+            $product = Product::where('id', $id)->firstOrFail();
+        } else {
+            $product = Product::where('id', $id)
+                            ->where('user_id', $user->id) // Check if the product belongs to the user
+                            ->firstOrFail();
+        }
+
 
         $averageRating = ReviewHelper::getAverageRating($id);
         $reviewCount = ReviewHelper::getReviewCount($id);
         $reviews = Review::where('product_id', $id)
-            ->where('status', 'active')
-            ->get();
+                            ->where('status', 'active')
+                            ->get();
         return view('superuser.products.details', compact('product', 'averageRating', 'reviewCount', 'reviews')); // Create this view for product info
     }
     

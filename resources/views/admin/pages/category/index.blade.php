@@ -17,71 +17,7 @@
                 </p>
             </div>
             <div class="row">
-                {{-- <div class="col-xl-4 col-lg-12">
-				<div class="ec-cat-list card card-default mb-24px">
-					<div class="card-body">
-						<div class="ec-cat-form">
-							<h4>Add New Category</h4>
 
-							<form>
-
-								<div class="form-group row">
-									<label for="text" class="col-12 col-form-label">Name</label>
-									<div class="col-12">
-										<input id="text" name="text" class="form-control here slug-title" type="text">
-									</div>
-								</div>
-
-<!-- 								<div class="form-group row hidden">
-									<label class="form-label" for="status">Select Status</label>
-									<div class="col-12">
-										<select name="status" id="status" class="form-select">
-											<option value="t-shirt">Active</option>
-											<option value="dress">Inactive</option>
-										</select>
-									</div>
-								</div> -->
-
-								<div class="ec-vendor-uploads">
-									<div class="ec-vendor-img-upload mb-5">
-										<h6 class="mb-2">Add Image</h6>
-										<div class="ec-vendor-main-img">
-											<div class="avatar-upload">
-												<div class="avatar-edit">
-
-													<input type="file" id="imageUpload" class="ec-image-upload" accept=".png, .jpg, .jpeg">
-													<label for="imageUpload"><img src="admin/assets/img/icons/edit.svg" class="svg_img header_svg" alt="edit"></label>
-												</div>
-												<div class="avatar-preview ec-preview">
-													<div class="imagePreview ec-div-preview">
-														<img class="ec-image-preview" src="admin/assets/img/products/vender-upload-preview.jpg" alt="edit">
-													</div>
-												</div>
-											</div>
-
-										</div>
-									</div>
-								</div>
-
-								<div class="form-group row">
-									<label for="text" class="col-12 col-form-label">Add Sub Category</label>
-									<div class="col-12">
-										<input id="sub-category" name="sub-category" class="form-control here slug-title" type="text">
-									</div>
-								</div>
-
-								<div class="row">
-									<div class="col-12 text-center">
-										<button name="submit" type="submit" class="btn btn-primary">Submit</button>
-									</div>
-								</div>
-
-							</form>
-
-						</div>
-					</div>
-				</div>
-			</div> --}}
                 <div class="col-xl-12 col-lg-12">
                     <div class="ec-cat-list card card-default">
                         <div class="card-body">
@@ -186,15 +122,6 @@
                             </div>
                         </div>
 
-                        <!--                         <div class="form-group row">
-                                <label class="form-label" for="editStatus">Select Status</label>
-                                <div class="col-12">
-                                    <select name="status" id="editStatus" class="form-select">
-                                        <option value="active">Active</option>
-                                        <option value="inactive">Inactive</option>
-                                    </select>
-                                </div>
-                            </div> -->
 
                         <div class="ec-vendor-uploads">
                             <div class="ec-vendor-img-upload mb-5">
