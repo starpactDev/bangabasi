@@ -22,348 +22,348 @@ $products = $subCategories;
 }
 @endphp
 
-<div class="w-full lg:sticky top-0 z-50 ">
+    <header class="w-full lg:sticky top-0 z-50 ">
 
-    {{-- First Row Start--}}
+        {{-- First Row Start--}}
 
-    <div class="w-full bg-gradient-to-r from-orange-500 to-orange-400 px-4 md:px-12 py-1 md:py-2 ">
-        <div class="w-full flex flex-wrap gap-x-4 items-center justify-between">
-            {{-- Logo Section --}}
-            <div class="min-w-32 order-1 ">
-                <a href="{{ route('home') }}">
-                    @if(isset($logos['1']))
-                        <img src={{ asset('user/uploads/logos/' . $logos['1']->image_path) }} class="h-auto max-w-32 lg:max-w-48" alt="Bangabasi Main Logo"/>
-                    @endif
-                </a>
-            </div>
-
-            {{-- Search Section --}}
-            <div class="w-full md:w-[55%] min-w-64 h-8 md:h-12 border-2 border-white rounded-full bg-white order-3 md:order-2">
-                <div class="w-full flex h-full px-2 md:px-6 items-center">
-                    <div class="flex justify-around items-center h-full rounded-l-full w-1/5 min-w-32 relative">
-                        <select id="categoryDropdown" class="bg-transparent w-full appearance-none outline-none md:pr-6">
-                            <option value="all-categories" >All categories</option>
-                            @foreach ($global_categories as $category)
-                                @if ($category->subCategories->count())
-                                    <optgroup label="{{ strtoupper($category->name) }}" >
-                                        @foreach ($category->subCategories as $subCategory)
-                                            <option value="{{ $subCategory->id }}" class="">{{ $subCategory->name }}</option>
-                                        @endforeach
-                                    </optgroup>
-                                @endif
-                            @endforeach                            
-                        </select>
-                        <i class="fa-solid fa-angle-down absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none"></i>
-                    </div>
-
-
-                    <div class="w-3/4 pl-2 md:pl-6">
-                        <input id="search_bar" class="w-full h-full px-4 outline-none" placeholder="Search" onkeyup="searchProducts()">
-                    </div>
-                    <p><i class="fa fa-search"></i></p>
+        <div class="w-full bg-gradient-to-r from-orange-500 to-orange-400 px-4 md:px-12 py-1 md:py-2 ">
+            <div class="w-full flex flex-wrap gap-x-4 items-center justify-between">
+                {{-- Logo Section --}}
+                <div class="min-w-32 order-1 ">
+                    <a href="{{ route('home') }}">
+                        @if(isset($logos['1']))
+                            <img src={{ asset('user/uploads/logos/' . $logos['1']->image_path) }} class="h-auto max-w-32 lg:max-w-48" alt="Bangabasi Main Logo"/>
+                        @endif
+                    </a>
                 </div>
 
-                <div id="search_result" class="w-full border mt-2 relative bg-white shadow-lg"
-                    style="display: none; z-index: 9999;">
-                    <div id="search_header" class="w-full flex justify-between items-center bg-gray-100 py-2 px-4">
-                        <div class="text-sm font-semibold">
-                            RECOMMENDED FOR YOU
+                {{-- Search Section --}}
+                <div class="w-full md:w-[55%] min-w-64 h-8 md:h-12 border-2 border-white rounded-full bg-white order-3 md:order-2">
+                    <div class="w-full flex h-full px-2 md:px-6 items-center">
+                        <div class="flex justify-around items-center h-full rounded-l-full w-1/5 min-w-32 relative">
+                            <select id="categoryDropdown" class="bg-transparent w-full appearance-none outline-none md:pr-6">
+                                <option value="all-categories" >All categories</option>
+                                @foreach ($global_categories as $category)
+                                    @if ($category->subCategories->count())
+                                        <optgroup label="{{ strtoupper($category->name) }}" >
+                                            @foreach ($category->subCategories as $subCategory)
+                                                <option value="{{ $subCategory->id }}" class="">{{ $subCategory->name }}</option>
+                                            @endforeach
+                                        </optgroup>
+                                    @endif
+                                @endforeach                            
+                            </select>
+                            <i class="fa-solid fa-angle-down absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none"></i>
                         </div>
-                        <div class="hover: cursor-pointer">
-                            Refresh <i class="fa fa-refresh"></i>
+
+
+                        <div class="w-3/4 pl-2 md:pl-6">
+                            <input id="search_bar" class="w-full h-full px-4 outline-none" placeholder="Search" onkeyup="searchProducts()">
                         </div>
+                        <p><i class="fa fa-search"></i></p>
                     </div>
-                    <div id="results_container">
-                        @foreach ($products as $product)
-                        <div class="w-full flex items-center gap-4 hover:bg-gray-200/30 hover:cursor-pointer mt-2 py-2 px-4"
-                            data-subcategory="{{ $product->id }}">
-                            <div>
-                                <div class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
-                                    <i class="fa-solid fa-magnifying-glass"></i>
-                                </div>
+
+                    <div id="search_result" class="w-full border mt-2 relative bg-white shadow-lg"
+                        style="display: none; z-index: 9999;">
+                        <div id="search_header" class="w-full flex justify-between items-center bg-gray-100 py-2 px-4">
+                            <div class="text-sm font-semibold">
+                                RECOMMENDED FOR YOU
                             </div>
-                            <div class="text-md text-red-600 font-semibold">
-                                {{ $product->name }}
+                            <div class="hover: cursor-pointer">
+                                Refresh <i class="fa fa-refresh"></i>
                             </div>
                         </div>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-
-            {{-- Cart Section --}}
-
-            <div class="w-[20%] min-w-32 order-2 md:order-3">
-                <div class="w-full flex justify-between items-center text-white py-1 md:py-2 px-4 font-bold text-lg">
-                    <div class=" relative hover:cursor-pointer hover:text-gray-200"> <span class="hidden xl:inline">Track Order</span> <i class="fa-regular fa-clock"></i></div>
-                    @php
-                        // Check if the user is authenticated and fetch the wishlist count
-                        $wishlistCount = Auth::check()
-                        ? \App\Models\Wishlist::where('user_id', Auth::id())->count()
-                        : 0;
-                        $cartCount = Auth::check() ? \App\Models\Cart::where('user_id', Auth::id())->count() : 0;
-                    @endphp
-                    <div class="relative hover:cursor-pointer hover:text-gray-200">
-                        <a href="{{ route('wishlist') }}">
-                            <i class="fa-regular fa-heart"></i>
-                        </a>
-                        <span
-                            class="absolute top-0 -right-3 inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-gray-800 bg-yellow-300 rounded-full">
-                            {{ $wishlistCount }}
-                        </span>
-                    </div>
-
-                    <div class="relative hover:cursor-pointer hover:text-gray-200">
-                        <a href="{{ route('cart') }}">
-                            <i class="fa fa-shopping-cart"></i>
-                        </a>
-                        <span
-                            class="absolute top-0 -right-3 inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-gray-800 bg-yellow-300 rounded-full">
-                            {{ $cartCount }}
-                        </span>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    {{-- First Row End--}}
-
-    {{-- Second Row Start--}}
-
-    <div class="w-full bg-[#c44601] text-white py-2 px-12 hidden lg:block">
-        <div class="w-full hidden lg:flex justify-between">
-            <div id="all_categories" class="md:w-auto dropdown ">
-                <i class="fa-solid fa-layer-group"></i>
-                <span class="font-bold text-md pl-2"> All Categories </span>
-                <span>
-                    <i class="fa-solid fa-angle-down"></i>
-                </span>
-
-                <div class="dropdown-content-1">
-                    <div class="w-[320px] bg-white text-black mt-10 ml-12">
-
-                        <div class="py-3 px-6 text-sm border-b  border-gray-300 sub-menu hover:cursor-pointer hover:bg-gray-100">
-
-                            <div class=" w-full flex items-center justify-between">
-                                <div class="flex gap-4">
-                                    <img src="{{ asset('images/icons/menu_1.png') }}" class="w-18">
-                                    {{ $activeCategory->get(0)->name ?? 'Category not found' }}
-                                </div>
-
-
-                                <span>
-                                    <i class="fa-solid fa-angle-right"></i>
-                                </span>
-                            </div>
-
-                            @include('parts.dropdown-content.clothes')
-
-                        </div>
-
-                        <div class="py-3 px-6 text-sm border-b border-gray-300 sub-menu hover:cursor-pointer hover:bg-gray-100">
-
-                            <div class=" w-full flex items-center justify-between">
-                                <div class="flex gap-4">
-                                    <img src="{{ asset('images/icons/menu_2.png') }}" class="w-18">
-                                    {{ $activeCategory->get(1)->name ?? 'Category not found' }}
-                                </div>
-                                <span>
-                                    <i class="fa-solid fa-angle-right"></i>
-                                </span>
-                            </div>
-
-                            @include('parts.dropdown-content.food')
-
-                        </div>
-
-
-                        <div class="py-3 px-6 text-sm border-b border-gray-300 sub-menu hover:cursor-pointer hover:bg-gray-100">
-
-                            <div class=" w-full flex items-center justify-between">
-                                <div class="flex gap-4">
-                                    <img src="{{ asset('images/icons/menu_3.png') }}" class="w-18">
-                                    {{ $activeCategory->get(2)->name ?? 'Category not found' }}
-                                </div>
-                                <span>
-                                    <i class="fa-solid fa-angle-right"></i>
-                                </span>
-                            </div>
-
-                            @include('parts.dropdown-content.dashakarma')
-
-                        </div>
-
-                        <div class="py-3 px-6 text-sm border-b border-gray-300 sub-menu hover:cursor-pointer hover:bg-gray-100">
-
-                            <div class=" w-full flex items-center justify-between">
-                                <div class="flex gap-4">
-                                    <img src="{{ asset('images/icons/menu_4.png') }}" class="w-18">
-                                    {{ $activeCategory->get(3)->name ?? 'Category not found' }}
-                                </div>
-                                <span>
-                                    <i class="fa-solid fa-angle-right"></i>
-                                </span>
-                            </div>
-
-                            @include('parts.dropdown-content.handcraft')
-
-                        </div>
-
-                        <div class="py-3 px-6 text-sm border-b border-gray-300 sub-menu hover:cursor-pointer hover:bg-gray-100">
-
-                            <div class=" w-full flex items-center justify-between">
-                                <div class="flex gap-4">
-                                    <img src="{{ asset('images/icons/menu_5.png') }}" class="w-18">
-                                    {{ $activeCategory->get(4)->name ?? 'Category not found' }}
-                                </div>
-                                <span>
-                                    <i class="fa-solid fa-angle-right"></i>
-                                </span>
-                            </div>
-
-                            @include('parts.dropdown-content.mens-grooming')
-
-                        </div>
-
-                        <div class="py-3 px-6 text-sm border-b border-gray-300 sub-menu hover:cursor-pointer hover:bg-gray-100">
-
-                            <div class=" w-full flex items-center justify-between">
-                                <div class="flex gap-4">
-                                    <img src="{{ asset('images/icons/menu_6.png') }}" class="w-18">
-                                    {{ $activeCategory->get(5)->name ?? 'Category not found' }}
-                                </div>
-                                <span>
-                                    <i class="fa-solid fa-angle-right"></i>
-                                </span>
-                            </div>
-
-                            @include('parts.dropdown-content.machinery')
-
-                        </div>
-
-                        <div class="py-3 px-6 text-sm border-b border-gray-300 sub-menu hover:cursor-pointer hover:bg-gray-100">
-
-                            <div class=" w-full flex items-center justify-between">
-                                <div class="flex gap-4">
-                                    <img src="{{ asset('images/icons/plug.png') }}" class="w-18">
-                                    {{ $activeCategory->get(6)->name ?? 'Category not found' }}
-                                </div>
-                                <span>
-                                    <i class="fa-solid fa-angle-right"></i>
-                                </span>
-                            </div>
-
-                            @include('parts.dropdown-content.electronics')
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="md:w-auto flex justify-end items-center">
-
-                <div class=" flex gap-6 items-center font-semibold text-sm">
-
-                    <div class="menu-item text-white">
-                        <a href="{{ route('seller_index') }}" >Become a Seller</a>
-                    </div>
-
-                    <div class="menu-item text-white">
-                        <a href="{{ route('sellers.index') }}" >Shops</a>
-                    </div>
-
-                    <div class="menu-item text-white">
-                        <a href="{{ route('about-us') }}" >About Us</a>
-                    </div>
-
-                    <div class="menu-item text-white">
-                        <a href="{{ route('blogs') }}" >Blogs</a>
-                    </div>
-
-                    <div class="menu-item text-white">
-                        <a href="{{ route('contact-us') }}" >Contacts</a>
-                    </div>
-
-                </div>
-            </div>
-            <div class=" menu-item">
-                @guest
-                <a href="{{ route('login') }}"  class="px-5 py-1 border text-white">
-                    <i class="fa-regular fa-user pr-2"> </i>
-                    Login / Register
-                </a>
-                @else
-
-                <div class=" dropdown text-white text-md  p-2 -m-2" style=" z-index: 9999999 !important; ">
-                    {{ auth()->user()->firstname }}
-                    <i class=" fa-solid fa-angle-down "> </i>
-
-                    <div class="dropdown-content-profile" style=" z-index: 9999 !important; ">
-                        <div class="w-full bg-white text-gray-700">
-                            <div class="p-2 px-4 hover:cursor-pointer hover:bg-gray-100">
-                                <a href="{{ route('myprofile') }}">
-                                    <div class="flex w-full items-center gap-2">
-                                        <i class="fa-solid fa-user"></i>
-                                        Profile
+                        <div id="results_container">
+                            @foreach ($products as $product)
+                            <div class="w-full flex items-center gap-4 hover:bg-gray-200/30 hover:cursor-pointer mt-2 py-2 px-4"
+                                data-subcategory="{{ $product->id }}">
+                                <div>
+                                    <div class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
+                                        <i class="fa-solid fa-magnifying-glass"></i>
                                     </div>
-                                </a>
-
-                            </div>
-                            <div class="p-2 px-4 hover:cursor-pointer hover:bg-gray-100">
-
-                                <a href="{{ route('wishlist') }}">
-                                    <div class="flex w-full items-center gap-2">
-                                        <i class="fa-solid fa-heart"></i>
-                                        Wishlist
-                                    </div>
-                                </a>
-
-                            </div>
-                            <div class="p-2 px-4 hover:cursor-pointer hover:bg-gray-100">
-
-                                <a href="{{ route('myorders') }}">
-                                    <div class="flex w-full items-center gap-2">
-                                        <i class="fa fa-shopping-bag"></i>
-                                        Orders
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="p-2 px-4 hover:cursor-pointer hover:bg-gray-100">
-                                <div class="flex w-full items-center gap-2">
-                                    <i class="fa fa-undo"></i>
-                                    Return Items
+                                </div>
+                                <div class="text-md text-red-600 font-semibold">
+                                    {{ $product->name }}
                                 </div>
                             </div>
-
-                            <div class="w-full border border-gray-200"> </div>
-
-                            <div class="p-2 px-4 hover:cursor-pointer hover:bg-gray-100">
-                                <div class="flex w-full items-center gap-2 text-red-700"
-                                    onclick=" document.getElementById('logout_form').submit();">
-                                    <i class="fa fa-sign-out"></i>
-                                    Logout
-                                </div>
-                                <form id="logout_form" action="{{ route('logout') }}" method="POST"
-                                    class="d-none">
-                                    @csrf
-                                </form>
-                            </div>
-
+                            @endforeach
                         </div>
                     </div>
                 </div>
 
-                @endguest
+                {{-- Cart Section --}}
+
+                <div class="w-[20%] min-w-32 order-2 md:order-3">
+                    <div class="w-full flex justify-between items-center text-white py-1 md:py-2 px-4 font-bold text-lg">
+                        <div class=" relative hover:cursor-pointer hover:text-gray-200"> <span class="hidden xl:inline">Track Order</span> <i class="fa-regular fa-clock"></i></div>
+                        @php
+                            // Check if the user is authenticated and fetch the wishlist count
+                            $wishlistCount = Auth::check()
+                            ? \App\Models\Wishlist::where('user_id', Auth::id())->count()
+                            : 0;
+                            $cartCount = Auth::check() ? \App\Models\Cart::where('user_id', Auth::id())->count() : 0;
+                        @endphp
+                        <div class="relative hover:cursor-pointer hover:text-gray-200">
+                            <a href="{{ route('wishlist') }}">
+                                <i class="fa-regular fa-heart"></i>
+                            </a>
+                            <span
+                                class="absolute top-0 -right-3 inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-gray-800 bg-yellow-300 rounded-full">
+                                {{ $wishlistCount }}
+                            </span>
+                        </div>
+
+                        <div class="relative hover:cursor-pointer hover:text-gray-200">
+                            <a href="{{ route('cart') }}">
+                                <i class="fa fa-shopping-cart"></i>
+                            </a>
+                            <span
+                                class="absolute top-0 -right-3 inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-gray-800 bg-yellow-300 rounded-full">
+                                {{ $cartCount }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </div>
-    </div>
 
-    {{-- Second Row End--}}
-</div>
+        {{-- First Row End--}}
+
+        {{-- Second Row Start--}}
+
+        <div class="w-full bg-[#c44601] text-white py-2 px-12 hidden lg:block">
+            <div class="w-full hidden lg:flex justify-between">
+                <div id="all_categories" class="md:w-auto dropdown ">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <span class="font-bold text-md pl-2"> All Categories </span>
+                    <span>
+                        <i class="fa-solid fa-angle-down"></i>
+                    </span>
+
+                    <div class="dropdown-content-1">
+                        <div class="w-[320px] bg-white text-black mt-10 ml-12">
+
+                            <div class="py-3 px-6 text-sm border-b  border-gray-300 sub-menu hover:cursor-pointer hover:bg-gray-100">
+
+                                <div class=" w-full flex items-center justify-between">
+                                    <div class="flex gap-4">
+                                        <img src="{{ asset('images/icons/menu_1.png') }}" class="w-18">
+                                        {{ $activeCategory->get(0)->name ?? 'Category not found' }}
+                                    </div>
+
+
+                                    <span>
+                                        <i class="fa-solid fa-angle-right"></i>
+                                    </span>
+                                </div>
+
+                                @include('parts.dropdown-content.clothes')
+
+                            </div>
+
+                            <div class="py-3 px-6 text-sm border-b border-gray-300 sub-menu hover:cursor-pointer hover:bg-gray-100">
+
+                                <div class=" w-full flex items-center justify-between">
+                                    <div class="flex gap-4">
+                                        <img src="{{ asset('images/icons/menu_2.png') }}" class="w-18">
+                                        {{ $activeCategory->get(1)->name ?? 'Category not found' }}
+                                    </div>
+                                    <span>
+                                        <i class="fa-solid fa-angle-right"></i>
+                                    </span>
+                                </div>
+
+                                @include('parts.dropdown-content.food')
+
+                            </div>
+
+
+                            <div class="py-3 px-6 text-sm border-b border-gray-300 sub-menu hover:cursor-pointer hover:bg-gray-100">
+
+                                <div class=" w-full flex items-center justify-between">
+                                    <div class="flex gap-4">
+                                        <img src="{{ asset('images/icons/menu_3.png') }}" class="w-18">
+                                        {{ $activeCategory->get(2)->name ?? 'Category not found' }}
+                                    </div>
+                                    <span>
+                                        <i class="fa-solid fa-angle-right"></i>
+                                    </span>
+                                </div>
+
+                                @include('parts.dropdown-content.dashakarma')
+
+                            </div>
+
+                            <div class="py-3 px-6 text-sm border-b border-gray-300 sub-menu hover:cursor-pointer hover:bg-gray-100">
+
+                                <div class=" w-full flex items-center justify-between">
+                                    <div class="flex gap-4">
+                                        <img src="{{ asset('images/icons/menu_4.png') }}" class="w-18">
+                                        {{ $activeCategory->get(3)->name ?? 'Category not found' }}
+                                    </div>
+                                    <span>
+                                        <i class="fa-solid fa-angle-right"></i>
+                                    </span>
+                                </div>
+
+                                @include('parts.dropdown-content.handcraft')
+
+                            </div>
+
+                            <div class="py-3 px-6 text-sm border-b border-gray-300 sub-menu hover:cursor-pointer hover:bg-gray-100">
+
+                                <div class=" w-full flex items-center justify-between">
+                                    <div class="flex gap-4">
+                                        <img src="{{ asset('images/icons/menu_5.png') }}" class="w-18">
+                                        {{ $activeCategory->get(4)->name ?? 'Category not found' }}
+                                    </div>
+                                    <span>
+                                        <i class="fa-solid fa-angle-right"></i>
+                                    </span>
+                                </div>
+
+                                @include('parts.dropdown-content.mens-grooming')
+
+                            </div>
+
+                            <div class="py-3 px-6 text-sm border-b border-gray-300 sub-menu hover:cursor-pointer hover:bg-gray-100">
+
+                                <div class=" w-full flex items-center justify-between">
+                                    <div class="flex gap-4">
+                                        <img src="{{ asset('images/icons/menu_6.png') }}" class="w-18">
+                                        {{ $activeCategory->get(5)->name ?? 'Category not found' }}
+                                    </div>
+                                    <span>
+                                        <i class="fa-solid fa-angle-right"></i>
+                                    </span>
+                                </div>
+
+                                @include('parts.dropdown-content.machinery')
+
+                            </div>
+
+                            <div class="py-3 px-6 text-sm border-b border-gray-300 sub-menu hover:cursor-pointer hover:bg-gray-100">
+
+                                <div class=" w-full flex items-center justify-between">
+                                    <div class="flex gap-4">
+                                        <img src="{{ asset('images/icons/plug.png') }}" class="w-18">
+                                        {{ $activeCategory->get(6)->name ?? 'Category not found' }}
+                                    </div>
+                                    <span>
+                                        <i class="fa-solid fa-angle-right"></i>
+                                    </span>
+                                </div>
+
+                                @include('parts.dropdown-content.electronics')
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="md:w-auto flex justify-end items-center">
+
+                    <div class=" flex gap-6 items-center font-semibold text-sm">
+
+                        <div class="menu-item text-white">
+                            <a href="{{ route('seller_index') }}" >Become a Seller</a>
+                        </div>
+
+                        <div class="menu-item text-white">
+                            <a href="{{ route('sellers.index') }}" >Shops</a>
+                        </div>
+
+                        <div class="menu-item text-white">
+                            <a href="{{ route('about-us') }}" >About Us</a>
+                        </div>
+
+                        <div class="menu-item text-white">
+                            <a href="{{ route('blogs') }}" >Blogs</a>
+                        </div>
+
+                        <div class="menu-item text-white">
+                            <a href="{{ route('contact-us') }}" >Contacts</a>
+                        </div>
+
+                    </div>
+                </div>
+                <div class=" menu-item">
+                    @guest
+                    <a href="{{ route('login') }}"  class="px-5 py-1 border text-white">
+                        <i class="fa-regular fa-user pr-2"> </i>
+                        Login / Register
+                    </a>
+                    @else
+
+                    <div class=" dropdown text-white text-md  p-2 -m-2" style=" z-index: 9999999 !important; ">
+                        {{ auth()->user()->firstname }}
+                        <i class=" fa-solid fa-angle-down "> </i>
+
+                        <div class="dropdown-content-profile" style=" z-index: 9999 !important; ">
+                            <div class="w-full bg-white text-gray-700">
+                                <div class="p-2 px-4 hover:cursor-pointer hover:bg-gray-100">
+                                    <a href="{{ route('myprofile') }}">
+                                        <div class="flex w-full items-center gap-2">
+                                            <i class="fa-solid fa-user"></i>
+                                            Profile
+                                        </div>
+                                    </a>
+
+                                </div>
+                                <div class="p-2 px-4 hover:cursor-pointer hover:bg-gray-100">
+
+                                    <a href="{{ route('wishlist') }}">
+                                        <div class="flex w-full items-center gap-2">
+                                            <i class="fa-solid fa-heart"></i>
+                                            Wishlist
+                                        </div>
+                                    </a>
+
+                                </div>
+                                <div class="p-2 px-4 hover:cursor-pointer hover:bg-gray-100">
+
+                                    <a href="{{ route('myorders') }}">
+                                        <div class="flex w-full items-center gap-2">
+                                            <i class="fa fa-shopping-bag"></i>
+                                            Orders
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="p-2 px-4 hover:cursor-pointer hover:bg-gray-100">
+                                    <div class="flex w-full items-center gap-2">
+                                        <i class="fa fa-undo"></i>
+                                        Return Items
+                                    </div>
+                                </div>
+
+                                <div class="w-full border border-gray-200"> </div>
+
+                                <div class="p-2 px-4 hover:cursor-pointer hover:bg-gray-100">
+                                    <div class="flex w-full items-center gap-2 text-red-700"
+                                        onclick=" document.getElementById('logout_form').submit();">
+                                        <i class="fa fa-sign-out"></i>
+                                        Logout
+                                    </div>
+                                    <form id="logout_form" action="{{ route('logout') }}" method="POST"
+                                        class="d-none">
+                                        @csrf
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    @endguest
+
+                </div>
+            </div>
+        </div>
+
+        {{-- Second Row End--}}
+    </header>
     {{-- Third Row Start--}}
 
     <div class="navbar bg-white shadow-lg hidden lg:flex justify-center">
@@ -503,7 +503,7 @@ $products = $subCategories;
 
 
         <div class="dropdown">
-            <button class="dropbtn group menu-item1"> Food Items
+            <button class="dropbtn group menu-item1"> {{ $activeCategory->get(1)->name }}
             <i class="fa fa-caret-down ml-2 transform group-hover:rotate-180 transition-transform"></i> 
                 <div class="bottom-b"></div>
             </button>
@@ -580,66 +580,66 @@ $products = $subCategories;
                         <div class=" relative w-1/5 border  hover:cursor-pointer p-holder">
                             <img src="{{ asset('images/aarti.jpg') }}" class="h-full w-full p-image"
                                 alt="mens product">
-                            <div class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text white z-10 w-[110%] bg-white py-4 text-center bg-opacity-80">
+                            <a href="{{ route('user.products', ['category' => 3]) }}" class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text white z-10 w-[110%] bg-white py-4 text-center bg-opacity-80">
                                 <div class="text-lg font-bold text-black">
                                     Dashakarma
                                 </div>
                                 <div class="text-sm">
                                     13 products available
                                 </div>
-                            </div>
+                            </a>
                         </div>
 
                         <div class=" relative w-1/5 border hover:cursor-pointer p-holder">
                             <img src="{{ asset('images/dhoop.jpg') }}" class="h-full w-full p-image"
                                 alt="mens product">
-                            <div class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text white z-10 w-[110%] bg-white py-4 text-center bg-opacity-80">
+                            <a href="{{ route('user.products', ['category' => 3]) }}" class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text white z-10 w-[110%] bg-white py-4 text-center bg-opacity-80">
                                 <div class="text-lg font-bold text-black">
                                     Puja Thali
                                 </div>
                                 <div class="text-sm">
                                     13 products available
                                 </div>
-                            </div>
+                            </a>
                         </div>
 
                         <div class=" relative w-1/5 border hover:cursor-pointer p-holder">
                             <img src="{{ asset('images/puja_samogri.jpg') }}" class="h-full w-full p-image"
                                 alt="mens product">
-                            <div class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text white z-10 w-[110%] bg-white py-4 text-center bg-opacity-80">
+                            <a href="{{ route('user.products', ['category' => 3]) }}" class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text white z-10 w-[110%] bg-white py-4 text-center bg-opacity-80">
                                 <div class="text-lg font-bold text-black">
                                     Puja Samogri
                                 </div>
                                 <div class="text-sm">
                                     13 products available
                                 </div>
-                            </div>
+                            </a>
                         </div>
 
                         <div class=" relative w-1/5 border hover:cursor-pointer p-holder">
                             <img src="{{ asset('images/candle.jpg') }}" class="h-full w-full p-image"
                                 alt="mens product">
-                            <div class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text white z-10 w-[110%] bg-white py-4 text-center bg-opacity-80">
+                            <a href="{{ route('user.products', ['category' => 3]) }}" class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text white z-10 w-[110%] bg-white py-4 text-center bg-opacity-80">
                                 <div class="text-lg font-bold text-black">
                                     Holi Idols
                                 </div>
                                 <div class="text-sm">
                                     13 products available
                                 </div>
-                            </div>
+                            </a>
                         </div>
 
                         <div class=" relative w-1/5 border hover:cursor-pointer p-holder">
                             <img src="{{ asset('images/iskcon.jpg') }}" class="h-full w-full p-image"
                                 alt="mens product">
-                            <div class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text white z-10 w-[110%] bg-white py-4 text-center bg-opacity-80">
+                            <a href="{{ route('user.products', ['category' => 3]) }}" class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text white z-10 w-[110%] bg-white py-4 text-center bg-opacity-80">
                                 <div class="text-lg font-bold text-black">
                                     Holi Utensils
                                 </div>
                                 <div class="text-sm">
                                     13 products available
                                 </div>
-                            </div>
+                            </a>
                         </div>
 
                     </div>
@@ -797,7 +797,7 @@ $products = $subCategories;
                                     </a>
                                     @endforeach
                                 </div>
-                                <a href="mailto:info@starpactglobal.com" class="w-5/6 mx-auto py-2 border hover:bg-neutral-50 text-center"><i class="fa fa-envelope px-4 text-lg"></i>Mail Us</a href="mailto:info@starpactglobal.com">
+                                <a href="mailto:info.bangabasi@gmail.com" class="w-5/6 mx-auto py-2 border hover:bg-neutral-50 text-center"><i class="fa fa-envelope px-4 text-lg"></i>Mail Us</a href="mailto:info@starpactglobal.com">
                             </div>
 
                         </div>
@@ -953,7 +953,7 @@ $products = $subCategories;
                     <div class="w-full p-8 flex bg-white gap-8 z-9999 opacity-100">
                         <div class=" relative w-1/5   hover:cursor-pointer p-holder">
                             <img src="{{ asset('images/machinery_01.jpg') }}" class=" w-full p-image" alt="mens product">
-                            <div class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text white z-10 w-[110%] bg-white py-4 text-center bg-opacity-80">
+                            <a href="{{ route('user.products', ['category' => 6]) }}" class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text white z-10 w-[110%] bg-white py-4 text-center bg-opacity-80">
                                 <div class="text-lg font-bold text-black">
                                     {{$subCategories[0]->name}}
                                 </div>
@@ -970,12 +970,12 @@ $products = $subCategories;
                                         {{$count_product}} products available
                                     @endif
                                 </div>
-                            </div>
+                            </a>
                         </div>
 
                         <div class=" relative w-1/5   hover:cursor-pointer p-holder">
                             <img src="{{ asset('images/machinery_03.jpg') }}" class=" w-full p-image" alt="mens product">
-                            <div class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text white z-10 w-[110%] bg-white py-4 text-center bg-opacity-80">
+                            <a href="{{ route('user.products', ['category' => 6]) }}" class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text white z-10 w-[110%] bg-white py-4 text-center bg-opacity-80">
                                 <div class="text-lg font-bold text-black">
                                     {{$subCategories[1]->name}}
                                 </div>
@@ -992,43 +992,43 @@ $products = $subCategories;
                                         {{$count_product}} products available
                                     @endif
                                 </div>
-                            </div>
+                            </a>
                         </div>
 
                         <div class=" relative w-1/5   hover:cursor-pointer p-holder">
                             <img src="{{ asset('images/machinery_02.jpg') }}" class="h-full w-full p-image" alt="mens product">
-                            <div class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text white z-10 w-[110%] bg-white py-4 text-center bg-opacity-80">
+                            <a href="{{ route('user.products', ['category' => 6]) }}" class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text white z-10 w-[110%] bg-white py-4 text-center bg-opacity-80">
                                 <div class="text-lg font-bold text-black">
                                     {{$subCategories[2]->name}}
                                 </div>
                                 <div class="text-sm">
                                     Show Products
                                 </div>
-                            </div>
+                            </a>
                         </div>
 
                         <div class=" relative w-1/5   hover:cursor-pointer p-holder">
                             <img src="{{ asset('images/machinery_03.jpg') }}" class="h-full w-full p-image" alt="mens product">
-                            <div class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text white z-10 w-[110%] bg-white py-4 text-center bg-opacity-80">
+                            <a href="{{ route('user.products', ['category' => 6]) }}" class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text white z-10 w-[110%] bg-white py-4 text-center bg-opacity-80">
                                 <div class="text-lg font-bold text-black">
                                     {{$subCategories[2]->name}}
                                 </div>
                                 <div class="text-sm">
                                     0 products available
                                 </div>
-                            </div>
+                            </a>
                         </div>
 
                         <div class=" relative w-1/5 hover:cursor-pointer p-holder">
                             <img src="{{ asset('images/machinery_04.jpg') }}" class="h-full w-full p-image" alt="mens product">
-                            <div class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text white z-10 w-[110%] bg-white py-4 text-center bg-opacity-80">
+                            <a class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text white z-10 w-[110%] bg-white py-4 text-center bg-opacity-80">
                                 <div class="text-lg font-bold text-black">
                                     {{$subCategories[2]->name}}
                                 </div>
                                 <div class="text-sm">
                                     0 products available
                                 </div>
-                            </div>
+                            </a>
                         </div>
 
                     </div>
@@ -1052,28 +1052,29 @@ $products = $subCategories;
                             $cat_id = $activeCategory->get(1)->id;
                         @endphp
 
-                        <div class=" relative w-1/3 border h-[340px] shadow-lg hover:cursor-pointer p-holder ">
+                        <div class="relative w-1/3 border h-[340px] shadow-lg hover:cursor-pointer p-holder">
                             <img src="{{ asset('images/electronics.jpg') }}" class="h-full w-full p-image" alt="mens product">
-                            <div class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text white z-10 w-[110%] bg-white py-4 text-center bg-opacity-80">
+                            <a href="{{ route('user.products', ['category' => 7]) }}" class="absolute block top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-[110%] bg-white py-4 text-center bg-opacity-80 border ">
                                 <div class="text-lg font-bold text-black">
-                                    {{ $subCategories[0]->name}}
+                                    {{ $subCategories[0]->name }}
                                 </div>
-                                <div class="text-sm ">
-                                    <a href="#" class="text-orange-600"> Show More </a>
+                                <div class="text-sm">
+                                    <span class="text-orange-600"> Show More </span>
                                 </div>
-                            </div>
+                            </a>
                         </div>
+
 
                         <div class=" relative w-1/3 border h-[340px] shadow-lg  hover:cursor-pointer p-holder">
                             <img src="{{ asset('images/electronics_1.jpg') }}" class="h-full w-full p-image " alt="mens product">
-                            <div class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text white z-10 w-full bg-white py-4 text-center bg-opacity-80">
+                            <a href="{{ route('user.products', ['category' => 7]) }}" class="absolute block top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text white z-10 w-full bg-white py-4 text-center bg-opacity-80">
                                 <div class="text-lg font-bold text-black">
                                     {{ $subCategories[1]->name}}
                                 </div>
                                 <div class="text-sm">
-                                    <a href="#" class="text-orange-600"> Show More </a>
+                                    <span class="text-orange-600"> Show More </span>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                         <div class=" relative w-1/3 flex flex-col justify-between  hover:cursor-pointer p-holder">
                             <div>
