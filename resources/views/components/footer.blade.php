@@ -76,10 +76,10 @@
                 <div class="col-span-12 lg:col-span-6  ">
                     <div class="flex py-4 justify-center gap-4 ">
                         @if(isset($logos['2']))
-                            <img src="{{ asset('user/uploads/logos/' . $logos['1']->image_path) }}" class="w-40">
+                            <img src="{{ asset('user/uploads/logos/' . $logos['1']->image_path) }}" alt="footer-log" class="w-40">
                         @endif
                         <div class="border-left border border-neutral-200"></div>
-                        <img src="{{ asset('images/svg/msme_icon_circle.png') }}" class="border-left h-fit w-10">
+                        <img src="{{ asset('images/svg/msme_icon_circle.png') }}" alt="mesme logo" class="border-left h-fit w-10">
                     </div>
                     <div class="text-center">
                         <p class="w-full md:w-3/4 mx-auto font-light text-sm"><b>Bangabasi.com</b>, a virtual gateway to Bengal’s finest offerings. Our mission is to make the crafts, food, apparel, and more of West Bengal accessible to anyone, anywhere.</p>
@@ -88,18 +88,18 @@
                         <div class="w-2/5  min-w-60 p-4">
                             <ul class="list-none space-y-2">
                                 <li class="flex items-start gap-4">
-                                    <img src="{{ asset('images/icons/pin_bangabasi.png')}}" alt="" class="inline w-4 " style="filter: brightness(10);">
+                                    <img src="{{ asset('images/icons/pin_bangabasi.png')}}" alt="pinterest logo" class="inline w-4 " style="filter: brightness(10);">
                                     <address class="text-sm inline">
                                         0050 Gita Kuthir, Burdwan
                                         <br> Pin 713125 (WB) India
                                     </address>
                                 </li>
                                 <li class="flex items-center gap-4">
-                                    <img src="{{ asset('images/icons/phone_bangabasi.png')}}" alt="" class="inline w-4 " style="filter: brightness(10);">
+                                    <img src="{{ asset('images/icons/phone_bangabasi.png')}}" alt="phone icon" class="inline w-4 " style="filter: brightness(10);">
                                     <a href="tel:+919476168391">+91 9476 168 391</a>
                                 </li>
                                 <li class="flex items-center gap-4">
-                                    <img src="{{ asset('images/icons/mail_bangabasi_1.png')}}" alt="" class="inline w-4 invert">
+                                    <img src="{{ asset('images/icons/mail_bangabasi_1.png')}}" alt="mail icon" class="inline w-4 invert">
                                     <a href="mailto:info.bangabasi@gmail.com">info.bangabasi@gmail.com</a>
                                 </li>
                             </ul>
@@ -159,15 +159,15 @@
             <div class="sm:flex justify-center items-center gap-4 space-y-6 sm:space-y-0 text-white pt-0 pb-4 text-center">
                 <h6 class="text-bold text-sm text-neutral-300">Pay With</h6>
                 <div class="border-l-2 border-gray-500 border-r-2 flex justify-around flex-wrap gap-2 px-4 sm:min-w-80">
-                    <img src="{{ asset('/images/svg/visa.png')}}" alt="" class="w-10">
-                    <img src="{{ asset('/images/svg/cirrus.png')}}" alt="" class="w-10">
-                    <img src="{{ asset('/images/svg/american-express.png')}}" alt="" class="w-10 hidden sm:block">
-                    <img src="{{ asset('/images/svg/master-card.png')}}" alt="" class="w-10">
-                    <img src="{{ asset('/images/svg/cirrus.png')}}" alt="" class="w-10">
-                    <img src="{{ asset('/images/svg/paypal.png')}}" alt="" class="w-10">
+                    <img src="{{ asset('/images/svg/visa.png')}}" alt="payment methods" class="w-10">
+                    <img src="{{ asset('/images/svg/cirrus.png')}}" alt="payment methods" class="w-10">
+                    <img src="{{ asset('/images/svg/american-express.png')}}" alt="payment methods" class="w-10 hidden sm:block">
+                    <img src="{{ asset('/images/svg/master-card.png')}}" alt="payment methods" class="w-10">
+                    <img src="{{ asset('/images/svg/cirrus.png')}}" alt="payment methods" class="w-10">
+                    <img src="{{ asset('/images/svg/paypal.png')}}" alt="payment methods" class="w-10">
                 </div>
                 @if(isset($logos['2']))
-                    <img src="{{ asset('user/uploads/logos/' . $logos['1']->image_path) }}" class="w-24 mx-auto sm:mx-0">
+                    <img src="{{ asset('user/uploads/logos/' . $logos['1']->image_path) }}" alt="footer small logo" class="w-24 mx-auto sm:mx-0">
                 @endif
             </div>
         </div>
