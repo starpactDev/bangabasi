@@ -1,6 +1,6 @@
 @extends("layouts.master")
 @section('head')
-    <title>Bangabasi | </title>
+    <title>Bangabasi | Order Status</title>
 @endsection
 @section('content')
 	@php
