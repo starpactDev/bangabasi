@@ -804,7 +804,7 @@ $products = $subCategories;
 
                         <div class=" relative w-3/5 p-4 border  shadow-lg  hover:cursor-pointer p-holder">
                             <h3 class="text-xl font-bold text-black mb-2"> New Products </h3>
-                            <x-comboproducts />
+                            <x-combothree />
                         </div>
 
                     </div>

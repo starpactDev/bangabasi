@@ -7,7 +7,7 @@ use App\Models\Product;
 use Illuminate\View\Component;
 use Illuminate\Contracts\View\View;
 
-class comboproducts extends Component
+class Combothree extends Component
 {
     public $comboproducts;
     /**
