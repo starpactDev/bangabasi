@@ -3,6 +3,7 @@
 <title>Bangabasi | eCommerce for Bengal</title>
 @endsection
 @section('content')
+
 <section class="py-8 hero">
 	<div class="container">
 		<div class="grid grid-cols-12 gap-4 ">
