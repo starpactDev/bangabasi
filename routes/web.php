@@ -231,6 +231,9 @@ Route::middleware(UserAuthMiddleware::class)->group(function () {
 
     Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist');
     Route::post('/wishlist/add', [WishlistController::class, 'add'])->name('wishlist.add');
+    // Add to wishlist and redirect to wishlist page
+    Route::post('/wishlist/add-and-redirect', [WishlistController::class, 'addAndRedirect'])->name('wishlist.addAndRedirect');
+
 
     Route::post('/wishlist/delete', [WishlistController::class, 'delete'])->name('wishlist.delete');
 

@@ -24,7 +24,13 @@
 	</div>
 	@endif
 	<div class="absolute w-full justify-center trasnsition-all top-0 hidden group-hover:top-10 group-hover:flex ">
-		<button class="mx-2 p-2 bg-white/65 text-xl text-orange-600 group-hover:shadow-md" onclick="redirectToCart(event)"><i class="fa-solid fa-cart-shopping"></i></button>
+		<form action="{{ route('wishlist.addAndRedirect') }}" method="POST">
+			@csrf
+			<input type="hidden" name="product_id" value="{{ $id }}">
+			<button type="submit" class="mx-2 p-2 bg-white/65 text-xl text-orange-600 group-hover:shadow-md">
+				<i class="fa-solid fa-heart"></i>
+			</button>
+		</form>
 		<button class="mx-2 p-2 bg-white/65 text-xl text-orange-600 border"><i class="fa-solid fa-share"></i></button>
 	</div>
 	@if(isset($id))

@@ -16,8 +16,7 @@ class WishlistController extends Controller
 {
     public function add(Request $request)
     {
-        // Log request data
-        Log::info('Wishlist add request data:', $request->all());
+
 
         $validatedData = $request->validate([
             'product_id' => 'required|integer|exists:products,id',
@@ -42,6 +41,37 @@ class WishlistController extends Controller
             return response()->json(['success' => false, 'message' => 'Unable to add to wishlist. Please try again.']);
         }
     }
+
+    public function addAndRedirect(Request $request)
+    {
+        // Validate the product_id
+        $validatedData = $request->validate([
+            'product_id' => 'required|integer|exists:products,id',
+        ]);
+
+        // Get the authenticated user
+        $user = Auth::user();
+
+        if (!$user) {
+            // If user is not authenticated, redirect to login page
+            return redirect()->route('login')->with('error', 'You need to login to add items to your wishlist.');
+        }
+
+        try {
+            // Create or update the wishlist entry
+            Wishlist::updateOrCreate([
+                'product_id' => $validatedData['product_id'],
+                'user_id' => $user->id,
+            ]);
+
+            // Redirect to wishlist page with a success message
+            return redirect()->route('wishlist')->with('success', 'Product added to wishlist!');
+        } catch (Exception $e) {
+            // Redirect back with an error message
+            return redirect()->back()->with('error', 'Unable to add to wishlist. Please try again.');
+        }
+    }
+
     public function index()
     {
         $user = Auth::user();
