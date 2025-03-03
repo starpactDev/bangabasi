@@ -74,5 +74,5 @@
 
     </div>
 
-    <x-combothree />
+
 @endsection

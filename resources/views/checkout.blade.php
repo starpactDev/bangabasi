@@ -43,7 +43,7 @@
 
     <div class="container grid grid-cols-12 gap-8 py-8">
 
-        <div class="col-span-12 lg:col-span-7 ">
+        <div class="col-span-12 lg:col-span-6">
 
             <div id="new_address" class=" {{ $address_type == 'new' ? 'block' : 'hidden' }} ">
 
@@ -144,7 +144,7 @@
                 <textarea name="" id="additional_info" class="w-full min-h-32 my-4 p-4 border focus:outline-none focus:border-b " placeholder="Notes about your order e.g. special notes for delivery"></textarea>
             </div>
         </div>
-        <div class="col-span-12 lg:col-span-5">
+        <div class="col-span-12 lg:col-span-6">
             <div class="px-4 py-6 min-h-64 border-2 border-black ">
                 <h3 class="text-lg uppercase font-medium py-2"><span class="border-b border-black py-2">Your Order</span>
                 </h3>
