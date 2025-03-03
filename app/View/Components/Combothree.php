@@ -38,6 +38,6 @@ class Combothree extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.comboproducts', ['comboproducts' => $this->comboproducts]);
+        return view('components.combothree', ['comboproducts' => $this->comboproducts]);
     }
 }
