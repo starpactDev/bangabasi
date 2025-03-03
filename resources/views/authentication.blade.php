@@ -150,6 +150,9 @@
 
 
             <button class="text-sm text-blue-500" id="authResetBtn">Forgot Password?</button>
+            @if(session('error'))
+                <p class="text-red-600 text-sm">{{ session('error') }}</p>
+            @endif
         </div>
         <div class="hidden md:block flex-1 min-w-80 min-h-96 right order-1">
             <div class="swiper welcome h-full">

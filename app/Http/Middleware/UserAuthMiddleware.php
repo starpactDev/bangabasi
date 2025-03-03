@@ -18,11 +18,11 @@ class UserAuthMiddleware
     {
         if (!Auth::check()) {
             // If the user is authenticated, redirect to a specific page (e.g., dashboard)
-            return redirect('/login');
+            return redirect('/login')->with('error', 'You must be logged in to access this page.');
         }
         else if(Auth::user()->usertype !== 'user')
         {
-            return redirect('/login');
+            return redirect('/login')->with('error', 'You do not have the required permissions.');
         }
 
         return $next($request);
