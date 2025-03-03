@@ -93,7 +93,7 @@
                         </video>
                     @endif
                 </div>
-                <div class="w-full py-4  " style="border: 1px dashed red">
+                <div class="w-full py-4" style="border: 1px dashed red">
                     <h6 class="capitalize text-sm font-semibold px-4 text-gray-700">you may be interested in... </h6>
                     <div class="swiper8 interested py-8 relative overflow-hidden">
                         <div class="swiper-wrapper">
@@ -140,7 +140,7 @@
                 </div>
             </div>
             <div class="col-span-12 lg:col-span-6">
-                <h1 class="text-2xl font-semibold "> {{ $xpage }}</h1>
+                <h1 class="text-2xl font-semibold ">{{ $xpage }}</h1>
                 <div>
                     @for ($i = 1; $i <= 5; $i++)
                         @if ($i <= $rating)
