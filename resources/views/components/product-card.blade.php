@@ -31,7 +31,7 @@
 				<i class="fa-solid fa-heart"></i>
 			</button>
 		</form>
-		<button class="mx-2 p-2 bg-white/65 text-xl text-orange-600 border"><i class="fa-solid fa-share"></i></button>
+		<a href="https://wa.me/?text={{ urlencode('Check out this product: ' . route('user.product.details', ['id' => $id])) }}" target="_blank" class="mx-2 p-2 bg-white/65 text-xl text-orange-600 border"><i class="fa-solid fa-share"></i></a>
 	</div>
 	@if(isset($id))
 		<a href="{{ route('user.product.details', ['id' => $id]) }}" class="{{ $class ?? '' }}">
