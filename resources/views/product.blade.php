@@ -203,80 +203,83 @@
                         @endforeach
                     </div>
                 @endif
-                @if ($in_stock == 1)
+                @if ($in_stock)
                     <div class="my-4 w-fit px-4 border border-green-600 rounded-full">In Stock <span class="text-green-600 animate-ping">&#9679;</span></div>
+
+                    <div class="my-4 space-y-2">
+                        <form action="" class="border-b-2 border-neutral-800 w-fit px-2 py-1" id="checkPinCode">
+                            @csrf
+                            <label for="pincode"><i class="fa-solid fa-map-marker-alt text-blue-600"></i></label>
+                            <input type="hidden" name="delivery_postcode" value="{{ $seller->pickupAddress->pincode ?? '713125' }}">
+                            <input type="number" name="pickup_postcode" id="pincode" value="700001" class="px-2 w-24 focus:outline-none" pattern="^\d{6}$" required>
+                            <input type="submit" value="Check Delivery" class="text-blue-600 cursor-pointer">
+                        </form>
+                        <h6 class="font-semibold" id="estDelivery"></h6>
+                        <small id="cutOffTime"></small>
+                        <p class="text-red-500" id="courierError"></p>
+                    </div>
+                    @php
+                        $notBuyer = Auth::check() && Auth::user()->usertype !== 'user' ? true : false;
+                    @endphp
+                    
+                    <div class="pb-4 relative {{$notBuyer ? 'grayscale' : ''}}" id="actionArea">
+                        
+                        <div class="flex justify-between py-4 px-4" >
+                            <div class="w-1/4 flex h-8">
+                                <button class="w-1/4 border hover:bg-slate-200" onclick="downCount()">-</button>
+                                <div class="w-1/4 text-center border leading-8" id="cartCount">1</div>
+                                <button class="w-1/4 border  hover:bg-slate-200" onclick="upCount()">+</button>
+                            </div>
+
+                            
+                                <button id="toCartBtn" onclick="submitWishlistToCart({{ $p_id }}, {{ $price }});" class="w-3/4 bg-black text-white hover:bg-gray-900">Add To Cart</button>
+
+                                <form id="wishlist_addToCart_{{ $p_id }}" action="{{ route('wishlist.addToCart') }}"
+                                    method="POST" style="display: none;">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{ $p_id }}">
+                                    <input type="hidden" name="quantity" id="quantity_{{ $p_id }}" value="1">
+                                    <input type="hidden" name="size" id="selected_size_{{ $p_id }}">
+                                    <input type="hidden" name="unit_price" id="unit_price_{{ $p_id }}" value="{{ $price }}">
+                                    <input type="hidden" name="total_price" id="total_price_{{ $p_id }}" value="{{ $price }}">
+                                </form>
+
+                            
+                        </div>
+                        
+                        @if($notBuyer)
+                            <div class="py-4 w-full"></div>
+                        @else
+                            <p class="text-center text-slate-400 text-sm py-2">---------------- OR ----------------</p>
+                        @endif
+                        <div class="flex justify-around my-2">
+                            <button id="buyNow" class="py-4 px-6 bg-[#c44601] hover:bg-red-700 text-center text-slate-50 font-semibold rounded-md cursor-pointer  max-w-xs text-lg " id="buyNow" data-product-id="{{ $p_id }}">
+                                <img src="/images/icons/shopping-cart.png" alt="" class="h-6 mr-3 inline invert">
+                                Buy Now
+                            </button>
+                            @if ($wishlist)
+                                <!-- Product is already in the wishlist, no click event will be attached -->
+                                <h3 class="py-4 px-4 border border-red-600 hover:bg-red-50 text-center text-red-600 font-semibold rounded-md cursor-pointer max-w-xs inline-flex items-center justify-center text-lg" data-product-id="{{ $p_id }}">
+                                    <img src="/images/icons/heart_fill.svg" alt="" class="h-6 mr-3">
+                                    Wishlisted
+                                </h3>
+                            @else     
+                                <!-- Product is not in the wishlist, attach click event -->
+                                <button class="py-4 px-6 border-2 border-green-100 bg-green-600 hover:bg-green-700 text-center text-slate-50 font-semibold rounded-md cursor-pointer  max-w-xs text-lg add-to-wishlist" data-product-id="{{ $p_id }}">
+                                    <img src="/images/icons/heart.svg" alt="" class="h-6 mr-3 inline invert">
+                                    Add to wishlist
+                                </button>
+                            @endif
+                        </div>
+                        @if($notBuyer)
+                            <div class="absolute w-full h-full top-0 flex justify-center items-center backdrop-blur-[1px] bg-neutral-200 bg-opacity-40 border">
+                                <p class="-translate-y-4 text-lg">You aren't authorized user.</p>
+                            </div>
+                        @endif
+                    </div>
                 @else
                     <div class="my-4 w-fit px-4 border border-red-600 rounded-full">Out of Stock <span class="text-red-600 animate-ping">&#9679;</span></div>
                 @endif
-                <div class="my-4 space-y-2">
-                    <form action="" class="border-b-2 border-neutral-800 w-fit px-2 py-1" id="checkPinCode">
-                        @csrf
-                        <label for="pincode"><i class="fa-solid fa-map-marker-alt text-blue-600"></i></label>
-                        <input type="hidden" name="delivery_postcode" value="{{ $seller->pickupAddress->pincode ?? '713125' }}">
-                        <input type="number" name="pickup_postcode" id="pincode" value="700001" class="px-2 w-24 focus:outline-none" pattern="^\d{6}$" required>
-                        <input type="submit" value="Check Delivery" class="text-blue-600 cursor-pointer">
-                    </form>
-                    <h6 class="font-semibold" id="estDelivery"></h6>
-                    <small id="cutOffTime"></small>
-                    <p class="text-red-500" id="courierError"></p>
-                </div>
-                @php
-                    $notBuyer = Auth::check() && Auth::user()->usertype !== 'user' ? true : false;
-                @endphp
-                <div class="pb-4 relative {{$notBuyer ? 'grayscale' : ''}}" id="actionArea">
-                    <div class="flex justify-between py-4 px-4" >
-                        <div class="w-1/4 flex h-8">
-                            <button class="w-1/4 border hover:bg-slate-200" onclick="downCount()">-</button>
-                            <div class="w-1/4 text-center border leading-8" id="cartCount">1</div>
-                            <button class="w-1/4 border  hover:bg-slate-200" onclick="upCount()">+</button>
-                        </div>
-
-                        @if ($in_stock)
-                            <button id="toCartBtn" onclick="submitWishlistToCart({{ $p_id }}, {{ $price }});" class="w-3/4 bg-black text-white hover:bg-gray-900">Add To Cart</button>
-
-                            <form id="wishlist_addToCart_{{ $p_id }}" action="{{ route('wishlist.addToCart') }}"
-                                method="POST" style="display: none;">
-                                @csrf
-                                <input type="hidden" name="product_id" value="{{ $p_id }}">
-                                <input type="hidden" name="quantity" id="quantity_{{ $p_id }}" value="1">
-                                <input type="hidden" name="size" id="selected_size_{{ $p_id }}">
-                                <input type="hidden" name="unit_price" id="unit_price_{{ $p_id }}" value="{{ $price }}">
-                                <input type="hidden" name="total_price" id="total_price_{{ $p_id }}" value="{{ $price }}">
-                            </form>
-
-                        @endif
-                    </div>
-                    @if($notBuyer)
-                        <div class="py-4 w-full"></div>
-                    @else
-                        <p class="text-center text-slate-400 text-sm py-2">---------------- OR ----------------</p>
-                    @endif
-                    <div class="flex justify-around my-2">
-                        <button id="buyNow" class="py-4 px-6 bg-[#c44601] hover:bg-red-700 text-center text-slate-50 font-semibold rounded-md cursor-pointer  max-w-xs text-lg " id="buyNow" data-product-id="{{ $p_id }}">
-                            <img src="/images/icons/shopping-cart.png" alt="" class="h-6 mr-3 inline invert">
-                            Buy Now
-                        </button>
-                        @if ($wishlist)
-                            <!-- Product is already in the wishlist, no click event will be attached -->
-                            <h3 class="py-4 px-4 border border-red-600 hover:bg-red-50 text-center text-red-600 font-semibold rounded-md cursor-pointer max-w-xs inline-flex items-center justify-center text-lg" data-product-id="{{ $p_id }}">
-                                <img src="/images/icons/heart_fill.svg" alt="" class="h-6 mr-3">
-                                Wishlisted
-                            </h3>
-                        @else     
-                            <!-- Product is not in the wishlist, attach click event -->
-                            <button class="py-4 px-6 border-2 border-green-100 bg-green-600 hover:bg-green-700 text-center text-slate-50 font-semibold rounded-md cursor-pointer  max-w-xs text-lg add-to-wishlist" data-product-id="{{ $p_id }}">
-                                <img src="/images/icons/heart.svg" alt="" class="h-6 mr-3 inline invert">
-                                Add to wishlist
-                            </button>
-                        @endif
-                    </div>
-                    @if($notBuyer)
-                        <div class="absolute w-full h-full top-0 flex justify-center items-center backdrop-blur-[1px] bg-neutral-200 bg-opacity-40 border">
-                            <p class="-translate-y-4 text-lg">You aren't authorized user.</p>
-                        </div>
-                    @endif
-                </div>
-                
             </div>
             <div class="col-span-12 my-12">
                 <ul class=" md:flex ">
