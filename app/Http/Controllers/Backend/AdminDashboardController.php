@@ -47,18 +47,28 @@ class AdminDashboardController extends Controller
             return $user;
         });
 
+        $sellerCount = User::where('usertype', 'seller')->count();
+
         $newSellers = User::where('usertype', 'seller')->orderBy('created_at', 'DESC')->take(5)->get();
 
         foreach ($newSellers as $seller) {
             $seller->total_products = Product::where('user_id', $seller->id)->count();
 
             $seller->total_sales = OrderItem::whereIn('product_id', Product::where('user_id', $seller->id)->pluck('id'))->count();
-        }
 
+            // Calculate the total sales price for the seller
+            $totalSalePrice = OrderItem::whereIn('product_id', Product::where('user_id', $seller->id)->pluck('id'))
+            ->get() // Get all the order items for the seller's products
+            ->sum(function ($orderItem) {
+                return $orderItem->quantity * $orderItem->unit_price; // Multiply quantity and unit_price for each order item
+            });
+
+            $seller->total_sale_price = $totalSalePrice;
+        }
 
         $orders = Order::all();
         $orderItems = OrderItem::with('order')->take(5)->get();
-        return view('admin.pages.dashboard', compact('userCount', 'purchasedProducts', 'usersWithSalesAndPrice', 'newSellers',  'orders', 'orderItems'));
+        return view('admin.pages.dashboard', compact('userCount', 'purchasedProducts', 'usersWithSalesAndPrice', 'sellerCount', 'newSellers',  'orders', 'orderItems'));
     }
 
     public function profile()

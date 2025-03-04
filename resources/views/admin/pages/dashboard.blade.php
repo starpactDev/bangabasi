@@ -120,6 +120,7 @@
 					<div class="card ec-cust-card card-table-border-none card-default">
 						<div class="card-header justify-content-between ">
 							<h2>New Customers</h2>
+							<h2>{{ $usersWithSalesAndPrice->count() ?? 0 }} Listed</h2>
 						</div>
 						<div class="card-body pt-0 pb-15px">
 							<table class="table ">
@@ -213,11 +214,12 @@
 			</div>
 
 			<div class="row py-4">
-				<div class="col-xl-5">
+				<div class="col-xl-6">
 					<!-- New Sellers -->
 					<div class="card ec-cust-card card-table-border-none card-default">
 						<div class="card-header justify-content-between ">
 							<h2>New Sellers</h2>
+							<h2>{{$sellerCount ?? 0}} Listed</h2>
 						</div>
 						<div class="card-body pt-0 pb-15px">
 							<table class="table ">
@@ -225,7 +227,8 @@
 									<tr>
 										<th>Name</th>
 										<th class="d-none d-md-block">Total Products</th>
-										<th>Total Sales</th>
+										<th>Total Orders</th>
+										<th>Total Amount</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -244,8 +247,9 @@
 													</div>
 												</div>
 											</td>
-											<td class="text-dark d-none d-md-block">{{$user->total_products}}</td>
-											<td>{{ $user->total_sales . ' '.'Orders'}}</td>
+											<td class="text-dark d-none d-md-block">{{$user->total_products ?? 0}}</td>
+											<td>{{ $user->total_sales ?? 0}}</td>
+											<td>{{ '₹'.$user->total_sale_price ?? 0 }}</td>
 										</tr>
 									@endforeach
 									
@@ -256,7 +260,7 @@
 					</div>
 				</div>
 
-				<div class="col-xl-7">
+				<div class="col-xl-6">
 					<!-- Top Products -->
 					<div class="card card-default ec-card-top-prod">
 						<div class="card-header justify-content-between">
