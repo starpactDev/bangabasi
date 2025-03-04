@@ -123,6 +123,13 @@
 						</div>
 						<div class="card-body pt-0 pb-15px">
 							<table class="table ">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th class="d-none d-md-block">Total Orders</th>
+										<th>Total Price</th>
+									</tr>
+								</thead>
 								<tbody>
 									@foreach($usersWithSalesAndPrice as $user)
 										<tr>
