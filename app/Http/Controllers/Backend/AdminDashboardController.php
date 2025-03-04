@@ -8,6 +8,7 @@ use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -22,7 +23,7 @@ class AdminDashboardController extends Controller
         $purchasedProducts = OrderItem::with('product')->select('product_id', DB::raw('COUNT(*) as purchase_count'))
             ->groupBy('product_id') // Group by product
             ->orderBy('purchase_count', 'DESC') // Order by count
-            ->take(4)
+            ->take(3)
             ->get();
 
 
@@ -46,9 +47,18 @@ class AdminDashboardController extends Controller
             return $user;
         });
 
+        $newSellers = User::where('usertype', 'seller')->orderBy('created_at', 'DESC')->take(5)->get();
+
+        foreach ($newSellers as $seller) {
+            $seller->total_products = Product::where('user_id', $seller->id)->count();
+
+            $seller->total_sales = OrderItem::whereIn('product_id', Product::where('user_id', $seller->id)->pluck('id'))->count();
+        }
+
+
         $orders = Order::all();
         $orderItems = OrderItem::with('order')->take(5)->get();
-        return view('admin.pages.dashboard', compact('userCount', 'purchasedProducts', 'usersWithSalesAndPrice', 'orders', 'orderItems'));
+        return view('admin.pages.dashboard', compact('userCount', 'purchasedProducts', 'usersWithSalesAndPrice', 'newSellers',  'orders', 'orderItems'));
     }
 
     public function profile()

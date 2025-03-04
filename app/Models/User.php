@@ -58,7 +58,12 @@ class User extends Authenticatable
     }
 
     public function gstDetails()
-{
-    return $this->hasOne(GstDetail::class);
-}
+    {
+        return $this->hasOne(GstDetail::class);
+    }
+
+    public function seller()
+    {
+        return $this->hasOne(Seller::class);
+    }
 }

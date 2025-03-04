@@ -64,4 +64,14 @@ class Seller extends Model
             ->count();
     }
 
+    public function orders()
+    {
+        return $this->hasManyThrough(Order::class, OrderItem::class, 'seller_id', 'id', 'id', 'order_id');
+    }
+
+    public function orderItems()
+    {
+        return $this->hasManyThrough(OrderItem::class, Product::class, 'user_id', 'product_id', 'user_id', 'id');
+    }
+
 }
