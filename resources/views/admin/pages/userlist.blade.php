@@ -16,9 +16,6 @@
 					<span><i class="mdi mdi-chevron-right"></i></span>User
 				</p>
 			</div>
-			<div>
-				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUser"> Add User </button>
-			</div>
 		</div>
 		@if(session('success'))
 			<div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -86,73 +83,7 @@
 				</div>
 			</div>
 		</div>
-		<!-- Add User Modal  -->
-		<div class="modal fade modal-add-contact" id="addUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-				<div class="modal-content">
-					<form>
-						<div class="modal-header px-4">
-							<h5 class="modal-title" id="exampleModalCenterTitle">Add New User</h5>
-						</div>
 
-						<div class="modal-body px-4">
-							<div class="row mb-2">
-								<div class="col-lg-6">
-									<div class="form-group">
-										<label for="firstName">First name</label>
-										<input type="text" class="form-control" id="firstName" value="John">
-									</div>
-								</div>
-
-								<div class="col-lg-6">
-									<div class="form-group">
-										<label for="lastName">Last name</label>
-										<input type="text" class="form-control" id="lastName" value="Deo">
-									</div>
-								</div>
-
-								<div class="col-lg-6">
-									<div class="form-group mb-4">
-										<label for="userName">User name</label>
-										<input type="text" class="form-control" id="userName"
-											value="johndoe">
-									</div>
-								</div>
-
-								<div class="col-lg-6">
-									<div class="form-group mb-4">
-										<label for="email">Email</label>
-										<input type="email" class="form-control" id="email"
-											value="johnexample@gmail.com">
-									</div>
-								</div>
-
-								<div class="col-lg-6">
-									<div class="form-group mb-4">
-										<label for="Birthday">Birthday</label>
-										<input type="text" class="form-control" id="Birthday"
-											value="10-12-1991">
-									</div>
-								</div>
-
-								<div class="col-lg-6">
-									<div class="form-group mb-4">
-										<label for="event">Address</label>
-										<input type="text" class="form-control" id="event"
-											value="Address here">
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div class="modal-footer px-4">
-							<button type="button" class="btn btn-secondary btn-pill" data-bs-dismiss="modal">Cancel</button>
-							<button type="button" class="btn btn-primary btn-pill">Save Contact</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
 	</div> <!-- End Content -->
 </div>
 @endsection
@@ -192,5 +123,5 @@
 
 			}
 		});
-	</script>	
+	</script>
 @endpush
