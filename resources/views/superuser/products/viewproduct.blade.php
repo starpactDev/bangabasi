@@ -32,9 +32,9 @@
                                         <th>Product</th>
                                         <th>Name</th>
                                         <th>Category</th>
-                                        <th>Sub-Category</th>
-                                        <th>Original Price &#8377;</th>
-                                        <th>Offer Price &#8377;</th>
+                                        
+                                        <th>Price &#8377;</th>
+
                                         <th>Purchased</th>
                                         <th>Size & Stock</th>
                                         <th>Colour</th>
@@ -46,7 +46,7 @@
 
                                 <tbody>
                                     @foreach ($products as $product)
-                                    <tr>
+                                    <tr >
                                         <td>
                                             @if ($product->productImages->isNotEmpty())
                                             <img class="tbl-thumb"
@@ -55,13 +55,13 @@
                                             @endif
                                         </td>
                                         <td>{{ $product->name ?? '' }}</td>
-                                        <td>{{ $product->categoryDetails->name ?? ''}}</td>
-                                        <td>{{ $product->subCategoryDetails->name ?? '' }}</td>
-                                        <td style="color:rgb(219, 9, 9);font-weight:600">
-                                            {{ $product->original_price ?? '' }}
+                                        <td>{{ $product->categoryDetails->name ?? ''}} <small class="text-truncate d-inline-block" style="width: 15ch; color:gray" title="{{ $product->subCategoryDetails->name ?? '' }}">{{ $product->subCategoryDetails->name ?? '' }}</small></td>
+                                        
+                                        <td >
+                                            <small style="display:block; color:rgb(219, 9, 9); text-decoration: line-through;">{{ $product->original_price ?? '' }}</small>
+                                            <span style="display:block; color:rgb(7, 82, 29); font-weight:600">{{ $product->offer_price ?? '' }}</span>
                                         </td>
-                                        <td style="color:rgb(7, 82, 29);font-weight:600">{{ $product->offer_price ?? '' }}
-                                        </td>
+
 
 
                                         <td><span class="badge bg-info fw-bold" style="font-size: 18px">0</span>
@@ -95,19 +95,13 @@
 
                                         <td>
                                             <div class="btn-group mb-1">
-                                                <a href="{{ route('admin_products.info', $product->id) }}"
-                                                    class="btn btn-outline-success">Info</a>
-                                                <button type="button"
-                                                    class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
-                                                    data-bs-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false" data-display="static">
+                                                <a href="{{ route('admin_products.info', $product->id) }}" class="btn btn-outline-success">Info</a>
+                                                <button type="button" class="btn btn-outline-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
                                                     <span class="sr-only">Info</span>
                                                 </button>
 
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item "
-                                                        href="{{ route('admin_products.edit', $product->id) }}">Edit</a>
-
+                                                    <a class="dropdown-item " href="{{ route('admin_products.edit', $product->id) }}">Edit</a>
                                                     <form id="deleteProductForm{{ $product->id }}" action="{{ route('admin_products.delete', $product->id) }}" method="POST">
                                                         @csrf
                                                         @method('DELETE')

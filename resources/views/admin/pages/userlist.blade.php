@@ -31,9 +31,9 @@
 							<thead>
 								<tr>
 									<th>Name</th>
-									<th>Email</th>
 									<th>Phone</th>
-									<th>Status</th>
+									<th>Contact</th>
+									<th>Verified</th>
 									<th>Join On</th>
 									<th>Action</th>
 								</tr>
@@ -42,13 +42,39 @@
 							<tbody>
                                     @foreach($users as $user)
                                     <tr>
-                                        <td>{{ $user->firstname }} {{ $user->lastname }}</td>
-                                        <td>{{ $user->email }}</td>
+                                        <td>
+											<div class="media">
+												<div class="media-image mr-3 rounded-circle">
+													<img class="profile-img rounded-circle w-45" src="{{'user/uploads/profile/'. ($user->image ?? 'default_dp.png')}}" data-src="admin/assets/img/user/u1.jpg" alt="customer image">
+												</div>
+												<div class="media-body align-self-center">
+														<h6 class="mt-0 text-dark font-weight-medium">{{ $user->firstname.' '.$user->lastname }}</h6>
+													<small class="text-truncate d-inline-block" style="width: 20ch" title="{{$user->email}}">{{ $user->email }}</small>
+												</div>
+											</div>
+										</td>
                                         <td>{{ $user->phone_number }}</td>
-                                        <td>{{ $user->status }}</td>
+										<td>{{ $user->contact_number }}</td>
+										<td>{{ $user->email_verified_at ? 'Yes' : 'No'}}</td>
 										<td>{{ $user->created_at ? $user->created_at->format('Y-m-d') : '' }}</td>
                                         <td>
-                                            <!-- Action buttons (e.g., Edit, Delete) can be added here -->
+                                            <div class="btn-group mb-1">
+                                                <a href="" class="btn btn-outline-success">Info</a>
+                                                <button type="button" class="btn btn-outline-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                                                    <span class="sr-only">Info</span>
+                                                </button>
+
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item " href="">Edit</a>
+                                                    <form id="deleteProductForm{{ $user->id }}" action="" method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <input type="hidden" id="deleteConfirmation{{ $user->id }}" name="deleteConfirmation" value="">
+                                                        <button type="button" class="dropdown-item deleteButton" data-form-id="{{ $user->id }}">Delete</button>
+                                                    </form>
+
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -61,8 +87,7 @@
 			</div>
 		</div>
 		<!-- Add User Modal  -->
-		<div class="modal fade modal-add-contact" id="addUser" tabindex="-1" role="dialog"
-			aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal fade modal-add-contact" id="addUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 				<div class="modal-content">
 					<form>
@@ -71,8 +96,6 @@
 						</div>
 
 						<div class="modal-body px-4">
-
-
 							<div class="row mb-2">
 								<div class="col-lg-6">
 									<div class="form-group">
@@ -123,8 +146,7 @@
 						</div>
 
 						<div class="modal-footer px-4">
-							<button type="button" class="btn btn-secondary btn-pill"
-								data-bs-dismiss="modal">Cancel</button>
+							<button type="button" class="btn btn-secondary btn-pill" data-bs-dismiss="modal">Cancel</button>
 							<button type="button" class="btn btn-primary btn-pill">Save Contact</button>
 						</div>
 					</form>
