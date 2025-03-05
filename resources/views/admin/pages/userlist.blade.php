@@ -3,7 +3,7 @@
 @section('head')
 	<!-- Data Tables -->
 	<link href='admin/assets/plugins/data-tables/datatables.bootstrap5.min.css' rel='stylesheet'>
-	<link href='admin/assets/plugins/data-tables/responsive.datatables.min.css' rel='stylesheet'>=
+	<link href='admin/assets/plugins/data-tables/responsive.datatables.min.css' rel='stylesheet'>
 @endsection
 
 @section('content')
@@ -31,8 +31,7 @@
 				<strong>Error!</strong> {{ session('error') }}
 			</div>
 		@endif
-	
-		<p></p>
+
 		<div class="row">
 			<div class="col-12">
 				<div class="ec-vendor-list card card-default">
