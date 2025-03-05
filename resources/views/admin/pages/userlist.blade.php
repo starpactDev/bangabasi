@@ -68,20 +68,12 @@
 										<td>{{ $user->email_verified_at ? 'Yes' : 'No'}}</td>
 										<td>{{ $user->created_at ? $user->created_at->format('Y-m-d') : '' }}</td>
 										<td>
-											<div class="btn-group mb-1">
-												<a href="" class="btn btn-outline-success">Info</a>
-												<button type="button" class="btn btn-outline-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-													<span class="sr-only">Info</span>
-												</button>
-
-												<div class="dropdown-menu">
-													<a class="dropdown-item " href="">Edit</a>
-													<form id="deleteUserForm{{ $user->id }}" action="{{ route('deleteUser', $user->id) }}" method="POST">
-														@csrf
-														@method('DELETE')
-														<button type="button" class="dropdown-item deleteButton" data-src="{{ $user->id }}">Delete</button>
-													</form>
-												</div>
+											<div class="btn-group mb-1 ">
+												<form id="deleteUserForm{{ $user->id }}" action="{{ route('deleteUser', $user->id) }}" method="POST">
+													@csrf
+													@method('DELETE')
+													<button type="button" class=" deleteButton btn btn-outline-danger" data-src="{{ $user->id }}">Delete</button>
+												</form>
 											</div>
 										</td>
 									</tr>
