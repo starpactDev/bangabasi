@@ -67,12 +67,20 @@
 							<!-- User Account -->
 							<li class="dropdown user-menu">
 								<button class="dropdown-toggle nav-link ec-drop" data-bs-toggle="dropdown" aria-expanded="false">
-									<img src="{{ Auth::user()->image ? asset('user/uploads/profile/' . Auth::user()->image) : asset('admin/assets/img/user/u1.jpg') }}" class="user-image" alt="User Image" />
+									@if(Auth::user()->usertype == 'admin')
+										<img src="{{ Auth::user()->image ? asset('user/uploads/profile/' . Auth::user()->image) : asset('admin/assets/img/user/u1.jpg') }}" class="user-image" alt="User Image" />
+									@else
+										<img src="{{ Auth::user()->image ? asset('user/uploads/seller/logo/' . Auth::user()->image) : asset('admin/assets/img/user/u1.jpg') }}" class="user-image" alt="User Image" />
+									@endif
 								</button>
 								<ul class="dropdown-menu dropdown-menu-right ec-dropdown-menu">
 									<!-- User image -->
 									<li class="dropdown-header">
-										<img src="{{ Auth::user()->image ? asset('user/uploads/seller/logo/' . Auth::user()->image) : asset('admin/assets/img/user/u1.jpg') }}" class="img-circle" alt="User Image" />
+										@if(Auth::user()->usertype == 'admin')
+											<img src="{{ Auth::user()->image ? asset('user/uploads/profile/' . Auth::user()->image) : asset('admin/assets/img/user/u1.jpg') }}" class="img-circle" alt="User Image" />
+										@else
+											<img src="{{ Auth::user()->image ? asset('user/uploads/seller/logo/' . Auth::user()->image) : asset('admin/assets/img/user/u1.jpg') }}" class="img-circle" alt="User Image" />
+										@endif
 										<div class="d-inline-block">
 											{{ Auth::user()->firstname }} {{ Auth::user()->lastname }} <small class="pt-1">{{ Auth::user()->email }}</small>
 										</div>
@@ -85,7 +93,7 @@
 
 									<li class="dropdown-footer">
 										@if(Auth::user()->usertype == 'admin')
-											<a href="{{route('admin_logout')}}"> <i class="mdi mdi-logout"></i> Log Out </a>
+											<a href="{{route('admin_logout') }}"> <i class="mdi mdi-logout"></i> Log Out </a>
 										@else
 											<a href="{{route('seller_logout')}}"> <i class="mdi mdi-logout"></i> Log Out </a>
 										@endif										
