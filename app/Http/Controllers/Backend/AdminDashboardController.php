@@ -19,7 +19,11 @@ class AdminDashboardController extends Controller
     public function dashboard()
     {
         $userCount = User::where('usertype', 'user')->count();
-        //return view('admin.pages.dashboard');
+
+        $orderCount = Order::count();
+
+        $totalSales = Order::sum('price');
+
         $purchasedProducts = OrderItem::with('product')->select('product_id', DB::raw('COUNT(*) as purchase_count'))
             ->groupBy('product_id') // Group by product
             ->orderBy('purchase_count', 'DESC') // Order by count
@@ -68,7 +72,7 @@ class AdminDashboardController extends Controller
 
         $orders = Order::all();
         $orderItems = OrderItem::with('order')->take(5)->get();
-        return view('admin.pages.dashboard', compact('userCount', 'purchasedProducts', 'usersWithSalesAndPrice', 'sellerCount', 'newSellers',  'orders', 'orderItems'));
+        return view('admin.pages.dashboard', compact('userCount', 'orderCount', 'totalSales', 'purchasedProducts', 'usersWithSalesAndPrice', 'sellerCount', 'newSellers',  'orders', 'orderItems'));
     }
 
     public function profile()
