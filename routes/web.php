@@ -283,6 +283,9 @@ Route::group(['middleware' =>  [AdminCheckMiddleware::class]], function () {
     Route::post('/admin/update-profile', [AdminDashboardController::class, 'updateProfile'])->name('admin.updateProfile');
     Route::get('/admin-user-list', [AdminUserController::class, 'index'])->name('admin_userlist');
 
+    Route::delete('/admin-users/delete/{id}', [AdminUserController::class, 'deleteUser'])->name('deleteUser');
+
+
     //category
     Route::get('/admin-category', [CategoryController::class, 'index'])->name('admin_category');
     Route::get('/admin-manage-category-header-images', [CategoryController::class, 'header_images'])->name('admin_category_header_images');
