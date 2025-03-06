@@ -40,17 +40,18 @@ use App\Http\Controllers\Backend\AdminLoginController;
 use App\Http\Controllers\Backend\AdminOrderController;
 use App\Http\Controllers\Frontend\Auth\AuthController;
 use App\Http\Controllers\Seller\SellerOrderController;
+use App\Http\Controllers\Backend\AdminContacController;
 use App\Http\Controllers\Backend\AdminHeaderController;
 use App\Http\Controllers\Backend\AdminReviewController;
 use App\Http\Controllers\Backend\AdminSellerController;
 use App\Http\Controllers\Backend\AdminTopbarController;
 use App\Http\Controllers\Frontend\NewsletterController;
 use App\Http\Controllers\Backend\AdminProductController;
+
 use App\Http\Controllers\Backend\AdminSidebarController;
-
 use App\Http\Controllers\Backend\AdminHomepageController;
-use App\Http\Controllers\ShipRocket\ShipRocketController;
 
+use App\Http\Controllers\ShipRocket\ShipRocketController;
 use App\Http\Controllers\Backend\AdminDashboardController;
 use App\Http\Controllers\Frontend\FilterProductController;
 use App\Http\Controllers\Seller\SellerDashboardController;
@@ -414,10 +415,14 @@ Route::group(['middleware' =>  [AdminCheckMiddleware::class]], function () {
     Route::post('/admin/about/update', [AdminAboutController::class, 'update'])->name('about.update');
     Route::post('/about/stories/update', [AdminAboutController::class, 'updateStories'])->name('about.stories.update');
 
+
+    //Contact 
+    
+
 });
 
 
-
+Route::get('/admin/contact', [AdminContacController::class, 'index'])->name('admin.contact');
 
 //Seler Pages
 
