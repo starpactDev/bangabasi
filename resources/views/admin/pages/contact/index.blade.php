@@ -26,7 +26,7 @@
 
             @if($nonRespondedCount > 0)
             <div class="alert alert-warning text-center">
-                <strong>{{ $nonRespondedCount }}</strong> non-responded message(s)
+                <strong>{{ $nonRespondedCount }}</strong> non-responded message{{($nonRespondedCount > 1) ? 's' : ''}}.
             </div>
             @endif
 
@@ -34,7 +34,7 @@
                 <div class="row">
                     @foreach ($message as $msg)
             
-                        <div class="col-md-4 mb-4 ">
+                        <div class="col-md-6 mb-4 ">
                             <div class="card" style="min-height: 25rem;">
                                 <div class="card-header flex-column justify-content-start align-items-start" >
                                     <h5 class="card-title">{{ $msg->name }}</h5>
@@ -61,7 +61,7 @@
                                             @method('PUT')
                                             <div class="form-group">
                                                 <label for="replyMessage"></label>
-                                                <textarea class="form-control" id="replyMessage" name="replyMessage" placeholder="Reply to this message." rows="3" required></textarea>
+                                                <textarea class="form-control" id="replyMessage" name="replyMessage" placeholder="Reply to this message." rows="2" required></textarea>
                                             </div>
                                             <button type="submit" class="btn btn-primary">Send Reply</button>
                                         </form>
