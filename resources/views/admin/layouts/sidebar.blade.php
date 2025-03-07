@@ -66,6 +66,9 @@
                     <a class="sidenav-item-link" href="{{ route('admin.contact') }}">
                         <i class="mdi mdi-comment-text"></i>
                         <span class="nav-text">Message</span>
+                        <span class="unread-count">
+                            {{ Cache::get('unread_messages_count', 0) }}
+                        </span>
                     </a>
                     <hr>
                 </li>

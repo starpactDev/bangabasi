@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Models\Message;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Providers\AppServiceProvider;
 
 class ContactController extends Controller
 {
@@ -24,6 +25,9 @@ class ContactController extends Controller
             'message' => $validatedData['message'],
             'responsed' => false, // Default value for responsed
         ]);
+        
+        // Trigger the cache update
+        AppServiceProvider::updateUnreadMessageCache();  
 
         // Redirect back with a success message
         return redirect()->back()->with('success', 'Your message has been sent successfully!');

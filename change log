@@ -95,3 +95,13 @@ const memoizedValue = useMemo(() => {
 }
 
 php artisan migrate --path=database/migrations/custom
+Now. come to my secnario. 
+I'm building a full fledged eCommerce application. 
+Where customer can fill up a contact form. as well admin can reply to it once only. 
+I have a sidebar for the admin dashboard where admin can navigate to the required page. 
+I have a element for the Message Page too. 
+Now I want a optimised method with best practice which will count the unread message and show that count at the top right corner of that nav element. 
+Now rather than the coding I need to know or learn it. How can it be achived it uisng server side cache.
+I want a system where the count will done from the databased aand then strored to the cache storage when the laravel project will run first. from then every time every request where that nav button will be displayed then it it retrive the data from the cache. I will also trigger the cache stroirage to update when an user will submit his query as well when admin will respond to any query. with that I can achive that optimisation because the cache function need to count from the database only when this kind of action happend so no unnecessary databse operation or cache operation need to happen. 
+But I don't know much about laravel from where I can mange this cache optimised way. 
+can you suggest me the design instead of the solution or the code?

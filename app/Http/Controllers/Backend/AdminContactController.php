@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Http\Controllers\Controller;
 use App\Models\Message;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Providers\AppServiceProvider;
 
 class AdminContactController extends Controller
 {
@@ -38,6 +39,9 @@ class AdminContactController extends Controller
         // $message->reply = $request->input('replyMessage');
         
         $message->save();
+
+        // Update the unread message count in the cache after responding
+        AppServiceProvider::updateUnreadMessageCache();
 
         return redirect()->route('admin.contact')->with('success', 'Message marked as responded');
     }
