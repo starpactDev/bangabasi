@@ -47,7 +47,7 @@
                                                 {{ $msg->message }}
                                             </span>
                                             <span id="message-preview-{{ $msg->id }}" class="message-preview-text">
-                                                {{ Str::limit($msg->message, 150) }}
+                                                {{ Str::limit($msg->message, 200) }}
                                             </span>
                                         </p>
                                         @if(strlen($msg->message) > 150)
