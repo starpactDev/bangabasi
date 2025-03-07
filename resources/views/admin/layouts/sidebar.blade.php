@@ -58,9 +58,18 @@
                             </li>
                         </ul>
                     </div>
-
                     <hr>
                 </li>
+
+                <!-- Contact Messages -->
+                <li class="{{ request()->routeIs('admin.contact') ? 'active' : '' }}">
+                    <a class="sidenav-item-link" href="{{ route('admin.contact') }}">
+                        <i class="mdi mdi-comment-text"></i>
+                        <span class="nav-text">Message</span>
+                    </a>
+                    <hr>
+                </li>
+
                 <!-- Brands -->
                 <li class="{{ request()->routeIs('admin.brands.index') ? 'active' : '' }}">
                     <a class="sidenav-item-link" href="{{ route('admin.brands.index') }}">
@@ -69,6 +78,7 @@
                     </a>
                     <hr>
                 </li>
+
                 <!-- Blogs -->
                 <li class="{{ request()->routeIs('admin.blogs.index') ? 'active' : '' }}">
                     <a class="sidenav-item-link" href="{{ route('admin.blogs.index') }}">
@@ -77,6 +87,7 @@
                     </a>
                     <hr>
                 </li>
+
                 <!-- Category -->
                 <li class="{{ request()->routeIs('admin_category') || request()->routeIs('admin_category_header_images') ? 'active' : '' }} has-sub {{ request()->routeIs('admin_category') || request()->routeIs('admin_category_header_images') ? 'expand' : '' }}">
                     <a class="sidenav-item-link" href="javascript:void(0)">
@@ -142,8 +153,6 @@
                     </div>
                 </li>
                 
-                
-
                 <!-- Products -->
                 <li class="has-sub">
                     <a class="sidenav-item-link" href="javascript:void(0)">
@@ -239,7 +248,6 @@
                         </ul>
                     </div>
                 </li>
-
 
             </ul>
             <!-- sidebar menu end -->
