@@ -12,13 +12,12 @@
             <div class="breadcrumb-wrapper d-flex align-items-center justify-content-between">
                 <div>
                     <h1>Brand</h1>
-                    <p class="breadcrumbs"><span><a href="index.html">Home</a></span>
+                    <p class="breadcrumbs"><span><a href="{{route('admin_dashboard')}}">Home</a></span>
                         <span><i class="mdi mdi-chevron-right"></i></span> Brand
                     </p>
                 </div>
                 <div>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#modal-add-member">Add Brand
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-add-member">Add Brand
                     </button>
                 </div>
             </div>
