@@ -40,17 +40,18 @@ use App\Http\Controllers\Backend\AdminLoginController;
 use App\Http\Controllers\Backend\AdminOrderController;
 use App\Http\Controllers\Frontend\Auth\AuthController;
 use App\Http\Controllers\Seller\SellerOrderController;
-use App\Http\Controllers\Backend\AdminContacController;
+use App\Http\Controllers\Backend\AdminContactController;
 use App\Http\Controllers\Backend\AdminHeaderController;
 use App\Http\Controllers\Backend\AdminReviewController;
 use App\Http\Controllers\Backend\AdminSellerController;
 use App\Http\Controllers\Backend\AdminTopbarController;
 use App\Http\Controllers\Frontend\NewsletterController;
+
+
 use App\Http\Controllers\Backend\AdminProductController;
-
 use App\Http\Controllers\Backend\AdminSidebarController;
-use App\Http\Controllers\Backend\AdminHomepageController;
 
+use App\Http\Controllers\Backend\AdminHomepageController;
 use App\Http\Controllers\ShipRocket\ShipRocketController;
 use App\Http\Controllers\Backend\AdminDashboardController;
 use App\Http\Controllers\Frontend\FilterProductController;
@@ -417,12 +418,14 @@ Route::group(['middleware' =>  [AdminCheckMiddleware::class]], function () {
 
 
     //Contact 
-    
+    Route::get('/admin/contact', [AdminContactController::class, 'index'])->name('admin.contact');
+    Route::get('/admin/contact/{id}', [AdminContactController::class, 'show'])->name('admin.contact.show');
 
+    Route::put('/admin/contact/{id}/respond', [AdminContactController::class, 'respond'])->name('admin.contact.respond');
 });
 
 
-Route::get('/admin/contact', [AdminContacController::class, 'index'])->name('admin.contact');
+
 
 //Seler Pages
 

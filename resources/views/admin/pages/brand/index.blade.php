@@ -55,48 +55,43 @@
                             </div>
                         </div>
 
-                          <!-- Edit Modal -->
-    <div class="modal fade" id="editModal-{{ $brand->id }}" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit Brand</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <!-- Form to edit brand name and image -->
-                    <form id="edit-brand-form-{{ $brand->id }}" enctype="multipart/form-data">
-                        <div class="form-group mb-3">
-                            <label for="edit-brand-name" class="form-label">Brand Name</label>
-                            <input type="text" class="form-control" id="edit-brand-name-{{ $brand->id }}" name="brand_name" required>
+                        <!-- Edit Modal -->
+                        <div class="modal fade" id="editModal-{{ $brand->id }}" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Edit Brand</h5>
+                                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <!-- Form to edit brand name and image -->
+                                        <form id="edit-brand-form-{{ $brand->id }}" enctype="multipart/form-data">
+                                            <div class="form-group mb-3">
+                                                <label for="edit-brand-name" class="form-label">Brand Name</label>
+                                                <input type="text" class="form-control" id="edit-brand-name-{{ $brand->id }}" name="brand_name" required>
+                                            </div>
+                                            <div class="form-group mb-3">
+                                                <label for="edit-brand-image" class="form-label">Brand Image</label>
+                                                <input type="file" class="form-control" id="edit-brand-image-{{ $brand->id }}" name="brand_image" accept="image/*">
+                                            </div>
+                                            <div class="form-group mb-3">
+                                                <label>Image Preview</label>
+                                                <img id="image-preview-{{ $brand->id }}" src="" alt="Image Preview" style="max-width: 100%; height: auto;">
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer px-4">
+                                        <button type="button" class="btn btn-secondary btn-pill" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="button" class="btn btn-primary btn-pill" onclick="updateBrand({{ $brand->id }})">Save Changes</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group mb-3">
-                            <label for="edit-brand-image" class="form-label">Brand Image</label>
-                            <input type="file" class="form-control" id="edit-brand-image-{{ $brand->id }}" name="brand_image" accept="image/*">
-                        </div>
-                        <div class="form-group mb-3">
-                            <label>Image Preview</label>
-                            <img id="image-preview-{{ $brand->id }}" src="" alt="Image Preview" style="max-width: 100%; height: auto;">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer px-4">
-                    <button type="button" class="btn btn-secondary btn-pill" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary btn-pill" onclick="updateBrand({{ $brand->id }})">Save Changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
                     @endforeach
-
-
-
                 </div>
             </div>
-
-
 
             <!-- Add Brand Button  -->
             <div class="modal fade" id="modal-add-member" tabindex="-1" role="dialog" aria-hidden="true">
@@ -139,176 +134,176 @@
 @push('script')
 <script>
     function confirmDelete(id) {
-    swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!',
-        cancelButtonText: 'Cancel'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            deleteBrand(id);
-        }
-    });
-}
-
-function deleteBrand(id) {
-    $.ajax({
-        url: "{{ route('admin.brand.destroy', '') }}/" + id, // Assuming the route name is brand.destroy
-        type: 'DELETE',
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        success: function(response) {
-            if(response.status === 'success') {
-                swal.fire(
-                    'Deleted!',
-                    response.message,
-                    'success'
-                ).then(() => {
-                    location.reload(); // Reload the page or update the UI
-                });
-            }
-        },
-        error: function(xhr) {
-            swal.fire(
-                'Error!',
-                'An error occurred while trying to delete the brand.',
-                'error'
-            );
-        }
-    });
-}
-
-  function editBrand(id, brandName, brandImage, routeUrl) {
-    // Store the route URL in a data attribute for later use
-    $('#edit-brand-form-' + id).data('route', routeUrl);
-
-    // Populate the modal with existing data
-    $('#edit-brand-name-' + id).val(brandName);
-
-    // Set the image preview
-    if (brandImage) {
-        $('#image-preview-' + id).attr('src', '/user/uploads/brand/images/' + brandImage);
-    } else {
-        $('#image-preview-' + id).attr('src', ''); // Clear if no image
-    }
-}
-
-function updateBrand(id) {
-    let formData = new FormData(document.getElementById('edit-brand-form-' + id));
-    let routeUrl = $('#edit-brand-form-' + id).data('route'); // Retrieve the route URL
-
-    $.ajax({
-        url: routeUrl, // Use the route name-based URL
-        type: 'POST',
-        data: formData,
-        processData: false,
-        contentType: false,
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-            'X-HTTP-Method-Override': 'PUT' // Laravel expects a PUT request for updates
-        },
-        success: function(response) {
-            if(response.status === 'success') {
-                Swal.fire({
-                    title: "Success!",
-                    text: response.message,
-                    icon: "success",
-                    button: "OK",
-                }).then(() => {
-                    $('#editModal-' + id).modal('hide');
-                    location.reload(); // Or update the UI as needed
-                });
-            }
-        },
-        error: function(xhr) {
-            let errors = xhr.responseJSON.errors;
-
-            // Show validation errors in the modal
-            $('.text-danger').remove();
-            if(errors.brand_name) {
-                $('#edit-brand-name-' + id).after('<span class="text-danger">'+errors.brand_name[0]+'</span>');
-            }
-            if(errors.brand_image) {
-                $('#edit-brand-image-' + id).after('<span class="text-danger">'+errors.brand_image[0]+'</span>');
-            }
-
-            Swal.fire({
-                title: "Error!",
-                text: "Please correct the errors and try again.",
-                icon: "error",
-                button: "OK",
-            });
-        }
-    });
-}
-
-function previewImage(event, id) {
-    const reader = new FileReader();
-    reader.onload = function(){
-        $('#image-preview-' + id).attr('src', reader.result);
-    };
-    reader.readAsDataURL(event.target.files[0]);
-}
-
-</script>
-    <script>
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteBrand(id);
             }
         });
+    }
 
-        function submitForm() {
-            let formData = new FormData(document.getElementById('add-member-form'));
-
-            $.ajax({
-                url: "{{ route('admin.brands.store') }}", // Route name
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-
-                success: function(response) {
-                    if (response.status === 'success') {
-                        Swal.fire.fire({
-                            title: "Success!",
-                            text: response.message,
-                            icon: "success",
-                            confirmButtonText: "OK"
-                        }).then(() => {
-                            $('#modal-add-member').modal('hide');
-                            location.reload();
-                        });
-                    }
-                },
-                error: function(xhr) {
-                    let errors = xhr.responseJSON.errors;
-
-                    // Clear previous error messages
-                    $('.text-danger').remove();
-
-                    // Show validation errors
-                    if (errors.brand_name) {
-                        $('#brand-name').after('<span class="text-danger">' + errors.brand_name[0] + '</span>');
-                    }
-                    if (errors.brand_image) {
-                        $('#brand-image').after('<span class="text-danger">' + errors.brand_image[0] +
-                            '</span>');
-                    }
-
-                    Swal.fire.fire({
-                        title: "Error!",
-                        text: "Please correct the errors and try again.",
-                        icon: "error",
-                        button: "OK",
+    function deleteBrand(id) {
+        $.ajax({
+            url: "{{ route('admin.brand.destroy', '') }}/" + id, // Assuming the route name is brand.destroy
+            type: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response) {
+                if(response.status === 'success') {
+                    swal.fire(
+                        'Deleted!',
+                        response.message,
+                        'success'
+                    ).then(() => {
+                        location.reload(); // Reload the page or update the UI
                     });
                 }
-            });
+            },
+            error: function(xhr) {
+                swal.fire(
+                    'Error!',
+                    'An error occurred while trying to delete the brand.',
+                    'error'
+                );
+            }
+        });
+    }
+
+    function editBrand(id, brandName, brandImage, routeUrl) {
+        // Store the route URL in a data attribute for later use
+        $('#edit-brand-form-' + id).data('route', routeUrl);
+
+        // Populate the modal with existing data
+        $('#edit-brand-name-' + id).val(brandName);
+
+        // Set the image preview
+        if (brandImage) {
+            $('#image-preview-' + id).attr('src', '/user/uploads/brand/images/' + brandImage);
+        } else {
+            $('#image-preview-' + id).attr('src', ''); // Clear if no image
         }
-    </script>
+    }
+
+    function updateBrand(id) {
+        let formData = new FormData(document.getElementById('edit-brand-form-' + id));
+        let routeUrl = $('#edit-brand-form-' + id).data('route'); // Retrieve the route URL
+
+        $.ajax({
+            url: routeUrl, // Use the route name-based URL
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                'X-HTTP-Method-Override': 'PUT' // Laravel expects a PUT request for updates
+            },
+            success: function(response) {
+                if(response.status === 'success') {
+                    Swal.fire({
+                        title: "Success!",
+                        text: response.message,
+                        icon: "success",
+                        button: "OK",
+                    }).then(() => {
+                        $('#editModal-' + id).modal('hide');
+                        location.reload(); // Or update the UI as needed
+                    });
+                }
+            },
+            error: function(xhr) {
+                let errors = xhr.responseJSON.errors;
+
+                // Show validation errors in the modal
+                $('.text-danger').remove();
+                if(errors.brand_name) {
+                    $('#edit-brand-name-' + id).after('<span class="text-danger">'+errors.brand_name[0]+'</span>');
+                }
+                if(errors.brand_image) {
+                    $('#edit-brand-image-' + id).after('<span class="text-danger">'+errors.brand_image[0]+'</span>');
+                }
+
+                Swal.fire({
+                    title: "Error!",
+                    text: "Please correct the errors and try again.",
+                    icon: "error",
+                    button: "OK",
+                });
+            }
+        });
+    }
+
+    function previewImage(event, id) {
+        const reader = new FileReader();
+        reader.onload = function(){
+            $('#image-preview-' + id).attr('src', reader.result);
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+
+</script>
+<script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    function submitForm() {
+        let formData = new FormData(document.getElementById('add-member-form'));
+
+        $.ajax({
+            url: "{{ route('admin.brands.store') }}", // Route name
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+
+            success: function(response) {
+                if (response.status === 'success') {
+                    Swal.fire.fire({
+                        title: "Success!",
+                        text: response.message,
+                        icon: "success",
+                        confirmButtonText: "OK"
+                    }).then(() => {
+                        $('#modal-add-member').modal('hide');
+                        location.reload();
+                    });
+                }
+            },
+            error: function(xhr) {
+                let errors = xhr.responseJSON.errors;
+
+                // Clear previous error messages
+                $('.text-danger').remove();
+
+                // Show validation errors
+                if (errors.brand_name) {
+                    $('#brand-name').after('<span class="text-danger">' + errors.brand_name[0] + '</span>');
+                }
+                if (errors.brand_image) {
+                    $('#brand-image').after('<span class="text-danger">' + errors.brand_image[0] +
+                        '</span>');
+                }
+
+                Swal.fire.fire({
+                    title: "Error!",
+                    text: "Please correct the errors and try again.",
+                    icon: "error",
+                    button: "OK",
+                });
+            }
+        });
+    }
+</script>
 @endpush
