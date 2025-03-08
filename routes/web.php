@@ -110,6 +110,7 @@ Route::group(['middleware' =>  [SellerMiddleware::class]], function () {
 Route::get('/home', function () {
     return view('test.home');
 });
+
 Route::get('/fetch-pincodes/{state}', [ProductController::class, 'fetchPincodes']);
 Route::get('/fetch-states', [ProductController::class, 'fetchStates'])->name('fetch.states');
 
