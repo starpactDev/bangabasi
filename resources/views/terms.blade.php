@@ -77,42 +77,42 @@
 @endsection
 @push('scripts')
 <script>
-	function typewriter(element, text, speed = 50, callback) {
-	let index = 0;
+	function typewriter(element, text, speed = 1000, callback) {
+		let index = 0;
 
-	function type() {
-		if (index < text.length) {
-		const char = text[index];
-		element.innerHTML += char === '\n' ? '<br>' : char;
-		index++;
-		setTimeout(type, speed);
-		} else if (callback) {
-		element.classList.remove('cursor');
-		callback(); // Trigger the next animation
+		function type() {
+			if (index < text.length) {
+				const char = text[index];
+				element.innerHTML += char === '\n' ? '<br>' : char;
+				index++;
+				setTimeout(type, speed);
+			} else if (callback) {
+				element.classList.remove('cursor');
+				callback(); // Trigger the next animation
+			}
 		}
+
+		type();
 	}
 
-	type();
-	}
+	function startSequentialTypewriter(selector, speed = 1000) {
+		const elements = document.querySelectorAll(selector);
+		let currentIndex = 0;
 
-	function startSequentialTypewriter(selector, speed = 50) {
-	const elements = document.querySelectorAll(selector);
-	let currentIndex = 0;
-
-	function startNext() {
-		if (currentIndex < elements.length) {
-		const element = elements[currentIndex];
-		element.classList.add('cursor');
-		const text = element.dataset.text || '';
-		typewriter(element, text, speed, startNext); // Call recursively for the next animation
-		currentIndex++;
+		function startNext() {
+			if (currentIndex < elements.length) {
+				const element = elements[currentIndex];
+				element.classList.add('cursor');
+				const text = element.dataset.text || '';
+				typewriter(element, text, speed, startNext); // Call recursively for the next animation
+				currentIndex++;
+			}
 		}
-	}
 
-	startNext();
+		startNext();
 	}
 
 	// Trigger the typewriter animations sequentially
-	startSequentialTypewriter('.typewriter', 50);
+	startSequentialTypewriter('.typewriter', 1000);
 </script>
 @endpush
