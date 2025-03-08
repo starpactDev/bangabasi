@@ -40,12 +40,12 @@ use App\Http\Controllers\Backend\AdminLoginController;
 use App\Http\Controllers\Backend\AdminOrderController;
 use App\Http\Controllers\Frontend\Auth\AuthController;
 use App\Http\Controllers\Seller\SellerOrderController;
-use App\Http\Controllers\Backend\AdminContactController;
 use App\Http\Controllers\Backend\AdminHeaderController;
 use App\Http\Controllers\Backend\AdminReviewController;
 use App\Http\Controllers\Backend\AdminSellerController;
 use App\Http\Controllers\Backend\AdminTopbarController;
 use App\Http\Controllers\Frontend\NewsletterController;
+use App\Http\Controllers\Backend\AdminContactController;
 
 
 use App\Http\Controllers\Backend\AdminProductController;
@@ -58,6 +58,7 @@ use App\Http\Controllers\Frontend\FilterProductController;
 use App\Http\Controllers\Seller\SellerDashboardController;
 use App\Http\Controllers\Backend\AdminCollectionController;
 use App\Http\Controllers\SuperUser\SuperUserOrderController;
+use App\Http\Controllers\Backend\AdminConfigurationController;
 use App\Http\Controllers\SuperUser\SuperUserProductController;
 use App\Http\Controllers\Backend\AdminProductSectionController;
 use App\Http\Controllers\Frontend\SellerController as FrontendSellerController;
@@ -423,6 +424,11 @@ Route::group(['middleware' =>  [AdminCheckMiddleware::class]], function () {
     Route::get('/admin/contact/{id}', [AdminContactController::class, 'show'])->name('admin.contact.show');
 
     Route::put('/admin/contact/{id}/respond', [AdminContactController::class, 'respond'])->name('admin.contact.respond');
+
+
+    //Controller
+    Route::get('/admin/configuration', [AdminConfigurationController::class, 'index'])->name('admin.configuration');
+    Route::post('/admin/coupon/store', [AdminConfigurationController::class, 'couponStore'])->name('admin.coupon.store');
 });
 
 
