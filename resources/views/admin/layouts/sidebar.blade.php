@@ -122,12 +122,12 @@
                     <hr>
                 </li>
                 <!-- create a side bar for this route ('admin.homepage') -->
-                <li class="{{ request()->routeIs('admin.homepage') || request()->routeIs('admin.header') || request()->routeIs('admin_sale') || request()->routeIs('admin.aboutus') || request()->routeIs('admin.logo.index') ? 'active' : '' }} has-sub {{ request()->routeIs('admin.homepage') || request()->routeIs('admin.header') || request()->routeIs('admin_sale') || request()->routeIs('admin.aboutus') || request()->routeIs('admin.logo.index') ? 'expand' : '' }}">
+                <li class="{{ request()->routeIs('admin.homepage') || request()->routeIs('admin.header') || request()->routeIs('admin_sale') || request()->routeIs('admin.aboutus') || request()->routeIs('admin.logo.index') || request()->routeIs('admin.configuration') ? 'active' : '' }} has-sub {{ request()->routeIs('admin.homepage') || request()->routeIs('admin.header') || request()->routeIs('admin_sale') || request()->routeIs('admin.aboutus') || request()->routeIs('admin.logo.index') || request()->routeIs('admin.configuration') ? 'expand' : '' }}">
                     <a class="sidenav-item-link" href="javascript:void(0)">
                         <i class="mdi mdi-dns-outline"></i>
                         <span class="nav-text">CMS</span> <b class="caret"></b>
                     </a>
-                    <div class="collapse {{ request()->routeIs('admin.homepage') || request()->routeIs('admin.header') || request()->routeIs('admin_sale') || request()->routeIs('admin.aboutus') || request()->routeIs('admin.logo.index') ? 'show' : '' }}">
+                    <div class="collapse {{ request()->routeIs('admin.homepage') || request()->routeIs('admin.header') || request()->routeIs('admin_sale') || request()->routeIs('admin.aboutus') || request()->routeIs('admin.logo.index') || request()->routeIs('admin.configuration') ? 'show' : '' }}">
                         <ul class="sub-menu" id="categorys" data-parent="#sidebar-menu">
                             <li class="{{ request()->routeIs('admin.homepage') ? 'active' : '' }}">
                                 <a class="sidenav-item-link" href="{{ route('admin.homepage') }}">
@@ -154,9 +154,15 @@
                                     <span class="nav-text">Logos</span>
                                 </a>
                             </li>
+                            <li class="{{ request()->routeIs('admin.configuration') ? 'active' : '' }}">
+                                <a class="sidenav-item-link" href="{{ route('admin.configuration') }}">
+                                    <span class="nav-text">Configuration</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>
+                
                 
                 <!-- Products -->
                 <li class="has-sub">

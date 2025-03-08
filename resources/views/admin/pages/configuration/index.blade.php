@@ -1,28 +1,7 @@
 @extends('superuser.layouts.master')
 @section('content')
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <style>
-        .text-danger {
-            color: red !important;
-        }
-        .active {
-            background-color: #d4edda;
-            color: #155724;
-        }
 
-        .inactive {
-            background-color: #f8d7da;
-            color: #721c24;
-        }
-
-        .amount-coupon {
-            background-color: #e2e3e5;
-        }
-
-        .percentage-coupon {
-            background-color: #cce5ff;
-        }
-    </style>
     <!-- CONTENT WRAPPER -->
     <div class="ec-content-wrapper">
         <div class="content">
@@ -135,11 +114,6 @@
                     </div>
                 </div>
             </div>
-
-
-
-            
-
 
         </div> <!-- End Content -->
     </div> <!-- End Content Wrapper -->
