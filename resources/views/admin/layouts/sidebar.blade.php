@@ -65,10 +65,12 @@
                 <li class="{{ request()->routeIs('admin.contact') ? 'active' : '' }}">
                     <a class="sidenav-item-link" href="{{ route('admin.contact') }}">
                         <i class="mdi mdi-comment-text"></i>
-                        <span class="nav-text">Message</span>
-                        <span class="unread-count">
-                            {{ Cache::get('unread_messages_count', 0) }}
+                        <span class="nav-tex position-relative">Message
+                            <span class="unread-count position-absolute" style="top: -0.5rem; right: -1.5rem; border-radius: 1rem; background-color: red; min-width: 1.25rem; text-align: center; line-height: 1.25rem; font-size: 0.75rem;">
+                                {{ Cache::get('unread_messages_count', 0) }}
+                            </span>
                         </span>
+                        
                     </a>
                     <hr>
                 </li>
