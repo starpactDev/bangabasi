@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Models\Coupon;
+use App\Models\PlatformFee;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -12,9 +13,12 @@ class AdminConfigurationController extends Controller
     {
         // Fetch all coupons with activation status
         $coupons = Coupon::all();
-    
+
+        // Fetch all platform fees
+        $platformFees = PlatformFee::all();
+
         // Return view with the coupons data
-        return view('admin.pages.configuration.index', compact('coupons'));
+        return view('admin.pages.configuration.index', compact('coupons', 'platformFees'));
     }
 
     public function couponStore(Request $request)
@@ -51,6 +55,24 @@ class AdminConfigurationController extends Controller
         return redirect()->route('admin.configuration')->with('success', 'Coupon created successfully');
             
 
+    }
+
+    public function platformFeeStore(Request $request)
+    {
+        // Validate the incoming request
+        $validated = $request->validate([
+            'amount' => 'required|numeric|min:0', // Ensure the amount is a positive number
+        ]);
+
+        // Create a new platform fee record
+        $platformFee = new PlatformFee();
+        $platformFee->amount = $validated['amount']; // Assign the validated amount to the model
+
+        // Save the record to the database
+        $platformFee->save();
+
+        // Redirect back or to a specific page with a success message
+        return redirect()->route('admin.configuration')->with('success', 'Platform fee created successfully.');
     }
     
 }

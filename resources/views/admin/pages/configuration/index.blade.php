@@ -15,6 +15,23 @@
 
             </div>
 
+            <div class="">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                @if(session('success'))
+                    <div class="alert alert-success" role="alert">
+                        {{ session('success') }}
+                    </div>
+                @endif
+            </div>
+
             <div class="product-brand ">
                 <div class="row my-4">
                     @forelse ($coupons as $coupon)
@@ -49,23 +66,9 @@
                         </div>
                     @endforelse
                 </div>
-                
+
                 <div class="card p-4 my-4">
                     <h3 class="mb-4">Set Coupons</h3>
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-                    @if(session('success'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('success') }}
-                        </div>
-                    @endif
                     <div class="row mb-m-24px">
                         <div class="col-md-6">
                             <form action="{{ route('admin.coupon.store') }}" method="POST">
@@ -115,6 +118,41 @@
                 </div>
             </div>
 
+            <div class="card">
+                <div class="card-header">
+                    <h4>Add New Platform Fee</h4>
+                </div>
+                <div class="card-body">
+                    <!-- Form to Add New Platform Fee -->
+                    <form action="{{ route('admin.platform-fee.store') }}" method="POST">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="amount" class="form-label">Amount</label>
+                            <input type="number" name="amount" id="amount" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Platform Fee</button>
+                    </form>
+            
+                    <hr>
+            
+                    <!-- Display Platform Fees -->
+                    <h5 class="mt-4">Existing Platform Fees</h5>
+                    <div class="row">
+                        @foreach($platformFees as $platformFee)
+                            <div class="col-md-4 mb-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Fee Id: {{ $platformFee->id }}</h6>
+                                        <p class="card-text">Amount: ₹{{ number_format($platformFee->amount, 2) }}</p>
+                                        <p class="card-text">Created At: {{ $platformFee->created_at->format('d M Y') }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+            
         </div> <!-- End Content -->
     </div> <!-- End Content Wrapper -->
 @endsection

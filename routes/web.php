@@ -430,6 +430,7 @@ Route::group(['middleware' =>  [AdminCheckMiddleware::class]], function () {
     //Controller
     Route::get('/admin/configuration', [AdminConfigurationController::class, 'index'])->name('admin.configuration');
     Route::post('/admin/coupon/store', [AdminConfigurationController::class, 'couponStore'])->name('admin.coupon.store');
+    Route::post('/admin/platform-fee/store', [AdminConfigurationController::class, 'platformFeeStore'])->name('admin.platform-fee.store');
 });
 
 
