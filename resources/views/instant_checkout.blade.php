@@ -8,7 +8,7 @@
         $xprv = 'home';
         use Carbon\Carbon;
         $currentTime = Carbon::now();
-        $cartAdded = $products[0]->updated_at;
+        $cartAdded = $products[0]['updated_at'];
         $diffInSeconds = $cartAdded->diffInSeconds($currentTime);
     @endphp
     <x-bread-crumb :page="$xpage" :previousHref="$xprv" />

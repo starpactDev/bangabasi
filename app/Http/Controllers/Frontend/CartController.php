@@ -156,7 +156,7 @@ class CartController extends Controller
 
 
         $address_type = $user_addresses->isEmpty() ? "new" : "old";
-
+        dd($products);
         return view('checkout', compact('products', 'total_price', 'original_price', 'coupon_discount', 'platform_fee', 'shipping_fee', 'total_amount', 'user_addresses', 'address_type'));
     }
 
@@ -230,6 +230,7 @@ class CartController extends Controller
                 'sku' => $product_size, // Use size in place of SKU
                 'quantity' => $product_quantity,
                 'subtotal' => $product->offer_price * $product_quantity,
+                'updated_at' => now(),
             ]
         ];
 
@@ -237,6 +238,22 @@ class CartController extends Controller
 
         // Total price
         $total_price = round($products[0]['subtotal'], 2);
+
+        $coupon_discount = 0;
+
+        // Retrieve the coupon ID from the session
+        $couponId = session('coupon_applied');
+
+        if ($couponId) {
+            $coupon = Coupon::find($couponId);
+            if ($coupon) {
+                if ($coupon->discount_percentage) {
+                    $coupon_discount = round(($total_price * $coupon->discount_percentage) / 100, 2);
+                } else {
+                    $coupon_discount = $coupon->discount_amount;
+                }
+            }
+        }
 
         $platform_fee = 20;
 
@@ -254,14 +271,14 @@ class CartController extends Controller
             $shipping_fee = 5;
         }
 
-        $total_amount = $total_price + $platform_fee + $shipping_fee;
+        $total_amount = $total_price - $coupon_discount + $platform_fee + $shipping_fee;
 
         // User addresses
         $user_addresses = UserAddress::where('user_id', $user->id)->get();
         $address_type = $user_addresses->isEmpty() ? "new" : "old";
 
         // Pass data to the view
-        return view('instant_checkout', compact('products', 'original_price', 'total_price', 'platform_fee', 'shipping_fee', 'total_amount', 'user_addresses', 'address_type'));
+        return view('instant_checkout', compact('products', 'original_price', 'total_price', 'coupon_discount', 'platform_fee', 'shipping_fee', 'total_amount', 'user_addresses', 'address_type'));
     }
 
     public function couponCheck(Request $request)
