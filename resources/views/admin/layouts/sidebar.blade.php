@@ -26,34 +26,22 @@
                     <hr>
                 </li>
 
-                <!-- Sellers -->
-                <li class="has-sub">
-                    <a class="sidenav-item-link" href="javascript:void(0)">
-                    <i class="mdi mdi-account-group-outline"></i>
-                    <span class="nav-text">Sellerss</span> <b class="caret"></b>
-                    </a>
-                    <div class="collapse" style="display: none;">
-                        <ul class="sub-menu" id="vendors" data-parent="#sidebar-menu">
-                            <li class="">
-                                <a class="sidenav-item-link" href="{{route('admin_sellerlist')}}">
-                                <span class="nav-text">Seller List</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-
                 <!-- Users -->
-                <li class="has-sub">
+                <li class="has-sub {{ request()->routeIs('admin_userlist') || request()->routeIs('admin_sellerlist') ? 'active expand' : '' }} ">
                     <a class="sidenav-item-link" href="javascript:void(0)">
                         <i class="mdi mdi-account-group"></i>
                         <span class="nav-text">Users</span> <b class="caret"></b>
                     </a>
-                    <div class="collapse">
+                    <div class="collapse  {{ request()->routeIs('admin_userlist') || request()->routeIs('admin_sellerlist') ? 'show' : ''}}">
                         <ul class="sub-menu" id="products" data-parent="#sidebar-menu">
                             <li class="">
                                 <a class="sidenav-item-link" href="{{ route('admin_userlist') }}">
                                     <span class="nav-text">User List</span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a class="sidenav-item-link" href="{{route('admin_sellerlist')}}">
+                                <span class="nav-text">Seller List</span>
                                 </a>
                             </li>
                         </ul>
