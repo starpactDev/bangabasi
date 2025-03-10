@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Cart;
 use App\Models\Coupon;
 use App\Models\Product;
+use App\Models\PlatformFee;
 use App\Models\ProductSize;
 use App\Models\UserAddress;
 use Illuminate\Http\Request;
@@ -132,9 +133,9 @@ class CartController extends Controller
         }
 
 
-        
+        $platform_fee = 0;
 
-        $platform_fee = 20;
+        $platform_fee = round(PlatformFee::latest()->first()->amount);
 
         $shipping_fee = 0;
 
@@ -251,7 +252,9 @@ class CartController extends Controller
             }
         }
 
-        $platform_fee = 20;
+        $platform_fee = 0;
+
+        $platform_fee = round(PlatformFee::latest()->first()->amount);
 
         $shipping_fee = 0;
 
