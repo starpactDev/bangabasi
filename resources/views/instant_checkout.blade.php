@@ -29,12 +29,13 @@
         <a href="{{ route('cart') }}" class="min-w-fit underline hover:text-gray-100">Back to Cart</a>
     </div>
 
-    <div class="container">
-        <h6 class="">Have you a coupon? <span class="underline text-gray-700" onClick="toggleCoupon('coupon')">Click here to enter</span></h6>
-        <div class="py-4 " id="couponCont">
-            <input type="text" class="w-72 md:w-96 px-4 leading-10 border focus:outline-none focus:border-black" placeholder="Coupon Code">
-            <input type="submit" value="Apply" class="mx-2 leading-10 bg-gray-400 hover:bg-orange-600 hover:text-slate-50 px-6">
-        </div>
+    <div class="container" id="couponCont">
+        <h6 class="">Have you a coupon? <span class="underline text-gray-700" onClick="toggleForm('coupon')">Click  here to enter</span></h6>
+        <form class="py-4 space-y-4 hidden" id="couponForm" action="{{ route('checkout.coupon') }}" method="POST">
+            @csrf
+            <input type="text" name="coupon_code" class="w-72 md:w-96 px-4 leading-10 border focus:outline-none focus:border-black" placeholder="Coupon Code" required>
+            <input type="submit" value="Apply" class="sm:mx-2 leading-10 bg-gray-400 hover:bg-orange-600 hover:text-slate-50 px-6">
+        </form>
     </div>
 
     <div class="container grid grid-cols-12 gap-8 py-8">
@@ -258,6 +259,79 @@
 </script>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
+<script id="toggleForm">
+    function toggleForm(id){
+        const form = document.getElementById(`${id}Form`);
+        if(form){
+            form.classList.toggle('hidden');
+        }
+    }
+</script>
+<script id="couponSubmit">
+    const couponCont = document.getElementById('couponCont');
+    const couponForm = document.getElementById('couponForm');
+    const couponInput = couponForm.querySelector('[name="coupon_code"]');
+
+    couponForm.addEventListener('submit', function(e) {
+
+        e.preventDefault();
+        const couponCode = couponInput.value;
+        if (!couponCode) {
+            return;
+        }
+
+        // Prepare the data to be sent with the request
+        const formData = new FormData();
+        formData.append('coupon_code', couponCode);
+
+        // Use fetch to send the data
+        fetch(couponForm.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json',
+                // Include CSRF token if needed
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Handle the response data here (e.g., display a success message)
+            if (data.success && couponCont) {
+                // Clear previous messages
+                couponCont.innerHTML = '';
+
+                // Create a new element to display the success message
+                const successMessage = document.createElement('p');
+                successMessage.classList.add('text-green-500');
+                successMessage.textContent = `${data.message} Refresh the page if you want to proceed with this coupon.`; // Coupon applied successfully
+
+                // Append the success message to couponCont
+                couponCont.appendChild(successMessage);
+                // Check if discount_amount or discount_percentage is available and display accordingly
+                if (data.discount_amount) {
+                    const discountAmount = document.createElement('p');
+                    discountAmount.classList.add('text-green800');
+                    discountAmount.textContent = `You will get ₹ ${data.discount_amount} discount on the final amount.`; // Displaying amount with ₹
+                    couponCont.appendChild(discountAmount);
+                } else if (data.discount_percentage) {
+                    const discountPercentage = document.createElement('p');
+                    discountPercentage.classList.add('text-green-800');
+                    discountPercentage.textContent = `You will get ${data.discount_percentage}% discount on the total of offer price.`; // Displaying percentage
+                    couponCont.appendChild(discountPercentage);
+                }
+            } else {
+                // Optionally display an error message if the coupon is invalid
+                couponCont.innerHTML = `<p class="text-red-500">${data.message}</p>`;
+            }
+        })
+        .catch(error => {
+            // Handle any errors during the fetch request
+            console.error('Error applying coupon:', error);
+            couponCont.innerHTML = `<p class="text-red-500">An error occurred while applying the coupon. Please try again.</p>`;
+        });
+    });
+</script>
 <script>
     let address_type = "old";
     let old_address_id = null;
