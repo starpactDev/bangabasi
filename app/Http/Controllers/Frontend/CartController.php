@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use Carbon\Carbon;
 use App\Models\Cart;
+use App\Models\Coupon;
 use App\Models\Product;
 use App\Models\ProductSize;
 use App\Models\UserAddress;
@@ -113,7 +115,24 @@ class CartController extends Controller
         }
         $total_price = round($total_price, 2);
 
-        $coupon_discount = 30;
+        $coupon_discount = 0;
+
+        // Retrieve the coupon ID from the session
+        $couponId = session('coupon_applied');
+
+        if ($couponId) {
+            $coupon = Coupon::find($couponId);
+            if ($coupon) {
+                if ($coupon->discount_percentage) {
+                    $coupon_discount = round(($total_price * $coupon->discount_percentage) / 100, 2);
+                } else {
+                    $coupon_discount = $coupon->discount_amount;
+                }
+            }
+        }
+
+
+        
 
         $platform_fee = 20;
 
@@ -243,6 +262,41 @@ class CartController extends Controller
 
         // Pass data to the view
         return view('instant_checkout', compact('products', 'original_price', 'total_price', 'platform_fee', 'shipping_fee', 'total_amount', 'user_addresses', 'address_type'));
+    }
+
+    public function couponCheck(Request $request)
+    {
+        // Validate incoming request
+        $validated = $request->validate([
+            'coupon_code' => 'required|string|exists:coupons,coupon_code',
+        ]);
+
+        $couponCode = $request->input('coupon_code');
+
+        // Find the coupon from the database
+        $coupon = Coupon::where('coupon_code', $couponCode)->first();
+
+        // Check if the coupon exists
+        if (!$coupon) {
+            return response()->json(['success' => false, 'message' => 'Coupon not found.'], 400);
+        }
+
+        // Check if the coupon has expired
+        $currentDate = Carbon::now();
+        if (Carbon::parse($coupon->expiration_date)->isBefore($currentDate)) {
+            return response()->json(['success' => false, 'message' => 'Coupon has expired.'], 400);
+        }
+
+        // Store the coupon ID in the session for later use
+        session(['coupon_applied' => $coupon->id]);
+
+        // Coupon is valid
+        return response()->json([
+            'success' => true,
+            'message' => 'Coupon applied successfully!',
+            'discount_amount' => $coupon->discount_amount,
+            'discount_percentage' => $coupon->discount_percentage
+        ]);
     }
 
 

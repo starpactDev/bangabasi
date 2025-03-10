@@ -168,9 +168,7 @@ Route::post('/send-otp', [OTPController::class, 'sendOTP']);
 // });
 
 
-// Route::get('/checkout', function () {
-//     return view('checkout');
-// });
+
 Route::get('/status', function () {
     return view('status');
 });
@@ -254,6 +252,8 @@ Route::middleware(UserAuthMiddleware::class)->group(function () {
     Route::post('/empty-cart', [CartController::class, 'emptyCart'])->name('cart.empty-cart');
 
     Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout');
+    Route::post('/order/coupon', [CartController::class, 'couponCheck'])->name('checkout.coupon');
+
     Route::get('/instant-checkout', [CartController::class, 'instantCheckout'])->name('instant_checkout');
 
 
