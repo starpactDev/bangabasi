@@ -29,13 +29,21 @@
         <a href="{{ route('cart') }}" class="min-w-fit underline hover:text-gray-100">Back to Cart</a>
     </div>
 
-    <div class="container" id="couponCont">
-        <h6 class="">Have you a coupon? <span class="underline text-gray-700" onClick="toggleForm('coupon')">Click  here to enter</span></h6>
-        <form class="py-4 space-y-4 hidden" id="couponForm" action="{{ route('checkout.coupon') }}" method="POST">
-            @csrf
-            <input type="text" name="coupon_code" class="w-72 md:w-96 px-4 leading-10 border focus:outline-none focus:border-black" placeholder="Coupon Code" required>
-            <input type="submit" value="Apply" class="sm:mx-2 leading-10 bg-gray-400 hover:bg-orange-600 hover:text-slate-50 px-6">
-        </form>
+    <div class="container" >
+        <div id="couponCont">
+            <h6 class="">Have you a coupon? <span class="underline text-gray-700" onClick="toggleForm('coupon')">Click  here to enter</span></h6>
+            <form class="py-4 space-y-4 hidden" id="couponForm" action="{{ route('checkout.coupon') }}" method="POST">
+                @csrf
+                <input type="text" name="coupon_code" class="w-72 md:w-96 px-4 leading-10 border focus:outline-none focus:border-black" placeholder="Coupon Code" required>
+                <input type="submit" value="Apply" class="sm:mx-2 leading-10 bg-gray-400 hover:bg-orange-600 hover:text-slate-50 px-6">
+            </form>
+        </div>
+        <div id="couponReset" class="hidden">
+            <form action="{{ route('reset.coupon') }}" method="POST" class="py-4 space-y-4">
+                @csrf
+                <input type="submit" value="Reset Coupon" class="leading-10 bg-gray-400 hover:bg-orange-600 hover:text-slate-50 px-6">
+            </form>
+        </div>
     </div>
 
     <div class="container grid grid-cols-12 gap-8 py-8">
@@ -271,6 +279,7 @@
     const couponCont = document.getElementById('couponCont');
     const couponForm = document.getElementById('couponForm');
     const couponInput = couponForm.querySelector('[name="coupon_code"]');
+    const couponReset = document.getElementById('couponReset');
 
     couponForm.addEventListener('submit', function(e) {
 
@@ -308,6 +317,7 @@
 
                 // Append the success message to couponCont
                 couponCont.appendChild(successMessage);
+                couponReset.classList.remove('hidden');
                 // Check if discount_amount or discount_percentage is available and display accordingly
                 if (data.discount_amount) {
                     const discountAmount = document.createElement('p');

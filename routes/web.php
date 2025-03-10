@@ -253,6 +253,7 @@ Route::middleware(UserAuthMiddleware::class)->group(function () {
 
     Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout');
     Route::post('/order/coupon', [CartController::class, 'couponCheck'])->name('checkout.coupon');
+    Route::post('/order/coupon/reset', [CartController::class, 'removeCoupon'])->name('reset.coupon');
 
     Route::get('/instant-checkout', [CartController::class, 'instantCheckout'])->name('instant_checkout');
 

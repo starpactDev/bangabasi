@@ -138,17 +138,13 @@ class CartController extends Controller
 
         $shipping_fee = 0;
 
-        if ($total_price > 50 && $total_price <= 299) {
-            $shipping_fee = 10;
-        } else if ($total_price > 300 && $total_price <= 599) {
-            $shipping_fee = 15;
-        } else if ($total_price > 600 && $total_price <= 899) {
-            $shipping_fee = 20;
-        } else if ($total_price > 900) {
-            $shipping_fee = 25;
-        } else {
-            $shipping_fee = 5;
-        }
+        $shipping_fee = match(true) {
+            $total_price > 50 && $total_price <= 299 => 10,
+            $total_price > 300 && $total_price <= 599 => 15,
+            $total_price > 600 && $total_price <= 899 => 20,
+            $total_price > 900 => 25,
+            default => 5,
+        };
 
         $total_amount = $total_price - $coupon_discount + $platform_fee + $shipping_fee;
 
@@ -316,5 +312,10 @@ class CartController extends Controller
         ]);
     }
 
+    public function removeCoupon()
+    {
+        session()->forget('coupon_applied');
+        return redirect()->back();
+    }
 
 }
