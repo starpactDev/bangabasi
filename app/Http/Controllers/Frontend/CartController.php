@@ -156,7 +156,7 @@ class CartController extends Controller
 
 
         $address_type = $user_addresses->isEmpty() ? "new" : "old";
-        dd($products);
+
         return view('checkout', compact('products', 'total_price', 'original_price', 'coupon_discount', 'platform_fee', 'shipping_fee', 'total_amount', 'user_addresses', 'address_type'));
     }
 
