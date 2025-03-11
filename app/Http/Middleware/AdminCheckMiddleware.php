@@ -21,10 +21,13 @@ class AdminCheckMiddleware
             if ($user_type == 'admin') {
                 return $next($request);
             } else {
+                session(['url.intended' => url()->current()]);
                 return redirect(url('/admin-login'));
             }
         } else {
+            session(['url.intended' => url()->current()]);
             return redirect(url('/admin-login'));
+            
         }
     }
 }

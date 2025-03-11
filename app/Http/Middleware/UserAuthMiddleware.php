@@ -17,8 +17,10 @@ class UserAuthMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if (!Auth::check()) {
+            // Store the current URL in the session
+            session(['url.intended' => url()->current()]);
             // If the user is authenticated, redirect to a specific page (e.g., dashboard)
-            return redirect('/login')->with('error', 'You must be logged in to access this page.');
+            return redirect('/login')->with('error', 'You must be logged in to access this page.')->with('redirect_to', url()->current());
         }
         else if(Auth::user()->usertype !== 'user')
         {
