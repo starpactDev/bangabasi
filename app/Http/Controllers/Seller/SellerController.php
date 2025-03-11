@@ -46,7 +46,7 @@ class SellerController extends Controller
         $request->session()->regenerate();
 
         // Redirect to dashboard or next step
-        return redirect()->route('seller_dashboard')->with('success', 'Welcome back!');
+        return redirect()->intended(route('seller_dashboard'))->with('success', 'Welcome back!');
     }
 
     public function processPhoneNumber(Request $request)

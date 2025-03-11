@@ -21,9 +21,13 @@ class SuperUserMiddleware
             if ($user_type == 'seller' || $user_type == 'admin') {
                 return $next($request);
             } else {
+                // Store the current URL in the session
+                session(['url.intended' => url()->current()]);
                 return redirect(url('/seller/login'));
             }
         } else {
+            // Store the current URL in the session
+            session(['url.intended' => url()->current()]);
             return redirect(url('/seller/login'));
         }
     }
