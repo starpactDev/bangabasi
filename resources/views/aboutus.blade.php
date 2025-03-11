@@ -131,78 +131,74 @@
 </section>
 
 <section class="p-4 my-8">
-<div class="grid grid-cols-3 gap-4">
-    <!-- Section 1: What We Do -->
-    <div class="col-span-3 lg:col-span-1 p-2 group">
-        <div class="w-full h-64 overflow-hidden">
-            <img src="{{ asset('user/uploads/about/'.($about->weDo->image ?? 'no-image.jpg')) }}" alt="Image" class="h-64 w-full object-cover scale-125 group-hover:scale-100 transition-transform duration-300">
-        </div>
+	<div class="grid grid-cols-3 gap-4">
+		<!-- Section 1: What We Do -->
+		<div class="col-span-3 lg:col-span-1 p-2 group">
+			<div class="w-full h-64 overflow-hidden">
+				<img src="{{ asset('user/uploads/about/'.($about->weDo->image ?? 'no-image.jpg')) }}" alt="Image" class="h-64 w-full object-cover scale-125 group-hover:scale-100 transition-transform duration-300">
+			</div>
 
-        <h2 class="text-center mt-4 text-xl font-semibold">{{ $about->weDo->head ?? "What We Do?" }}</h2>
-        <div class="text-slate-600 mt-2 text-justify">
-            <!-- Truncated text -->
-            <p id="weDoText" class="text-truncated">
-                {{ Str::limit($about->weDo->text ?? 'No Description', 150) }} 
-            </p>
-            
-            <!-- Full text (initially hidden) -->
-            <p id="weDoFullText" class="hidden mt-2 text-justify">
-                {{ $about->weDo->text ?? 'No Description' }}
-            </p>
-            
-            <!-- Toggle Button -->
-            <button class="text-blue-500 mt-2 text-sm cursor-pointer" id="weDoToggleBtn" onclick="toggleText('weDo')">Continue Reading</button>
-        </div>
-    </div>
+			<h2 class="text-center mt-4 text-xl font-semibold">{{ $about->weDo->head ?? "What We Do?" }}</h2>
+			<div class="text-slate-600 mt-2 text-justify">
+				<!-- Truncated text -->
+				<p id="weDoText" class="text-truncated">
+					{{ Str::limit($about->weDo->text ?? 'No Description', 150) }} 
+				</p>
+				
+				<!-- Full text (initially hidden) -->
+				<p id="weDoFullText" class="hidden mt-2 text-justify">
+					{{ $about->weDo->text ?? 'No Description' }}
+				</p>
+				
+				<!-- Toggle Button -->
+				<button class="text-blue-500 mt-2 text-sm cursor-pointer" id="weDoToggleBtn" onclick="toggleText('weDo')">Continue Reading</button>
+			</div>
+		</div>
 
-    <!-- Section 2: Mission & Vision -->
-    <div class="col-span-3 lg:col-span-1 p-2 group">
-        <div class="w-full h-64 overflow-hidden">
-            <img src="{{ asset('user/uploads/about/'.($about->missionVision->image ?? 'no-image.jpg')) }}" alt="Image" class="h-64 w-full object-cover scale-125 group-hover:scale-100 transition-transform duration-300">
-        </div>
-        <h2 class="text-center mt-4 text-xl font-semibold">{{ $about->missionVision->head ?? "Our Mission and Vision" }}</h2>
-        <div class="text-slate-600 mt-2 text-justify">
-            <!-- Truncated text -->
-            <p id="missionVisionText" class="text-truncated">
-                {{ Str::limit($about->missionVision->text ?? 'No Description', 150) }} 
-            </p>
+		<!-- Section 2: Mission & Vision -->
+		<div class="col-span-3 lg:col-span-1 p-2 group">
+			<div class="w-full h-64 overflow-hidden">
+				<img src="{{ asset('user/uploads/about/'.($about->missionVision->image ?? 'no-image.jpg')) }}" alt="Image" class="h-64 w-full object-cover scale-125 group-hover:scale-100 transition-transform duration-300">
+			</div>
+			<h2 class="text-center mt-4 text-xl font-semibold">{{ $about->missionVision->head ?? "Our Mission and Vision" }}</h2>
+			<div class="text-slate-600 mt-2 text-justify">
+				<!-- Truncated text -->
+				<p id="missionVisionText" class="text-truncated">
+					{{ Str::limit($about->missionVision->text ?? 'No Description', 150) }} 
+				</p>
 
-            <!-- Full text (initially hidden) -->
-            <p id="missionVisionFullText" class="hidden mt-2 text-justify">
-                {{ $about->missionVision->text ?? 'No Description' }}
-            </p>
-            
-            <!-- Toggle Button -->
-            <button class="text-blue-500 mt-2 text-sm cursor-pointer" id="missionVisionToggleBtn" onclick="toggleText('missionVision')">Continue Reading</button>
-        </div>
-    </div>
+				<!-- Full text (initially hidden) -->
+				<p id="missionVisionFullText" class="hidden mt-2 text-justify">
+					{{ $about->missionVision->text ?? 'No Description' }}
+				</p>
+				
+				<!-- Toggle Button -->
+				<button class="text-blue-500 mt-2 text-sm cursor-pointer" id="missionVisionToggleBtn" onclick="toggleText('missionVision')">Continue Reading</button>
+			</div>
+		</div>
 
-    <!-- Section 3: Our Story -->
-    <div class="col-span-3 lg:col-span-1 p-2 group">
-        <div class="w-full h-64 overflow-hidden">
-            <img src="{{ asset('user/uploads/about/'.($about->history->image ?? 'shirts.jpg')) }}" alt="Image" class="h-64 w-full object-cover scale-125 group-hover:scale-100 transition-transform duration-300">
-        </div>
-        <h2 class="text-center mt-4 text-xl font-semibold">{{ $about->history->head ?? "Our Story" }}</h2>
-        <div class="text-slate-600 mt-2 text-justify">
-            <!-- Truncated text -->
-            <p id="historyText" class="text-truncated">
-                {{ Str::limit($about->history->text ?? 'No Description', 150) }} 
-            </p>
+		<!-- Section 3: Our Story -->
+		<div class="col-span-3 lg:col-span-1 p-2 group">
+			<div class="w-full h-64 overflow-hidden">
+				<img src="{{ asset('user/uploads/about/'.($about->history->image ?? 'shirts.jpg')) }}" alt="Image" class="h-64 w-full object-cover scale-125 group-hover:scale-100 transition-transform duration-300">
+			</div>
+			<h2 class="text-center mt-4 text-xl font-semibold">{{ $about->history->head ?? "Our Story" }}</h2>
+			<div class="text-slate-600 mt-2 text-justify">
+				<!-- Truncated text -->
+				<p id="historyText" class="text-truncated">
+					{{ Str::limit($about->history->text ?? 'No Description', 150) }} 
+				</p>
 
-            <!-- Full text (initially hidden) -->
-            <p id="historyFullText" class="hidden mt-2 text-justify">
-                {{ $about->history->text ?? 'No Description' }}
-            </p>
+				<!-- Full text (initially hidden) -->
+				<p id="historyFullText" class="hidden mt-2 text-justify">
+					{{ $about->history->text ?? 'No Description' }}
+				</p>
 
-            <!-- Toggle Button -->
-            <button class="text-blue-500 mt-2 text-sm cursor-pointer" id="historyToggleBtn" onclick="toggleText('history')">Continue Reading</button>
-        </div>
-    </div>
-</div>
-
-
-
-
+				<!-- Toggle Button -->
+				<button class="text-blue-500 mt-2 text-sm cursor-pointer" id="historyToggleBtn" onclick="toggleText('history')">Continue Reading</button>
+			</div>
+		</div>
+	</div>
 </section>
 
 <section class="text-center p-4 my-8">
