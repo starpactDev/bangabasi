@@ -57,6 +57,7 @@ use App\Http\Controllers\Backend\AdminDashboardController;
 use App\Http\Controllers\Frontend\FilterProductController;
 use App\Http\Controllers\Seller\SellerDashboardController;
 use App\Http\Controllers\Backend\AdminCollectionController;
+use App\Http\Controllers\Backend\AdminNewsLetterController;
 use App\Http\Controllers\SuperUser\SuperUserOrderController;
 use App\Http\Controllers\Backend\AdminConfigurationController;
 use App\Http\Controllers\SuperUser\SuperUserProductController;
@@ -427,10 +428,13 @@ Route::group(['middleware' =>  [AdminCheckMiddleware::class]], function () {
     Route::put('/admin/contact/{id}/respond', [AdminContactController::class, 'respond'])->name('admin.contact.respond');
 
 
-    //Controller
+    //Configuration
     Route::get('/admin/configuration', [AdminConfigurationController::class, 'index'])->name('admin.configuration');
     Route::post('/admin/coupon/store', [AdminConfigurationController::class, 'couponStore'])->name('admin.coupon.store');
     Route::post('/admin/platform-fee/store', [AdminConfigurationController::class, 'platformFeeStore'])->name('admin.platform-fee.store');
+
+    //Newsletter
+    Route::get('/admin/newsletter', [AdminNewsLetterController::class, 'index'])->name('admin.newsletter');
 });
 
 
