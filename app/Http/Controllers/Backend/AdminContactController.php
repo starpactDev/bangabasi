@@ -11,7 +11,8 @@ class AdminContactController extends Controller
 {
     public function index(){
         //$message = Message::paginate(6); // 6 messages per page
-        $message = Message::orderBy('responsed', 'asc')->orderBy('created_at', 'desc')->get();
+        $message = Message::orderBy('responsed', 'asc')->orderBy('created_at', 'desc')->paginate(6);
+
         return view('admin.pages.contact.index', compact('message'));
     }
 

@@ -95,3 +95,4 @@ const memoizedValue = useMemo(() => {
 }
 
 php artisan migrate --path=database/migrations/custom
+#002167

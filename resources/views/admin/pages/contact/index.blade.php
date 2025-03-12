@@ -16,6 +16,11 @@
                         <span><i class="mdi mdi-chevron-right"></i></span> Message
                     </p>
                 </div>
+                <div>
+                    <small>
+                        Showing {{ $message->count() }} of {{ $message->total() }} messages
+                    </small>
+                </div>
 
             </div>
 
@@ -76,8 +81,31 @@
                         </div>
                     @endforeach
                 </div>
-            </div>
 
+            </div>
+            <!-- Pagination links -->
+
+            <div class="d-flex justify-content-center">
+                <!-- Inline CSS for custom pagination -->
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination" style="display: flex; list-style-type: none; padding-left: 0; justify-content: center; margin: 20px 0;">
+                        <li class="page-item" style="margin: 0 5px; {{ $message->currentPage() == 1 ? 'filter : grayscale(1); cursor-event:none' : '' }}">
+                            <a class="page-link" href="{{ $message->previousPageUrl() }}" style="color: #007bff; background-color: #fff; border: 1px solid #ddd; padding: 8px 15px; font-size: 16px; border-radius: 4px; text-decoration: none;">Previous</a>
+                        </li>
+                        @for ($i = 1; $i <= $message->lastPage(); $i++)
+                            <li class="page-item " style="margin: 0 5px; ">
+                                <a class="page-link" href="{{ $message->url($i) }}" style=" {{ $message->currentPage() == $i ? 'border: 1px solid #007bff !important;' : 'border: 1px solid #ddd !important;' }} color: #007bff; background-color: #fff;  padding: 8px 15px; font-size: 16px; border-radius: 4px; text-decoration: none;">
+                                    {{ $i }}
+                                </a>
+                            </li>
+                        @endfor
+                        <li class="page-item" style="margin: 0 5px; {{ $message->currentPage() == $message->lastPage() ? 'filter : grayscale(1); cursor-event:none' : '' }}">
+                            <a class="page-link" href="{{ $message->nextPageUrl() }}" style="color: #007bff; background-color: #fff; border: 1px solid #ddd; padding: 8px 15px; font-size: 16px; border-radius: 4px; text-decoration: none;">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+                    
         </div> <!-- End Content -->
     </div> <!-- End Content Wrapper -->
 
