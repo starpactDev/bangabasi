@@ -1,3 +1,8 @@
+<style>
+    ul.sub-menu li.active .nav-text {
+        color: #88aaf3 !important; /* Your desired color */
+    }
+</style>
 <div class="ec-left-sidebar ec-bg-sidebar" style="font-family: Roboto, sans-serif;">
     <div id="sidebar" class="sidebar ec-sidebar-footer">
 
@@ -34,12 +39,12 @@
                     </a>
                     <div class="collapse  {{ request()->routeIs('admin_userlist') || request()->routeIs('admin_sellerlist') ? 'show' : ''}}">
                         <ul class="sub-menu" id="products" data-parent="#sidebar-menu">
-                            <li class="">
+                            <li class="{{ request()->routeIs('admin_userlist') ? 'active' : '' }}">
                                 <a class="sidenav-item-link" href="{{ route('admin_userlist') }}">
                                     <span class="nav-text">User List</span>
                                 </a>
                             </li>
-                            <li class="">
+                            <li class="{{ request()->routeIs('admin_sellerlist') ? 'active' : '' }}">
                                 <a class="sidenav-item-link" href="{{route('admin_sellerlist')}}">
                                 <span class="nav-text">Seller List</span>
                                 </a>
@@ -53,7 +58,7 @@
                 <li class="{{ request()->routeIs('admin.contact') ? 'active' : '' }}">
                     <a class="sidenav-item-link" href="{{ route('admin.contact') }}">
                         <i class="mdi mdi-comment-text"></i>
-                        <span class="nav-tex position-relative">Message
+                        <span class=" position-relative">Message
                             <span class="unread-count position-absolute" style="top: -0.5rem; right: -1.5rem; border-radius: 1rem; background-color: red; min-width: 1.25rem; text-align: center; line-height: 1.25rem; font-size: 0.75rem;">
                                 {{ Cache::get('unread_messages_count', 0) }}
                             </span>
@@ -82,7 +87,7 @@
                 </li>
 
                 <!-- Category -->
-                <li class="{{ request()->routeIs('admin_category') || request()->routeIs('admin_category_header_images') ? 'active' : '' }} has-sub {{ request()->routeIs('admin_category') || request()->routeIs('admin_category_header_images') ? 'expand' : '' }}">
+                <li class="has-sub {{ request()->routeIs('admin_category') || request()->routeIs('admin_category_header_images') ? 'active expand' : '' }}">
                     <a class="sidenav-item-link" href="javascript:void(0)">
                         <i class="mdi mdi-dns-outline"></i>
                         <span class="nav-text">Categories</span> <b class="caret"></b>
@@ -109,8 +114,9 @@
                     </a>
                     <hr>
                 </li>
+
                 <!-- create a side bar for this route ('admin.homepage') -->
-                <li class="{{ request()->routeIs('admin.homepage') || request()->routeIs('admin.header') || request()->routeIs('admin_sale') || request()->routeIs('admin.aboutus') || request()->routeIs('admin.logo.index') || request()->routeIs('admin.configuration') ? 'active' : '' }} has-sub {{ request()->routeIs('admin.homepage') || request()->routeIs('admin.header') || request()->routeIs('admin_sale') || request()->routeIs('admin.aboutus') || request()->routeIs('admin.logo.index') || request()->routeIs('admin.configuration') ? 'expand' : '' }}">
+                <li class="has-sub {{ request()->routeIs('admin.homepage', 'admin.header', 'admin_sale', 'admin.aboutus', 'admin.logo.index', 'admin.configuration') ? 'active expand' : '' }}">
                     <a class="sidenav-item-link" href="javascript:void(0)">
                         <i class="mdi mdi-dns-outline"></i>
                         <span class="nav-text">CMS</span> <b class="caret"></b>
@@ -153,14 +159,14 @@
                 
                 
                 <!-- Products -->
-                <li class="has-sub">
+                <li class="has-sub {{ request()->routeIs('superuser_addproduct') || request()->routeIs('admin_viewproduct') || request()->routeIs('admin.my_products') || request()->routeIs('admin.inactive_products') || request()->routeIs('superuser.lowStockProducts') ? 'active expand' : '' }}">
                     <a class="sidenav-item-link" href="javascript:void(0)">
                         <i class="mdi mdi-palette-advanced"></i>
                         <span class="nav-text">Products</span> <b class="caret"></b>
                     </a>
-                    <div class="collapse">
+                    <div class="collapse {{ request()->routeIs('superuser_addproduct') || request()->routeIs('admin_viewproduct') || request()->routeIs('admin.my_products') || request()->routeIs('admin.inactive_products') || request()->routeIs('superuser.lowStockProducts') ? 'show' : '' }}">
                         <ul class="sub-menu" id="products" data-parent="#sidebar-menu">
-                            <li class="">
+                            <li class="{{ request()->routeIs('superuser_addproduct') ? 'active' : '' }}">
                                 <a class="sidenav-item-link" href="{{ route('superuser_addproduct') }}">
                                     <span class="nav-text">Add Product</span>
                                 </a>
@@ -180,7 +186,7 @@
                                     <span class="nav-text">Inactive Products</span>
                                 </a>
                             </li>
-                            <li class="{{ request()->routeIs('admin.inactive_products') ? 'active' : '' }}">
+                            <li class="{{ request()->routeIs('superuser.lowStockProducts') ? 'active' : '' }}">
                                 <a class="sidenav-item-link" href="{{ route('superuser.lowStockProducts') }}">
                                     <span class="nav-text">Low Stocks</span>
                                 </a>
@@ -188,6 +194,7 @@
                         </ul>
                     </div>
                 </li>
+                
                 <li class="{{ request()->routeIs('admin.review.index') ? 'active' : '' }}">
                     <a class="sidenav-item-link" href="{{ route('admin.review.index') }}">
                         <i class="mdi mdi-star-half"></i>
@@ -204,15 +211,15 @@
                 </li>
 
                 <!-- Orders -->
-                <li class="has-sub">
+                <li class="has-sub {{ request()->routeIs('admin_orderlist') || request()->routeIs('admin.my_order') ? 'active expand' : '' }}">
                     <a class="sidenav-item-link" href="javascript:void(0)">
                         <i class="mdi mdi-cart"></i>
                         <span class="nav-text">Orders</span> <b class="caret"></b>
                     </a>
-                    
-                    <div class="collapse">
+                
+                    <div class="collapse {{ request()->routeIs('admin_orderlist') || request()->routeIs('admin.my_order') ? 'show' : '' }}">
                         <ul class="sub-menu" id="orders" data-parent="#sidebar-menu">
-                            <li class="">
+                            <li class="{{ request()->routeIs('admin_orderlist') ? 'active' : '' }}">
                                 <a class="sidenav-item-link" href="{{ route('admin_orderlist') }}">
                                     <span class="nav-text">Order List</span>
                                 </a>
@@ -222,28 +229,25 @@
                                     <span class="nav-text">My Orders</span>
                                 </a>
                             </li>
-
                         </ul>
                     </div>
-                    <hr/>
+                    <hr />
                 </li>
+                
 
                 <!-- Transactions -->
-                <li class="has-sub">
+                <li class="has-sub {{ request()->routeIs('admin_transaction') ? 'active expand' : '' }}">
                     <a class="sidenav-item-link" href="javascript:void(0)">
                         <i class="mdi mdi-currency-inr"></i>
                         <span class="nav-text">Transactions</span> <b class="caret"></b>
                     </a>
-                    <div class="collapse">
+                    <div class="collapse {{ request()->routeIs('admin_transaction') ? 'show' : '' }}">
                         <ul class="sub-menu" id="orders" data-parent="#sidebar-menu">
-
-
-                            <li class="">
+                            <li class="{{ request()->routeIs('admin_transaction') ? 'active' : '' }}">
                                 <a class="sidenav-item-link" href="{{ route('admin_transaction') }}">
                                     <span class="nav-text">Transaction List</span>
                                 </a>
                             </li>
-
                         </ul>
                     </div>
                 </li>
