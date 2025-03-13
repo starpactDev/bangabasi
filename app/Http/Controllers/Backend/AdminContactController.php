@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Backend;
 
 use App\Models\Message;
 use Illuminate\Http\Request;
+use App\Mail\UserQueryResponse;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 use App\Providers\AppServiceProvider;
 
 class AdminContactController extends Controller
@@ -33,12 +35,17 @@ class AdminContactController extends Controller
         ]);
 
         $message = Message::findOrFail($id);
-        $message->responsed = true;
-
-        // Optionally save the reply message
-        // If you want to store the admin's reply, you can add a 'reply' field to the message
-        // $message->reply = $request->input('replyMessage');
         
+
+        // Send the email response
+        Mail::to($message->email)->send(
+            new UserQueryResponse(
+                'Response to Your Query', // Subject
+                $request->input('replyMessage') // Reply message
+            )
+        );
+
+        $message->responsed = true;
         $message->save();
 
         // Update the unread message count in the cache after responding

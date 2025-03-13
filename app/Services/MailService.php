@@ -2,8 +2,9 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\Mail;
 use App\Mail\TestEmail;
+use App\Mail\UserQueryResponse;
+use Illuminate\Support\Facades\Mail;
 
 class MailService
 {
@@ -17,4 +18,38 @@ class MailService
     {
         Mail::to($toEmail)->send(new TestEmail());
     }
+
+    /**
+     * Send a newsletter email.
+     *
+     * @param string $toEmail
+     * @param string $subject
+     * @param string $content
+     * @return void
+     */
+
+
+        /**
+     * Send a response to a user query.
+     *
+     * @param string $toEmail
+     * @param string $subject
+     * @param string $replyMessage
+     * @return void
+     */
+    public function sendQueryResponse($toEmail, $subject, $replyMessage)
+    {
+        Mail::to($toEmail)->send(new UserQueryResponse($subject, $replyMessage));
+    }
+
+        /**
+     * Send a generic email.
+     *
+     * @param string $toEmail
+     * @param string $subject
+     * @param string $view
+     * @param array $data
+     * @return void
+     */
+
 }
