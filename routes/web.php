@@ -4,17 +4,18 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\OTPController;
+use App\Http\Controllers\MailController;
 use App\Http\Middleware\GuestMiddleware;
 use App\Http\Middleware\SellerMiddleware;
 use App\Http\Middleware\UserAuthMiddleware;
 use App\Http\Controllers\RazorpayController;
+
+
 use App\Http\Middleware\SuperUserMiddleware;
-
-
 use App\Http\Middleware\AdminCheckMiddleware;
 use App\Http\Controllers\InstantBuyController;
-use App\Http\Controllers\Frontend\BlogController;
 
+use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\SaleController;
@@ -26,10 +27,10 @@ use App\Http\Controllers\Frontend\TopbarController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\ProductController;
+
 use App\Http\Controllers\Frontend\ProfileController;
 
 use App\Http\Controllers\Frontend\SidebarController;
-
 use App\Http\Controllers\Backend\AdminBlogController;
 use App\Http\Controllers\Backend\AdminLogoController;
 use App\Http\Controllers\Backend\AdminUserController;
@@ -45,12 +46,12 @@ use App\Http\Controllers\Backend\AdminReviewController;
 use App\Http\Controllers\Backend\AdminSellerController;
 use App\Http\Controllers\Backend\AdminTopbarController;
 use App\Http\Controllers\Frontend\NewsletterController;
+
+
 use App\Http\Controllers\Backend\AdminContactController;
-
-
 use App\Http\Controllers\Backend\AdminProductController;
-use App\Http\Controllers\Backend\AdminSidebarController;
 
+use App\Http\Controllers\Backend\AdminSidebarController;
 use App\Http\Controllers\Backend\AdminHomepageController;
 use App\Http\Controllers\ShipRocket\ShipRocketController;
 use App\Http\Controllers\Backend\AdminDashboardController;
@@ -528,3 +529,10 @@ Route::get('/test-shiprocket/serviceability', function () {
 
     return response()->json($response->json());
 });
+
+
+//Test Mail Routes
+
+
+Route::get('/send-test-email', [MailController::class, 'sendTestEmail']);
+
