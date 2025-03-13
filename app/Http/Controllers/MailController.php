@@ -11,7 +11,7 @@ class MailController extends Controller
         public function sendTestEmail()
         {
             // Send email
-            Mail::to('test@example.com')->send(new TestEmail());
+            Mail::to('developers.starpact@gmail.com')->send(new TestEmail());
     
             return "Test email sent!";
         }
