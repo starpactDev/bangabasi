@@ -53,6 +53,6 @@ class AdminContactController extends Controller
         // Update the unread message count in the cache after responding
         AppServiceProvider::updateUnreadMessageCache();
 
-        return redirect()->route('admin.contact')->with('success', 'Message marked as responded');
+        return redirect()->route('admin.contact')->with('success', 'Response sent to ' . $message->name . ' (' . $message->email . ') .');
     }
 }

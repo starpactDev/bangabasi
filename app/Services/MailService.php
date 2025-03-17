@@ -29,7 +29,7 @@ class MailService
      */
 
 
-        /**
+    /**
      * Send a response to a user query.
      *
      * @param string $toEmail
