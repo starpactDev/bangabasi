@@ -12,17 +12,22 @@ use Illuminate\Queue\SerializesModels;
 class UserQueryResponse extends Mailable
 {
     use Queueable, SerializesModels;
-
-    public $subject;
-    public $replyMessage;
-
     
+    public $username;
+    public $subject;
+    public $userQuery;
+    public $replyMessage;
+    
+
+
     /**
      * Create a new message instance.
      */
-    public function __construct($subject, $replyMessage)
-    {
+    public function __construct($username, $subject, $userQuery, $replyMessage)
+    {   
+        $this->username = $username;
         $this->subject = $subject;
+        $this->userQuery = $userQuery;
         $this->replyMessage = $replyMessage;
     }
 
@@ -43,7 +48,11 @@ class UserQueryResponse extends Mailable
     {
         return new Content(
             view: 'emails.user_query_response',
-            with: ['replyMessage' => $this->replyMessage],
+            with: [
+                'username' => $this->username,
+                'userQuery' => $this->userQuery,
+                'replyMessage' => $this->replyMessage,
+            ],
         );
     }
 

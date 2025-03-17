@@ -40,7 +40,9 @@ class AdminContactController extends Controller
         // Send the email response
         Mail::to($message->email)->send(
             new UserQueryResponse(
+                $message->name, // Username
                 'Response to Your Query', // Subject
+                $message->message, // User Query message
                 $request->input('replyMessage') // Reply message
             )
         );

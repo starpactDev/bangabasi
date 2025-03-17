@@ -37,9 +37,9 @@ class MailService
      * @param string $replyMessage
      * @return void
      */
-    public function sendQueryResponse($toEmail, $subject, $replyMessage)
+    public function sendQueryResponse($toEmail, $username, $subject, $userQuery, $replyMessage)
     {
-        Mail::to($toEmail)->send(new UserQueryResponse($subject, $replyMessage));
+        Mail::to($toEmail)->send(new UserQueryResponse($username, $subject, $userQuery,  $replyMessage));
     }
 
         /**
