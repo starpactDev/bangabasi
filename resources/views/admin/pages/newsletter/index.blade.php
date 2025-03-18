@@ -23,10 +23,22 @@
                 </div>
             </div>
 
+            @if(session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if(session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ session('error') }}
+                </div>
+            @endif
+
             <div class="product-brand card card-default p-24px">
                 <div class="row">
                     <h4>List of NewsLetter Users</h4>
-                    <form method="POST" action="">
+                    <form method="POST" action="{{ route('send.newsletter') }}">
                         @csrf
                         <!-- User List -->
                         <div class="table-responsive mt-3">
@@ -61,11 +73,17 @@
                                 </tbody>
                             </table>
                         </div>
-    
+                        <hr>
+                        <h4 class="my-4">Enter your Newsletter mail here.</h4>
+
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" class="form-control" id="subject" name="subject" placeholder="Enter mail subject" value="{{ old('subject') }}">
+                        </div>
                         <!-- Message Textarea -->
                         <div class="form-group mt-3">
                             <label for="message">Message</label>
-                            <textarea class="form-control" id="message" name="message" rows="5" placeholder="Enter your message"></textarea>
+                            <textarea class="form-control" id="message" name="message" rows="5" placeholder="Enter mail body" >{{ old('message') }}</textarea>
                         </div>
     
                         <!-- Send Button -->

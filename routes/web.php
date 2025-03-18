@@ -65,7 +65,6 @@ use App\Http\Controllers\SuperUser\SuperUserProductController;
 use App\Http\Controllers\Backend\AdminProductSectionController;
 use App\Http\Controllers\Frontend\SellerController as FrontendSellerController;
 
-
 //Seller Routes
 Route::get('/seller', function () {
     return view('seller.index');
@@ -180,6 +179,7 @@ Route::get('/status', function () {
 // })->name('login');
 Route::post('/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
 Route::post('/complete-subscribe', [NewsletterController::class, 'completeSubscription'])->name('newsletter.subscribe_complete');
+Route::get('/unsubscribe/{token}', [AdminNewsletterController::class, 'unsubscribe'])->name('newsletter.unsubscribe');
 
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.submit');
 
@@ -436,6 +436,9 @@ Route::group(['middleware' =>  [AdminCheckMiddleware::class]], function () {
 
     //Newsletter
     Route::get('/admin/newsletter', [AdminNewsLetterController::class, 'index'])->name('admin.newsletter');
+    Route::post('/admin/newsletter/send', [AdminNewsletterController::class, 'sendNewsletter'])->name('send.newsletter');
+    
+
 });
 
 

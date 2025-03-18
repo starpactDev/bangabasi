@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Mail\TestEmail;
+use App\Mail\NewsLetterEmail;
 use App\Mail\UserQueryResponse;
 use Illuminate\Support\Facades\Mail;
 
@@ -20,13 +21,19 @@ class MailService
     }
 
     /**
-     * Send a newsletter email.
+     * Send a newsletter email to the provided email addresses.
      *
-     * @param string $toEmail
+     * @param array $toEmails
      * @param string $subject
-     * @param string $content
+     * @param string $messageContent
      * @return void
      */
+    public function sendNewsletterEmail(array $toEmails, $subject, $messageContent, $unsubscribeLink)
+    {
+        foreach ($toEmails as $email) {
+            Mail::to($email)->send(new NewsLetterEmail($subject, $messageContent, $unsubscribeLink));
+        }
+    }
 
 
     /**
