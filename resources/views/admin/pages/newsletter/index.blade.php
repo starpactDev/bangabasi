@@ -18,7 +18,7 @@
                 </div>
                 <div>
                     <small>
-                        Showing {{ $newsletterUsers->count() }} of {{ $newsletterUsers->total() }} messages
+                        Showing {{ $newsletterUsers->count() }} of {{ $newsletterUsers->total() }} Newsletter Users
                     </small>
                 </div>
             </div>
@@ -32,6 +32,16 @@
             @if(session('error'))
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     {{ session('error') }}
+                </div>
+            @endif
+
+            @if ($errors->any())
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
                 </div>
             @endif
 
@@ -57,7 +67,7 @@
                                     @foreach($newsletterUsers as $user)
                                     <tr>
                                         <td>
-                                            <input type="checkbox" class="form-check-input" name="users[]" value="{{ $user->id }}" id="user-{{ $user->id }}">
+                                            <input type="checkbox" class="form-check-input" name="users[]" value="{{ $user->id }}" id="user-{{ $user->id }}" {{$user->is_subscribed ? '' : 'disabled'}}>
                                         </td>
                                         <td>{{ $user->email }}</td>
                                         <td class="{{ $user->first_name ?? 'text-center'}}">{{ $user->first_name ?? '- -' }}</td>
@@ -214,6 +224,7 @@
     document.getElementById('select-all').addEventListener('change', function() {
         const checkboxes = document.querySelectorAll('input[name="users[]"]');
         checkboxes.forEach(checkbox => {
+            if (checkbox.disabled) return;
             checkbox.checked = this.checked;
         });
     });

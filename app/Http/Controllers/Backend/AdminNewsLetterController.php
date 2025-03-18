@@ -27,7 +27,15 @@ class AdminNewsLetterController extends Controller
             'subject' => 'required|string|max:255',
             'message' => 'required|string',
             'users' => 'required|array|min:1',
-            'users.*' => 'exists:newsletter_users,id',
+            'users.*' => [
+                'exists:newsletter_users,id',
+                function ($attribute, $value, $fail) {
+                    $user = NewsletterUser::find($value);
+                    if (!$user->is_subscribed) {
+                        $fail('The selected user '.$user->email.' is not subscribed.');
+                    }
+                }
+            ],
         ]);
     
         $selectedUsers = NewsletterUser::whereIn('id', $request->users)->get();
@@ -65,8 +73,25 @@ class AdminNewsLetterController extends Controller
 
                 // Increment success count if the email is sent successfully
                 $successCount++;
+            } catch (\Swift_TransportException $e) {
+                // This exception is thrown when there's a transport issue (e.g., invalid email address)
+                session()->flash('error', 'Transport issue for ' . $email . ': ' . $e->getMessage());
+                $failureCount++;
+            } catch (\Swift_RfcComplianceException $e) {
+                // This exception is thrown for invalid email addresses (e.g., malformed emails)
+                session()->flash('error', 'Invalid email address for ' . $email . ': ' . $e->getMessage());
+                $failureCount++;
+            } catch (\Swift_AuthenticationException $e) {
+                // This exception handles issues like wrong SMTP credentials (authentication error)
+                session()->flash('error', 'Authentication error for ' . $email . ': ' . $e->getMessage());
+                $failureCount++;
+            } catch (\Swift_SwiftException $e) {
+                // This catches other SwiftMailer errors, including connection or rate-limiting errors
+                session()->flash('error', 'SwiftMailer error for ' . $email . ': ' . $e->getMessage());
+                $failureCount++;
             } catch (\Exception $e) {
-                // Increment failure count if there is an error sending the email
+                // Generic exception handler for any unexpected error
+                session()->flash('error', 'Unexpected error for ' . $email . ': ' . $e->getMessage());
                 $failureCount++;
             }
         }
