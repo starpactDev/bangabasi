@@ -67,6 +67,13 @@
                     </a>
                     <hr>
                 </li>
+                <li class="{{ request()->routeIs('admin.newsletter') ? 'active' : '' }}">
+                    <a class="sidenav-item-link" href="{{ route('admin.newsletter') }}">
+                        <i class="mdi mdi-newspaper"></i>
+                        <span class="nav-text">Newsletter</span>
+                    </a>
+                    <hr>
+                </li>
 
                 <!-- Brands -->
                 <li class="{{ request()->routeIs('admin.brands.index') ? 'active' : '' }}">
