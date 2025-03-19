@@ -84,33 +84,7 @@
                     <div class="text-center">
                         <p class="w-full md:w-3/4 mx-auto font-light text-sm"><b>Bangabasi.com</b>, a virtual gateway to Bengal’s finest offerings. Our mission is to make the crafts, food, apparel, and more of West Bengal accessible to anyone, anywhere.</p>
                     </div>
-                    <div class="flex mt-4 gap-4 justify-around flex-wrap">
-                        <div class="w-2/5  min-w-60 p-4">
-                            <ul class="list-none space-y-2">
-                                <li class="flex items-start gap-4">
-                                    <img src="{{ asset('images/icons/pin_bangabasi.png')}}" alt="pinterest logo" class="inline w-4 " style="filter: brightness(10);">
-                                    <address class="text-sm inline">
-                                        0050 Gita Kuthir, Burdwan
-                                        <br> Pin 713125 (WB) India
-                                    </address>
-                                </li>
-                                <li class="flex items-center gap-4">
-                                    <img src="{{ asset('images/icons/phone_bangabasi.png')}}" alt="phone icon" class="inline w-4 " style="filter: brightness(10);">
-                                    <a href="tel:+919476168391">+91 9476 168 391</a>
-                                </li>
-                                <li class="flex items-center gap-4">
-                                    <img src="{{ asset('images/icons/mail_bangabasi_1.png')}}" alt="mail icon" class="inline w-4 invert">
-                                    <a href="mailto:info.bangabasi@gmail.com">info.bangabasi@gmail.com</a>
-                                </li>
-                            </ul>
-
-                        </div>
-                        <div class="flex-1  min-w-60 p-4">
-                            <h6 class="text-bold "><span>GSTIN : </span>19EKRPD4832A1Z7</h6>
-                            <h6 class="text-bold "><span>MSME : </span>UDYAM-WB-03-0025485</h6>
-                            <h6 class="text-bold"><span>Trade Reg : </span>SSNOCPZVP36865047N</h6>
-                        </div>
-                    </div>
+                    
                 </div>
                 <div class="col-span-6 lg:col-span-3 p-4 ">
                     <h3 class="font-bold text-xl">Quick Links</h3>
@@ -166,9 +140,7 @@
                     <img src="{{ asset('/images/svg/cirrus.png')}}" alt="payment methods" class="w-10">
                     <img src="{{ asset('/images/svg/paypal.png')}}" alt="payment methods" class="w-10">
                 </div>
-                @if(isset($logos['2']))
-                    <img src="{{ asset('user/uploads/logos/' . $logos['1']->image_path) }}" alt="footer small logo" class="w-24 mx-auto sm:mx-0">
-                @endif
+                
             </div>
         </div>
         <div class="text-center border-t-2 border-gray-400 text-neutral-50 space-y-2 text-sm py-4">
