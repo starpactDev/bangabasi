@@ -337,7 +337,7 @@
 	</section>
 
 	<footer class="my-8 pb-16">
-		<div class="container mx-auto grid grid-cols-12 border-b">
+		<div class="container px-4 md:px-8 mx-auto grid grid-cols-12 border-b">
 			<div class="col-span-12 lg:col-span-4 py-4">
 				<img src="{{ asset('user/uploads/logos/logo.png') }}" alt="banagabasi logo">
 				<p class="w-4/5 my-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum pariatur dolores tenetur saepe architecto maxime!</p>
