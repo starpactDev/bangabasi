@@ -16,180 +16,161 @@
     <x-navigation-tabs />
 
     <section id="profile" class="p-2 md:p-6 bg-gray-100 min-h-screen">
-        <div class="container p-2 md:p-6 grid grid-cols-12 gap-12 overflow-x-hidden">
-            <div class="col-span-12 lg:col-span-5 w-fit">
-                <div class="flex p-2 md:p-4 justify-between items-center min-h-20 max-w-sm">
-                    <h2 class="text-lg font-medium">My Profile</h2>
-                    <button type="button" id="editButton" class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-700">Edit Profile</button>
+        <div class="container  p-2 md:p-6">
+            <div class="grid grid-cols-12 gap-12 ">
+                <div class="col-span-12 lg:col-span-5 ">
+
+
+                    <!-- Profile Info -->
+                    <div class=" w-fit mx-auto">
+                        <form id="updateProfileForm" class=" mx-auto space-y-4 bg-white md:p-4  max-w-xs md:max-w-lg">
+                            <!-- Profile Image Section -->
+                            <div class="flex flex-col items-center py-4">
+                                <label for="profileImage" class="relative">
+                                    <img id="profileImagePreview" src="{{ $user->image ? asset('user/uploads/profile/' . $user->image) : asset('admin/assets/img/user/u1.jpg') }}" alt="Profile Image" class="w-32 h-32 rounded-full border border-gray-300 object-cover">
+                                    <input id="profileImage" name="image" type="file" onchange="previewImage(event)" class="absolute inset-0 opacity-0 cursor-pointer" />
+                                </label>
+                            </div>
+                            <!-- Name Fields (Side by Side) -->
+                            <div class="md:flex gap-4">
+                                <!-- First Name Box -->
+                                <div class="input-container flex flex-1 border border-transparent rounded-lg px-4 py-2">
+                                    <label for="firstName" class="flex items-center px-2 text-orange-500">
+                                        <img src="/images/icons/person.svg" alt="Person Icon" class="w-4 h-4">
+                                    </label>
+                                    <input id="firstName" name="firstname" type="text" class="w-full p-2 focus:outline-none bg-transparent" placeholder="John" value="{{ $user->firstname }}" readonly />
+                                </div>
+    
+                                <!-- Last Name Box -->
+                                <div class="input-container flex flex-1 border border-transparent rounded-lg px-4 py-2">
+                                    <label for="lastName" class="flex items-center px-2 text-orange-500">
+                                        <img src="/images/icons/person.svg" alt="Person Icon" class="w-4 h-4">
+                                    </label>
+                                    <input id="lastName" name="lastname"type="text" class="w-full p-2 focus:outline-none bg-transparent" placeholder="Doe" value="{{ $user->lastname }}" readonly />
+                                </div>
+                            </div>
+    
+                            <!-- Phone Field -->
+                            <div class="input-container flex border border-transparent rounded-lg px-4 py-2">
+                                <label for="phone" class="flex items-center px-2 text-orange-500">
+                                    <img src="/images/icons/phone.svg" alt="Phone Icon" class="w-4 h-4">
+                                </label>
+                                <input id="phone" type="tel" class="flex-1 p-2 focus:outline-none bg-transparent" placeholder="123-456-7890" name="phone_number" value="{{ $user->phone_number }}" readonly />
+                            </div>
+                            <!-- Contact Number Field -->
+                            <div class="input-container flex border border-transparent rounded-lg px-4 py-2">
+                                <label for="contact" class="flex items-center px-2 text-orange-500">
+                                    <img src="/images/icons/phone.svg" alt="Phone Icon" class="w-4 h-4">
+                                </label>
+                                <input id="contact" type="tel" class="flex-1 p-2 focus:outline-none bg-transparent" placeholder="Contact Number" name="contact_number" value="{{ $user->contact_number }}" readonly />
+                            </div>
+    
+                            <!-- Email Field -->
+                            <div class="input-container flex border border-transparent rounded-lg px-4 py-2">
+                                <label for="email" class="flex items-center px-2 text-orange-500">
+                                    <img src="/images/icons/email.svg" alt="Email Icon" class="w-4 h-4">
+                                </label>
+                                <input id="email" type="email" class="flex-1 p-2 focus:outline-none bg-transparent" placeholder="Insert Your Email" name="email" value="{{ $user->email }}" readonly />
+                            </div>
+    
+                            <!-- Password Field -->
+                            <div class="input-container flex border border-transparent rounded-lg px-4 py-2">
+                                <label for="oldPassword" class="flex items-center px-2 text-orange-500">
+                                    <img src="/images/icons/key.svg" alt="Password Icon" class="w-4 h-4">
+                                </label>
+                                <input id="oldPassword" type="password" class="flex-1 p-2 focus:outline-none bg-transparent" placeholder="Old Password" value="" name="old_password" readonly />
+                            </div>
+                            <div class="input-container flex border border-transparent rounded-lg px-4 py-2">
+                                <label for="newPassword" class="flex items-center px-2 text-orange-500">
+                                    <img src="/images/icons/key.svg" alt="Password Icon" class="w-4 h-4">
+                                </label>
+                                <input id="newPassword" type="password" class="flex-1 p-2 focus:outline-none bg-transparent" placeholder="New Password" value="" name="new_password" readonly />
+                            </div>
+    
+                            <!-- Confirm Password Field -->
+                            <div class="input-container flex border border-transparent rounded-lg px-4 py-2">
+                                <label for="conPassword" class="flex items-center px-2 text-orange-500">
+                                    <img src="/images/icons/lock.svg" alt="Confirm Password Icon" class="w-4 h-4">
+                                </label>
+                                <input id="conPassword" type="password" class="flex-1 p-2 focus:outline-none bg-transparent" placeholder="Confirm Password" name="con_password" value="" readonly />
+                            </div>
+    
+                            <!-- Action Buttons -->
+                            <div class="flex space-x-4">
+                                <div id="actionButtons" class="hidden">
+                                    <button type="submit" class="bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600">Update</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    
                 </div>
 
-                <!-- Profile Info -->
-                <form id="updateProfileForm" class="mx-auto space-y-4 bg-white md:p-4 border border-black max-w-xs md:max-w-lg">
-                    <!-- Profile Image Section -->
-                    <div class="flex flex-col items-center py-4">
-                        <label for="profileImage" class="relative">
-                            <img id="profileImagePreview" src="{{ $user->image ? asset('user/uploads/profile/' . $user->image) : asset('admin/assets/img/user/u1.jpg') }}" alt="Profile Image" class="w-32 h-32 rounded-full border border-gray-300 object-cover">
-                            <input id="profileImage" name="image" type="file" onchange="previewImage(event)" class="absolute inset-0 opacity-0 cursor-pointer" />
-                        </label>
-                    </div>
-                    <!-- Name Fields (Side by Side) -->
-                    <div class="md:flex gap-4">
-                        <!-- First Name Box -->
-                        <div class="input-container flex-1 border border-transparent rounded-lg px-4 py-2">
-                            <label for="firstName" class="flex items-center px-2 text-orange-500">
-                                <img src="/images/icons/person.svg" alt="Person Icon" class="w-4 h-4">
-                            </label>
-                            <input id="firstName" name="firstname" type="text" class="w-full p-2 focus:outline-none bg-transparent" placeholder="John" value="{{ $user->firstname }}" readonly />
-                        </div>
-
-                        <!-- Last Name Box -->
-                        <div class="input-container flex-1 border border-transparent rounded-lg px-4 py-2">
-                            <label for="lastName" class="flex items-center px-2 text-orange-500">
-                                <img src="/images/icons/person.svg" alt="Person Icon" class="w-4 h-4">
-                            </label>
-                            <input id="lastName" name="lastname"type="text" class="w-full p-2 focus:outline-none bg-transparent" placeholder="Doe" value="{{ $user->lastname }}" readonly />
-                        </div>
+                <div class="col-span-12 lg:col-span-7  ">
+                    <div class="flex md:p-4 justify-between items-center min-h-20 max-w-sm">
+                        <h2 class="text-lg font-medium">Address</h2>
+                        <button id="open-form-button" class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-700 focus:outline-none"> Add Address </button>
                     </div>
 
-                    <!-- Phone Field -->
-                    <div class="input-container flex border border-transparent rounded-lg px-4 py-2">
-                        <label for="phone" class="flex items-center px-2 text-orange-500">
-                            <img src="/images/icons/phone.svg" alt="Phone Icon" class="w-4 h-4">
-                        </label>
-                        <input id="phone" type="tel" class="flex-1 p-2 focus:outline-none bg-transparent" placeholder="123-456-7890" name="phone_number" value="{{ $user->phone_number }}" readonly />
-                    </div>
-                    <!-- Contact Number Field -->
-                    <div class="input-container flex border border-transparent rounded-lg px-4 py-2">
-                        <label for="contact" class="flex items-center px-2 text-orange-500">
-                            <img src="/images/icons/phone.svg" alt="Phone Icon" class="w-4 h-4">
-                        </label>
-                        <input id="contact" type="tel" class="flex-1 p-2 focus:outline-none bg-transparent" placeholder="Contact Number" name="contact_number" value="{{ $user->contact_number }}" readonly />
-                    </div>
+                    <!-- Saved Addresses Section -->
+                    <div id="saved-addresses" class="md:px-4 w-fit">
+                        <div class="space-y-4">
+                            @if (count($saved_address) == 0)
+                                <h1 class="text-3xl font-bold text-center text-gray-500">No Saved Address There!</h1>
+                            @else
+                                <p>You have {{ count($saved_address) }} saved address</p>
+                                @foreach ($saved_address as $address)
+                                    <article class="relative p-4 border rounded-md bg-gray-50 max-w-xs md:max-w-lg">
+                                        <!-- Buttons for Edit and Remove -->
+                                        <button class="absolute top-2 right-2 border border-blue-500 text-white px-2 py-1 rounded hover:bg-blue-100 focus:outline-none" onclick="editAddress(this)" data-id="{{ $address->id }}">
+                                            <img src="/images/icons/pencil.svg" alt="" class="h-4">
+                                        </button>
+                                        <button class="absolute top-2 right-16 border border-red-500 text-white px-2 py-1 rounded hover:bg-red-100 focus:outline-none" data-id="{{ $address->id }}" onclick="removeAddress(this)">
+                                            <img src="/images/icons/bin.svg" alt="" class="h-4">
+                                        </button>
 
-                    <!-- Email Field -->
-                    <div class="input-container flex border border-transparent rounded-lg px-4 py-2">
-                        <label for="email" class="flex items-center px-2 text-orange-500">
-                            <img src="/images/icons/email.svg" alt="Email Icon" class="w-4 h-4">
-                        </label>
-                        <input id="email" type="email" class="flex-1 p-2 focus:outline-none bg-transparent" placeholder="Insert Your Email" name="email" value="{{ $user->email }}" readonly />
-                    </div>
+                                        <address class="max-w-72">
+                                            <p class="font-semibold">{{ $address->firstname }} {{ $address->lastname }}</p>
+                                            <p>{{ $address->street_name }}{{ $address->apartment ? ', Apt ' . $address->apartment : '' }}
+                                            </p>
+                                            <p>{{ $address->city }}, {{ $address->state }} {{ $address->pin }}</p>
+                                            <p>{{ $address->country }}</p>
+                                        </address>
+                                        <div class="text-gray-600">
+                                            <p>Phone: {{ $address->phone }}</p>
+                                            <p>Email: {{ $address->email }}</p>
+                                        </div>
+                                    </article>
+                                @endforeach
+                            @endif
+                            <!-- Address Item -->
 
-                    <!-- Password Field -->
-                    <div class="input-container flex border border-transparent rounded-lg px-4 py-2">
-                        <label for="oldPassword" class="flex items-center px-2 text-orange-500">
-                            <img src="/images/icons/key.svg" alt="Password Icon" class="w-4 h-4">
-                        </label>
-                        <input id="oldPassword" type="password" class="flex-1 p-2 focus:outline-none bg-transparent" placeholder="Old Password" value="" name="old_password" readonly />
-                    </div>
-                    <div class="input-container flex border border-transparent rounded-lg px-4 py-2">
-                        <label for="newPassword" class="flex items-center px-2 text-orange-500">
-                            <img src="/images/icons/key.svg" alt="Password Icon" class="w-4 h-4">
-                        </label>
-                        <input id="newPassword" type="password" class="flex-1 p-2 focus:outline-none bg-transparent" placeholder="New Password" value="" name="new_password" readonly />
-                    </div>
+                            <!-- Repeat for additional addresses -->
+                            <!-- Address Item -->
 
-                    <!-- Confirm Password Field -->
-                    <div class="input-container flex border border-transparent rounded-lg px-4 py-2">
-                        <label for="conPassword" class="flex items-center px-2 text-orange-500">
-                            <img src="/images/icons/lock.svg" alt="Confirm Password Icon" class="w-4 h-4">
-                        </label>
-                        <input id="conPassword" type="password" class="flex-1 p-2 focus:outline-none bg-transparent" placeholder="Confirm Password" name="con_password" value="" readonly />
-                    </div>
-
-                    <!-- Action Buttons -->
-                    <div class="flex space-x-4">
-                        <div id="actionButtons" class="hidden">
-                            <button type="submit" class="bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600">Update</button>
                         </div>
                     </div>
-                </form>
+
+                    <!-- Address Input Form (Initially hidden) -->
+                    <div id="address-form" class="hidden bg-white p-4">
+                        <h3 class="text-sm uppercase font-medium py-4">Add Address</h3>
+                        <input type="text" id="first_name" class="w-full my-2 px-4 bg-transparent rounded-md leading-10 border focus:outline-none" placeholder="Enter your First Name">
+                        <input type="hidden" id="address_id" value="">
+                        <input type="text" id="last_name" class="w-full my-2 px-4 bg-transparent rounded-md leading-10 border focus:outline-none" placeholder="Enter your Last Name">
+                        <input type="text" id="country" class="w-full my-2 px-4 bg-transparent rounded-md leading-10 border focus:outline-none" placeholder="Country">
+
+                        <input type="text" id="street_name" class="w-full my-2 px-4 bg-transparent rounded-md leading-10 border focus:outline-none" placeholder="House number and street name">
+                        <input type="text" id="apartment" class="w-full my-2 px-4 bg-transparent rounded-md leading-10 border focus:outline-none" placeholder="Apartment, suite, unit, etc (optional)">
+                        <input type="text" id="city" class="w-full my-2 px-4 bg-transparent rounded-md leading-10 border focus:outline-none" placeholder="Town / City">
+                        <input type="text" id="state" class="w-full my-2 px-4 bg-transparent rounded-md leading-10 border focus:outline-none" placeholder="State">
+                        <input type="tel" id="address_phone" class="w-full my-2 px-4 bg-transparent rounded-md leading-10 border focus:outline-none" placeholder="Phone">
+                        <input type="number" id="postcode" pattern="^\d{6}$"  class="w-full my-2 bg-transparent px-4 rounded-md leading-10 border focus:outline-none" placeholder="Postcode">
+                        <input type="email" id="address_email"  class="w-full my-2 bg-transparent px-4 rounded-md leading-10 border focus:outline-none" placeholder="Email">
+                        <input type="submit" id="submit_address" value="Add Address" class="w-full my-2 bg-orange-500 text-white px-4 rounded-md leading-10 hover:bg-orange-700 border focus:outline-none">
+                    </div>
+                </div>
+
             </div>
-
-            <div class="col-span-12 lg:col-span-7 border border-blue-500 w-fit">
-                <div class="flex md:p-4 justify-between items-center min-h-20 max-w-sm">
-                    <h2 class="text-lg font-medium">Address</h2>
-                    <button id="open-form-button" class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-700 focus:outline-none"> Add Address </button>
-                </div>
-
-                <!-- Saved Addresses Section -->
-                <div id="saved-addresses" class="md:px-4 w-fit">
-                    <div class="space-y-4">
-                        @if (count($saved_address) == 0)
-                            <h1 class="text-3xl font-bold text-center text-gray-500">No Saved Address There!</h1>
-                        @else
-                            <p>You have {{ count($saved_address) }} saved address</p>
-                            @foreach ($saved_address as $address)
-                                <article class="relative p-4 border rounded-md bg-gray-50 max-w-xs md:max-w-lg">
-                                    <!-- Buttons for Edit and Remove -->
-                                    <button class="absolute top-2 right-2 border border-blue-500 text-white px-2 py-1 rounded hover:bg-blue-100 focus:outline-none" onclick="editAddress(this)" data-id="{{ $address->id }}">
-                                        <img src="/images/icons/pencil.svg" alt="" class="h-4">
-                                    </button>
-                                    <button class="absolute top-2 right-16 border border-red-500 text-white px-2 py-1 rounded hover:bg-red-100 focus:outline-none" data-id="{{ $address->id }}" onclick="removeAddress(this)">
-                                        <img src="/images/icons/bin.svg" alt="" class="h-4">
-                                    </button>
-
-                                    <address class="max-w-72">
-                                        <p class="font-semibold">{{ $address->firstname }} {{ $address->lastname }}</p>
-                                        <p>{{ $address->street_name }}{{ $address->apartment ? ', Apt ' . $address->apartment : '' }}
-                                        </p>
-                                        <p>{{ $address->city }}, {{ $address->state }} {{ $address->pin }}</p>
-                                        <p>{{ $address->country }}</p>
-                                    </address>
-                                    <div class="text-gray-600">
-                                        <p>Phone: {{ $address->phone }}</p>
-                                        <p>Email: {{ $address->email }}</p>
-                                    </div>
-                                </article>
-                            @endforeach
-                        @endif
-                        <!-- Address Item -->
-
-                        <!-- Repeat for additional addresses -->
-                        <!-- Address Item -->
-
-                    </div>
-                </div>
-
-                <!-- Address Input Form (Initially hidden) -->
-                <div id="address-form" class="hidden bg-white p-4">
-                    <h3 class="text-sm uppercase font-medium py-4">Add Address</h3>
-                    <input type="text" id="first_name"
-                        class="w-full my-2 px-4 bg-transparent rounded-md leading-10 border focus:outline-none"
-                        placeholder="Enter your First Name">
-                    <input type="hidden" id="address_id" value="">
-                    <input type="text" id="last_name"
-                        class="w-full my-2 px-4 bg-transparent rounded-md leading-10 border focus:outline-none"
-                        placeholder="Enter your Last Name">
-                    <input type="text" id="country"
-                        class="w-full my-2 px-4 bg-transparent rounded-md leading-10 border focus:outline-none"
-                        placeholder="Country">
-
-                    <input type="text" id="street_name"
-                        class="w-full my-2 px-4 bg-transparent rounded-md leading-10 border focus:outline-none"
-                        placeholder="House number and street name">
-                    <input type="text" id="apartment"
-                        class="w-full my-2 px-4 bg-transparent rounded-md leading-10 border focus:outline-none"
-                        placeholder="Apartment, suite, unit, etc (optional)">
-                    <input type="text" id="city"
-                        class="w-full my-2 px-4 bg-transparent rounded-md leading-10 border focus:outline-none"
-                        placeholder="Town / City">
-                    <input type="text" id="state"
-                        class="w-full my-2 px-4 bg-transparent rounded-md leading-10 border focus:outline-none"
-                        placeholder="State">
-                    <input type="tel" id="address_phone"
-                        class="w-full my-2 px-4 bg-transparent rounded-md leading-10 border focus:outline-none"
-                        placeholder="Phone">
-                    <input type="number" id="postcode" pattern="^\d{6}$" 
-                        class="w-full my-2 bg-transparent px-4 rounded-md leading-10 border focus:outline-none"
-                        placeholder="Postcode">
-                    <input type="email" id="address_email" 
-                        class="w-full my-2 bg-transparent px-4 rounded-md leading-10 border focus:outline-none"
-                        placeholder="Email">
-                    <input type="submit" id="submit_address" value="Add Address"
-                        class="w-full my-2 bg-orange-500 text-white px-4 rounded-md leading-10 hover:bg-orange-700 border focus:outline-none">
-                </div>
-            </div>
-
         </div>
     </section>
 @endsection
