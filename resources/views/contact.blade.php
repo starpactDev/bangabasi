@@ -17,9 +17,9 @@
             <p class="text-gray-700 mt-3">Reach out to us via phone, email, or visit our office.</p>
             <div class="mt-5 space-y-3">
                 <strong class="text-orange-500">Address: </strong>
-                <p class="text-md text-gray-900 ml-16"><strong class="text-black">Office Address: </strong> 0050 Gita Kuthir, Burdwan, WB 713125, India</p>
-                <p class="text-md text-gray-900 ml-16"><strong class="text-black">Durgapur Office : </strong> B-II/29, Netaji Subhas Road, Dhobighat A Zone, Durgapur, (WB), 713204</p>
-                <p class="text-md text-gray-900 ml-16"><strong class="text-black">Burdwan Office : </strong> Nawab Dost N. D. Kayem Lane, B. C.Road, Nearby Bardhaman Sadar Police Station, Bardhaman, (WB), 713101</p>
+                <p class="text-md text-gray-900 "><strong class="text-black">Office Address: </strong> 0050 Gita Kuthir, Burdwan, WB 713125, India</p>
+                <p class="text-md text-gray-900 "><strong class="text-black">Durgapur Office : </strong> B-II/29, Netaji Subhas Road, Dhobighat A Zone, Durgapur, (WB), 713204</p>
+                <p class="text-md text-gray-900 "><strong class="text-black">Burdwan Office : </strong> Nawab Dost N. D. Kayem Lane, B. C.Road, Nearby Bardhaman Sadar Police Station, Bardhaman, (WB), 713101</p>
                 <p class="text-md text-gray-900"><strong class="text-orange-500">Phone & WhatsApp:</strong> +91 94761 68391</p>
             </div>
         </div>
