@@ -243,61 +243,61 @@
     <div class="container mt-5">
         <h4 class="mb-4">Ship Rocket Last Order Response</h4>
         <div class="row">
-                <div class="col-md-6 mb-4">
-                    <div class="card ">
-                        <div class="card-header">
-                            <strong>Order ID:</strong> {{ $orderResponse->id }} <br>
-                            <strong>Channel Order ID:</strong> {{ $orderResponse->channel_order_id }}
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">Order Item ID: {{ $orderResponse->order_item_id }}</h5>
-                            
-                            <p class="card-text"><strong>Status:</strong> {{ $orderResponse->status }}</p>
-                            <p class="card-text"><strong>Status Code:</strong> {{ $orderResponse->status_code }}</p>
-                            <p class="card-text"><strong>AWB Code:</strong> {{ $orderResponse->awb_code ?? 'N/A' }}</p>
-                            <p class="card-text"><strong>Courier:</strong> {{ $orderResponse->courier_name ?? 'Not Available' }}</p>
-                            <p class="card-text"><strong>Invoice No:</strong> {{ $orderResponse->invoice_no ?? 'N/A' }}</p>
-                            <p class="card-text"><strong>Invoice Date:</strong> {{ $orderResponse->invoice_date ?? 'N/A' }}</p>
-                            <h4 class="my-1">Shipment Details</h4>
-                            <p class="card-text"><strong>Shipment ID:</strong> {{ $orderResponse->shipments->id ?? 'N/A' }}</p>
-                            <p class="card-text"><strong>Shipment Cost:</strong> {{ $orderResponse->shipments->cost ?? 'N/A' }}</p>
-                            <p class="card-text"><strong>Delivery Date:</strong> {{ $orderResponse->delivery->date ?? 'N/A' }}</p>
-                            <p class="card-text"><strong>Dimension:</strong> {{ $orderResponse->shipments->dimensions ?? 'N/A' }} cm x cm x cm</p>
-                            <p class="card-text"><strong>Weight:</strong> {{ $orderResponse->shipments->weight ?? 'N/A' }} kg</p>
-                            <p class="card-text"><strong>Volumetric Weight:</strong> {{ ($orderResponse->shipments->volumetric_weight)*1000 ?? 'N/A' }} gm</p>
-                            <p class="card-text"><strong>Packaging Box Error:</strong> {{ $orderResponse->packaging_box_error ?? 'None' }}</p>
-                        </div>
-                        <div class="card-footer text-muted d-flex justify-content-between">
-                            <small>Created at: {{ $orderResponse->created_at }}</small>
-                            <small>Updated at: {{ $orderResponse->updated_at }}</small>
-                        </div>
+            <div class="col-md-6 mb-4">
+                <div class="card ">
+                    <div class="card-header">
+                        <strong>Order ID:</strong> {{ $orderResponse->id }} <br>
+                        <strong>Channel Order ID:</strong> {{ $orderResponse->channel_order_id }}
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Order Item ID: {{ $orderResponse->order_item_id }}</h5>
+                        
+                        <p class="card-text"><strong>Status:</strong> {{ $orderResponse->status }}</p>
+                        <p class="card-text"><strong>Status Code:</strong> {{ $orderResponse->status_code }}</p>
+                        <p class="card-text"><strong>AWB Code:</strong> {{ $orderResponse->awb_code ?? 'N/A' }}</p>
+                        <p class="card-text"><strong>Courier:</strong> {{ $orderResponse->courier_name ?? 'Not Available' }}</p>
+                        <p class="card-text"><strong>Invoice No:</strong> {{ $orderResponse->invoice_no ?? 'N/A' }}</p>
+                        <p class="card-text"><strong>Invoice Date:</strong> {{ $orderResponse->invoice_date ?? 'N/A' }}</p>
+                        <h4 class="my-1">Shipment Details</h4>
+                        <p class="card-text"><strong>Shipment ID:</strong> {{ $orderResponse->shipments->id ?? 'N/A' }}</p>
+                        <p class="card-text"><strong>Shipment Cost:</strong> {{ $orderResponse->shipments->cost ?? 'N/A' }}</p>
+                        <p class="card-text"><strong>Delivery Date:</strong> {{ $orderResponse->delivery->date ?? 'N/A' }}</p>
+                        <p class="card-text"><strong>Dimension:</strong> {{ $orderResponse->shipments->dimensions ?? 'N/A' }} cm x cm x cm</p>
+                        <p class="card-text"><strong>Weight:</strong> {{ $orderResponse->shipments->weight ?? 'N/A' }} kg</p>
+                        <p class="card-text"><strong>Volumetric Weight:</strong> {{ isset($orderResponse->shipments->volumetric_weight) ? ($orderResponse->shipments->volumetric_weight * 1000) : 'N/A' }} gm</p>
+                        <p class="card-text"><strong>Packaging Box Error:</strong> {{ $orderResponse->packaging_box_error ?? 'None' }}</p>
+                    </div>
+                    <div class="card-footer text-muted d-flex justify-content-between">
+                        <small>Created at: {{ $orderResponse->created_at }}</small>
+                        <small>Updated at: {{ $orderResponse->updated_at }}</small>
                     </div>
                 </div>
-                <div class="col-md-6 mb-4">
-                    <div class="card rounded">
-                        <div class="card-header">
-                            <strong>Customer & Pickup Address</strong> 
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text"><strong>Customer Name:</strong> {{ $orderResponse->customer_name }}</p>
-                            <p class="card-text"><strong>Customer Email:</strong> {{ $orderResponse->customer_email }}</p>
-                            <p class="card-text"><strong>Customer Phone:</strong> {{ $orderResponse->customer_phone }}</p>
-                            <div class="py-2"></div>
-                            <p class="card-text"><strong>Customer Address 1:</strong> {{ $orderResponse->customer_address }}</p>
-                            <p class="card-text"><strong>Customer Address 2:</strong> {{ $orderResponse->customer_address_2 }} , {{ $orderResponse->customer_pincode }}</p>
-                            <p class="card-text"><strong>City:</strong> {{ $orderResponse->customer_city }}</p>
-                            <p class="card-text"><strong>State:</strong> {{ $orderResponse->customer_state }}</p>
-                            <hr>
-                            <p class="card-text"><strong>Pickup Code:</strong> {{ $orderResponse->pickup_code }}</p>
-                            <p class="card-text"><strong>Pickup Location:</strong> {{ $orderResponse->pickup_location }}</p>
-                            <p class="card-text"><strong>Pickup Location ID:</strong> {{ $orderResponse->pickup_location_id }}</p>
-                        </div>
-                        <div class="card-footer text-muted d-flex justify-content-between">
-                            <small style="text-transform: capitalize;">Address Category : {{ $orderResponse->address_category }}</small>
-                            <small style="text-transform: capitalize">RTO Risk: {{ $orderResponse->rto_risk }}</small>
-                        </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card rounded">
+                    <div class="card-header">
+                        <strong>Customer & Pickup Address</strong> 
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text"><strong>Customer Name:</strong> {{ $orderResponse->customer_name }}</p>
+                        <p class="card-text"><strong>Customer Email:</strong> {{ $orderResponse->customer_email }}</p>
+                        <p class="card-text"><strong>Customer Phone:</strong> {{ $orderResponse->customer_phone }}</p>
+                        <div class="py-2"></div>
+                        <p class="card-text"><strong>Customer Address 1:</strong> {{ $orderResponse->customer_address }}</p>
+                        <p class="card-text"><strong>Customer Address 2:</strong> {{ $orderResponse->customer_address_2 }} , {{ $orderResponse->customer_pincode }}</p>
+                        <p class="card-text"><strong>City:</strong> {{ $orderResponse->customer_city }}</p>
+                        <p class="card-text"><strong>State:</strong> {{ $orderResponse->customer_state }}</p>
+                        <hr>
+                        <p class="card-text"><strong>Pickup Code:</strong> {{ $orderResponse->pickup_code }}</p>
+                        <p class="card-text"><strong>Pickup Location:</strong> {{ $orderResponse->pickup_location }}</p>
+                        <p class="card-text"><strong>Pickup Location ID:</strong> {{ $orderResponse->pickup_location_id }}</p>
+                    </div>
+                    <div class="card-footer text-muted d-flex justify-content-between">
+                        <small style="text-transform: capitalize;">Address Category : {{ $orderResponse->address_category }}</small>
+                        <small style="text-transform: capitalize">RTO Risk: {{ $orderResponse->rto_risk }}</small>
                     </div>
                 </div>
+            </div>
         </div>
     </div>
 @endif
