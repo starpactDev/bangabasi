@@ -128,5 +128,5 @@ class SchemaConverter
 // Example usage:
 
 $converter = new SchemaConverter('localhost', 'bangobasi3', 'root', '');
-$schema = $converter->convertTableToLaravelSchema('orders');
+$schema = $converter->convertTableToLaravelSchema('carts');
 echo $schema;

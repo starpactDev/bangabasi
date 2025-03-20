@@ -5,15 +5,18 @@ namespace App\Http\Controllers\Frontend;
 use App\Models\Cart;
 use App\Models\Size;
 use App\Models\Order;
+use App\Models\Coupon;
 use App\Models\Product;
 use App\Models\IstantBuy;
 use App\Models\OrderItem;
+use App\Models\PlatformFee;
 use App\Models\ProductSize;
 use App\Models\UserAddress;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Models\OrderAmountBreakdown;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
@@ -123,11 +126,15 @@ class OrderController extends Controller
 
             Cart::where('user_id', $user->id)->delete();
 
+
+
             return response()->json(['message' => 'Order placed successfully', 'order_id' => $order->id, "status" => "success"], 200);
         } catch (\Throwable $th) {
             return response()->json(['message' => 'An error occurred. Please try again later.'], 500);
         }
     }
+
+
 
     public function instantplaceOrder(Request $request)
     {
