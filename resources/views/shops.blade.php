@@ -5,9 +5,16 @@
 @endsection
 
 @section('content')
-<div class="container mx-auto px-6 py-12">
+<div class="container mx-auto py-12">
+    <!-- Seller Registration Call to Action -->
+    <div class="block md:hidden border-2 border-orange-500  text-center py-4 rounded shadow-md mb-10">
+        <h1 class="text-xl font-bold">Sell on Bangabasi to 14 Cr+ customers at <br /> <span class="text-orange-600">0% Commission</span></h1>
+        <p class="my-6">Become a seller today and expand your business across India</p>
+        <a href="{{ route('seller_index') }}" class="mt-4 inline-block text-white bg-orange-600 py-2 px-6 rounded-lg text-sm tracking-wide hover:bg-blue-700 transition">Register as a Seller</a>
+    </div>
+
     <div class="text-center">
-        <h1 class="text-5xl font-bold text-orange-500 "> Meet Our Sellers </h1>
+        <h1 class="text-2xl md:text-3xl lg:text-5xl font-bold text-orange-500 "> Meet Our Sellers </h1>
         <p class="text-lg text-gray-600 mt-3">Explore our top-rated sellers and their products.</p>
     </div>
 
