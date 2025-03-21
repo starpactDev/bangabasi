@@ -74,12 +74,11 @@
         <div class="container">
             <div class="grid grid-cols-12 gap-4  text-white ">
                 <div class="col-span-12 lg:col-span-6  ">
-                    <div class="flex py-4 justify-center gap-4 ">
+                    <div class="flex justify-center py-4">
                         @if(isset($logos['2']))
-                            <img src="{{ asset('user/uploads/logos/' . $logos['1']->image_path) }}" alt="footer-log" class="w-40 object-contain">
+                            <img src="{{ asset('user/uploads/logos/' . $logos['1']->image_path) }}" alt="footer-log" class="w-1/2 max-w-60 object-contain ">
                         @endif
-                        <div class="border-left border border-neutral-200"></div>
-                        <img src="{{ asset('images/svg/msme_icon_circle.png') }}" alt="mesme logo" class="border-left h-fit w-10">
+                        
                     </div>
                     <div class="text-center">
                         <p class="w-full md:w-3/4 mx-auto font-light text-sm"><b>Bangabasi.com</b>, a virtual gateway to Bengal’s finest offerings. Our mission is to make the crafts, food, apparel, and more of West Bengal accessible to anyone, anywhere.</p>
