@@ -438,27 +438,24 @@
 
 		</div>
 	</div>
-	<div>
-		<div class="container">
-			<h4 class="text-sm text-slate-600 font-semibold text-center py-4 border-bottom-4 border-bottom">PROUDUCTS TAGS</h4>
-			<ul class="w-4/5 mx-auto flex flex-wrap justify-center gap-2 gap-y-4">
-				@foreach ($all_products as $product)
-					@php
-					// Get the first tag for the current product
-					$firstTag = $firstTags[$product->id] ?? null; // Default to null if no tag exists
-					@endphp
+	<div class="container hidden md:block">
+		<h4 class="text-sm text-slate-600 font-semibold text-center py-4 border-bottom-4 border-bottom">PROUDUCTS TAGS</h4>
+		<ul class="w-4/5 mx-auto flex flex-wrap justify-center gap-2 gap-y-4">
+			@foreach ($all_products as $product)
+				@php
+				// Get the first tag for the current product
+				$firstTag = $firstTags[$product->id] ?? null; // Default to null if no tag exists
+				@endphp
 
-					@if ($firstTag) <!-- Only show the item if a first tag is available -->
-					<li>
-						<a href="#" class="px-4 py-2 block max-w-64 md:max-w-48 whitespace-nowrap overflow-hidden text-ellipsis text-sm bg-slate-100 text-slate-500 hover:text-slate-50 hover:bg-orange-600 ">
-							{{ $firstTag }} <!-- Display the first unique tag -->
-						</a>
-					</li>
-					@endif
-				@endforeach
-			</ul>
-		</div>
-
+				@if ($firstTag) <!-- Only show the item if a first tag is available -->
+				<li>
+					<a href="#" class="px-4 py-2 block max-w-64 md:max-w-48 whitespace-nowrap overflow-hidden text-ellipsis text-sm bg-slate-100 text-slate-500 hover:text-slate-50 hover:bg-orange-600 ">
+						{{ $firstTag }} <!-- Display the first unique tag -->
+					</a>
+				</li>
+				@endif
+			@endforeach
+		</ul>
 	</div>
 </section>
 
