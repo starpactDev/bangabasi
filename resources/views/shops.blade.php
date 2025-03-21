@@ -7,10 +7,10 @@
 @section('content')
 <div class="container mx-auto py-12">
     <!-- Seller Registration Call to Action -->
-    <div class="block md:hidden border-2 border-orange-500  text-center py-4 rounded shadow-md mb-10">
-        <h1 class="text-xl font-bold">Sell on Bangabasi to 14 Cr+ customers at <br /> <span class="text-orange-600">0% Commission</span></h1>
+    <div class="block md:hidden bg-orange-50 border-2 border-orange-500  text-center py-8 rounded shadow-md mb-10">
+        <h1 class="text-xl font-bold">Sell on Bangabasi to 14 Cr+ customers at <br /> <span class="text-green-600">0% Commission</span></h1>
         <p class="my-6">Become a seller today and expand your business across India</p>
-        <a href="{{ route('seller_index') }}" class="mt-4 inline-block text-white bg-orange-600 py-2 px-6 rounded-lg text-sm tracking-wide hover:bg-blue-700 transition">Register as a Seller</a>
+        <a href="{{ route('seller_index') }}" class="mt-4 inline-block text-white bg-orange-600 py-2 px-6 rounded-lg text-sm tracking-wide hover:bg-orange-700 transition">Register as a Seller</a>
     </div>
 
     <div class="text-center">
