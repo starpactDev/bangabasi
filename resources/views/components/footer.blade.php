@@ -1,9 +1,9 @@
 <footer class="mt-6">
     <section class="bg-neutral-50">
         <div class="container">
-            <div class="grid grid-cols-12 gap-4">
+            <div class="grid grid-cols-12 md:gap-4">
                 <!-- Newsletter Section -->
-                <div class="col-span-12 sm:col-span-6 lg:col-span-4 p-4" id="newsletterHolder">
+                <div class="col-span-12 sm:col-span-6 lg:col-span-4 p-2 md:p-4" id="newsletterHolder">
                     <h3 class="font-bold text-xl">News Letter</h3>
                     <div id="emailFormDiv">
                         <p class="text-sm min-h-10">Sign up for our newsletter to get the latest updates</p>
@@ -31,7 +31,7 @@
                 </div>
 
                 <!-- Follow Us Section -->
-                <div class="col-span-12 sm:col-span-6 lg:col-span-4 p-4">
+                <div class="col-span-12 sm:col-span-6 lg:col-span-4 p-2 md:p-4">
                     <h3 class="font-bold text-xl">Follow Us</h3>
                     <p class="text-sm min-h-10">Find whats happening in the backend.</p>
                     <div class="my-4 flex justify-start gap-2 py-2 bg-white w-fit px-2">
@@ -57,7 +57,7 @@
                 </div>
 
                 <!-- Order via Whatsapp Section -->
-                <div class="col-span-12 sm:hidden md:col-span-6 lg:block lg:col-span-4 p-4">
+                <div class="col-span-12 sm:hidden md:col-span-6 lg:block lg:col-span-4 p-2 md:p-4">
                     <h3 class="font-bold text-xl">Order via Whatsapp</h3>
                     <p class="text-sm min-h-10">Finding it difficult to order via Website?</p>
                     <div class="my-4 flex justify-start gap-2 text-white">
@@ -76,7 +76,7 @@
                 <div class="col-span-12 lg:col-span-6  ">
                     <div class="flex py-4 justify-center gap-4 ">
                         @if(isset($logos['2']))
-                            <img src="{{ asset('user/uploads/logos/' . $logos['1']->image_path) }}" alt="footer-log" class="w-40">
+                            <img src="{{ asset('user/uploads/logos/' . $logos['1']->image_path) }}" alt="footer-log" class="w-40 object-contain">
                         @endif
                         <div class="border-left border border-neutral-200"></div>
                         <img src="{{ asset('images/svg/msme_icon_circle.png') }}" alt="mesme logo" class="border-left h-fit w-10">
