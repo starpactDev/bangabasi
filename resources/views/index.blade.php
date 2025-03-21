@@ -10,7 +10,7 @@
 			<div class="col-span-12 lg:col-span-5">
 				<div class="dokra min-h-screen md:h-full col-span-12 md:col-span-6 lg:col-span-5 md:row-span-9 border-blue" style="background-image: url('{{ asset('user/uploads/homepage/'.$homeData['heroSection']['image']) }}');">
 
-					<div class="text-center w-ful" id="banga">
+					<div class="text-center w-full px-4" id="banga">
 						<div class="text-xxl font-roboto  font-bold ">{!! $homeData['heroSection']['head'] !!}</div>
 						<div class="banner-title text-white">{!! $homeData['heroSection']['description'] !!}</div>
 						<a href="{{$homeData['heroSection']['redirect']}}" class="text-[1rem] text-orange-600 font-semibold hover:underline">{{$homeData['heroSection']['button']}}</a>
