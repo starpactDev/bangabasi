@@ -93,25 +93,23 @@ input::-webkit-inner-spin-button {
 		text-align: center;
 		/* image will be availble from the index file dynamically */
 		background-position: center;
-		background-size: 100%;
+		background-size: cover;
 		background-repeat: no-repeat;
 		transition: background-size 1s ease;
 	}
-	.dokra:hover{
-		background-size: 120%;
-	}
+
 
 	.dokra .text-center {
 		font-size: 2.5rem;
 		display: flex;
 		flex-direction: column;
-		font-weight: semi-bold;
+		line-height: 2.5rem;
 	}
 
 	.dokra .banner-title {
 		font-size: 1rem;
-		color: #777;
 		margin-top: 0.5rem;
+		line-height: 1rem;
 	}
 }
 

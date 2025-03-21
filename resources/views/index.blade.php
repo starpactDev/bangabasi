@@ -12,8 +12,8 @@
 
 					<div class="text-center w-ful" id="banga">
 						<div class="text-xxl font-roboto  font-bold ">{!! $homeData['heroSection']['head'] !!}</div>
-						<div class="banner-title">{!! $homeData['heroSection']['description'] !!}</div>
-						<a href="{{$homeData['heroSection']['redirect']}}" class="text-[1rem] text-secondary font-semibold hover:underline">{{$homeData['heroSection']['button']}}</a>
+						<div class="banner-title text-white">{!! $homeData['heroSection']['description'] !!}</div>
+						<a href="{{$homeData['heroSection']['redirect']}}" class="text-[1rem] text-orange-600 font-semibold hover:underline">{{$homeData['heroSection']['button']}}</a>
 					</div>
 
 				</div>
