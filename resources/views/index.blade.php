@@ -515,7 +515,7 @@
 <!-- handpicked items -->
 <section class="handpicked ">
 	<h2 class="text-center text-2xl font-semibold capitalize py-6">Handpicked Products for You</h2>
-	<div class="container border-4 p-6">
+	<div class="container border-4 md:p-6">
 		<div class="handcrafts grid grid-cols-12 min-h-60 items-center" style="background-image: url('{{ asset('user/uploads/homepage/'.$homeData['handpickedSection']['image']) }}'); background-size: cover; background-position: left">
 			<div class="col-span-12 md:col-span-6 mx-auto lg-mx-0 lg:px-16 ">
 				<h3 class="text-lg md:text-2xl font-bold py-2 md:py-4">{!! $homeData['handpickedSection']['head'] !!}</h3>
@@ -526,7 +526,7 @@
 
 			</div>
 		</div>
-		<div class="w-full py-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+		<div class="w-full py-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-y-4">
 			@foreach ($handpicked as $product)
 
 
