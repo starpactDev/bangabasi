@@ -89,7 +89,7 @@ class SellerController extends Controller
             $imageName = time() . '_' . rand(1000, 9999) . '.' . $extension;
         
             // Move the file to the 'public/logos' directory
-            $request->file('logo')->move(public_path('user/uploads/profile'), $imageName);
+            $request->file('image')->move(public_path('user/uploads/profile'), $imageName);
         }
 
 
