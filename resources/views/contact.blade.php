@@ -13,7 +13,6 @@
     <!-- Contact Details Section -->
     <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         <div>
-            <h2 class="text-2xl font-semibold text-blue-600">Get in Touch</h2>
             <p class="text-gray-700 mt-3">Reach out to us via phone, email, or visit our office.</p>
             <div class="mt-5 space-y-3">
                 <strong class="text-orange-500">Address: </strong>
