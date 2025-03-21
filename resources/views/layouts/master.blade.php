@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="theme-color" content="#f97417">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="Explore the rich culture of Bengal with Bangabasi.com. Discover authentic Bengali crafts, food, apparel, and more, supporting talented artisans and connecting you to Bengal’s heritage worldwide." />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
