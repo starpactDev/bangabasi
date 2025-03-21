@@ -2,13 +2,32 @@
 
 @section('head')
 <title>Our Sellers | Bangabasi</title>
+<style>
+    .animate-blink {
+        animation: animate-blink 1s infinite;
+
+    }
+
+    @keyframes animate-blink {
+        0% {
+            background-color: #fff;
+            color: #16a34a;
+        }
+
+        100% {
+            background-color: #16a34a;
+            color: #fff;
+        }
+    }
+</style>
+
 @endsection
 
 @section('content')
 <div class="container mx-auto py-12">
     <!-- Seller Registration Call to Action -->
     <div class="block md:hidden bg-orange-50 border-2 border-orange-500  text-center py-8 rounded shadow-md mb-10">
-        <h1 class="text-xl font-bold">Sell on Bangabasi to 14 Cr+ customers at <br /> <span class="text-green-600">0% Commission</span></h1>
+        <h1 class="text-xl font-bold leading-10">Sell on Bangabasi to 14 Cr+ customers at <br /> <span class="text-green-600 animate-blink p-2 border border-green-600 rounded">0% Commission</span></h1>
         <p class="my-6">Become a seller today and expand your business across India</p>
         <a href="{{ route('seller_index') }}" class="mt-4 inline-block text-white bg-orange-600 py-2 px-6 rounded-lg text-sm tracking-wide hover:bg-orange-700 transition">Register as a Seller</a>
     </div>
