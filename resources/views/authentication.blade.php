@@ -6,7 +6,7 @@
 
 @section("content")
 
-<section class="auth-body md:min-h-screen flex justify-center items-center py-2 md:py-8">
+<section class="auth-body md:min-h-screen flex justify-center items-center py-8">
     <div class="auth-container bg-transparent w-3/5 min-h-96 min-w-96 rounded-lg shadow-xl flex flex-wrap gap-y-4">
         <div class="flex-1 min-w-80 min-h-96 bg-white flex flex-col items-center justify-evenly p-6 order-2">
             @if(isset($logos['3']))
