@@ -167,7 +167,7 @@
 		</ul>
 
 		<div class="min-h-[80vh] border-[3px] border-orange-600 tabs" id="dashakarma">
-			<div class="h-[40vh] flex justify-end items-center banner bg-right md:bg-left bg-auto" style="background-image: url('{{ asset('user/uploads/homepage/' . $homeData['dontMissSectionDashaKarma']['image']) }}')">
+			<div class="h-[40vh] flex justify-end items-center banner bg-right md:bg-left bg-cover" style="background-image: url('{{ asset('user/uploads/homepage/' . $homeData['dontMissSectionDashaKarma']['image']) }}')">
 				<div class="max-w-[360px] px-8">
 					<h3 class="text-xl font-semibold">{!! $homeData['dontMissSectionDashaKarma']['head'] !!}</h3>
 					<p>{!! $homeData['dontMissSectionDashaKarma']['description'] !!}</p>
@@ -199,7 +199,7 @@
 			</div>
 		</div>
 		<div class="min-h-[80vh] border-[3px] border-ornage-600 hidden tabs" id="machinery">
-			<div class="h-[40vh] flex justify-start items-center banner bg-left md:bg-right bg-auto" style="background-image: url('{{ asset('user/uploads/homepage/' . $homeData['dontMissSectionMachinery']['image']) }}')">
+			<div class="h-[40vh] flex justify-start items-center banner bg-left md:bg-right bg-cover" style="background-image: url('{{ asset('user/uploads/homepage/' . $homeData['dontMissSectionMachinery']['image']) }}')">
 				<div class="max-w-[360px] px-8">
 					<h3 class="text-xl font-semibold">{!! $homeData['dontMissSectionMachinery']['head'] !!}</h3>
 					<p>{!! $homeData['dontMissSectionMachinery']['description'] !!}</p>
@@ -235,7 +235,7 @@
 		</div>
 		
 		<div class="min-h-[80vh] border-[3px] border-orange-600 hidden tabs" id="clothing">
-			<div class="h-[40vh] flex justify-end items-center banner bg-right md:bg-left bg-auto" style="background-image: url('{{ asset('user/uploads/homepage/' . $homeData['dontMissSectionClothing']['image']) }}')">
+			<div class="h-[40vh] flex justify-end items-center banner bg-right md:bg-left bg-cover" style="background-image: url('{{ asset('user/uploads/homepage/' . $homeData['dontMissSectionClothing']['image']) }}')">
 				<div class="max-w-[360px] px-8">
 					<h3 class="text-xl font-semibold">{!! $homeData['dontMissSectionClothing']['head'] !!}</h3>
 					<p>{!! $homeData['dontMissSectionClothing']['description'] !!}</p>
@@ -267,7 +267,7 @@
 			</div>
 		</div>
 		<div class="min-h-[80vh] border-[3px] border-orange-600 hidden tabs" id="food">
-			<div class="h-[40vh] flex justify-end items-center banner bg-right md:bg-left bg-auto" style="background-image: url('{{ asset('user/uploads/homepage/' . $homeData['dontMissSectionFoodItem']['image']) }}')">
+			<div class="h-[40vh] flex justify-end items-center banner bg-right md:bg-left bg-cover" style="background-image: url('{{ asset('user/uploads/homepage/' . $homeData['dontMissSectionFoodItem']['image']) }}')">
 				<div class="max-w-[360px] px-8">
 					<h3 class="text-xl font-semibold">{!! $homeData['dontMissSectionFoodItem']['head'] !!}</h3>
 					<p>{!! $homeData['dontMissSectionFoodItem']['description'] !!}</p>
