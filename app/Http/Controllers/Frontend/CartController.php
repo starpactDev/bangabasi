@@ -10,6 +10,7 @@ use App\Models\PlatformFee;
 use App\Models\ProductSize;
 use App\Models\UserAddress;
 use Illuminate\Http\Request;
+use App\Models\CheckoutSession;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -319,6 +320,48 @@ class CartController extends Controller
     {
         session()->forget('coupon_applied');
         return redirect()->back();
+    }
+
+    private function storeCartSession($user)
+    {
+        $cartItems = Cart::where('user_id', $user->id)->get();
+
+        if ($cartItems->isEmpty()) {
+            return null;
+        }
+
+        $total_price = $cartItems->sum(fn($item) => $item->unit_price * $item->quantity);
+        $coupon_discount = session('coupon_applied') ? Coupon::find(session('coupon_applied'))->discount_amount ?? 0 : 0;
+        $platform_fee = PlatformFee::latest()->first()->amount ?? 0;
+        $shipping_fee = $this->calculateShippingFee($total_price);
+        $final_amount = $total_price - $coupon_discount + $platform_fee + $shipping_fee;
+
+        return CheckoutSession::updateOrCreate(
+            ['user_id' => $user->id],
+            [
+                'cart_data' => json_encode($cartItems),
+                'total_price' => $total_price,
+                'coupon_discount' => $coupon_discount,
+                'platform_fee' => $platform_fee,
+                'shipping_fee' => $shipping_fee,
+                'final_amount' => $final_amount,
+            ]
+        );
+    }
+
+    private function calculateShippingFee($total_price)
+    {
+        if ($total_price > 50 && $total_price <= 299) {
+            return 10;
+        } elseif ($total_price > 300 && $total_price <= 599) {
+            return 15;
+        } elseif ($total_price > 600 && $total_price <= 899) {
+            return 20;
+        } elseif ($total_price > 900) {
+            return 25;
+        } else {
+            return 5;
+        }
     }
 
 }
