@@ -43,38 +43,11 @@ class OrderController extends Controller
         $user = Auth::user();
         $delivery_address = null;
 
-        // Custom validation rules
-        $rules = [
-            "firstname" => "required",
-            "lastname" => "required",
-            "email" => "required|email",
-            "street_name" => "required",
-            "city" => "required",
-            "phone" => "required|digits:10",
-            "total_amount" => "required|numeric",
-            "pin" => "required|digits:6",
-            "state" => "required",
-        ];
+        // Call the common address handling method
+        $delivery_address = $this->_handleAddress($request, $user);
 
-        if ($request->address_type == "new") {
-            $request->validate($rules);
-            $address = new UserAddress();
-            $address->user_id = $user->id;
-            $address->firstname = $request->firstname;
-            $address->lastname = $request->lastname;
-            $address->email = $request->email;
-            $address->street_name = $request->street_name;
-            $address->city = $request->city;
-            $address->state = "";
-            $address->country = $request->country;
-            $address->phone = $request->phone;
-            $address->pin = $request->pin;
-            $address->state = $request->state;
-            $address->apartment = $request->apartment;
-            $address->save();
-            $delivery_address = $address;
-        } elseif ($request->address_type == "old") {
-            $delivery_address = UserAddress::find($request->address_id);
+        if (!$delivery_address) {
+            return response()->json(['message' => 'Invalid address.'], 400);
         }
 
         try {
@@ -139,43 +112,14 @@ class OrderController extends Controller
     public function instantplaceOrder(Request $request)
     {
         
-
         $user = Auth::user();
         $delivery_address = null;
 
-        // Custom validation rules
-        $rules = [
-            "firstname" => "required",
-            "lastname" => "required",
-            "email" => "required|email",
-            "street_name" => "required",
-            "city" => "required",
-            "phone" => "required|digits:10",
-            "total_amount" => "required|numeric",
-            "total_price" => "required|numeric",
-            "pin" => "required|digits:6",
-            "state" => "required",
-        ];
+        // Call the common address handling method
+        $delivery_address = $this->_handleAddress($request, $user);
 
-        if ($request->address_type == "new") {
-            $request->validate($rules);
-            $address = new UserAddress();
-            $address->user_id = $user->id;
-            $address->firstname = $request->firstname;
-            $address->lastname = $request->lastname;
-            $address->email = $request->email;
-            $address->street_name = $request->street_name;
-            $address->city = $request->city;
-            $address->state = $request->state ? $request->state : ' ';
-            $address->country = $request->country;
-            $address->phone = $request->phone;
-            $address->pin = $request->pin;
-            $address->state = $request->state;
-            $address->apartment = $request->apartment;
-            $address->save();
-            $delivery_address = $address;
-        } elseif ($request->address_type == "old") {
-            $delivery_address = UserAddress::find($request->address_id);
+        if (!$delivery_address) {
+            return response()->json(['message' => 'Invalid address.'], 400);
         }
 
         try {
@@ -268,4 +212,48 @@ class OrderController extends Controller
             return response()->json(['status' => 'error', 'message' => 'An error occurred while canceling the order.'], 500);
         }
     }
+
+    private function _handleAddress(Request $request, $user)
+    {
+        // Custom validation rules
+        $rules = [
+            "firstname" => "required",
+            "lastname" => "required",
+            "email" => "required|email",
+            "street_name" => "required",
+            "city" => "required",
+            "phone" => "required|digits:10",
+            "total_amount" => "required|numeric",
+            "pin" => "required|digits:6",
+            "state" => "required",
+        ];
+
+        // Validate the request if the address is new
+        if ($request->address_type == "new") {
+            $request->validate($rules);
+
+            // Create a new address
+            $address = new UserAddress();
+            $address->user_id = $user->id;
+            $address->firstname = $request->firstname;
+            $address->lastname = $request->lastname;
+            $address->email = $request->email;
+            $address->street_name = $request->street_name;
+            $address->city = $request->city;
+            $address->state = $request->state;
+            $address->country = $request->country;
+            $address->phone = $request->phone;
+            $address->pin = $request->pin;
+            $address->apartment = $request->apartment;
+            $address->save();
+
+            return $address;
+        } elseif ($request->address_type == "old") {
+            // Use the existing address if it is old
+            return UserAddress::find($request->address_id);
+        }
+
+        return null; // In case address type is neither 'new' nor 'old'
+    }
+
 }
