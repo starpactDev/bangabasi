@@ -111,13 +111,13 @@ class CartController extends Controller
         $checkoutDetails = $this->_calculateCheckoutDetails($user, $products);
 
         // Store session data
-        $this->_storeCheckoutSession($user, $products, $checkoutDetails);
+        $checkoutSession = $this->_storeCheckoutSession($user, $products, $checkoutDetails);
 
         // Fetch user addresses
         $user_addresses = UserAddress::where('user_id', $user->id)->get();
         $address_type = $user_addresses->isEmpty() ? "new" : "old";
 
-        return view('checkout', array_merge(compact('products', 'user_addresses', 'address_type'), $checkoutDetails));
+        return view('checkout', array_merge(compact('products', 'user_addresses', 'address_type'), $checkoutDetails, ['checkoutSession' => $checkoutSession] ));
     }
 
 
@@ -304,13 +304,22 @@ class CartController extends Controller
         if (empty($products)) {
             return null; // No items in cart, no need to store session
         }
-
+        
+        // Filter out relevant product attributes (SKU, quantity, etc.)
+        $cartData = $products->map(function($product) {
+            return [
+                'id' => $product->id,           
+                'sku' => $product->sku,         
+                'quantity' => $product->quantity, 
+                'unit_price' => $product->unit_price, 
+            ];
+        });
 
         // Store session data
         $checkoutSession = CheckoutSession::updateOrCreate(
             ['user_id' => $user->id],
             [
-                'cart_data' => json_encode($products), // Storing cart items
+                'cart_data' => json_encode($cartData), // Storing cart items
                 'original_price' => $checkoutDetails['original_price'],
                 'total_price' => $checkoutDetails['total_price'],
                 'coupon_discount' => $checkoutDetails['coupon_discount'],

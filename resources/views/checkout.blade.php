@@ -14,7 +14,6 @@
         }
     @endphp
 
-
     <x-bread-crumb :page="$xpage" :previousHref="$xprv" />
     <div class="flex flex-wrap justify-center gap-x-4 p-8 bg-slate-50 my-4">
         <div class="min-w-64 lg:min-w-80 text-center py-4">
@@ -398,7 +397,7 @@
     })
     
     $("#place_order").click(function() {
-        var payment_type = document.querySelector('input[name="payments"]:checked').value;
+
         var products = [];
         @foreach($products as $item)
         products.push({
@@ -417,10 +416,10 @@
                 _token: '{{ csrf_token() }}'
             },
             success: function(response) {
-                var allAvailable = response.availability.every(function(item) {
+                const allAvailable = response.availability.every(function(item) {
                     return item.available;
                 });
-                if (!allAvailable) {
+                if(!allAvailable){
                     Swal.fire({
                         title: 'Out of Stock!',
                         text: 'One or more items are out of stock. Please adjust your order.',
