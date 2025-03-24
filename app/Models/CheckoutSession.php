@@ -29,7 +29,7 @@ class CheckoutSession extends Model
         'coupon_discount',
         'shipping_fee',
         'platform_fee',
-        'final_amount',
+        'total_amount',
     ];
 
     /**

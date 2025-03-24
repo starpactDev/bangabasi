@@ -19,7 +19,7 @@ return new class extends Migration
             $table->double('coupon_discount')->nullable();
             $table->double('shipping_fee');
             $table->double('platform_fee');
-            $table->double('final_amount'); // Final payable amount
+            $table->double('total_amount'); // Final payable amount
             $table->timestamps();
         });
     }

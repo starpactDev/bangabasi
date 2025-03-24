@@ -14,6 +14,8 @@ use App\Models\CheckoutSession;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
+use function PHPUnit\Framework\isEmpty;
+
 class CartController extends Controller
 {
     //
@@ -97,66 +99,27 @@ class CartController extends Controller
     {
         $user = Auth::user();
 
+        // Fetch products in cart
         $products = Product::join('carts', 'products.id', '=', 'carts.product_id')
-                             ->where('carts.user_id', $user->id)
-                             ->orderBy('carts.created_at', 'desc')
-                             ->select('products.*', "carts.*", "carts.id as cart_id")
-                             ->with('productImages') // Eager load product images
-                             ->get();
+                            ->where('carts.user_id', $user->id)
+                            ->orderBy('carts.created_at', 'desc')
+                            ->select('products.*', "carts.*", "carts.id as cart_id")
+                            ->with('productImages') // Eager load product images
+                            ->get();
 
-        $original_price = 0;
-        foreach ($products as $item) {
-            $original_price += $item->original_price * $item->quantity;
-        }
-        $original_price = round($original_price, 2);
+        // Calculate all checkout details
+        $checkoutDetails = $this->_calculateCheckoutDetails($user, $products);
 
-        $total_price = 0;
-        foreach ($products as $item) {
-            $total_price += $item->unit_price * $item->quantity;
-            $item->subtotal = $item->unit_price * $item->quantity;
-        }
-        $total_price = round($total_price, 2);
+        // Store session data
+        $this->_storeCheckoutSession($user, $products, $checkoutDetails);
 
-        $coupon_discount = 0;
-
-        // Retrieve the coupon ID from the session
-        $couponId = session('coupon_applied');
-
-        if ($couponId) {
-            $coupon = Coupon::find($couponId);
-            if ($coupon) {
-                if ($coupon->discount_percentage) {
-                    $coupon_discount = round(($total_price * $coupon->discount_percentage) / 100, 2);
-                } else {
-                    $coupon_discount = $coupon->discount_amount;
-                }
-            }
-        }
-
-
-        $platform_fee = 0;
-
-        $platform_fee = round(PlatformFee::latest()->first()->amount);
-
-        $shipping_fee = 0;
-
-        $shipping_fee = match(true) {
-            $total_price > 50 && $total_price <= 299 => 10,
-            $total_price > 300 && $total_price <= 599 => 15,
-            $total_price > 600 && $total_price <= 899 => 20,
-            $total_price > 900 => 25,
-            default => 5,
-        };
-
-        $total_amount = $total_price - $coupon_discount + $platform_fee + $shipping_fee;
-
+        // Fetch user addresses
         $user_addresses = UserAddress::where('user_id', $user->id)->get();
-
-
         $address_type = $user_addresses->isEmpty() ? "new" : "old";
 
-        return view('checkout', compact('products', 'total_price', 'original_price', 'coupon_discount', 'platform_fee', 'shipping_fee', 'total_amount', 'user_addresses', 'address_type'));
+        return view('checkout', array_merge(compact('products', 'user_addresses', 'address_type'), $checkoutDetails));
     }
+
 
     public function checkStock(Request $request)
     {
@@ -273,6 +236,19 @@ class CartController extends Controller
 
         $total_amount = $total_price - $coupon_discount + $platform_fee + $shipping_fee;
 
+        // Checkout details
+        $checkoutDetails = [
+            'original_price' => $original_price,
+            'total_price' => $total_price,
+            'coupon_discount' => $coupon_discount,
+            'platform_fee' => $platform_fee,
+            'shipping_fee' => $shipping_fee,
+            'total_amount' => $total_amount,
+        ];
+
+        // Call the private function to store the checkout session
+        $this->_storeCheckoutSession($user, $products, $checkoutDetails);
+
         // User addresses
         $user_addresses = UserAddress::where('user_id', $user->id)->get();
         $address_type = $user_addresses->isEmpty() ? "new" : "old";
@@ -284,7 +260,7 @@ class CartController extends Controller
     public function couponCheck(Request $request)
     {
         // Validate incoming request
-        $validated = $request->validate([
+        $request->validate([
             'coupon_code' => 'required|string|exists:coupons,coupon_code',
         ]);
 
@@ -322,46 +298,78 @@ class CartController extends Controller
         return redirect()->back();
     }
 
-    private function storeCartSession($user)
+    private function _storeCheckoutSession($user, $products, $checkoutDetails)
     {
-        $cartItems = Cart::where('user_id', $user->id)->get();
 
-        if ($cartItems->isEmpty()) {
-            return null;
+        if (empty($products)) {
+            return null; // No items in cart, no need to store session
         }
 
-        $total_price = $cartItems->sum(fn($item) => $item->unit_price * $item->quantity);
-        $coupon_discount = session('coupon_applied') ? Coupon::find(session('coupon_applied'))->discount_amount ?? 0 : 0;
-        $platform_fee = PlatformFee::latest()->first()->amount ?? 0;
-        $shipping_fee = $this->calculateShippingFee($total_price);
-        $final_amount = $total_price - $coupon_discount + $platform_fee + $shipping_fee;
 
-        return CheckoutSession::updateOrCreate(
+        // Store session data
+        $checkoutSession = CheckoutSession::updateOrCreate(
             ['user_id' => $user->id],
             [
-                'cart_data' => json_encode($cartItems),
-                'total_price' => $total_price,
-                'coupon_discount' => $coupon_discount,
-                'platform_fee' => $platform_fee,
-                'shipping_fee' => $shipping_fee,
-                'final_amount' => $final_amount,
+                'cart_data' => json_encode($products), // Storing cart items
+                'original_price' => $checkoutDetails['original_price'],
+                'total_price' => $checkoutDetails['total_price'],
+                'coupon_discount' => $checkoutDetails['coupon_discount'],
+                'platform_fee' => $checkoutDetails['platform_fee'],
+                'shipping_fee' => $checkoutDetails['shipping_fee'],
+                'total_amount' => $checkoutDetails['total_amount'],
             ]
         );
+
+        return $checkoutSession;
     }
 
-    private function calculateShippingFee($total_price)
+    
+
+
+    private function _calculateCheckoutDetails($user, $products)
     {
-        if ($total_price > 50 && $total_price <= 299) {
-            return 10;
-        } elseif ($total_price > 300 && $total_price <= 599) {
-            return 15;
-        } elseif ($total_price > 600 && $total_price <= 899) {
-            return 20;
-        } elseif ($total_price > 900) {
-            return 25;
-        } else {
-            return 5;
+        // Ensure $products is a collection (even for instantCheckout)
+        $products = collect($products);
+
+        // Calculate total original price
+        $original_price = $products->sum(fn($item) => $item['original_price'] * $item['quantity']);
+        $original_price = round($original_price, 2);
+
+        // Calculate total price
+        $total_price = $products->sum(fn($item) => $item['unit_price'] * $item['quantity']);
+        $total_price = round($total_price, 2);
+
+        // Apply coupon discount
+        $coupon_discount = 0;
+        $couponId = session('coupon_applied');
+
+        if ($couponId) {
+            $coupon = Coupon::find($couponId);
+            if ($coupon) {
+                $coupon_discount = $coupon->discount_percentage
+                    ? round(($total_price * $coupon->discount_percentage) / 100, 2)
+                    : $coupon->discount_amount;
+            }
         }
+
+        // Platform fee
+        $platform_fee = round(PlatformFee::latest()->first()->amount ?? 0);
+
+        // Shipping fee
+        $shipping_fee = match(true) {
+            $total_price > 50 && $total_price <= 299 => 10,
+            $total_price > 300 && $total_price <= 599 => 15,
+            $total_price > 600 && $total_price <= 899 => 20,
+            $total_price > 900 => 25,
+            default => 5,
+        };
+
+        // Final total amount
+        $total_amount = $total_price - $coupon_discount + $platform_fee + $shipping_fee;
+
+        return compact('original_price', 'total_price', 'coupon_discount', 'platform_fee', 'shipping_fee', 'total_amount');
     }
+
+
 
 }
