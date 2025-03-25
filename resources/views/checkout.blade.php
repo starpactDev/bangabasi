@@ -154,8 +154,7 @@
         </div>
         <div class="col-span-12 lg:col-span-6">
             <div class="px-4 py-6 min-h-64 border-2 border-black ">
-                <h3 class="text-lg uppercase font-medium py-2"><span class="border-b border-black py-2">Your Order</span>
-                </h3>
+                <h3 class="text-lg uppercase font-medium py-2"><span class="border-b border-black py-2">Your Order</span></h3>
                 <style>
 					.break-words {
 						word-wrap: break-word;
@@ -248,6 +247,7 @@
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 @if($products->count() > 0)
 <script id="countDownScript">
@@ -292,6 +292,7 @@
     }
 </script>
 @endif
+
 <script id="toggleForm">
     function toggleForm(id){
         const form = document.getElementById(`${id}Form`);
@@ -300,6 +301,7 @@
         }
     }
 </script>
+
 <script id="couponSubmit">
     const couponCont = document.getElementById('couponCont');
     const couponForm = document.getElementById('couponForm');
@@ -368,23 +370,7 @@
     });
 </script>
 
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<script>
-    var address_type = "old";
-    var old_address_id = null;
-    // Check if address_type is "old" and user_addresses is not empty
-    @if($user_addresses -> isNotEmpty())
-    if (address_type === "old") {
-        old_address_id = "{{ $user_addresses[0]->id }}"; // Use the first address's ID if address_type is "old"
-    } else {
-        // Optionally handle the case where address_type is not "old"
-        old_address_id = null; // Or set this to some default value or handle as needed
-    }
-    @else
-    // Handle case where no addresses are available
-    old_address_id = null; // Or handle as needed
-    @endif
-
+<script id="toggleAddressType">
     $("#add_address").click(function() {
         $("#old_address").hide();
         $("#new_address").show();
@@ -395,10 +381,25 @@
         $("#new_address").hide();
         address_type = "old";
     })
-    
+</script>
+
+<script>
+    let address_type = "old";
+    let old_address_id = null;
+
+    // Check if address_type is "old" and user_addresses is not empty
+    @if($user_addresses->isNotEmpty())
+        if (address_type === "old") {
+            old_address_id = "{{ $user_addresses[0]->id }}"; 
+        }
+    @else
+        address_type = "new";
+    @endif
+
+
     $("#place_order").click(function() {
 
-        var products = [];
+        let products = [];
         @foreach($products as $item)
         products.push({
             id: '{{ $item->product_id }}',
@@ -525,6 +526,20 @@
         old_address_id = $(this).val();
     })
 
+    
+    function showAlert(title, text, icon, callback = null) {
+        Swal.fire({
+            title,
+            text,
+            icon,
+            confirmButtonText: "OK"
+        }).then(result => {
+            if (result.isConfirmed && callback) callback();
+        });
+    }
+</script>
+
+<script id="razorPayMethods">
     function initiateRazorpay() {
         const total_price = "{{ $total_price }}"; // Fetch the total price
         // Make a request to your server to create the Razorpay order
@@ -619,16 +634,6 @@
             .catch(() => {
                 showAlert("Error!", "An error occurred while processing payment. Please try again later.", "error");
             });
-    }
-    function showAlert(title, text, icon, callback = null) {
-        Swal.fire({
-            title,
-            text,
-            icon,
-            confirmButtonText: "OK"
-        }).then(result => {
-            if (result.isConfirmed && callback) callback();
-        });
     }
 </script>
 @endpush
