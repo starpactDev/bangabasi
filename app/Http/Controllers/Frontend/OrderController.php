@@ -279,7 +279,7 @@ class OrderController extends Controller
             $this->_updateStock($item);
 
             // Increase admin fee dynamically (replace hardcoded value)
-            $extra_fee += $admin_commision * $item->quantity; 
+            $extra_fee += ($admin_commision * $item->quantity); 
         }
 
         return $extra_fee;
