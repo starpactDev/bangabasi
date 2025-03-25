@@ -59,85 +59,34 @@ class OrderController extends Controller
             return response()->json(['message' => 'Invalid checkout session.'], 400);
         }
 
-        // Ensure the total amount matches the session
+        // Validate total amount
         if ($checkoutSession->total_amount != $request->total_amount) {
             return response()->json(['message' => 'Total amount mismatch.'], 400);
         }
 
 
-        // Call the common address handling method
+        // Handle Address
         $delivery_address = $this->_handleAddress($request, $user);
-
         if (!$delivery_address) {
             return response()->json(['message' => 'Invalid address.'], 400);
         }
 
         try {
-            $unique_order_id = time() . "-" . rand(100, 999) . "-" . strtoupper(Str::random(6));
-            $order = new Order();
-            $order->user_id = $user->id;
-            $order->address_id = $delivery_address->id;
-            $order->unique_id = $unique_order_id;
-            $order->price = $checkoutSession->total_amount;
-            $order->additional_info = $request->additional_info;
-            $order->payment_method = $request->payment_type;
-            $order->status = "pending";
-            $order->save();
+            // Create Order
+            $order = $this->_createOrder($user, $checkoutSession, $delivery_address, $request);
 
-           
-            $cart = Cart::where('user_id', $user->id)->get();
+            $extra_fee = $checkoutSession->platform_fee + $checkoutSession->shipping_fee - $checkoutSession->coupon_discount;
 
-            $admin_fee = $checkoutSession->platform_fee + $checkoutSession->shipping_fee - $checkoutSession->coupon_discount;
-
-            foreach ($cart as $item) {
-                $order_item = new OrderItem();
-                $order_item->order_id = $order->id;
-                $order_item->product_id = $item->product_id;
-                $order_item->sku = $item->sku;
-                $order_item->quantity = $item->quantity;
-                $order_item->unit_price = $item->unit_price;
-                $order_item->status = (int) 0;
-                $order_item->save();
-
-                // Update the quantity in ProductSize model
-                $productSize = ProductSize::where('product_id', $item->product_id)
-                    ->where('size', $item->sku) // Assuming size is a field in the cart and ProductSize model
-                    ->first();
-
-                if ($productSize) {
-                    $productSize->quantity -= $item->quantity;
-                    $productSize->save();
-                }
-                // Check if all sizes for the product have a quantity of 0
-                $sizesLeft = ProductSize::where('product_id', $item->product_id)
-                    ->where('quantity', '>', 0)
-                    ->count();
-
-                if ($sizesLeft === 0) {
-                    // Update the in_stock field to 0 in the Product model
-                    $product = Product::find($item->product_id);
-                    $product->in_stock = 0;
-                    $product->save();
-                }
-
-                $admin_fee += 50;
-            }
-
-            $orderAmountBreakdown = new OrderAmountBreakdown();
-            $orderAmountBreakdown->order_id = $order->id;
-            $orderAmountBreakdown->platform_fee = $checkoutSession->platform_fee;
-            $orderAmountBreakdown->shipping_charge = $checkoutSession->shipping_fee;
-            $orderAmountBreakdown->coupon_discount = $checkoutSession->coupon_discount;
-            $orderAmountBreakdown->total_paid_by_customer = $checkoutSession->total_amount;
-            $orderAmountBreakdown->admin_fee = $admin_fee;
-            $orderAmountBreakdown->amount_to_seller = $checkoutSession->total_amount - $admin_fee;
-            $orderAmountBreakdown->save();
+            // Process Order Items
+            $admin_fee = $this->_processOrderItems($order, $user, $extra_fee);
             
+
+            // Store Order Amount Breakdown
+            $this->_storeOrderAmountBreakdown($order, $checkoutSession, $admin_fee);
+
+            // Clear Checkout Session & Cart
             CheckoutSession::where('id', $request->checkout_session)->delete();
-
             Cart::where('user_id', $user->id)->delete();
-
-
 
             return response()->json(['message' => 'Order placed successfully', 'order_id' => $order->id, "status" => "success"], 200);
         } catch (\Throwable $th) {
@@ -293,5 +242,84 @@ class OrderController extends Controller
 
         return null; // In case address type is neither 'new' nor 'old'
     }
+
+    private function _createOrder($user, $checkoutSession, $delivery_address, $request)
+    {
+        $unique_order_id = time() . "-" . rand(100, 999) . "-" . strtoupper(Str::random(6));
+
+        $order = new Order();
+        $order->user_id = $user->id;
+        $order->address_id = $delivery_address->id;
+        $order->unique_id = $unique_order_id;
+        $order->price = $checkoutSession->total_amount;
+        $order->additional_info = $request->additional_info;
+        $order->payment_method = $request->payment_type;
+        $order->status = "pending";
+        $order->save();
+
+        return $order;
+    }
+
+    private function _processOrderItems($order, $user, $extra_fee)
+    {
+        $cart = Cart::where('user_id', $user->id)->get();
+        $admin_commision = 50; // Hardcoded value
+
+        foreach ($cart as $item) {
+            $order_item = new OrderItem();
+            $order_item->order_id = $order->id;
+            $order_item->product_id = $item->product_id;
+            $order_item->sku = $item->sku;
+            $order_item->quantity = $item->quantity;
+            $order_item->unit_price = $item->unit_price;
+            $order_item->status = 0;
+            $order_item->save();
+
+            // Update stock levels
+            $this->_updateStock($item);
+
+            // Increase admin fee dynamically (replace hardcoded value)
+            $extra_fee += $admin_commision * $item->quantity; 
+        }
+
+        return $extra_fee;
+    }
+
+    private function _updateStock($cartItem)
+    {
+        $productSize = ProductSize::where('product_id', $cartItem->product_id)
+                                ->where('size', $cartItem->sku)
+                                ->first();
+
+        if ($productSize) {
+            $productSize->quantity -= $cartItem->quantity;
+            $productSize->save();
+        }
+
+        // Check if all sizes for the product are out of stock
+        $sizesLeft = ProductSize::where('product_id', $cartItem->product_id)
+                                ->where('quantity', '>', 0)
+                                ->count();
+
+        if ($sizesLeft === 0) {
+            $product = Product::find($cartItem->product_id);
+            $product->in_stock = 0;
+            $product->save();
+        }
+    }
+
+    private function _storeOrderAmountBreakdown($order, $checkoutSession, $admin_fee)
+    {
+        $orderAmountBreakdown = new OrderAmountBreakdown();
+        $orderAmountBreakdown->order_id = $order->id;
+        $orderAmountBreakdown->platform_fee = $checkoutSession->platform_fee;
+        $orderAmountBreakdown->shipping_charge = $checkoutSession->shipping_fee;
+        $orderAmountBreakdown->coupon_discount = $checkoutSession->coupon_discount;
+        $orderAmountBreakdown->total_paid_by_customer = $checkoutSession->total_amount;
+        $orderAmountBreakdown->admin_fee = $admin_fee;
+        $orderAmountBreakdown->amount_to_seller = $checkoutSession->total_amount - $admin_fee;
+        $orderAmountBreakdown->save();
+    }
+
 
 }
