@@ -20,7 +20,7 @@ class OrderAmountBreakdown extends Model
         'shipping_charge',
         'coupon_discount',
         'total_paid_by_customer',
-        'seller_fee',
+        'admin_fee',
         'amount_to_seller',
     ];
 

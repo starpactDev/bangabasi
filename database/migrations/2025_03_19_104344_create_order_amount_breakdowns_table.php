@@ -20,7 +20,7 @@ return new class extends Migration
             $table->double('coupon_discount')->nullable(); // Any coupon discount applied
             $table->double('total_paid_by_customer'); // Total paid by the customer (including all products, fees, and discounts)
             // Seller-specific breakdown
-            $table->double('seller_fee')->nullable(); // Seller fee deducted from the seller
+            $table->double('admin_fee')->nullable(); // Seller fee deducted from the seller
             $table->double('amount_to_seller'); // The final amount to be paid to the seller
             $table->timestamps();
         });

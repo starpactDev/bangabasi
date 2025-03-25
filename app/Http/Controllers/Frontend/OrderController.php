@@ -87,7 +87,7 @@ class OrderController extends Controller
            
             $cart = Cart::where('user_id', $user->id)->get();
 
-            $seller_fee = $checkoutSession->platform_fee + $checkoutSession->shipping_fee - $checkoutSession->coupon_discount;
+            $admin_fee = $checkoutSession->platform_fee + $checkoutSession->shipping_fee - $checkoutSession->coupon_discount;
 
             foreach ($cart as $item) {
                 $order_item = new OrderItem();
@@ -120,7 +120,7 @@ class OrderController extends Controller
                     $product->save();
                 }
 
-                $seller_fee += 50;
+                $admin_fee += 50;
             }
 
             $orderAmountBreakdown = new OrderAmountBreakdown();
@@ -129,8 +129,8 @@ class OrderController extends Controller
             $orderAmountBreakdown->shipping_charge = $checkoutSession->shipping_fee;
             $orderAmountBreakdown->coupon_discount = $checkoutSession->coupon_discount;
             $orderAmountBreakdown->total_paid_by_customer = $checkoutSession->total_amount;
-            $orderAmountBreakdown->seller_fee = $seller_fee;
-            $orderAmountBreakdown->amount_to_seller = $checkoutSession->total_amount - $seller_fee;
+            $orderAmountBreakdown->admin_fee = $admin_fee;
+            $orderAmountBreakdown->amount_to_seller = $checkoutSession->total_amount - $admin_fee;
             $orderAmountBreakdown->save();
             
             CheckoutSession::where('id', $request->checkout_session)->delete();
