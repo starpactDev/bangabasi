@@ -439,7 +439,8 @@
                         var new_address = $("#new_address_form").serialize();
                         new_address += "&payment_type=" + payment_type;
                         new_address += "&additional_info=" + $("#additional_info").val();
-                        new_address += "&total_amount=" + "{{ $total_amount }}";
+                        new_address += "&total_amount=" + "{{ $checkoutSession->total_amount }}";
+                        new_address += "&checkout_session=" + "{{ $checkoutSession->id }}";
                         $.ajax({
                             url: "{{ route('order.place') }}",
                             type: "POST",
@@ -483,8 +484,9 @@
                         var old_address = "address_id=" + old_address_id;
                         old_address += "&payment_type=" + payment_type;
                         old_address += "&additional_info=" + $("#additional_info").val();
-                        old_address += "&total_amount=" + "{{ $total_amount }}";
+                        old_address += "&total_amount=" + "{{ $checkoutSession->total_amount }}";
                         old_address += "&address_type=old";
+                        old_address += "&checkout_session=" + "{{ $checkoutSession->id }}";
                         old_address += "&_token={{ csrf_token() }}";
                         $.ajax({
                             url: "{{ route('order.place') }}",

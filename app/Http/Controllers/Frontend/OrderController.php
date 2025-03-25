@@ -14,6 +14,7 @@ use App\Models\ProductSize;
 use App\Models\UserAddress;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\CheckoutSession;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Models\OrderAmountBreakdown;
@@ -43,6 +44,27 @@ class OrderController extends Controller
         $user = Auth::user();
         $delivery_address = null;
 
+        // Validate incoming request
+        $request->validate([
+            'total_amount' => 'required|numeric|min:1',
+            'checkout_session' => 'required|exists:checkout_sessions,id',
+        ]);
+
+        // Retrieve the checkout session from database
+        $checkoutSession = CheckoutSession::where('id', $request->checkout_session)
+                                            ->where('user_id', $user->id)
+                                            ->first();
+
+        if (!$checkoutSession) {
+            return response()->json(['message' => 'Invalid checkout session.'], 400);
+        }
+
+        // Ensure the total amount matches the session
+        if ($checkoutSession->total_amount != $request->total_amount) {
+            return response()->json(['message' => 'Total amount mismatch.'], 400);
+        }
+
+
         // Call the common address handling method
         $delivery_address = $this->_handleAddress($request, $user);
 
@@ -56,7 +78,7 @@ class OrderController extends Controller
             $order->user_id = $user->id;
             $order->address_id = $delivery_address->id;
             $order->unique_id = $unique_order_id;
-            $order->price = $request->total_amount;
+            $order->price = $checkoutSession->total_amount;
             $order->additional_info = $request->additional_info;
             $order->payment_method = $request->payment_type;
             $order->status = "pending";
@@ -64,6 +86,8 @@ class OrderController extends Controller
 
            
             $cart = Cart::where('user_id', $user->id)->get();
+
+            $seller_fee = $checkoutSession->platform_fee + $checkoutSession->shipping_fee - $checkoutSession->coupon_discount;
 
             foreach ($cart as $item) {
                 $order_item = new OrderItem();
@@ -95,7 +119,21 @@ class OrderController extends Controller
                     $product->in_stock = 0;
                     $product->save();
                 }
+
+                $seller_fee += 50;
             }
+
+            $orderAmountBreakdown = new OrderAmountBreakdown();
+            $orderAmountBreakdown->order_id = $order->id;
+            $orderAmountBreakdown->platform_fee = $checkoutSession->platform_fee;
+            $orderAmountBreakdown->shipping_charge = $checkoutSession->shipping_fee;
+            $orderAmountBreakdown->coupon_discount = $checkoutSession->coupon_discount;
+            $orderAmountBreakdown->total_paid_by_customer = $checkoutSession->total_amount;
+            $orderAmountBreakdown->seller_fee = $seller_fee;
+            $orderAmountBreakdown->amount_to_seller = $checkoutSession->total_amount - $seller_fee;
+            $orderAmountBreakdown->save();
+            
+            CheckoutSession::where('id', $request->checkout_session)->delete();
 
             Cart::where('user_id', $user->id)->delete();
 
