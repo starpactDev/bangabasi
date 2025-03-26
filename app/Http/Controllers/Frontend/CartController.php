@@ -247,14 +247,14 @@ class CartController extends Controller
         ];
 
         // Call the private function to store the checkout session
-        $this->_storeCheckoutSession($user, $products, $checkoutDetails);
+        $checkoutSession = $this->_storeCheckoutSession($user, $products, $checkoutDetails);
 
         // User addresses
         $user_addresses = UserAddress::where('user_id', $user->id)->get();
         $address_type = $user_addresses->isEmpty() ? "new" : "old";
 
         // Pass data to the view
-        return view('instant_checkout', compact('products', 'original_price', 'total_price', 'coupon_discount', 'platform_fee', 'shipping_fee', 'total_amount', 'user_addresses', 'address_type'));
+        return view('instant_checkout', compact('products', 'original_price', 'total_price', 'coupon_discount', 'platform_fee', 'shipping_fee', 'total_amount', 'user_addresses', 'address_type', 'checkoutSession'));
     }
 
     public function couponCheck(Request $request)

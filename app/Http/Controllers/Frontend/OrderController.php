@@ -101,64 +101,52 @@ class OrderController extends Controller
 
     public function instantplaceOrder(Request $request)
     {
-        
+
         $user = Auth::user();
         $delivery_address = null;
 
-        // Call the common address handling method
-        $delivery_address = $this->_handleAddress($request, $user);
+        // Validate incoming request
+        $request->validate([
+            'total_amount' => 'required|numeric|min:1',
+            'checkout_session' => 'required|exists:checkout_sessions,id',
+        ]);
+      
+        // Retrieve the checkout session from database
+        $checkoutSession = CheckoutSession::where('id', $request->checkout_session)
+                                            ->where('user_id', $user->id)
+                                            ->first();
 
+        if (!$checkoutSession) {
+            return response()->json(['message' => 'Invalid checkout session.'], 400);
+        }
+
+        // Validate total amount
+        if ($checkoutSession->total_amount != $request->total_amount) {
+            return response()->json(['message' => 'Total amount mismatch.'], 400);
+        }
+
+        // Handle Address
+        $delivery_address = $this->_handleAddress($request, $user);
         if (!$delivery_address) {
             return response()->json(['message' => 'Invalid address.'], 400);
         }
 
         try {
-            $unique_order_id = time() . "-" . rand(100, 999) . "-" . strtoupper(Str::random(6));
-            $order = new Order();
-            $order->user_id = $user->id;
-            $order->address_id = $delivery_address->id;
-            $order->unique_id = $unique_order_id;
-            $order->price = $request->total_amount;
-            $order->additional_info = $request->additional_info;
-            $order->payment_method = $request->payment_type;
-            $order->status = "pending";
-            $order->save();
-
+            // Create Order
+            $order = $this->_createOrder($user, $checkoutSession, $delivery_address, $request);
            
             $cart = IstantBuy::where('user_id', $user->id)->get();
             
-            foreach ($cart as $item) {
-                $order_item = new OrderItem();
-                $order_item->order_id = $order->id;
-                $order_item->product_id = $item->product_id;
-                $order_item->sku = $item->sku;
-                $order_item->quantity = $item->quantity;
-                $order_item->unit_price = $request->total_price;
-                $order_item->save();
+            $extra_fee = $checkoutSession->platform_fee + $checkoutSession->shipping_fee - $checkoutSession->coupon_discount;
+            // Process Order Items
+            $admin_fee = $this->_processInstantOrderItems($order, $user, $request, $extra_fee);
+            
+            // Store Order Item Breakdown
+            $this->_storeOrderItemBreakdown($order);
 
-                // Update the quantity in ProductSize model
-                $productSize = ProductSize::where('product_id', $item->product_id)
-                    ->where('size', $item->sku) // Assuming size is a field in the cart and ProductSize model
-                    ->first();
-
-                if ($productSize) {
-                    $productSize->quantity -= $item->quantity;
-                    $productSize->save();
-                    
-                }
-                // Check if all sizes for the product have a quantity of 0
-                $sizesLeft = ProductSize::where('product_id', $item->product_id)
-                    ->where('quantity', '>', 0)
-                    ->count();
-
-                if ($sizesLeft === 0) {
-                    // Update the in_stock field to 0 in the Product model
-                    $product = Product::find($item->product_id);
-                    $product->in_stock = 0;
-                    $product->save();
-                }
-            }
-
+            // Store Order Amount Breakdown
+            $this->_storeOrderAmountBreakdown($order, $checkoutSession, $admin_fee);
+            
             IstantBuy::where('user_id', $user->id)->delete();
 
             return response()->json(['message' => 'Order placed successfully', 'order_id' => $order->id, "status" => "success"], 200);
@@ -356,5 +344,27 @@ class OrderController extends Controller
         }
     }
 
+
+    private function _processInstantOrderItems($order, $user, $request, $extra_fee)
+    {
+        $cart = IstantBuy::where('user_id', $user->id)->get();
+        $admin_commision = 50; // Hardcoded value
+
+        foreach ($cart as $item) {
+            $order_item = new OrderItem();
+            $order_item->order_id = $order->id;
+            $order_item->product_id = $item->product_id;
+            $order_item->sku = $item->sku;
+            $order_item->quantity = $item->quantity;
+            $order_item->unit_price = $request->total_price;
+            $order_item->save();
+
+            // Update stock
+            $this->_updateStock($item);
+
+        // Increase admin fee dynamically (replace hardcoded value)
+        $extra_fee += ($admin_commision * $item->quantity);
+        }
+    }
 
 }
