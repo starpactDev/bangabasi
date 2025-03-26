@@ -15,6 +15,7 @@ use App\Models\UserAddress;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\CheckoutSession;
+use App\Models\OrderItemBreakdown;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Models\OrderAmountBreakdown;
@@ -80,6 +81,8 @@ class OrderController extends Controller
             // Process Order Items
             $admin_fee = $this->_processOrderItems($order, $user, $extra_fee);
             
+            // Store Order Item Breakdown
+            $this->_storeOrderItemBreakdown($order);
 
             // Store Order Amount Breakdown
             $this->_storeOrderAmountBreakdown($order, $checkoutSession, $admin_fee);
@@ -319,6 +322,38 @@ class OrderController extends Controller
         $orderAmountBreakdown->admin_fee = $admin_fee;
         $orderAmountBreakdown->amount_to_seller = $checkoutSession->total_amount - $admin_fee;
         $orderAmountBreakdown->save();
+    }
+
+    private function _storeOrderItemBreakdown($order)
+    {
+        $orderItems = OrderItem::where('order_id', $order->id)->get();
+        $checkoutSession = CheckoutSession::where('user_id', $order->user_id)->first();
+
+        $admin_commision = 50; // Hardcoded value
+
+        foreach ($orderItems as $item) {
+            $product = Product::find($item->product_id);
+
+            if (!$product) {
+                continue; // Skip if product doesn't exist (shouldn't happen)
+            }
+
+            $seller_id = $product->user_id;
+
+            // Amount seller receives after deduction
+            $amount_to_seller = ($item->quantity * ($item->unit_price - $admin_commision));
+            
+            // Store breakdown data
+            OrderItemBreakdown::create([
+                'order_item_id' => $item->id,
+                'seller_id' => $seller_id,
+                'platform_fee' => $checkoutSession->platform_fee,
+                'shipping_charge' => $checkoutSession->shipping_fee,
+                'coupon_discount' => $checkoutSession->coupon_discount,
+                'item_total' => $item->unit_price * $item->quantity,
+                'amount_to_seller' => $amount_to_seller,
+            ]);
+        }
     }
 
 
