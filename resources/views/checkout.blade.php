@@ -198,7 +198,7 @@
 								<td class="p-2 text-center text-neutral-500 whitespace-nowrap">₹ {{ $item['unit_price'] }}</td>
 								<td class="p-2 text-center text-neutral-800"> {{ $item['sku'] }} </td>
 								<td class="p-2 text-center text-neutral-800"> {{ $item['quantity'] }} </td>
-								<td class="p-2 text-right text-neutral-600"> ₹ {{ $item['subtotal'] }} </td>
+								<td class="p-2 text-right text-neutral-600"> ₹ {{ $item['unit_price'] *  $item['quantity'] }} </td>
 							</tr>
                             
 						@endforeach

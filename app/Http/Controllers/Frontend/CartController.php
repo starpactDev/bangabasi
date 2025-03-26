@@ -305,15 +305,29 @@ class CartController extends Controller
             return null; // No items in cart, no need to store session
         }
         
-        // Filter out relevant product attributes (SKU, quantity, etc.)
-        $cartData = $products->map(function($product) {
-            return [
-                'id' => $product->id,           
-                'sku' => $product->sku,         
-                'quantity' => $product->quantity, 
-                'unit_price' => $product->unit_price, 
-            ];
-        });
+        // Check if $products is an array or a Collection
+        if (is_array($products)) {
+            // Use array_map() if $products is a regular array
+            $cartData = array_map(function($product) {
+
+                return [
+                    'id' => $product['product_id'],           // Assuming array keys for product attributes
+                    'sku' => $product['sku'],
+                    'quantity' => $product['quantity'],
+                    'unit_price' => $product['unit_price'],
+                ];
+            }, $products);
+        } else {
+            // If $products is a Collection, use map()
+            $cartData = $products->map(function($product) {
+                return [
+                    'id' => $product->id,           
+                    'sku' => $product->sku,         
+                    'quantity' => $product->quantity, 
+                    'unit_price' => $product->unit_price, 
+                ];
+            });
+        }
 
         // Store session data
         $checkoutSession = CheckoutSession::updateOrCreate(
