@@ -25,47 +25,47 @@ class ProfileController extends Controller
             'data' => $address
         ]);
     }
-  // Method to update an existing address
-  public function address_update(Request $request, $id)
-  {
-      // Validation (same as store)
-      $validator = Validator::make($request->all(), [
-          'first_name' => 'required|string|max:255',
-          'last_name' => 'required|string|max:255',
-          'country' => 'required|string|max:255',
-          'street_name' => 'required|string|max:255',
-          'apartment' => 'nullable|string|max:255',
-          'city' => 'required|string|max:255',
-          'state' => 'required|string|max:255',
-          'phone' => 'required|digits_between:10,15',
-          'postcode' => 'required|numeric',
-          'email' => 'required|email',
-      ]);
+    // Method to update an existing address
+    public function address_update(Request $request, $id)
+    {
+        // Validation (same as store)
+        $validator = Validator::make($request->all(), [
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'country' => 'required|string|max:255',
+            'street_name' => 'required|string|max:255',
+            'apartment' => 'nullable|string|max:255',
+            'city' => 'required|string|max:255',
+            'state' => 'required|string|max:255',
+            'phone' => 'required|digits_between:10,15',
+            'postcode' => 'required|numeric',
+            'email' => 'required|email',
+        ]);
 
-      // If validation fails, return errors
-      if ($validator->fails()) {
-          return response()->json(['errors' => $validator->errors()], 422);
-      }
+        // If validation fails, return errors
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
 
-      // Find the address by ID
-      $address = UserAddress::findOrFail($id);
+        // Find the address by ID
+        $address = UserAddress::findOrFail($id);
 
-      // Update the address with the new data
-      $address->update([
-          'firstname' => $request->first_name,
-          'lastname' => $request->last_name,
-          'country' => $request->country,
-          'street_name' => $request->street_name,
-          'apartment' => $request->apartment,
-          'city' => $request->city,
-          'state' => $request->state,
-          'phone' => $request->phone,
-          'pin' => $request->postcode,
-          'email' => $request->email,
-      ]);
+        // Update the address with the new data
+        $address->update([
+            'firstname' => $request->first_name,
+            'lastname' => $request->last_name,
+            'country' => $request->country,
+            'street_name' => $request->street_name,
+            'apartment' => $request->apartment,
+            'city' => $request->city,
+            'state' => $request->state,
+            'phone' => $request->phone,
+            'pin' => $request->postcode,
+            'email' => $request->email,
+        ]);
 
-      return response()->json(['success' => true, 'message' => 'Address updated successfully.']);
-  }
+        return response()->json(['success' => true, 'message' => 'Address updated successfully.']);
+    }
     public function address_store(Request $request)
     {
         // Define validation rules
@@ -116,8 +116,9 @@ class ProfileController extends Controller
         $address = UserAddress::find($id);
 
         if ($address) {
-
+            // Perform soft delete (sets deleted_at to current timestamp)
             $address->delete();
+
             return response()->json(['success' => 'Address deleted successfully']);
         } else {
             return response()->json(['error' => 'Address not found'], 404);
