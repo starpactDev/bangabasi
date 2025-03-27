@@ -11,15 +11,18 @@ class AdminSellerController extends Controller
 {
     public function index(){
 
-        // Fetch sellers and join with users table to get the required data
+        // Fetch sellers along with total amount paid to them
         $sellers = Seller::select(
             DB::raw("CONCAT(users.firstname, ' ', users.lastname) as name"),
             'users.email',
             'sellers.is_active as status',
-            DB::raw("DATE_FORMAT(sellers.created_at, '%Y-%m-%d') as join_on"), // Format date in query
-            'sellers.id as seller_id'
+            DB::raw("DATE_FORMAT(sellers.created_at, '%Y-%m-%d') as join_on"),
+            'sellers.id as seller_id',
+            DB::raw("COALESCE(SUM(order_item_breakdowns.amount_to_seller), 0) as total_earnings") // Sum amount_to_seller
         )
         ->join('users', 'sellers.user_id', '=', 'users.id')
+        ->leftJoin('order_item_breakdowns', 'order_item_breakdowns.seller_id', '=', 'sellers.user_id') // Linking with user_id
+        ->groupBy('sellers.id', 'users.firstname', 'users.lastname', 'users.email', 'sellers.is_active', 'sellers.created_at')
         ->get();
 
         // Pass data to the view

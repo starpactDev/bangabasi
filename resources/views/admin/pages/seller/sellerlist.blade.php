@@ -31,6 +31,7 @@
 											<th>Email</th>
 											<th>Status</th>
 											<th>Join On</th>
+											<th>Net Earning</th>
 											<th>Action</th>
 										</tr>
 									</thead>
@@ -42,6 +43,7 @@
 												<td>{{ $seller->email }}</td>
 												<td>{{ $seller->status ? 'Active' : 'Inactive' }}</td>
 												<td>{{ $seller->join_on }}</td>
+												<td>{{ $seller->total_earnings }}</td>
 												<td>
 													<div class="btn-group">
 														<button type="button" class="btn btn-outline-success">Info</button>
