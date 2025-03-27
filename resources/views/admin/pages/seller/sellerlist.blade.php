@@ -35,7 +35,7 @@
 									<tbody>
 										@foreach ($sellers as $seller)
 											<tr style="{{ $seller->status ? '' : 'color:darkgrey; filter:grayscale(1)' }}">
-												<td style="{{ $seller->status ? 'color:green' : '' }}">{{ $seller->name }}</td>
+												<td style="{{ $seller->status ? 'color:green' : 'color:darkgrey' }}">{{ $seller->name }}</td>
 												<td>{{ $seller->email }}</td>
 												<td>{{ $seller->join_on }}</td>
 												<td>{{ $seller->total_products_sold }}</td>
