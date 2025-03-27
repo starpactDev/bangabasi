@@ -3,7 +3,7 @@
 @section('head')
 	<!-- Data Tables -->
 	<link href='admin/assets/plugins/data-tables/datatables.bootstrap5.min.css' rel='stylesheet'>
-	<link href='admin/assets/plugins/data-tables/responsive.datatables.min.css' rel='stylesheet'>=
+	<link href='admin/assets/plugins/data-tables/responsive.datatables.min.css' rel='stylesheet'>
 @endsection
 
 @section('content')
@@ -13,10 +13,6 @@
 				<div>
 					<h1>Vendor List</h1>
 					<p class="breadcrumbs"><span><a href="{{route('admin_dashboard')}}">Home</a></span><span><i class="mdi mdi-chevron-right"></i></span>Vendor</p>
-				</div>
-				<div>
-					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addVendor"> Add Vendor
-					</button>
 				</div>
 			</div>
 			<div class="row">
@@ -29,20 +25,20 @@
 										<tr>
 											<th>Name</th>
 											<th>Email</th>
-											<th>Status</th>
 											<th>Join On</th>
-											<th>Net Earning</th>
+											<th>Sold</th>
+											<th>Earning</th>
 											<th>Action</th>
 										</tr>
 									</thead>
 
 									<tbody>
 										@foreach ($sellers as $seller)
-											<tr>
-												<td>{{ $seller->name }}</td>
+											<tr style="{{ $seller->status ? '' : 'color:darkgrey; filter:grayscale(1)' }}">
+												<td style="{{ $seller->status ? 'color:green' : '' }}">{{ $seller->name }}</td>
 												<td>{{ $seller->email }}</td>
-												<td>{{ $seller->status ? 'Active' : 'Inactive' }}</td>
 												<td>{{ $seller->join_on }}</td>
+												<td>{{ $seller->total_products_sold }}</td>
 												<td>{{ $seller->total_earnings }}</td>
 												<td>
 													<div class="btn-group">
@@ -66,69 +62,6 @@
 				</div>
 			</div>
 
-			<!-- Add Vendor Modal  -->
-			<div class="modal fade modal-add-contact" id="addVendor" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-					<div class="modal-content">
-						<form >
-							<div class="modal-header px-4">
-								<h5 class="modal-title" id="exampleModalCenterTitle">Add New Vendor</h5>
-							</div>
-
-							<div class="modal-body px-4">
-								<div class="row mb-2">
-									<div class="col-lg-6">
-										<div class="form-group">
-											<label for="firstName">First name</label>
-											<input type="text" class="form-control" id="firstName" value="John">
-										</div>
-									</div>
-
-									<div class="col-lg-6">
-										<div class="form-group">
-											<label for="lastName">Last name</label>
-											<input type="text" class="form-control" id="lastName" value="Deo">
-										</div>
-									</div>
-
-									<div class="col-lg-6">
-										<div class="form-group mb-4">
-											<label for="userName">User name</label>
-											<input type="text" class="form-control" id="userName" value="johndoe">
-										</div>
-									</div>
-
-									<div class="col-lg-6">
-										<div class="form-group mb-4">
-											<label for="email">Email</label>
-											<input type="email" class="form-control" id="email" value="johnexample@gmail.com">
-										</div>
-									</div>
-
-									<div class="col-lg-6">
-										<div class="form-group mb-4">
-											<label for="Birthday">Birthday</label>
-											<input type="text" class="form-control" id="Birthday" value="10-12-1991">
-										</div>
-									</div>
-
-									<div class="col-lg-6">
-										<div class="form-group mb-4">
-											<label for="event">Address</label>
-											<input type="text" class="form-control" id="event" value="Address here">
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div class="modal-footer px-4">
-								<button type="button" class="btn btn-secondary btn-pill" data-bs-dismiss="modal">Cancel</button>
-								<button type="button" class="btn btn-primary btn-pill">Save Contact</button>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
 		</div> <!-- End Content -->
 	</div>
 @endsection
