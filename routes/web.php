@@ -369,7 +369,9 @@ Route::group(['middleware' =>  [AdminCheckMiddleware::class]], function () {
 
     //Orders
     Route::get('/manage-order-section', [AdminOrderController::class, 'index'])->name('admin_orderlist');
-    Route::get('/orders/summary', [AdminOrderController::class, 'getOrderSummary'])->name('admin.order_summary');
+    Route::get('/orders/summary', [AdminOrderController::class, 'getOrderSummary'])->name('admin_orders_summary');
+    Route::get('/orders/summary/{order}', [AdminOrderController::class, 'show'])->name('admin_order_summary');
+
     
 
     //Transaction

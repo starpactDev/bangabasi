@@ -25,6 +25,17 @@ class AdminOrderController extends Controller
         return view('admin.pages.order.summary', compact('orders'));
     }
 
+    public function show($orderId)
+    {
+        // Fetch a single order with its related data
+        $order = Order::with(['amountBreakdown', 'orderItems', 'user', 'address'])
+                        ->where('id', $orderId)
+                        ->firstOrFail(); // Throws 404 if not found
+
+//return response()->json($order);
+        return view('admin.pages.order.show', compact('order'));
+    }
+
     public function transaction()
     {
         $transactions = Order::all();
