@@ -11,9 +11,9 @@
 <div class="ec-content-wrapper">
 	<div class="content">
 		<div class="breadcrumb-wrapper breadcrumb-wrapper-2">
-			<h1>Manage Orders</h1>
+			<h1>Order Summary</h1>
 			<p class="breadcrumbs"><span><a href="{{route('admin_dashboard')}}">Home</a></span>
-				<span><i class="mdi mdi-chevron-right"></i></span>Manage Orders
+				<span><i class="mdi mdi-chevron-right"></i></span>Order Summary
 			</p>
 		</div>
 		<div class="row">
@@ -26,9 +26,9 @@
 									<tr>
 										<th>Order ID</th>
 										<th class="d-none d-lg-table-cell">Date</th>                                        
-										<th class="d-none d-lg-table-cell">Paid</th>
-										<th class="d-none d-lg-table-cell">Admin</th>
-										<th class="d-none d-lg-table-cell">Seller</th>                    
+										<th>Paid</th>
+										<th>Admin</th>
+										<th>Seller</th>                    
 										<th class="d-none d-lg-table-cell">Payment</th>
 										<th>Action</th>
 									</tr>
@@ -53,13 +53,13 @@
 												<td class="d-none d-lg-table-cell" title="{{ $order->created_at }}">
 													{{ \Carbon\Carbon::parse($order->created_at)->format('M d, Y') }}
 												</td>
-												<td class="d-none d-lg-table-cell">
+												<td>
 													₹{{ number_format($order->amountBreakdown?->total_paid_by_customer ?? 0, 2) }}
 												</td>
-												<td class="d-none d-lg-table-cell text-uppercase">
+												<td>
 													₹{{ number_format($order->amountBreakdown?->admin_fee ?? 0, 2) }}
 												</td>
-												<td class="d-none d-lg-table-cell text-uppercase">
+												<td>
 													₹{{ number_format($order->amountBreakdown?->amount_to_seller ?? 0, 2) }}
 												</td>
 												<td class="d-none d-lg-table-cell text-uppercase">
