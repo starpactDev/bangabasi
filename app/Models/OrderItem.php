@@ -19,4 +19,9 @@ class OrderItem extends Model
     {
         return $this->belongsTo(Order::class, 'order_id');
     }
+
+    public function breakdown()
+    {
+        return $this->hasOne(OrderItemBreakdown::class, 'order_item_id');
+    }
 }

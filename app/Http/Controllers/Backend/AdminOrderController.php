@@ -28,7 +28,7 @@ class AdminOrderController extends Controller
     public function show($orderId)
     {
         // Fetch a single order with its related data
-        $order = Order::with(['amountBreakdown', 'orderItems', 'user', 'address'])
+        $order = Order::with(['amountBreakdown', 'orderItems.product', 'orderItems.breakdown', 'user', 'address'])
                         ->where('id', $orderId)
                         ->firstOrFail(); // Throws 404 if not found
 
