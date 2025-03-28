@@ -1,4 +1,4 @@
-@extends('superuser.layouts.master')
+@extends('admin.layouts.master')
 
 @section('head')
 	<!-- Data Tables -->

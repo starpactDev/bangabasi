@@ -15,6 +15,16 @@ class AdminOrderController extends Controller
         return view('superuser.orders.index',compact('orderItems'));
     }
 
+    public function getOrderSummary()
+    {
+        $orders = Order::with('amountBreakdown')
+                        ->orderBy('created_at', 'desc')
+                        ->get();
+
+
+        return view('admin.pages.order.summary', compact('orders'));
+    }
+
     public function transaction()
     {
         $transactions = Order::all();

@@ -369,6 +369,7 @@ Route::group(['middleware' =>  [AdminCheckMiddleware::class]], function () {
 
     //Orders
     Route::get('/manage-order-section', [AdminOrderController::class, 'index'])->name('admin_orderlist');
+    Route::get('/orders/summary', [AdminOrderController::class, 'getOrderSummary'])->name('admin.order_summary');
     
 
     //Transaction
@@ -487,7 +488,6 @@ Route::group(['middleware' =>  [SuperUserMiddleware::class]], function () {
 
 
     Route::get('/orders/my-orders', [SuperUserOrderController::class, 'myOrders'])->name('admin.my_order');
-    Route::get('/orders/summary', [SuperUserOrderController::class, 'getOrderSummary'])->name('admin.order_summary');
     Route::get('/orders/{id}', [SuperUserOrderController::class, 'show'])->name('superuser_orders.show');
     Route::post('/orders/initiate', [SuperUserOrderController::class, 'initiateOrder'])->name('superuser_orders.initiate');
     Route::get('/orders/shiprocket/show', [SuperUserOrderController::class, 'shiprocketShowOrder'])->name('superuser_orders.shiprocket.show');
