@@ -23,4 +23,9 @@ class Order extends Model
     {
         return $this->belongsTo(UserAddress::class, 'address_id');
     }
+    public function amountBreakdown()
+    {
+        return $this->hasOne(OrderAmountBreakdown::class, 'order_id');
+    }
+
 }

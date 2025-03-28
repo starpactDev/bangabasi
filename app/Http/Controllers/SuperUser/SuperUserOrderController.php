@@ -30,6 +30,19 @@ class SuperUserOrderController extends Controller
         return view('superuser.orders.index', compact('orderItems'));
     }
 
+    public function getOrderSummary()
+    {
+        $orders = Order::with('amountBreakdown')
+        ->whereHas('amountBreakdown') // Ensures only orders with a breakdown are fetched
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+
+
+        return view('superuser.orders.summary', compact('orders'));
+    }
+
+
     public function shipRocketlogin() {
         $response = Http::post('https://apiv2.shiprocket.in/v1/external/auth/login', [
             'email' => 'developers.starpact@gmail.com',

@@ -11,9 +11,9 @@
 <div class="ec-content-wrapper">
 	<div class="content">
 		<div class="breadcrumb-wrapper breadcrumb-wrapper-2">
-			<h1>Order List</h1>
+			<h1>Manage Orders</h1>
 			<p class="breadcrumbs"><span><a href="{{route('admin_dashboard')}}">Home</a></span>
-				<span><i class="mdi mdi-chevron-right"></i></span>Orders
+				<span><i class="mdi mdi-chevron-right"></i></span>Manage Orders
 			</p>
 		</div>
 		<div class="row">
@@ -24,7 +24,7 @@
 							<table class="table card-table table-responsive table-responsive-large" id="responsive-data-table" style="width:100%">
 								<thead>
 									<tr>
-										<th>Order ID</th>
+										<th>Order Item ID</th>
 										<th>Product Name</th>
 										<th class="d-none d-lg-table-cell">Units</th>
 										<th class="d-none d-lg-table-cell">Order Date</th>										
@@ -36,8 +36,7 @@
 								</thead>
 								<tbody>
 									@if(count($orderItems)>0)
-										@foreach($orderItems as $order)		
-															
+										@foreach($orderItems as $order)
 											@php
 												$badgeClass = '';
 
@@ -62,10 +61,10 @@
 											<tr>
 												<td>{{$order->order->unique_id ?? 'null'}}</td>
 												<td>
-													<a class="text-dark" href=""> {{$order->product->name}}</a>
+													<a class="text-dark" href="{{ route('superuser_orders.show', ['id' => $order->id]) }}"> {{$order->product->name}}</a>
 												</td>
 												<td class="d-none d-lg-table-cell">{{$order->quantity}} Unit</td>
-												<td class="d-none d-lg-table-cell" title="$order->created_at">{{ date('M d, Y', strtotime($order->created_at)) }}</td>
+												<td class="d-none d-lg-table-cell" title="{{$order->created_at}}">{{ date('M d, Y', strtotime($order->created_at)) }}</td>
 												<td class="d-none d-lg-table-cell">{{'₹'.$order->unit_price*$order->quantity}}</td>
 												<td>
 													<span class="badge d-inline-block {{$badgeClass}}" style=" min-width: 18ch;">{{$order->order_status }}</span>
