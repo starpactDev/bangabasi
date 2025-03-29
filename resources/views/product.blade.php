@@ -468,10 +468,10 @@
 
                 </div>
 
-                <button class="mx-auto block px-6 py-2 font-semibold border rounded border-violet-500 group hover:bg-violet-600 hover:text-white">
+                <a href="{{route('seller.shop', ['sellerId' => $seller->id])}}" class="mx-auto block w-fit px-6 py-2 font-semibold border rounded border-violet-500 group hover:bg-violet-600 hover:text-white">
                     <img src="{{ asset('images/icons/store.png')}}" alt="" class="h-4 mr-4 inline group-hover:invert">
                     View Shop
-                </button>
+                </a>
             </div>
             <div class="order-2 lg:order-3 border p-4 my-4">
                 <h4 class="text-lg font-semibold text-indigo-900 mb-4">Shipping Information</h4>
