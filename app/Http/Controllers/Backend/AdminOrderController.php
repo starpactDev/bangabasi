@@ -28,12 +28,18 @@ class AdminOrderController extends Controller
     public function show($orderId)
     {
         // Fetch a single order with its related data
-        $order = Order::with(['amountBreakdown', 'orderItems.product', 'orderItems.breakdown', 'user', 'address'])
+        $order = Order::with(['amountBreakdown', 'orderItems.product.seller.user', 'orderItems.breakdown', 'user', 'address'])
                         ->where('id', $orderId)
                         ->firstOrFail(); // Throws 404 if not found
 
-//return response()->json($order);
-        return view('admin.pages.order.show', compact('order'));
+        // Extract unique sellers from order items
+        $sellers = $order->orderItems
+                        ->map(fn($item) => $item->product->seller)
+                        ->unique('id') // Ensure unique sellers
+                        ->values(); // Reset keys
+
+        //return response()->json($sellers);
+        return view('admin.pages.order.show', compact('order', 'sellers'));
     }
 
     public function transaction()

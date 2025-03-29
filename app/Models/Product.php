@@ -70,4 +70,8 @@ class Product extends Model
     {
         return $this->hasMany(OrderItem::class);
     }
+    public function seller()
+    {
+        return $this->belongsTo(Seller::class, 'user_id', 'user_id'); // Match user_id from sellers table
+    }
 }

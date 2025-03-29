@@ -18,8 +18,8 @@
 		</div>
 
 		<div class="card shadow-sm mb-4 border-0">
-			<div class="card-header bg-info text-white d-flex align-items-center justify-content-between">
-				<div class="ml-5">
+			<div class="card-header bg-info text-white d-flex align-items-center justify-content-between px-4">
+				<div class="">
 					<h5 class="mb-1 fw-bold">{{ $order->user->firstname }} {{ $order->user->lastname }}</h5>
 					<span class="small"><i class="fas fa-envelope"></i> {{ $order->user->email }}</span>
 				</div>
@@ -130,59 +130,95 @@
 							<h5 class="mb-0">Order Items Breakdown</h5>
 						</div>
 						<div class="card-body">
-							<table class="table table-hover table-bordered align-middle">
-								<thead class="">
-									<tr>
-										<th>Product</th>
-										<th>Size</th>
-										<th>Quantity</th>
-										<th>Total Price</th>
-										<th>Amount to Seller</th>
-										<th>Commission</th>
-										<th>Status</th>
-									</tr>
-								</thead>
-								<tbody>
-									@foreach($order->orderItems as $item)
+							<div class="table-responsive">
+								<table class="table table-hover table-bordered align-middle">
+									<thead class="">
 										<tr>
-											<td>
-												<strong>{{ $item->product->name ?? 'N/A' }}</strong> <br>
-												<small class="text-muted">₹{{ number_format($item->unit_price, 2) }}</small>
-											</td>
-											<td>{{ $item->sku ?? 'N/A' }}</td>
-											<td>{{ $item->quantity }}</td>
-											<td>₹{{ number_format($item->unit_price * $item->quantity, 2) }}</td>
-											<td>
-												₹{{ number_format(optional($item->breakdown)->amount_to_seller, 2) ?? '0.00' }}
-											</td>
-											<td>
-												₹{{ number_format(optional($item->breakdown)->item_total - optional($item->breakdown)->amount_to_seller, 2) ?? '0.00' }}
-											</td>
-											<td>
-												<span class="badge {{ $item->order_status == 'pending' ? 'bg-warning' : 'bg-success' }}">{{ ucfirst($item->order_status) }}</span>
-											</td>
+											<th>Product</th>
+											<th class="d-none d-md-table-cell">Size</th>
+											<th>Seller</th>
+											<th>Quantity</th>
+											<th>Total Price</th>
+											<th>Amount to Seller</th>
+											<th class="d-none d-md-table-cell">Commission</th>
+											<th class="d-none d-md-table-cell">Status</th>
 										</tr>
-									@endforeach
-								</tbody>
-								<tfoot class="table-light">
-									<tr>
-										<th colspan="4" class="text-end">Products Total:</th>
-										<th>
-											₹{{ number_format($order->orderItems->sum(fn($item) => $item->unit_price * $item->quantity), 2) }}
-										</th>
-										<th>
-											₹{{ number_format($order->orderItems->sum(fn($item) => optional($item->breakdown)->amount_to_seller), 2) }}
-										</th>
-										<th>
-											₹{{ number_format($order->orderItems->sum(fn($item) => optional($item->breakdown)->item_total - optional($item->breakdown)->amount_to_seller), 2) }}
-										</th>
-										<th></th>
-									</tr>
-								</tfoot>
-							</table>
+									</thead>
+									<tbody>
+										@foreach($order->orderItems as $item)
+											<tr>
+												<td>
+													<strong>{{ $item->product->name ?? 'N/A' }}</strong> <br>
+													<small class="text-muted">₹{{ number_format($item->unit_price, 2) }}</small>
+												</td>
+												<td class="d-none d-md-table-cell">{{ $item->sku ?? 'N/A' }}</td>
+												<td>{{ $item->product->seller->store_name ?? 'Unknown Seller' }}</td>
+												<td>{{ $item->quantity }}</td>
+												<td>₹{{ number_format($item->unit_price * $item->quantity, 2) }}</td>
+												<td>₹{{ number_format(optional($item->breakdown)->amount_to_seller, 2) ?? '0.00' }}</td>
+												<td class="d-none d-md-table-cell">
+													₹{{ number_format(optional($item->breakdown)->item_total - optional($item->breakdown)->amount_to_seller, 2) ?? '0.00' }}
+												</td>
+												<td class="d-none d-md-table-cell">
+													<span class="badge {{ $item->order_status == 'pending' ? 'bg-warning' : 'bg-success' }}">{{ ucfirst($item->order_status) }}</span>
+												</td>
+											</tr>
+										@endforeach
+									</tbody>
+									<tfoot class="table-light">
+										<tr>
+											<th colspan="4" class="text-end">Products Total:</th>
+											<th>
+												₹{{ number_format($order->orderItems->sum(fn($item) => $item->unit_price * $item->quantity), 2) }}
+											</th>
+											<th>
+												₹{{ number_format($order->orderItems->sum(fn($item) => optional($item->breakdown)->amount_to_seller), 2) }}
+											</th>
+											<th class="d-none d-md-table-cell">
+												₹{{ number_format($order->orderItems->sum(fn($item) => optional($item->breakdown)->item_total - optional($item->breakdown)->amount_to_seller), 2) }}
+											</th>
+											<th class="d-none d-md-table-cell"></th>
+										</tr>
+									</tfoot>
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>
+			</div>
+			
+			<!-- Unique Sellers Section -->
+			<div class="row mt-4">
+				<div class="col-12 bg-info my-4 rounded">
+					<h5 class="text-white py-2 ">Sellers Involved in This Order</h5>
+				</div>
+
+				@foreach($sellers as $seller)
+					<div class="col-lg-4 col-md-6">
+						<div class="card shadow-sm border-0">
+							<div class="card-body text-center">
+								<!-- Seller Logo -->
+								<img src="{{ asset('user/uploads/seller/logo/'.($seller->logo ?? 'default-store.png')) }}" alt="{{ $seller->store_name }}" class="img-fluid rounded-circle mb-3" style="width: 80px; height: 80px; object-fit: cover;">
+
+								<!-- Seller Info -->
+								<h6 class="fw-bold">{{ $seller->store_name ?? 'Unknown Store' }}</h6>
+								<p class="text-muted mb-2">
+									<i class="fas fa-envelope"></i> {{ $seller->email ?? 'N/A' }}
+								</p>
+								<p class="text-muted small" style="height: 3rem; overflow: hidden;">
+									{{ Str::limit($seller->description, 80, '...') }}
+								</p>
+
+								<!-- User Details -->
+								<hr>
+								<p class="mb-0">{{ $seller->user->firstname ?? 'N/A' }} {{ $seller->user->lastname ?? '' }}</p>
+								<p class="text-muted small">
+									<i class="fas fa-phone"></i> {{ $seller->user->phone_number ?? 'N/A' }}
+								</p>
+							</div>
+						</div>
+					</div>
+				@endforeach
 			</div>
 			
 			
