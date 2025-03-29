@@ -69,7 +69,7 @@
 													<div class="dropdown show d-inline-block widget-dropdown">
 														<a class="dropdown-toggle icon-burger-mini" href="#" role="button" id="dropdown-recent-order1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static"></a>
 														<ul class="dropdown-menu dropdown-menu-right">
-															<li class="dropdown-item"><a href="#">View</a></li>
+															<li class="dropdown-item"><a href="{{ route('admin_order_summary', ['order' => $order->id])}}">View</a></li>
 														</ul>
 													</div>
 												</td>
