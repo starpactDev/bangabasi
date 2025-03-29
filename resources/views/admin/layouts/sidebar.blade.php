@@ -224,7 +224,7 @@
                         <span class="nav-text">Orders</span> <b class="caret"></b>
                     </a>
                 
-                    <div class="collapse {{ request()->routeIs('admin_orderlist') || request()->routeIs('admin.my_order') ? 'show' : '' }}">
+                    <div class="collapse {{ request()->routeIs('admin_orderlist') || request()->routeIs('admin.my_order') || request()->routeIs('admin_orders_summary')? 'show' : '' }}">
                         <ul class="sub-menu" id="orders" data-parent="#sidebar-menu">
                             <li class="{{ request()->routeIs('admin_orderlist') ? 'active' : '' }}">
                                 <a class="sidenav-item-link" href="{{ route('admin_orderlist') }}">
@@ -234,6 +234,11 @@
                             <li class="{{ request()->routeIs('admin.my_order') ? 'active' : '' }}">
                                 <a class="sidenav-item-link" href="{{ route('admin.my_order') }}">
                                     <span class="nav-text">My Orders</span>
+                                </a>
+                            </li>
+                            <li class="{{ request()->routeIs('admin_orders_summary') ? 'active' : '' }}">
+                                <a class="sidenav-item-link" href="{{ route('admin_orders_summary') }}">
+                                    <span class="nav-text">Orders Summary</span>
                                 </a>
                             </li>
                         </ul>
