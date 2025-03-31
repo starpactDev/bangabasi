@@ -303,7 +303,7 @@
 @endif
 
 <!-- Courier Status Check -->
-<section class="container mt-4">
+{{-- <section class="container mt-4">
     <div class="card">
         <div class="card-header bg-primary text-white">
             <h5 class="mb-0">Courier Status Check</h5>
@@ -328,7 +328,7 @@
             </form>
         </div>
     </div>
-</section>
+</section> --}}
 
 
 

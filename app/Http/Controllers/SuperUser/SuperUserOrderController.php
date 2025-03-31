@@ -48,12 +48,13 @@ class SuperUserOrderController extends Controller
         }
     }
 
-    public function show($id) {
+    public function show($id, ShiprocketAPI $shiprocketAPI) {
         $user = Auth::user();
 
         // Fetch the order item and associated order with address using the passed $id
-        $orderItem = OrderItem::with('order.address') // Eager load the associated order and address
-            ->findOrFail($id); // Find the order item by its ID
+        $orderItem = OrderItem::with('order.address') 
+            ->findOrFail($id); 
+            
         $productData = Product::whereHas('orderItems', function ($query) use ($id) {
             $query->where('id', $id); // Filter order_item by the passed order_item ID
         })
@@ -68,7 +69,7 @@ class SuperUserOrderController extends Controller
         $user = User::where('id', $order->user_id)->first();
         
         // Fetch the pickup pin code for the logged-in user
-        $pickupPinCode = PickupAddress::where('user_id', $user->id)->value('pincode');
+        $pickupPinCode = PickupAddress::withTrashed()->where('user_id', $user->id)->value('pincode');
 
         // Get the delivery pin code from the order's address
         $deliveryPinCode = $address->pin;
@@ -86,9 +87,7 @@ class SuperUserOrderController extends Controller
             $orderResponse = OrderResponse::where('order_item_id', $orderItem->id)->first();
 
             if($orderResponse){    
-                $response = Http::withHeaders([
-                        'Authorization' => 'Bearer ' . $apiToken,
-                    ])->get("{$baseUrl}/orders/show/{$orderResponse->order_id}", );
+                $response = $shiprocketAPI->request('get', "/orders/show/{$orderResponse->order_id}");
                     
                 if($response->successful()) {
                     $orderResponse = json_decode($response->body());
@@ -122,7 +121,7 @@ class SuperUserOrderController extends Controller
         return view('superuser.orders.status', compact( 'orderItem','order', 'user', 'productData', 'address', 'orderResponse'));
     }
 
-    public function initiateOrder(Request $request) {
+    public function initiateOrder(Request $request, ShiprocketAPI $shiprocketAPI) {
 
         $validatedData = $request->validate([
             'order_id' => 'required|string',
@@ -192,10 +191,7 @@ class SuperUserOrderController extends Controller
 
         try {
             // Send API request to Shiprocket
-            $response = Http::withHeaders([
-                'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . env('SHIPROCKET_API_TOKEN'),
-            ])->post(env('SHIPROCKET_API_BASE_URL') . '/orders/create/adhoc', $shiprocketOrderData);
+            $response = $shiprocketAPI->request('post', '/orders/create/adhoc', $shiprocketOrderData);
     
             // Check the response
             if ($response->successful()) {

@@ -510,35 +510,7 @@ Route::get('shiprocket/fetch-shipment', [ShipRocketController::class, 'fetchShip
 Route::get('shiprocket/fetch-tracking', [ShipRocketController::class, 'fetchTracking'])->name('shiprocket.fetch-tracking');
 
 
-Route::get('/test-shiprocket/serviceability', function () {
-    $baseUrl = config('shiprocket.base_url');
-    $apiToken = config('shiprocket.api_token');
-
-    // Define sample pin codes for testing
-    $queryParams = [
-        'pickup_postcode' => '700001', // Example pickup pin code 713205
-        'delivery_postcode' => '722122', // Example delivery pin code
-        'cod' => 1, // Set to 1 for COD serviceability check
-        'weight' => 1.5, // Example weight
-    ];
-
-    $response = Http::withHeaders([
-        'Authorization' => 'Bearer ' . $apiToken,
-    ])->get('{$baseUrl}/courier/serviceability/', $queryParams);
-
-    if ($response->failed()) {
-        return response()->json([
-            'error' => 'Failed to fetch data from Shiprocket',
-            'details' => $response->json(),
-        ], $response->status());
-    }
-
-    return response()->json($response->json());
-});
-
-
 //Test Mail Routes
-
 
 Route::get('/send-test-email', [MailController::class, 'sendTestEmail']);
 
