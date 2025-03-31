@@ -169,7 +169,7 @@
 				errorMessage.classList.add('hidden');
 			}
 
-			const apiKey = '2c6a327dde13542f48cee3d264f6ab21'; // Ensure this is set in your environment
+			const apiKey = `{{env('GSTIN_API_KEY')}}`; // Ensure this is set in your environment
 			const apiUrl = `https://sheet.gstincheck.co.in/check/${apiKey}/${gstNumber}`;
 
 			try {
