@@ -9,9 +9,7 @@ use Illuminate\Support\Facades\Http;
 
 class ShipRocketController extends Controller
 {
-    public function serviceAbility(Request $request){
-        $baseUrl = config('shiprocket.base_url');
-        $apiToken = config('shiprocket.api_token');
+    public function serviceAbility(Request $request, ShiprocketAPI $shiprocketAPI){
 
         // Validate the incoming request data
         $validatedData = $request->validate([
@@ -27,10 +25,9 @@ class ShipRocketController extends Controller
                 'cod' => 1, // Set to 1 for COD serviceability check
                 'weight' => 1, 
             ];
+
             // Make the API call
-            $response = Http::withHeaders([
-                'Authorization' => 'Bearer ' . $apiToken,
-            ])->get("{$baseUrl}/courier/serviceability/", $queryParams);
+            $response = $shiprocketAPI->request('get', "/courier/serviceability/", $queryParams);
     
             // Return the full API response as JSON
             return response()->json($response->json(), $response->status());

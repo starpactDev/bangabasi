@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers\SuperUser;
 
+use App\Models\User;
 use App\Models\Order;
-use App\Models\Product;
 
+use App\Models\Product;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use App\Models\OrderResponse;
 use App\Models\PickupAddress;
+use App\Services\ShiprocketAPI;
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use Illuminate\Contracts\Support\ValidatedData;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Contracts\Support\ValidatedData;
 
 class SuperUserOrderController extends Controller
 {
@@ -252,19 +253,16 @@ class SuperUserOrderController extends Controller
         ]);
     }
 
-    public function shiprocketShowOrder(Request $request) {
+    public function shiprocketShowOrder(Request $request, ShiprocketAPI $shiprocketAPI) {
+
         // Validate input
         $validated = $request->validate([
             'order_id' => 'required|string', // Ensure the order_id is provided
         ]);
 
-        $url = "https://apiv2.shiprocket.in/v1/external/orders";
 
         try {
-            $response = Http::withHeaders([
-                'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . env('SHIPROCKET_API_TOKEN'), // Use .env for security
-            ])->get($url);
+            $response = $shiprocketAPI->request('get', "/orders/show/{$validated['order_id']}");
 
             // Check if the response is successful
             if ($response->successful()) {
