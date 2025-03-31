@@ -94,9 +94,9 @@ Route::get('seller/sellerverification', [SellerController::class, 'sellerVerific
 Route::post('seller/details', [SellerController::class, 'storeSellerDetails'])->name('seller_verify');
 
 
-    Route::get('seller/success', function(){
-        return view('seller.success');
-    })->name('seller_success');
+Route::get('seller/success', function(){
+    return view('seller.success');
+})->name('seller_success');
 
 Route::group(['middleware' =>  [SellerMiddleware::class]], function () {
 
@@ -164,9 +164,7 @@ Route::get('/send-otp-form', function () {
     return view('send-otp');
 });
 Route::post('/send-otp', [OTPController::class, 'sendOTP']);
-// Route::get('/product', function () {
-//     return view('product');
-// });
+
 
 
 
@@ -174,9 +172,7 @@ Route::get('/status', function () {
     return view('status');
 });
 
-// Route::get('/authentication', function () {
-//     return view('authentication');
-// })->name('login');
+
 Route::post('/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
 Route::post('/complete-subscribe', [NewsletterController::class, 'completeSubscription'])->name('newsletter.subscribe_complete');
 Route::get('/unsubscribe/{token}', [AdminNewsletterController::class, 'unsubscribe'])->name('newsletter.unsubscribe');
@@ -192,32 +188,16 @@ Route::get('/coming-soon', function () {
     return view('coming_soon');
 })->name('coming_soon');
 
-Route::get('/check-auth', function () {
-    if (Auth::check()) {
-        $user = Auth::user();
-        return response()->json([
-            'loggedIn' => true,
-            'userType' => $user->usertype, // Assuming 'user_type' is the column name
-            'isUser' => $user->usertype === 'user' // Check if the user type is 'user'
-        ]);
-    } else {
-        return response()->json(['loggedIn' => false]);
-    }
-});
 
 Route::post('/send-otp', [AuthController::class, 'sendOTP'])->name('send-otp');
 Route::post('/verify-otp', [AuthController::class, 'verifyOTP'])->name('verify-otp');
 Route::post('/set-new-password', [AuthController::class, 'setNewPassword'])->name('set-new-password');
 
 
-
 //Guest Middleware
 Route::middleware(GuestMiddleware::class)->group(function () {
-
     Route::get('/login', [AuthController::class, 'login'] )->name('login');
-
     Route::post('/login', [AuthController::class, 'loginTry']);
-
     Route::post('/register', [AuthController::class, 'register'])->name('register');
 });
 
@@ -238,9 +218,7 @@ Route::middleware(UserAuthMiddleware::class)->group(function () {
     // Add to wishlist and redirect to wishlist page
     Route::post('/wishlist/add-and-redirect', [WishlistController::class, 'addAndRedirect'])->name('wishlist.addAndRedirect');
 
-
     Route::post('/wishlist/delete', [WishlistController::class, 'delete'])->name('wishlist.delete');
-
     Route::post('/wishlist/addToCart', [WishlistController::class, 'addToCart'])->name('wishlist.addToCart');
 
     Route::get('/cart', [CartController::class, 'index'])->name('cart');
@@ -248,17 +226,14 @@ Route::middleware(UserAuthMiddleware::class)->group(function () {
     Route::post('/cart/checkAvailability', [CartController::class, 'checkAvailability'])->name('order.checkAvailability');
 
     Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
-
     Route::post('/cart/delete/{id}', [CartController::class, 'delete'])->name('cart.delete');
 
     Route::post('/empty-cart', [CartController::class, 'emptyCart'])->name('cart.empty-cart');
-
     Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout');
     Route::post('/order/coupon', [CartController::class, 'couponCheck'])->name('checkout.coupon');
     Route::post('/order/coupon/reset', [CartController::class, 'removeCoupon'])->name('reset.coupon');
 
     Route::get('/instant-checkout', [CartController::class, 'instantCheckout'])->name('instant_checkout');
-
 
     Route::post('/order/place', [OrderController::class, 'placeOrder'])->name('order.place');
     Route::post('instant/order/place', [OrderController::class, 'instantplaceOrder'])->name('order.place.instant');
@@ -274,10 +249,7 @@ Route::group(['middleware' => [CustomRedirectMiddleware::class]], function () {
         return view('admin.pages.login');
     })->name('admin_login');
 
-    Route::post(
-        'admin-login-check',
-        [AdminLoginController::class, 'admin_login_check']
-    )->name('admin_login_submit');
+    Route::post('admin-login-check', [AdminLoginController::class, 'admin_login_check'])->name('admin_login_submit');
 });
 
 
@@ -313,38 +285,9 @@ Route::group(['middleware' =>  [AdminCheckMiddleware::class]], function () {
     Route::delete('/collections/{id}', [AdminCollectionController::class, 'destroy'])->name('admin.collections.destroy');
     Route::post('/collections/store', [AdminCollectionController::class, 'store'])->name('admin.collections.store');
 
-    //Product
-    //Route::get('/generate-item-code', [AdminProductController::class, 'generateItemCode'])->name('generate.item.code');
-    
-    //Route::get('/get-categories', [CategoryController::class, 'getCategories'])->name('categories.list');
-    //Route::get('/subcategories/{category_id}', [CategoryController::class, 'getSubcategories'])->name('subcategories.fetch');
-    //Route::get('/get-products/{subcategory}', [CategoryController::class, 'getProducts'])->name('products.list');
-    //Route::get('/product/{id}', [CategoryController::class, 'product_show'])->name('product.show');
-
     Route::get('/admin-view-all-product-list', [AdminProductController::class, 'view'])->name('admin_viewproduct');
     Route::get('/purchased-products/view-more', [AdminProductController::class, 'viewMore'])->name('purchasedProducts.viewMore');
     
-    //Route::get('/admin-add-product', [AdminProductController::class, 'add'])->name('admin_addproduct');
-    //Route::post('admin-product-submit',[AdminProductController::class, 'submit'])->name('admin_product_submit');
-
-    //Route::get('/low-stock-products', [AdminProductController::class, 'lowStock'])->name('admin.lowStockProducts');
-    //Route::get('/admin/inactive-products', [AdminProductController::class, 'viewInactive'])->name('admin.inactive_products');
-    //Route::get('/products/my-products', [AdminProductController::class, 'myProducts'])->name('admin.my_products');
-    //Route::get('/admin/products/{id}/info', [AdminProductController::class, 'show'])->name('admin_products.info');
-    //Route::get('/admin/products/{id}/edit', [AdminProductController::class, 'edit'])->name('admin_products.edit');
-    //Route::get('/admin/products/{id}/edit/images', [AdminProductController::class, 'edit_image'])->name('admin_products.edit_image');
-    //Route::delete('/admin/products/{id}', [AdminProductController::class, 'delete'])->name('admin_products.delete');
-    //Route::post('/admin/product/update', [AdminProductController::class, 'update'])->name('admin_product_update');
-    //Route::post('/admin/product/update/image', [AdminProductController::class, 'update_image'])->name('admin_product_update_image');
-    //Route::post('/admin/product-image/store', [AdminProductController::class, 'store_image'])->name('admin_product_image.store');
-
-    //Route::post('/sizes', [AdminProductController::class, 'size_store'])->name('sizes.store');
-    //Route::delete('/sizes/{id}', [AdminProductController::class, 'size_destroy'])->name('sizes.delete');
-    //Route::get('/sizes', [AdminProductController::class, 'size_index'])->name('sizes.index');
-
-    //Route::get('/admin/product/images/{id}', [AdminProductController::class, 'destroy_image'])->name('admin_product_image.delete');
-
-    //Route::post('/admin/product/status-update/{id}', [AdminProductController::class, 'updateStatus'])->name('admin_product.status_update');
     Route::get('/admin/products/export/excel', [AdminProductController::class, 'exportExcel'])->name('products.export.excel');
 
     //Product Section
@@ -355,8 +298,6 @@ Route::group(['middleware' =>  [AdminCheckMiddleware::class]], function () {
     // Brands
     Route::get('/brands', [AdminBrandController::class, 'index'])->name('admin.brands.index');
     Route::post('/brand/store', [AdminBrandController::class, 'store'])->name('admin.brands.store');
-
-
 
     Route::put('/brand/{id}', [AdminBrandController::class, 'update'])->name('admin.brand.update');
     Route::delete('/brand/{id}', [AdminBrandController::class, 'destroy'])->name('admin.brand.destroy');
@@ -372,14 +313,12 @@ Route::group(['middleware' =>  [AdminCheckMiddleware::class]], function () {
     Route::get('/orders/summary', [AdminOrderController::class, 'getOrderSummary'])->name('admin_orders_summary');
     Route::get('/orders/summary/{order}', [AdminOrderController::class, 'show'])->name('admin_order_summary');
 
-    
 
     //Transaction
     Route::get('/admin/transaction', [AdminOrderController::class, 'transaction'])->name('admin_transaction');
 
     Route::get('admin-sellerlist', [AdminSellerController::class, 'index'])->name('admin_sellerlist');
     Route::get('admin-sellerlist/toggle-status/{id}', [AdminSellerController::class, 'toggleStatus'])->name('admin_sellerlist.toggle_status');
-
 
     Route::get('/admin/logout',[AdminDashboardController::class, 'logout'])->name('admin_logout');
 
@@ -444,13 +383,7 @@ Route::group(['middleware' =>  [AdminCheckMiddleware::class]], function () {
 
 });
 
-
-
-
 //Seler Pages
-
-
-
 
 
 //SuperUser Routes
@@ -477,17 +410,13 @@ Route::group(['middleware' =>  [SuperUserMiddleware::class]], function () {
     Route::get('/get-products/{subcategory}', [CategoryController::class, 'getProducts'])->name('products.list');
     Route::get('/product/{id}', [CategoryController::class, 'product_show'])->name('product.show');
 
-
-
     Route::post('/sizes', [SuperUserProductController::class, 'size_store'])->name('sizes.store');
     Route::delete('/sizes/{id}', [SuperUserProductController::class, 'size_destroy'])->name('sizes.delete');
     Route::get('/sizes', [SuperUserProductController::class, 'size_index'])->name('sizes.index');
 
     Route::get('/subcategories/{categoryId}', [CategoryController::class, 'getSubCategoriesByCategory'])->name('subcategories.byCategory');
 
-
     Route::post('/product-submit',[SuperUserProductController::class, 'submit'])->name('admin_product_submit');
-
 
     Route::get('/orders/my-orders', [SuperUserOrderController::class, 'myOrders'])->name('admin.my_order');
     Route::get('/orders/{id}', [SuperUserOrderController::class, 'show'])->name('superuser_orders.show');
