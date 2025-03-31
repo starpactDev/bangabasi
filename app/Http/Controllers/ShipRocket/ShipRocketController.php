@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\ShipRocket;
 
 use Illuminate\Http\Request;
+use App\Services\ShiprocketAPI;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 
@@ -42,17 +43,13 @@ class ShipRocketController extends Controller
         }
     }
 
-    public function fetchOrder(){
-        $baseUrl = config('shiprocket.base_url');
-        $apiToken = config('shiprocket.api_token');
-
-        $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $apiToken,
-        ])->get("{$baseUrl}/orders/show/748247766", );
-
-        return $response->json();
-
-
+    public function fetchOrder(ShiprocketAPI $shiprocketAPI)
+    {
+        $orderId = 748247766; // Hardcoded for now, can be dynamic if needed
+    
+        $response = $shiprocketAPI->request('get', "/orders/show/{$orderId}");
+    
+        return response()->json($response->json());
     }
     public function fetchShipment(){
         $baseUrl = config('shiprocket.base_url');
