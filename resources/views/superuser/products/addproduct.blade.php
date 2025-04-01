@@ -126,11 +126,11 @@
                                                 <div class="avatar-upload">
                                                     <div class="avatar-edit">
                                                         <input type='file' id="imageUpload" name="images[]" class="ec-image-upload" accept=".png, .jpg, .jpeg, .webp" />
-                                                        <label for="imageUpload"><img src="admin/assets/img/icons/edit.svg" class="svg_img header_svg" alt="edit" /></label>
+                                                        <label for="imageUpload"><img src="{{url('/')}}/admin/assets/img/icons/edit.svg" class="svg_img header_svg" alt="edit" /></label>
                                                     </div>
                                                     <div class="avatar-preview ec-preview">
                                                         <div class="imagePreview ec-div-preview">
-                                                            <img class="ec-image-preview" src="admin/assets/img/products/vender-upload-preview.jpg" alt="edit" />
+                                                            <img class="ec-image-preview" src="{{url('/')}}/admin/assets/img/products/vender-upload-preview.jpg" alt="edit" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -139,22 +139,22 @@
                                                         <div class="thumb-edit">
                                                             <input type='file' id="thumbUpload01" name="images[]"
                                                                 class="ec-image-upload" accept=".png, .jpg, .jpeg, .webp" />
-                                                            <label for="imageUpload"><img src="admin/assets/img/icons/edit.svg" class="svg_img header_svg" alt="edit" /></label>
+                                                            <label for="imageUpload"><img src="{{url('/')}}/admin/assets/img/icons/edit.svg" class="svg_img header_svg" alt="edit" /></label>
                                                         </div>
                                                         <div class="thumb-preview ec-preview">
                                                             <div class="image-thumb-preview">
-                                                                <img class="image-thumb-preview ec-image-preview" src="admin/assets/img/products/vender-upload-thumb-preview.jpg" alt="edit" />
+                                                                <img class="image-thumb-preview ec-image-preview" src="{{url('/')}}/admin/assets/img/products/vender-upload-thumb-preview.jpg" alt="edit" />
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="thumb-upload">
                                                         <div class="thumb-edit">
                                                             <input type='file' id="thumbUpload02" name="images[]" class="ec-image-upload" accept=".png, .jpg, .jpeg, .webp" />
-                                                            <label for="imageUpload"><img src="admin/assets/img/icons/edit.svg" class="svg_img header_svg" alt="edit" /></label>
+                                                            <label for="imageUpload"><img src="{{url('/')}}/admin/assets/img/icons/edit.svg" class="svg_img header_svg" alt="edit" /></label>
                                                         </div>
                                                         <div class="thumb-preview ec-preview">
                                                             <div class="image-thumb-preview">
-                                                                <img class="image-thumb-preview ec-image-preview" src="admin/assets/img/products/vender-upload-thumb-preview.jpg" alt="edit" />
+                                                                <img class="image-thumb-preview ec-image-preview" src="{{url('/')}}/admin/assets/img/products/vender-upload-thumb-preview.jpg" alt="edit" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -162,11 +162,11 @@
                                                         <div class="thumb-edit">
                                                             <input type='file' id="thumbUpload03" name="images[]"
                                                                 class="ec-image-upload" accept=".png, .jpg, .jpeg, .webp" />
-                                                            <label for="imageUpload"><img src="admin/assets/img/icons/edit.svg" class="svg_img header_svg" alt="edit" /></label>
+                                                            <label for="imageUpload"><img src="{{url('/')}}/admin/assets/img/icons/edit.svg" class="svg_img header_svg" alt="edit" /></label>
                                                         </div>
                                                         <div class="thumb-preview ec-preview">
                                                             <div class="image-thumb-preview">
-                                                                <img class="image-thumb-preview ec-image-preview" src="admin/assets/img/products/vender-upload-thumb-preview.jpg" alt="edit" />
+                                                                <img class="image-thumb-preview ec-image-preview" src="{{url('/')}}/admin/assets/img/products/vender-upload-thumb-preview.jpg" alt="edit" />
                                                             </div>
                                                         </div>
                                                     </div>
