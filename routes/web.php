@@ -317,8 +317,10 @@ Route::group(['middleware' =>  [AdminCheckMiddleware::class]], function () {
     //Transaction
     Route::get('/admin/transaction', [AdminOrderController::class, 'transaction'])->name('admin_transaction');
 
-    Route::get('admin-sellerlist', [AdminSellerController::class, 'index'])->name('admin_sellerlist');
-    Route::get('admin-sellerlist/toggle-status/{id}', [AdminSellerController::class, 'toggleStatus'])->name('admin_sellerlist.toggle_status');
+    Route::get('/admin-sellerlist', [AdminSellerController::class, 'index'])->name('admin_sellerlist');
+    Route::get('/admin-sellerlist/{id}', [AdminSellerController::class, 'getSellerDetails'])->name('admin_sellerlist.details');
+    
+    Route::get('/admin-sellerlist/toggle-status/{id}', [AdminSellerController::class, 'toggleStatus'])->name('admin_sellerlist.toggle_status');
 
     Route::get('/admin/logout',[AdminDashboardController::class, 'logout'])->name('admin_logout');
 

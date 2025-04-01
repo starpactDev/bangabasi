@@ -43,5 +43,21 @@ class AdminSellerController extends Controller
         return redirect()->route('admin_sellerlist')->with('success', 'Seller status updated successfully.');
     }
 
+    public function getSellerDetails($sellerId)
+    {
+        $seller = Seller::with([
+            'user', 
+            'user.gstDetails', 
+            'user.bank', 
+            'user.pickupAddresses'
+        ])->find($sellerId);
+
+        if (!$seller) {
+            return response()->json(['error' => 'Seller not found'], 404);
+        }
+
+        return response()->json($seller);
+    }
+
 
 }

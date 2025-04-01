@@ -62,6 +62,16 @@ class User extends Authenticatable
         return $this->hasOne(GstDetail::class);
     }
 
+    public function bank()
+    {
+        return $this->hasOne(Bank::class);
+    }
+
+    public function pickupAddresses()
+    {
+        return $this->hasMany(PickupAddress::class);
+    }
+    
     public function seller()
     {
         return $this->hasOne(Seller::class);
