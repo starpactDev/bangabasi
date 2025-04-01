@@ -56,7 +56,8 @@ class AdminSellerController extends Controller
             return response()->json(['error' => 'Seller not found'], 404);
         }
 
-        return response()->json($seller);
+        return view('admin.pages.seller.view', compact('seller'));
+        //return response()->json($seller);
     }
 
 

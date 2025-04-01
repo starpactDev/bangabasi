@@ -42,7 +42,7 @@
 												<td>{{ $seller->total_earnings }}</td>
 												<td>
 													<div class="btn-group">
-														<button type="button" class="btn btn-outline-success">Info</button>
+														<a href="{{ route('admin_seller.details', ['id' => $seller->seller_id])}}" class="btn btn-outline-success">Info</a>
 														<button type="button" class="btn btn-outline-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
 															<span class="sr-only">Info</span>
 														</button>
