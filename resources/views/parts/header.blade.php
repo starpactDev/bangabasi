@@ -380,6 +380,7 @@ $products = $subCategories;
                     <div class="w-full p-8 flex bg-white gap-8 z-9999 opacity-100">
                         @php
                             $subCategories = $activeCategory->get(0)->subCategories;
+                            $randomSubCategories = $subCategories->shuffle()->take(6);
                             $cat_id = $activeCategory->get(0)->id;
                         @endphp
                         <div class=" relative w-1/5   hover:cursor-pointer p-holder">
@@ -437,7 +438,7 @@ $products = $subCategories;
                             <div cl[110%]"text-xl  text-black font-bold pl-2 mb-6">
                                 {{ $activeCategory->get(0)->name }}
                             </div>
-                            @foreach ($subCategories as $value)
+                            @foreach ($randomSubCategories as $value)
                             <a href="{{ url('/products') }}?category={{ $cat_id }}&sub_category={{ $value->id }}">
                                 <div class="menu-item1 ">
                                     {{ $value->name }}
@@ -522,8 +523,9 @@ $products = $subCategories;
                                 @php
                                     $subCategories = $activeCategory->get(1)->subCategories;
                                     $cat_id = $activeCategory->get(1)->id;
+                                    $randomSubCategories = $subCategories->shuffle()->take(4);
                                 @endphp
-                                @foreach ($subCategories as $value)
+                                @foreach ($randomSubCategories as $value)
                                 <a href="{{ url('/products') }}?category={{ $cat_id }}&sub_category={{ $value->id }}">
                                     <div class="menu-item1 ">
                                         {{ $value->name }}
