@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="icon" href="/images/bangabasi_favicon.png" sizes="32x32" />
+	<link rel="icon" href="{{asset('user/uploads/logos/bangabasi_icon.png')}}" sizes="32x32" />
 	<title>Bangabasi | Seller</title>
 	@vite('resources/css/app.css')
 	@stack('css')
@@ -29,10 +29,18 @@
 				color: #fff;
 			}
 		}
+		summary::marker {
+			content: "☰";
+			color: #ea580c;
+		}
+		details[open] summary::marker {
+			content: "✖";
+			color: #ea580c;
+		}
 	</style>
 	
-	<header class="sticky top-0 z-50 p-4 bg-white shadow border-b ">
-		<div class="container mx-auto px-4 py-2 flex items-center justify-between">
+	<header class="sticky top-0 z-50 p-1 md:p-4 bg-white shadow border-b ">
+		<div class="container mx-auto px-4 py-2 md:flex items-center justify-between">
 			<!-- Left: Logo -->
 			<div class="text-lg font-bold">
 				<a href="#">
@@ -47,42 +55,44 @@
 				<a href="#shipping" class="font-semibold hover:text-orange-600">Shipping & Returns</a>
 			</nav>
 			<!-- Right: Buttons -->
-			<div class="flex space-x-4">
-				<a class="border border-orange-600 text-orange-600 px-4 py-2 rounded hover:bg-orange-100" href="{{ route('seller_login') }}"> Login </a>
-				<a class="bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-700" href="{{ route('seller_registration') }}" > Start Selling </a>
+			<div class="flex justify-end items-center space-x-4 ">
+				<div class="flex space-x-4">
+					<a class="border border-orange-600 text-orange-600 px-4 py-2 rounded hover:bg-orange-100" href="{{ route('seller_login') }}"> Login </a>
+					<a class="bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-700" href="{{ route('seller_registration') }}" >Start Selling</a>
+				</div>
+				<details class="block lg:hidden relative">
+					<summary class="w-4"></summary>
+					<nav class="absolute top-16 right-0 w-48 h-full  border">
+						<ul class="border bg-white ">
+							<li class="text-orange-600 hover:bg-orange-100 border-b py-2 px-4"><a href="">Sell Online</a></li>
+							<li class="text-orange-600 hover:bg-orange-100 border-b py-2 px-4"><a href="">How it works</a></li>
+							<li class="text-orange-600 hover:bg-orange-100 border-b py-2 px-4"><a href="">Pricing & Commission</a></li>
+							<li class="text-orange-600 hover:bg-orange-100 border-b py-2 px-4"><a href="">Shipping & Returns</a></li>
+						</ul>
+					</nav>
+				</details>
 			</div>
-			<details class="block lg:hidden relative">
-				<summary>…</summary>
-				<nav class="absolute top-16 right-0 w-48 h-full  border">
-					<ul class="border bg-white ">
-						<li class="text-orange-600 hover:bg-orange-100 border-b py-2 px-4"><a href="">Sell Online</a></li>
-						<li class="text-orange-600 hover:bg-orange-100 border-b py-2 px-4"><a href="">How it works</a></li>
-						<li class="text-orange-600 hover:bg-orange-100 border-b py-2 px-4"><a href="">Pricing & Commission</a></li>
-						<li class="text-orange-600 hover:bg-orange-100 border-b py-2 px-4"><a href="">Shipping & Returns</a></li>
-					</ul>
-				</nav>
-			</details>
 		</div>
 	</header>
 
 	<section class="min-h-[70dvh] bg-sky-50 content-end" id="sell-online">
 		<div class="container h-full grid grid-cols-12 mx-auto ">
-			<div class="col-span-12 lg:col-span-6 h-96 order-2 lg:order-1 px-6">
+			<div class="col-span-12 lg:col-span-6 min-h-96 order-2 lg:order-1 px-6 space-y-4">
 				<h1 class="text-4xl font-bold">Sell online to 14 Cr+ customers at <br /> <span class="text-orange-600">0% Commission</span></h1>
 				<p class="my-6">Become a Bangabasi seller and grow your business across India</p>
 				<p>
 					<span class="px-2 py-1 border border-orange-600 text-white rounded mr-4 animate-blink">New!</span>Don't have a GSTIN or have a Composition GSTIN?
 					<br />You can still sell on Bangabasi. Click <a href="" class="text-orange-600 hover:text-orange-500 font-semibold">here</a> to know more.
 				</p>
-				<form action="{{ route('seller.phone.submit') }}" method="POST">
+				<form action="{{ route('seller.phone.submit') }}" method="POST" class="hidden md:block">
 					@csrf
 					<div class="my-6 w-fit border rounded-md overflow-hidden bg-white">
 						<span class="px-2 ">+91</span>
-						<input type="tel" name="phone" placeholder="Enter Your Mobile Number" class="leading-10 px-4 focus:outline-none">
+						<input type="tel" name="phone" placeholder="Enter Your Mobile Number" class="leading-10 px-4 focus:outline-none w-fit ">
 						<button type="submit" class="bg-orange-600 text-white px-4 py-2 hover:bg-orange-700"> Start Selling </button>
 					</div>
 				</form>
-				
+				<a href="{{ route('seller_registration') }}" class="block md:hidden bg-orange-600 text-white px-4 py-2 hover:bg-orange-700 w-fit rounded"> Start Selling </a>
 			</div>
 			<div class="col-span-12 lg:col-span-6  h-96  order-1 lg:order-2 relative">
 				<img src="{{ asset('user/uploads/seller/bangabasi_growth.png') }}" alt="">
