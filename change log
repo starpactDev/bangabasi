@@ -97,3 +97,4 @@ const memoizedValue = useMemo(() => {
 php artisan migrate --path=database/migrations/custom
 #002167
 #88aaf3
+UIN 192400009586ES5
