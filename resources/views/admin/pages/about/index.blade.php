@@ -105,7 +105,7 @@
 						<button type="submit" class="btn btn-primary">Update</button>
 					</form>
 				</div>
-				@foreach(['member1', 'member2', 'member3', 'member4'] as $key)
+				@foreach(['member1', 'member2', 'member3', 'member4', 'member5'] as $key)
                     @php
                         $member = $about[$key];
                     @endphp
