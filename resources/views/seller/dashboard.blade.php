@@ -13,7 +13,7 @@
 					<div class="card card-mini dash-card card-1" style="background-color: aliceblue; border:none;">
 						<div class="card-body">
 							<h2 class="mb-1">₹{{ number_format($totalAdminAmount) }}</h2>
-							<p>Total Admin Amount</p>
+							<p>Total Admin Commission</p>
 							<span class="mdi mdi-account-arrow-left"></span>
 						</div>
 					</div>
