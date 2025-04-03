@@ -12,8 +12,8 @@
 				<div class="col-xl-4 col-sm-6 p-b-15 lbl-card">
 					<div class="card card-mini dash-card card-1" style="background-color: aliceblue; border:none;">
 						<div class="card-body">
-							<h2 class="mb-1">{{ number_format($userCount) }}</h2>
-							<p>Total Signups</p>
+							<h2 class="mb-1">₹{{ number_format($totalAdminAmount) }}</h2>
+							<p>Total Admin Amount</p>
 							<span class="mdi mdi-account-arrow-left"></span>
 						</div>
 					</div>

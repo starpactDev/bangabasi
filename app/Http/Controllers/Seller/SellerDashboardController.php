@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Seller;
 
 use App\Models\User;
 use App\Models\Order;
+use App\Models\Seller;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
+use App\Models\OrderItemBreakdown;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -23,6 +25,16 @@ class SellerDashboardController extends Controller
 
 
         $authId = Auth::id();
+        $sellerId = Seller::where('user_id', $seller->id)->first();
+
+        // Retrieve the order item breakdowns for this seller
+        $orderItemBreakdowns = OrderItemBreakdown::where('seller_id', $seller->id)->get();
+
+        // Calculate the total amount that goes to admin
+        $totalAdminAmount = $orderItemBreakdowns->sum(function ($orderItem) {
+            return $orderItem->item_total - $orderItem->amount_to_seller;
+        });
+
       
         $orderItemCount = OrderItem::whereHas('product', function ($query) use ($authId) {
             $query->where('user_id', $authId);
@@ -78,7 +90,7 @@ class SellerDashboardController extends Controller
             ->get();
 
         // Return the view for the seller dashboard with the necessary data
-        return view('seller.dashboard', compact('userCount','totalPrice','orderItemCount', 'purchasedProducts', 'usersWithSalesAndPrice', 'orders', 'orderItems'));
+        return view('seller.dashboard', compact('userCount','totalPrice', 'totalAdminAmount', 'orderItemCount', 'purchasedProducts', 'usersWithSalesAndPrice', 'orders', 'orderItems'));
     }
 
     
