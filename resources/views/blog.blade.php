@@ -47,6 +47,29 @@
 						@endif
 					</div>
 					<div id="article-end"></div>
+					<!-- Share Section -->
+					<div id="share_section">
+						<div class="my-6">
+							<span class="font-medium">Share this post:</span>
+							<div class="flex space-x-4 mt-2">
+								<a href="https://wa.me/?text={{ urlencode(route('blog', ['id' => $mainBlog->id, 'slug' => $mainBlog->slug])) }}" target="_blank" class="p-2 bg-green-500 hover:bg-green-600 text-white rounded-md">
+									WhatsApp
+								</a>
+								<a href="mailto:?subject={{ urlencode($mainBlog->blog_head) }}&body={{ urlencode(route('blog', ['id' => $mainBlog->id, 'slug' => $mainBlog->slug])) }}" target="_blank" class="p-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md">
+									Email
+								</a>
+								<a href="sms:?body={{ urlencode(route('blog', ['id' => $mainBlog->id, 'slug' => $mainBlog->slug])) }}" target="_blank" class="p-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-md">
+									SMS
+								</a>
+								<a href="https://twitter.com/share?url={{ urlencode(route('blog', ['id' => $mainBlog->id, 'slug' => $mainBlog->slug])) }}&text={{ urlencode($mainBlog->blog_head) }}" target="_blank" class="p-2 bg-blue-400 hover:bg-blue-500 text-white rounded-md">
+									Twitter
+								</a>
+								<a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(route('blog', ['id' => $mainBlog->id, 'slug' => $mainBlog->slug])) }}" target="_blank" class="p-2 bg-blue-700 hover:bg-blue-800 text-white rounded-md">
+									Facebook
+								</a>
+							</div>
+						</div>
+					</div>
 				</article>
 				<div class="space-y-4 my-6 px-4">
 					<h4>All Comments</h4>
