@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('pincode');
             $table->string('city');
             $table->string('state');
+            $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
     }
