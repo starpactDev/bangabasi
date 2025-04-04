@@ -148,22 +148,16 @@
 	</div>
 </section>
 
-@php
-	$food_products = App\Models\Product::where('category', 2)->inRandomOrder()->take(10)->get();
-	$clothing_products = App\Models\Product::where('category', 1)->inRandomOrder()->take(10)->get();
-	$dashakarma_products = App\Models\Product::where('category', 3)->inRandomOrder()->take(10)->get();
-	$machinery_products = App\Models\Product::where('category', 6)->inRandomOrder()->take(10)->get();
-@endphp
 
 <!-- don't Miss Section  -->
 <section class="py-8" id="dontMissSection">
 	<div class="container">
 		<h2 class="text-xl font-bold capitalize w-fit mx-auto py-4">Dont' Miss out These Offers!</h2>
 		<ul class="flex mx-auto w-full flex-wrap justify-center" id="tabList">
-			<li onclick=tabToggle(dashakarma) class="px-8 md:px-4 py-4 w-full md:w-1/4 text-center font-semibold text-slate-600 capitalize cursor-pointer hover:text-orange-600 ">Dashakarma</li>
-			<li onclick=tabToggle(machinery) class="px-8 md:px-4 py-4 w-full md:w-1/4 text-center font-semibold text-slate-600 capitalize cursor-pointer hover:text-orange-600 bg-slate-50">Machinery</li>
-			<li onclick=tabToggle(clothing) class="px-8 md:px-4 py-4 w-full md:w-1/4 text-center font-semibold text-slate-600 capitalize cursor-pointer hover:text-orange-600 bg-slate-50">Clothing</li>
-			<li onclick=tabToggle(food) class="px-8 md:px-4 py-4 w-full md:w-1/4 text-center font-semibold text-slate-600 capitalize cursor-pointer hover:text-orange-600 bg-slate-50">Food Item</li>
+			<li onclick=tabToggle(dashakarma) class="px-8 md:px-4 py-4 w-full md:w-1/4 text-center font-semibold text-slate-600 capitalize cursor-pointer hover:text-orange-600 ">{{$categories[2]->name ?? 'Category' }}</li>
+			<li onclick=tabToggle(machinery) class="px-8 md:px-4 py-4 w-full md:w-1/4 text-center font-semibold text-slate-600 capitalize cursor-pointer hover:text-orange-600 bg-slate-50">{{$categories[5]->name ?? 'Category'}}</li>
+			<li onclick=tabToggle(clothing) class="px-8 md:px-4 py-4 w-full md:w-1/4 text-center font-semibold text-slate-600 capitalize cursor-pointer hover:text-orange-600 bg-slate-50">{{$categories[0]->name ?? 'Category' }}</li>
+			<li onclick=tabToggle(food) class="px-8 md:px-4 py-4 w-full md:w-1/4 text-center font-semibold text-slate-600 capitalize cursor-pointer hover:text-orange-600 bg-slate-50">{{ $categories[1]->name ?? 'Category' }}</li>
 		</ul>
 
 		<div class="min-h-[80vh] border-[3px] border-orange-600 tabs" id="dashakarma">

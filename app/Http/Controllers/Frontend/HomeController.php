@@ -146,7 +146,15 @@ class HomeController extends Controller
             $headerData = []; // Handle missing file
         }
         
+        // Fetch 10 random products from each category
+        $food_products = Product::where('category', 2)->where('is_active', 1)->inRandomOrder()->take(10)->get();
+        $clothing_products = Product::where('category', 1)->where('is_active', 1)->inRandomOrder()->take(10)->get();
+        $dashakarma_products = Product::where('category', 3)->where('is_active', 1)->inRandomOrder()->take(10)->get();
+        $machinery_products = Product::where('category', 6)->where('is_active', 1)->inRandomOrder()->take(10)->get();
        
+        //Fetch all Categories
+        $categories = Category::all();
+
         // Pass firstTags to the view
         return view('index', [
             'popularPicks' => $popularPicks,
@@ -162,7 +170,13 @@ class HomeController extends Controller
             'activeSubCategories' => $activeSubCategories,
             'discountThreshold' => $discountThreshold,
             'homeData' => $homeData,
-            'headerData' => $headerData
+            'headerData' => $headerData,
+            'categories' => $categories,
+            // Pass the random products to the view
+            'food_products' => $food_products, 
+            'clothing_products' => $clothing_products, 
+            'dashakarma_products' => $dashakarma_products, 
+            'machinery_products' => $machinery_products
         ]);
     }
 }
