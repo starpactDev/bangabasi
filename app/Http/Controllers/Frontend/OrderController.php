@@ -39,6 +39,24 @@ class OrderController extends Controller
         return view('myorders', compact('orders'));
     }
 
+    public function showOrderSummary($uniqueId)
+    {
+        $user = Auth::user();
+
+        // Fetch the order by unique ID and ensure it belongs to the logged-in user
+        $order = Order::where('unique_id', $uniqueId)
+            ->where('user_id', $user->id)
+            ->with([
+                'orderItems.product.productImages', // Eager load product + images
+                'address' => fn($query) => $query->withTrashed(), // include soft-deleted address
+                'amountBreakdown'
+            ])
+            ->firstOrFail();
+
+        //return response()->json($order);
+        return view('order_summary', compact('order'));
+    }
+
     public function placeOrder(Request $request)
     {
 

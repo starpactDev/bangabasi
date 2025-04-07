@@ -21,7 +21,7 @@ class Order extends Model
 
     public function address()
     {
-        return $this->belongsTo(UserAddress::class, 'address_id');
+        return $this->belongsTo(UserAddress::class, 'address_id')->withTrashed();
     }
     public function amountBreakdown()
     {

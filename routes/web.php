@@ -238,6 +238,8 @@ Route::middleware(UserAuthMiddleware::class)->group(function () {
     Route::post('/order/place', [OrderController::class, 'placeOrder'])->name('order.place');
     Route::post('instant/order/place', [OrderController::class, 'instantplaceOrder'])->name('order.place.instant');
     Route::get('/myorders',  [OrderController::class, 'myOrder'])->name('myorders');
+    Route::get('/order-summary/{uniqueId}', [OrderController::class, 'showOrderSummary'])->name('order.summary');
+
 
     Route::post('/cancel-order-item', [OrderController::class, 'cancelOrderItem'])->name('cancelOrderItem');
 });
