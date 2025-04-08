@@ -1,6 +1,6 @@
 @extends("layouts.master")
 @section('head')
-<title>Bangabasi | My Orders</title>
+<title>Bangabasi | Order Summary {{$order->unique_id ?? ''}}</title>
 @endsection
 @section('content')
 @php
@@ -101,4 +101,92 @@
 
 
 </div>
+<div class="mt-6 text-right max-w-4xl mx-auto">
+    <button onclick="printReceipt()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-md shadow">
+        🖨️ Print Receipt
+    </button>
+</div>
+<!-- Hidden A5 Print Layout -->
+<div id="printable-receipt" class="hidden print:block print:p-4 print:bg-white print:text-black text-sm font-sans">
+    <div class="w-[148mm] mx-auto border p-4">
+        <h2 class="text-center text-lg mb-2">Order Receipt</h2>
+        <p><strong>Order ID:</strong> {{ $order->unique_id }}</p>
+        <p><strong>Date:</strong> {{ $order->created_at->format('d M, Y h:i A') }}</p>
+
+        <hr class="my-2 border-dashed">
+
+        <!-- Address -->
+        <h3 class="font-semibold">Shipping Address</h3>
+        @php $addr = $order->address; @endphp
+        <div class="flex justify-between">
+            <p class="mt-1">
+                {{ $addr->firstname.' '.$addr->lastname }}<br>
+                {{ $addr->street_name }}, {{ $addr->apartment }}<br>
+                {{ $addr->city}}, {{ $addr->state }}, {{ $addr->pin }}<br>
+            </p>
+            <div>
+                <p><small class="text-neutral-700">Mobile: </small> {{ $addr->phone }}</p>
+                <p><small class="text-neutral-700">Email : </small> {{ $addr->email}}</p>
+                <p><small class="text-neutral-700">Country : </small>{{ $addr->country }}</p>
+            </div>
+
+        </div>
+        
+
+        <hr class="my-4 border-dashed">
+
+        <!-- Items Table -->
+        <table class="w-full text-left mb-4">
+            <thead>
+                <tr class="border-b">
+                    <th class="py-1">#</th>
+                    <th class="py-1">Item</th>
+                    <th class="py-1 text-right">SKU</th>
+                    <th class="py-1 text-right">Qty</th>
+                    <th class="py-1 text-right">Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($order->orderItems as $i => $item)
+                <tr>
+                    <td class="py-1">{{ $i + 1 }}</td>
+                    <td class="py-1">{{ $item->product->name }}</td>
+                    <td class="py-1 text-right">{{ $item->sku }}</td>
+                    <td class="py-1 text-right">{{ $item->quantity }}</td>
+                    <td class="py-1 text-right">₹{{ number_format($item->unit_price * $item->quantity, 2) }}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+
+        <!-- Summary -->
+        <div class="text-right space-y-1">
+            <p><strong>Subtotal:</strong> ₹{{ number_format($order->orderItems->sum(fn($item) => $item->unit_price * $item->quantity), 2) }}</p>
+            <p><strong>Discount:</strong> -₹{{ number_format($order->amountBreakdown->coupon_discount ?? 0, 2) }}</p>
+            <p><strong>Shipping:</strong> ₹{{ number_format($order->amountBreakdown->shipping_charge ?? 0, 2) }}</p>
+            <p><strong>Platform Fee:</strong> ₹{{ number_format($order->amountBreakdown->platform_fee ?? 0, 2) }}</p>
+            <p><strong class="text-lg">Grand Total:</strong> ₹{{ number_format($order->price, 2) }}</p>
+        </div>
+
+        <hr class="my-4 border-dashed">
+
+        <p class="text-xs text-center text-gray-500 mt-6">Thank you for shopping with us!</p>
+    </div>
+</div>
+
 @endsection
+
+@push('scripts')
+<script>
+    function printReceipt() {
+        const printContents = document.getElementById("printable-receipt").innerHTML;
+        const originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
+        location.reload(); // Reload to restore event bindings
+    }
+</script>
+
+@endpush
