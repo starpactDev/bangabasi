@@ -12,12 +12,12 @@
     <div class="flex justify-between items-center border-b pb-4 mb-4">
         <div>
             <h1 class="text-2xl font-bold">Order Summary</h1>
-            <p class="text-sm text-gray-500">Order ID: <span class="font-medium">{{ $order->unique_id }}</span></p>
-            <p class="text-sm text-gray-500">Order Date: <span class="font-medium">{{ $order->created_at->format('d M Y, h:i A') }}</span></p>
+            <p class="text-sm text-gray-500">Order ID: <span class="font-medium">{{ $order->unique_id ?? 'N/A' }}</span></p>
+            <p class="text-sm text-gray-500">Order Date: <span class="font-medium">{{ optional($order->created_at)->format('d M Y, h:i A') ?? 'N/A' }}</span></p>
         </div>
         <div class="text-right">
-            <p class="font-semibold capitalize">Status: <span class="text-blue-600">{{ $order->status }}</span></p>
-            <p class="text-sm text-gray-500">{{ $order->payment_method === 'prePaid' ? 'Prepaid' : 'Cash On Delivery' }}</p>
+            <p class="font-semibold capitalize">Status: <span class="text-blue-600">{{ $order->status ?? 'N/A' }}</span></p>
+            <p class="text-sm text-gray-500">{{ ($order->payment_method ?? '') === 'prePaid' ? 'Prepaid' : 'Cash On Delivery' }}</p>
         </div>
     </div>
 
@@ -26,14 +26,17 @@
         <div>
             <h2 class="font-semibold text-lg mb-2">Shipping Address</h2>
             @php $addr = $order->address; @endphp
-            <p><strong>{{ $addr->firstname.' '.$addr->lastname }}</strong></p>
-            <p><small class="text-neutral-700">Street Name : </small>{{ $addr->street_name }}</p>
-            <p><small class="text-neutral-700">Apartment </small>{{ $addr->apartment }}</p>
-            <p>{{ $addr->address_line }}</p>
-            <p>{{ $addr->city }}, {{ $addr->state }} - {{ $addr->postal_code }}</p>
-            <p>Phone: {{ $addr->phone }}</p>
-            <p>Email: {{ $addr->email ?? '—' }}</p>
-            <p class="text-xs text-gray-400 mt-1 italic">{{ $addr->deleted_at ? '(Address was removed by user)' : '' }}</p>
+            @if ($addr)
+                <p><strong>{{ $addr->firstname ?? '' }} {{ $addr->lastname ?? '' }}</strong></p>
+                <p><small class="text-neutral-700">Street Name : </small>{{ $addr->street_name ?? '—' }}</p>
+                <p><small class="text-neutral-700">Apartment </small>{{ $addr->apartment ?? '—' }}</p>
+                <p>{{ $addr->city ?? '' }}, {{ $addr->state ?? '' }} - {{ $addr->postal_code ?? '' }}</p>
+                <p>Phone: {{ $addr->phone ?? '—' }}</p>
+                <p>Email: {{ $addr->email ?? '—' }}</p>
+                <p class="text-xs text-gray-400 mt-1 italic">{{ $addr->deleted_at ? '(Address was removed by user)' : '' }}</p>
+            @else
+                <p class="text-gray-500 italic">Address not available</p>
+            @endif
         </div>        
         <div>
             <h2 class="font-semibold text-lg mb-2">Additional Info</h2>
@@ -56,18 +59,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($order->orderItems as $item)
+                    @foreach ($order->orderItems ?? [] as $item)
                     <tr>
                         <td class="p-3 border-b">
                             <div class="flex items-center gap-3">
-                                <img src="{{ asset('user/uploads/products/images/' . $item->product->productImages->first()->image) }}" alt="Product Image" class="w-12 h-12 object-cover rounded">
-                                <span>{{ $item->product->name }}</span>
+                                <img src="{{ asset('user/uploads/products/images/' . ($item->product->productImages->first()->image ?? 'placeholder.jpg')) }}" alt="Product Image" class="w-12 h-12 object-cover rounded">
+                                <span>{{ $item->product->name ?? 'Unnamed Product' }}</span>
                             </div>
                         </td>
                         <td class="p-3 border-b">{{ $item->sku ?? 'N/A' }}</td>
-                        <td class="p-3 border-b text-right">{{ $item->quantity }}</td>
-                        <td class="p-3 border-b text-right">₹{{ number_format($item->unit_price, 2) }}</td>
-                        <td class="p-3 border-b text-right">₹{{ number_format($item->unit_price * $item->quantity, 2) }}</td>
+                        <td class="p-3 border-b text-right">{{ $item->quantity ?? 0 }}</td>
+                        <td class="p-3 border-b text-right">₹{{ number_format($item->unit_price ?? 0, 2) }}</td>
+                        <td class="p-3 border-b text-right">₹{{ number_format(($item->unit_price ?? 0) * ($item->quantity ?? 0), 2) }}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -77,30 +80,24 @@
 
     <!-- Order Total Summary -->
     <div class="bg-gray-50 border rounded-lg p-4 mt-6 shadow-sm">
-        
-
         <div class="grid md:grid-cols-2 gap-6 text-sm">
-
-
             <div class="space-y-2">
                 <h2 class="text-lg font-semibold mb-4 text-gray-700">Order Summary</h2>
-                <p><span class="font-medium">Total Paid by Customer:</span> ₹{{ number_format($order->amountBreakdown->total_paid_by_customer, 2) }}</p>
-                
+                <p><span class="font-medium">Total Paid by Customer:</span> ₹{{ number_format($order->amountBreakdown->total_paid_by_customer ?? 0, 2) }}</p>
                 <p class="text-base font-semibold mt-4 border-t pt-2">
-                    Grand Total: ₹{{ number_format($order->price, 2) }}
+                    Grand Total: ₹{{ number_format($order->price ?? 0, 2) }}
                 </p>
             </div>
             <div class="space-y-2 text-right">
-                <p><span class="font-medium">Subtotal:</span> ₹{{ number_format($order->orderItems->sum(fn($item) => $item->unit_price * $item->quantity), 2) }}</p>
+                <p><span class="font-medium">Subtotal:</span> ₹{{ number_format(collect($order->orderItems ?? [])->sum(fn($item) => ($item->unit_price ?? 0) * ($item->quantity ?? 0)), 2) }}</p>
                 <p><span class="font-medium">Coupon Discount:</span> -₹{{ number_format($order->amountBreakdown->coupon_discount ?? 0, 2) }}</p>
                 <p><span class="font-medium">Shipping Charge:</span> ₹{{ number_format($order->amountBreakdown->shipping_charge ?? 0, 2) }}</p>
                 <p><span class="font-medium">Platform Fee:</span> ₹{{ number_format($order->amountBreakdown->platform_fee ?? 0, 2) }}</p>
             </div>
         </div>
     </div>
-
-
 </div>
+
 <div class="mt-6 text-right max-w-4xl mx-auto">
     <button onclick="printReceipt()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-md shadow">
         🖨️ Print Receipt
@@ -110,8 +107,8 @@
 <div id="printable-receipt" class="hidden print:block print:p-4 print:bg-white print:text-black text-sm font-sans">
     <div class="w-[148mm] mx-auto border p-4">
         <h2 class="text-center text-lg mb-2">Order Receipt</h2>
-        <p><strong>Order ID:</strong> {{ $order->unique_id }}</p>
-        <p><strong>Date:</strong> {{ $order->created_at->format('d M, Y h:i A') }}</p>
+        <p><strong>Order ID:</strong> {{ $order->unique_id ?? 'N/A' }}</p>
+        <p><strong>Date:</strong> {{ $order->created_at?->format('d M, Y h:i A') ?? 'N/A' }}</p>
 
         <hr class="my-2 border-dashed">
 
@@ -120,18 +117,16 @@
         @php $addr = $order->address; @endphp
         <div class="flex justify-between">
             <p class="mt-1">
-                {{ $addr->firstname.' '.$addr->lastname }}<br>
-                {{ $addr->street_name }}, {{ $addr->apartment }}<br>
-                {{ $addr->city}}, {{ $addr->state }}, {{ $addr->pin }}<br>
+                {{ $addr?->firstname.' '.$addr?->lastname ?? 'N/A' }}<br>
+                {{ $addr?->street_name ?? '' }}, {{ $addr?->apartment ?? '' }}<br>
+                {{ $addr?->city ?? '' }}, {{ $addr?->state ?? '' }}, {{ $addr?->pin ?? '' }}<br>
             </p>
             <div>
-                <p><small class="text-neutral-700">Mobile: </small> {{ $addr->phone }}</p>
-                <p><small class="text-neutral-700">Email : </small> {{ $addr->email}}</p>
-                <p><small class="text-neutral-700">Country : </small>{{ $addr->country }}</p>
+                <p><small class="text-neutral-700">Mobile: </small> {{ $addr?->phone ?? '—' }}</p>
+                <p><small class="text-neutral-700">Email : </small> {{ $addr?->email ?? '—' }}</p>
+                <p><small class="text-neutral-700">Country : </small>{{ $addr?->country ?? '—' }}</p>
             </div>
-
         </div>
-        
 
         <hr class="my-4 border-dashed">
 
@@ -147,13 +142,13 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($order->orderItems as $i => $item)
+                @foreach ($order->orderItems ?? [] as $i => $item)
                 <tr>
                     <td class="py-1">{{ $i + 1 }}</td>
-                    <td class="py-1">{{ $item->product->name }}</td>
-                    <td class="py-1 text-right">{{ $item->sku }}</td>
-                    <td class="py-1 text-right">{{ $item->quantity }}</td>
-                    <td class="py-1 text-right">₹{{ number_format($item->unit_price * $item->quantity, 2) }}</td>
+                    <td class="py-1">{{ $item->product->name ?? 'Unnamed Product' }}</td>
+                    <td class="py-1 text-right">{{ $item->sku ?? 'N/A' }}</td>
+                    <td class="py-1 text-right">{{ $item->quantity ?? 0 }}</td>
+                    <td class="py-1 text-right">₹{{ number_format(($item->unit_price ?? 0) * ($item->quantity ?? 0), 2) }}</td>
                 </tr>
                 @endforeach
             </tbody>
@@ -161,11 +156,11 @@
 
         <!-- Summary -->
         <div class="text-right space-y-1">
-            <p><strong>Subtotal:</strong> ₹{{ number_format($order->orderItems->sum(fn($item) => $item->unit_price * $item->quantity), 2) }}</p>
+            <p><strong>Subtotal:</strong> ₹{{ number_format(($order->orderItems ?? collect())->sum(fn($item) => ($item->unit_price ?? 0) * ($item->quantity ?? 0)), 2) }}</p>
             <p><strong>Discount:</strong> -₹{{ number_format($order->amountBreakdown->coupon_discount ?? 0, 2) }}</p>
             <p><strong>Shipping:</strong> ₹{{ number_format($order->amountBreakdown->shipping_charge ?? 0, 2) }}</p>
             <p><strong>Platform Fee:</strong> ₹{{ number_format($order->amountBreakdown->platform_fee ?? 0, 2) }}</p>
-            <p><strong class="text-lg">Grand Total:</strong> ₹{{ number_format($order->price, 2) }}</p>
+            <p><strong class="text-lg">Grand Total:</strong> ₹{{ number_format($order->price ?? 0, 2) }}</p>
         </div>
 
         <hr class="my-4 border-dashed">
@@ -173,6 +168,7 @@
         <p class="text-xs text-center text-gray-500 mt-6">Thank you for shopping with us!</p>
     </div>
 </div>
+
 
 @endsection
 
