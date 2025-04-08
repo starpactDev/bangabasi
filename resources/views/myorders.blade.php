@@ -49,7 +49,7 @@
             
             <div class="shadow-sm bg-gray-50 border-l border-l-blue-500">
                 <div class="flex justify-between items-center text-white p-2 text-sm md:text-lg font-semibold {{ $order->status === 'canceled' ? 'bg-red-500' : 'bg-blue-500' }} ">
-                    <span>Order ID: {{ $order->unique_id }}</span>
+                    <a href="{{ route('order.summary', ['uniqueId' => $order->unique_id]) }}" class="cursor-pointer hover:text-orange-600"><span>Order ID: {{ $order->unique_id }}</span></a>
                     <span>Status: {{ ucfirst($order->status) }}</span>
                 </div>
                 @foreach ($order->orderItems as $item)
@@ -161,6 +161,7 @@
                 @endforeach
                 <div class="flex justify-between items-center px-4 py-2 ">
                     <div title="{{ $order->created_at->format('d-m-Y H:i') }}"> {{ formatTimeAgo($order->created_at) }} </div>
+                    <a href="{{ route('order.summary', ['uniqueId' => $order->unique_id]) }}" class="cursor-pointer px-2 py-1 bg-orange-600 text-white rounded hover:bg-orange-800">Summary</a>
                     <div class="capitalize"> 
                         <span>Total Amount : ₹{{ $order->price }} | </span>
                         <span>{{ $order->payment_method == 'prePaid' ? 'Prepaid' : '' }} {{ $order->payment_method == 'postPaid' ? 'Cash On Delivery' : '' }}</span>
