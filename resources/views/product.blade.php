@@ -874,77 +874,81 @@
 
     </script>
     <script id="serviceAbility">
-        document.querySelector('#checkPinCode').addEventListener('submit', async (e) => {
-            e.preventDefault();
+        const checkPinCode = document.querySelector('#checkPinCode');
+        if(checkPinCode){
+            checkPinCode.addEventListener('submit', async (e) => {
+                e.preventDefault();
 
-            const pickupPostcode = document.querySelector('input[name="pickup_postcode"]').value;
-            const deliveryPostcode = document.querySelector('input[name="delivery_postcode"]').value;
-            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                const pickupPostcode = document.querySelector('input[name="pickup_postcode"]').value;
+                const deliveryPostcode = document.querySelector('input[name="delivery_postcode"]').value;
+                const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-            try {
-                const response = await fetch('{{ route('shiprocket.serviceability') }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'X-CSRF-TOKEN': csrfToken
-                    },
-                    body: JSON.stringify({
-                        pickup_postcode: pickupPostcode,
-                        delivery_postcode: deliveryPostcode,
-                    }),
-                });
+                try {
+                    const response = await fetch('{{ route('shiprocket.serviceability') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                            'X-CSRF-TOKEN': csrfToken
+                        },
+                        body: JSON.stringify({
+                            pickup_postcode: pickupPostcode,
+                            delivery_postcode: deliveryPostcode,
+                        }),
+                    });
 
-                const data = await response.json();
-                const estDelivery = document.getElementById('estDelivery');
-                const cutOffTime = document.getElementById('cutOffTime');
-                const courierError = document.getElementById('courierError');
-                const actionArea = document.querySelector('#actionArea')
-                const toCartBtn = document.querySelector('#toCartBtn')
+                    const data = await response.json();
+                    const estDelivery = document.getElementById('estDelivery');
+                    const cutOffTime = document.getElementById('cutOffTime');
+                    const courierError = document.getElementById('courierError');
+                    const actionArea = document.querySelector('#actionArea')
+                    const toCartBtn = document.querySelector('#toCartBtn')
 
 
-                if (data.status === 200) {
-                    // Handle available couriers
-                    let courier;
-                    const recommendedCourierId = data.shiprocket_recommended_courier_id;
+                    if (data.status === 200) {
+                        // Handle available couriers
+                        let courier;
+                        const recommendedCourierId = data.shiprocket_recommended_courier_id;
 
-                    if (recommendedCourierId) {
-                        courier = data.data.available_courier_companies.find(c => c.courier_company_id === recommendedCourierId);
+                        if (recommendedCourierId) {
+                            courier = data.data.available_courier_companies.find(c => c.courier_company_id === recommendedCourierId);
+                        }
+
+                        // If no recommended courier, pick the first one
+                        if (!courier) {
+                            courier = data.data.available_courier_companies[0];
+                        }
+
+                        if (courier) {
+                            estDelivery.textContent = `Delivered in ${courier.estimated_delivery_days || courier.etd} days | ${courier.courier_name}`;
+                            cutOffTime.textContent = `if ordered before ${courier.cutoff_time}`;
+                            actionArea.style.pointerEvents = 'auto';
+                            actionArea.classList.remove('grayscale', 'bg-gray-100');
+                            toCartBtn.classList.remove('bg-neutral-600');
+                            toCartBtn.classList.add('bg-black');
+                            courierError.textContent = '';
+                        }
+                    } else {
+                        // Handle error response
+                        if (data.message) {
+                            estDelivery.textContent = '';
+                            cutOffTime.textContent = '';
+                            courierError.textContent = `${data.message}`;
+                            actionArea.style.pointerEvents = 'none';
+                            actionArea.classList.add('grayscale', 'bg-gray-100');
+                            toCartBtn.classList.add('bg-neutral-600');
+                            toCartBtn.classList.remove('bg-black');
+                        }
+                        else{
+                            courierError.textContent = 'Something went wrong. Please try again later.';
+                        }
                     }
-
-                    // If no recommended courier, pick the first one
-                    if (!courier) {
-                        courier = data.data.available_courier_companies[0];
-                    }
-
-                    if (courier) {
-                        estDelivery.textContent = `Delivered in ${courier.estimated_delivery_days || courier.etd} days | ${courier.courier_name}`;
-                        cutOffTime.textContent = `if ordered before ${courier.cutoff_time}`;
-                        actionArea.style.pointerEvents = 'auto';
-                        actionArea.classList.remove('grayscale', 'bg-gray-100');
-                        toCartBtn.classList.remove('bg-neutral-600');
-                        toCartBtn.classList.add('bg-black');
-                        courierError.textContent = '';
-                    }
-                } else {
-                    // Handle error response
-                    if (data.message) {
-                        estDelivery.textContent = '';
-                        cutOffTime.textContent = '';
-                        courierError.textContent = `${data.message}`;
-                        actionArea.style.pointerEvents = 'none';
-                        actionArea.classList.add('grayscale', 'bg-gray-100');
-                        toCartBtn.classList.add('bg-neutral-600');
-                        toCartBtn.classList.remove('bg-black');
-                    }
-                    else{
-                        courierError.textContent = 'Something went wrong. Please try again later.';
-                    }
+                } catch (error) {
+                    console.error('Unexpected error:', error);
+                    courierError.textContent = 'Internal server error. ';
                 }
-            } catch (error) {
-                console.error('Unexpected error:', error);
-                courierError.textContent = 'Internal server error. ';
-            }
-        });
+            });
+        }
+        
     </script>
 @endpush
