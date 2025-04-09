@@ -119,7 +119,7 @@
                             <!-- Order Placed -->
                             <div class="relative pl-6">
                                 <div class="absolute left-0 top-2 w-2 h-2 rounded-full {{ $bgClass }} "></div>
-                                <p class="text-sm text-gray-600">Order Placed <span class="text-gray-500">- Jan 25, 2025</span></p>
+                                <p class="text-sm text-gray-600">Order Placed <span class="text-gray-500" title="{{ \Carbon\Carbon::parse($item->created_at)->toDayDateTimeString() }}">{{ \Carbon\Carbon::parse($item->created_at)->format('M d, Y') }}</span></p>
                             </div>
 
                             <!-- Order Processed with Shipment Tracking -->
@@ -131,7 +131,7 @@
                             @if ($item->status == 5)
                                 <div class="relative pl-6">
                                     <div class="absolute left-0 top-2 w-2 h-2 rounded-full {{ $bgClass }}"></div>
-                                    <p class="text-sm text-gray-600">Cancelled <span class="text-gray-500">- Jan 29, 2025</span></p>
+                                    <p class="text-sm text-gray-600">Cancelled <span class="text-gray-500" title="{{ \Carbon\Carbon::parse($item->updated_at)->toDayDateTimeString() }}">{{ \Carbon\Carbon::parse($item->updated_at)->format('M d, Y') }}</span></p>
                                 </div>
                             @endif
 
