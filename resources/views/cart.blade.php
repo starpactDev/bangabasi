@@ -143,7 +143,7 @@
                 <button class="w-full bg-gray-400 text-slate-50 py-2 my-4 hover:cursor-not-allowed  " disabled> Proceed To Checkout </button>
             @else
                 <a href="{{ route('checkout') }}" class="">
-                    <button class="w-full bg-black text-slate-50 py-2 my-4 hover:bg-gray-800  "> Proceed To Checkout </button>
+                    <button class="w-full bg-orange-700 text-slate-50 py-2 my-4 hover:bg-orange-600  "> Proceed To Checkout </button>
                 </a>
                 <p id="timer-message"></p>
             @endif
