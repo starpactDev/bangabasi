@@ -139,9 +139,9 @@
 		</div>
 		<div class="col-span-12 lg:col-span-9 h-full py-4 grid grid-cols-12 gap-4">
 			@foreach ($activeCategories as $category)
-				<a class="col-span-6 md:col-span4 lg:col-span-2 flex flex-col items-center justify-center cursor-pointer group hover:opacity-90" id="{{ $category->id }}">
+				<a class="col-span-6 md:col-span-4 lg:col-span-2 flex flex-col items-center pt-8 cursor-pointer group hover:opacity-90" id="{{ $category->id }}">
 					<img src="/user/uploads/category/image/{{ $category->images }}" alt="{{ $category->images }}" class="group-hover:opacity-70">
-					<h6 class="mt-2 text-gray-800 group-hover:text-orange-700">{{ $category->name }}</h6>
+					<h6 class="mt-2 text-gray-800 group-hover:text-orange-700 text-center">{{ $category->name }}</h6>
 				</a>
 			@endforeach
 		</div>
