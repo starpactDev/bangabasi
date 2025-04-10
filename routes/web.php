@@ -202,7 +202,18 @@ Route::middleware(GuestMiddleware::class)->group(function () {
 });
 
 Route::post('/logout', [AuthController::class, 'logout1'])->name('logout');
-
+Route::get('/check-auth', function () {
+    if (Auth::check()) {
+        $user = Auth::user();
+        return response()->json([
+            'loggedIn' => true,
+            'userType' => $user->usertype, // Assuming 'user_type' is the column name
+            'isUser' => $user->usertype === 'user' // Check if the user type is 'user'
+        ]);
+    } else {
+        return response()->json(['loggedIn' => false]);
+    }
+});
 
 //User Middleware
 Route::middleware(UserAuthMiddleware::class)->group(function () {
