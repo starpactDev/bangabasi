@@ -70,7 +70,10 @@
                         </label>
                         <input id="password_confirmation-up" name="password_confirmation" type="password" class="w-72 inline focus:outline-none" placeholder="Confirm Password" autocomplete="new-password">
                     </div>
-
+                    <div class="w-80 leading-4 my-4 flex">
+                        <input name="newsletterCheck" type="checkbox" class="focus:outline-none" id="newsletter-up" checked>
+                        <label for="newsletter-up" class="px-2">Subscribe to Newsletter.</label>
+                    </div>
                     <div class="w-80 leading-4 my-4 flex">
                         <input name="terms" type="checkbox" class="focus:outline-none" id="terms-up">
                         <label for="terms-up" class="px-2">I agree to <a href="{{ route('terms') }}" class="text-orange-500 hover:underline">terms and conditions</a>.</label>

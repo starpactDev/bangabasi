@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend\Auth;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\NewsletterUser;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -104,6 +105,9 @@ class AuthController extends Controller
             $validatedData['password'] = Hash::make($request->password);
             $validatedData["usertype"] = "user";
             $user = User::create($validatedData);
+
+            // Store newsletter subscription if applicable
+            $this->handleNewsletterSubscription($request, $validatedData);
 
             if ($user && Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
                 return response()->json(["message" => "success"]);
@@ -270,6 +274,20 @@ class AuthController extends Controller
                 'message' => 'Something went wrong.',
                 'error' => $e->getMessage(),
             ], 500);
+        }
+    }
+
+    private function handleNewsletterSubscription(Request $request, array $validatedData)
+    {
+        if ($request->has('newsletterCheck')) {
+            NewsletterUser::updateOrCreate(
+                ['email' => $validatedData['email']],
+                [
+                    'first_name' => $validatedData['firstname'],
+                    'last_name' => $validatedData['lastname'],
+                    'is_subscribed' => true,
+                ]
+            );
         }
     }
 }
