@@ -10,12 +10,12 @@
             <div class="breadcrumb-wrapper breadcrumb-contacts">
                 <div>
                     <h1>User Profile</h1>
-                    <p class="breadcrumbs"><span><a href="index.html">Home</a></span>
+                    <p class="breadcrumbs"><span><a href="">Home</a></span>
                         <span><i class="mdi mdi-chevron-right"></i></span>Profile
                     </p>
                 </div>
                 <div>
-                    <a href="user-list.html" class="btn btn-primary">Edit</a>
+                    <a href="" class="btn btn-primary">Edit</a>
                 </div>
             </div>
             <div class="card bg-white profile-content">
@@ -71,17 +71,11 @@
                             <ul class="nav nav-tabs px-3 px-xl-5 nav-style-border" id="myProfileTab" role="tablist">
 
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link active" id="settings-tab" data-bs-toggle="tab"
-                                        data-bs-target="#settings" type="button" role="tab" aria-controls="settings"
-                                        aria-selected="false">Settings</button>
+                                    <button class="nav-link active" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">Settings</button>
                                 </li>
                             </ul>
                             <div class="tab-content px-3 px-xl-5" id="myTabContent">
-
-
-
-                                <div class="tab-pane fade  show active" id="settings" role="tabpanel"
-                                    aria-labelledby="settings-tab">
+                                <div class="tab-pane fade  show active" id="settings" role="tabpanel" aria-labelledby="settings-tab">
                                     <div class="tab-pane-content mt-5">
                                         <form id="updateProfileForm">
                                             <!-- User Image -->
@@ -101,16 +95,14 @@
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
                                                         <label for="firstName">First Name</label>
-                                                        <input type="text" class="form-control" id="firstName"
-                                                            name="firstname" value="{{ $user->firstname }}">
+                                                        <input type="text" class="form-control" id="firstName" name="firstname" value="{{ $user->firstname }}">
                                                     </div>
                                                 </div>
 
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
                                                         <label for="lastName">Last Name</label>
-                                                        <input type="text" class="form-control" id="lastName"
-                                                            name="lastname" value="{{ $user->lastname }}">
+                                                        <input type="text" class="form-control" id="lastName" name="lastname" value="{{ $user->lastname }}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -118,49 +110,42 @@
                                             <!-- Email -->
                                             <div class="form-group mb-4">
                                                 <label for="email">Email</label>
-                                                <input type="email" class="form-control" id="email" name="email"
-                                                    value="{{ $user->email }}">
+                                                <input type="email" class="form-control" id="email" name="email" value="{{ $user->email }}">
                                             </div>
 
                                             <!-- Contact Number -->
                                             <div class="form-group mb-4">
                                                 <label for="contactNumber">Contact Number</label>
-                                                <input type="text" class="form-control" id="contactNumber"
-                                                    name="contact_number" value="{{ $user->contact_number }}">
+                                                <input type="text" class="form-control" id="contactNumber" name="contact_number" value="{{ $user->contact_number }}">
                                             </div>
 
                                             <!-- Phone Number (Optional) -->
                                             <div class="form-group mb-4">
                                                 <label for="phoneNumber">Phone Number (Optional)</label>
-                                                <input type="text" class="form-control" id="phoneNumber"
-                                                    name="phone_number" value="{{ $user->phone_number }}">
+                                                <input type="text" class="form-control" id="phoneNumber" name="phone_number" value="{{ $user->phone_number }}">
                                             </div>
 
                                             <!-- Old Password -->
                                             <div class="form-group mb-4">
                                                 <label for="oldPassword">Old Password</label>
-                                                <input type="password" class="form-control" id="oldPassword"
-                                                    name="old_password">
+                                                <input type="password" class="form-control" id="oldPassword" name="old_password">
                                             </div>
 
                                             <!-- New Password -->
                                             <div class="form-group mb-4">
                                                 <label for="newPassword">New Password</label>
-                                                <input type="password" class="form-control" id="newPassword"
-                                                    name="new_password">
+                                                <input type="password" class="form-control" id="newPassword" name="new_password">
                                             </div>
 
                                             <!-- Confirm Password -->
                                             <div class="form-group mb-4">
                                                 <label for="conPassword">Confirm Password</label>
-                                                <input type="password" class="form-control" id="conPassword"
-                                                    name="con_password">
+                                                <input type="password" class="form-control" id="conPassword" name="con_password">
                                             </div>
 
                                             <!-- Submit Button -->
                                             <div class="d-flex justify-content-end mt-5">
-                                                <button type="submit" class="btn btn-primary mb-2 btn-pill">Update
-                                                    Profile</button>
+                                                <button type="submit" class="btn btn-primary mb-2 btn-pill">Update Profile</button>
                                             </div>
                                         </form>
 
@@ -182,15 +167,15 @@
     <script>
         // JavaScript to handle file input label change
         document.addEventListener('DOMContentLoaded', function() {
-    var fileInput = document.getElementById('coverImage');
-    var fileLabel = document.querySelector('label.custom-file-label[for="coverImage"]');
-    
+            var fileInput = document.getElementById('coverImage');
+            var fileLabel = document.querySelector('label.custom-file-label[for="coverImage"]');
+            
 
-    fileInput.addEventListener('change', function() {
-        var fileName = fileInput.files.length > 0 ? fileInput.files[0].name : 'Choose file...';
-        fileLabel.textContent = fileName;
-    });
-});
+            fileInput.addEventListener('change', function() {
+                var fileName = fileInput.files.length > 0 ? fileInput.files[0].name : 'Choose file...';
+                fileLabel.textContent = fileName;
+            });
+        });
         $(document).ready(function() {
             $.ajaxSetup({
                 headers: {

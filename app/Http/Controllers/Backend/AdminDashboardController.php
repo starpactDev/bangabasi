@@ -78,7 +78,7 @@ class AdminDashboardController extends Controller
     public function profile()
     {
         $user = Auth::user();
-        return view('admin.pages.profile', compact('user'));
+        return view('superuser.profile.profile', compact('user'));
     }
     public function updateProfile(Request $request)
     {
