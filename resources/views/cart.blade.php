@@ -280,7 +280,7 @@
                 // Create a new element to display the success message
                 const successMessage = document.createElement('p');
                 successMessage.classList.add('text-green-500');
-                successMessage.textContent = `${data.message} Refresh the page if you want to proceed with this coupon.`; // Coupon applied successfully
+                successMessage.textContent = `${data.message} Go to checkout page if you want to proceed with this coupon.`; // Coupon applied successfully
 
                 // Append the success message to couponCont
                 couponCont.appendChild(successMessage);
