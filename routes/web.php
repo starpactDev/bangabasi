@@ -271,7 +271,7 @@ Route::group(['middleware' =>  [AdminCheckMiddleware::class]], function () {
     Route::get('/admin-dashboard', [AdminDashboardController::class, 'dashboard'])->name('admin_dashboard');
     
     //Profile
-    Route::get('/admin-profile', [AdminDashboardController::class, 'profile'])->name('admin_profile');
+
     Route::post('/admin/update-profile', [AdminDashboardController::class, 'updateProfile'])->name('admin.updateProfile');
     Route::get('/admin-user-list', [AdminUserController::class, 'index'])->name('admin_userlist');
 
@@ -438,6 +438,7 @@ Route::group(['middleware' =>  [SuperUserMiddleware::class]], function () {
     Route::post('/orders/initiate', [SuperUserOrderController::class, 'initiateOrder'])->name('superuser_orders.initiate');
     Route::get('/orders/shiprocket/show', [SuperUserOrderController::class, 'shiprocketShowOrder'])->name('superuser_orders.shiprocket.show');
 
+    Route::get('/superuser-profile', [AdminDashboardController::class, 'profile'])->name('admin_profile');
 });
 
 Route::get('/test-order', [SuperUserOrderController::class, 'createAdHocOrder'])->name('test_order');
