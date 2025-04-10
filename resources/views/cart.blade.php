@@ -151,10 +151,21 @@
         </div>
         <div class="col-span-12 lg:col-span-8">
             <div class="flex justify-between py-4 flex-wrap gap-4">
-                <div class="border-2 w-fit leading-10">
-                    <input type="text" name="" id="" class="w-64 px-4 focus:outline-none"
-                        placeholder="Enter Coupon Code">
-                    <input type="submit" value="OK" class="inline px-4 bg-orange-600 text-white hover:bg-orange-800">
+                <div class=" w-fit leading-10">
+                    <div id="couponCont">
+                        <h6 class="">Have you a coupon? <span class="underline text-gray-700" onClick="toggleForm('coupon')">Click  here to enter</span></h6>
+                        <form class="py-4 space-y-4 hidden" id="couponForm" action="{{ route('checkout.coupon') }}" method="POST">
+                            @csrf
+                            <input type="text" name="coupon_code" class="w-72 md:w-96 px-4 leading-10 border focus:outline-none focus:border-black" placeholder="Coupon Code" required>
+                            <input type="submit" value="Apply" class="sm:mx-2 leading-10 bg-gray-400 hover:bg-orange-600 hover:text-slate-50 px-6">
+                        </form>
+                    </div>
+                    <div id="couponReset" class="hidden">
+                        <form action="{{ route('reset.coupon') }}" method="POST" class="py-4 space-y-4">
+                            @csrf
+                            <input type="submit" value="Reset Coupon" class="leading-10 bg-gray-400 hover:bg-orange-600 hover:text-slate-50 px-6">
+                        </form>
+                    </div>
                 </div>
                 <button onclick="toggleModal()" class="border-2 border-black px-4 leading-10 hover:bg-gray-800 hover:text-gray-100"><span class="text-red-500 mr-2">⮿</span>Clear Shopping Cart</button>
             </div>
@@ -222,7 +233,82 @@
 @endsection
 
 @push('scripts')
+<script id="toggleForm">
+    function toggleForm(id){
+        const form = document.getElementById(`${id}Form`);
+        if(form){
+            form.classList.toggle('hidden');
+        }
+    }
+</script>
 
+<script id="couponSubmit">
+    const couponCont = document.getElementById('couponCont');
+    const couponForm = document.getElementById('couponForm');
+    const couponInput = couponForm.querySelector('[name="coupon_code"]');
+    const couponReset = document.getElementById('couponReset');
+
+    couponForm.addEventListener('submit', function(e) {
+
+        e.preventDefault();
+        const couponCode = couponInput.value;
+        if (!couponCode) {
+            return;
+        }
+
+        // Prepare the data to be sent with the request
+        const formData = new FormData();
+        formData.append('coupon_code', couponCode);
+
+        // Use fetch to send the data
+        fetch(couponForm.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json',
+                // Include CSRF token if needed
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Handle the response data here (e.g., display a success message)
+            if (data.success && couponCont) {
+                // Clear previous messages
+                couponCont.innerHTML = '';
+
+                // Create a new element to display the success message
+                const successMessage = document.createElement('p');
+                successMessage.classList.add('text-green-500');
+                successMessage.textContent = `${data.message} Refresh the page if you want to proceed with this coupon.`; // Coupon applied successfully
+
+                // Append the success message to couponCont
+                couponCont.appendChild(successMessage);
+                couponReset.classList.remove('hidden');
+                // Check if discount_amount or discount_percentage is available and display accordingly
+                if (data.discount_amount) {
+                    const discountAmount = document.createElement('p');
+                    discountAmount.classList.add('text-green800');
+                    discountAmount.textContent = `You will get ₹ ${data.discount_amount} discount on the final amount.`; // Displaying amount with ₹
+                    couponCont.appendChild(discountAmount);
+                } else if (data.discount_percentage) {
+                    const discountPercentage = document.createElement('p');
+                    discountPercentage.classList.add('text-green-800');
+                    discountPercentage.textContent = `You will get ${data.discount_percentage}% discount on the total of offer price.`; // Displaying percentage
+                    couponCont.appendChild(discountPercentage);
+                }
+            } else {
+                // Optionally display an error message if the coupon is invalid
+                couponCont.innerHTML = `<p class="text-red-500">${data.message}</p>`;
+            }
+        })
+        .catch(error => {
+            // Handle any errors during the fetch request
+            console.error('Error applying coupon:', error);
+            couponCont.innerHTML = `<p class="text-red-500">An error occurred while applying the coupon. Please try again.</p>`;
+        });
+    });
+</script>
     
     @if($products->isNotEmpty())
         <script id="countDown">
