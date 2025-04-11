@@ -40,6 +40,8 @@
                 <input type="text" name="coupon_code" class="w-72 md:w-96 px-4 leading-10 border focus:outline-none focus:border-black" placeholder="Coupon Code" required>
                 <input type="submit" value="Apply" class="sm:mx-2 leading-10 bg-gray-400 hover:bg-orange-600 hover:text-slate-50 px-6">
             </form>
+            <p class="text-red-500" id="coupan_alert"></p>
+
         </div>
         <div id="couponReset" class="hidden">
             <form action="{{ route('reset.coupon') }}" method="POST" class="py-4 space-y-4">
@@ -123,7 +125,7 @@
                         Your shipping address and billing address will be the same.
                     </label>
                 </div>
-                
+
                 @if ($user_addresses->isNotEmpty())
                     @foreach ($user_addresses as $k => $ad)
                         <div class="mt-4 p-8 w-full shadow-md">
@@ -200,7 +202,7 @@
 								<td class="p-2 text-center text-neutral-800"> {{ $item['quantity'] }} </td>
 								<td class="p-2 text-right text-neutral-600"> ₹ {{ $item['unit_price'] *  $item['quantity'] }} </td>
 							</tr>
-                            
+
 						@endforeach
 					</tbody>
 					<tfoot class="border-t-2">
@@ -307,6 +309,8 @@
     const couponForm = document.getElementById('couponForm');
     const couponInput = couponForm.querySelector('[name="coupon_code"]');
     const couponReset = document.getElementById('couponReset');
+    const coupan_alert = document.getElementById('coupan_alert');
+
 
     couponForm.addEventListener('submit', function(e) {
 
@@ -359,7 +363,8 @@
                 }
             } else {
                 // Optionally display an error message if the coupon is invalid
-                couponCont.innerHTML = `<p class="text-red-500">${data.message}</p>`;
+                // couponCont.innerHTML = `<p class="text-red-500">${data.message}</p>`;
+                coupan_alert.textContent = data.message;
             }
         })
         .catch(error => {
@@ -390,7 +395,7 @@
     // Check if address_type is "old" and user_addresses is not empty
     @if($user_addresses->isNotEmpty())
         if (address_type === "old") {
-            old_address_id = "{{ $user_addresses[0]->id }}"; 
+            old_address_id = "{{ $user_addresses[0]->id }}";
         }
     @else
         address_type = "new";
@@ -528,7 +533,6 @@
         old_address_id = $(this).val();
     })
 
-    
     function showAlert(title, text, icon, callback = null) {
         Swal.fire({
             title,
