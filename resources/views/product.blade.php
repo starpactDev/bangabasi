@@ -459,7 +459,9 @@
                 <div class="flex  my-2 border-t border-b">
                     <div class=" flex-1 p-2 ">
                         <p class="text-indigo-700 font-semibold w-fit px-2 border rounded-full my-1" title="{{$seller->average_rating ?? 'not found'}}">{{  number_format($seller->average_rating ?? 0, 1) }} <span>★</span></p>
-                        <p class="text-slate-600">{{ $seller->total_reviews > 0 ? $seller->total_reviews . ' ' . Str::plural('Review', $seller->total_reviews) : 'No Reviews Yet' }}</p>
+                        <p class="text-slate-600">
+                            {{ $seller && $seller->total_reviews > 0 ? $seller->total_reviews . ' ' . Str::plural('Review', $seller->total_reviews) : ($seller ? 'No Reviews Yet' : '') }}
+                        </p>
                     </div>
                     <div class=" flex-1 p-2">
                         <p class="text-rose-700 text-center font-semibold min-w-14 w-fit px-2 border rounded-full my-1">{{ $seller->product_count ?? '0'}}</p>
@@ -468,10 +470,13 @@
 
                 </div>
 
-                <a href="{{route('seller.shop', ['sellerId' => $seller->id])}}" class="mx-auto block w-fit px-6 py-2 font-semibold border rounded border-violet-500 group hover:bg-violet-600 hover:text-white">
-                    <img src="{{ asset('images/icons/store.png')}}" alt="" class="h-4 mr-4 inline group-hover:invert">
-                    View Shop
-                </a>
+                @if($seller)
+                    <a href="{{ route('seller.shop', ['sellerId' => $seller->id]) }}" class="mx-auto block w-fit px-6 py-2 font-semibold border rounded border-violet-500 group hover:bg-violet-600 hover:text-white">
+                        <img src="{{ asset('images/icons/store.png') }}" alt="" class="h-4 mr-4 inline group-hover:invert">
+                        View Shop
+                    </a>
+                @endif
+
             </div>
             <div class="order-2 lg:order-3 border p-4 my-4">
                 <h4 class="text-lg font-semibold text-indigo-900 mb-4">Shipping Information</h4>
