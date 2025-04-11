@@ -465,9 +465,28 @@
                                                     <textarea class="form-control summernote" rows="4" id="full_summernote" name="full_details">{{ old('full_details', $product->full_details) }}</textarea>
 
                                                 </div>
-                                                <input type="hidden" id="product_id" name="product_id"
-                                                    value="{{ $product->id }}">
-
+                                                <input type="hidden" id="product_id" name="product_id" value="{{ $product->id }}">
+                                                <div class="col-md-12 mb-3 mt-3">
+                                                    <div class="row">
+                                                        <div class="col-md-3 mb-3">
+                                                            <label for="length" class="form-label">Length (cm)</label>
+                                                            <input type="number" step="0.01" class="form-control" id="length" name="length" value="{{ old('length', optional($dimensions)->length ?? '') }}" placeholder="Enter length" required>
+                                                        </div>
+                                                        <div class="col-md-3 mb-3">
+                                                            <label for="width" class="form-label">Width (cm)</label>
+                                                            <input type="number" step="0.01" class="form-control" id="width" name="width" value="{{ old('width', optional($dimensions)->width ?? '') }}" placeholder="Enter width" required>
+                                                        </div>
+                                                        <div class="col-md-3 mb-3">
+                                                            <label for="height" class="form-label">Height (cm)</label>
+                                                            <input type="number" step="0.01" class="form-control" id="height" name="height" value="{{ old('height', optional($dimensions)->height ?? '') }}" placeholder="Enter height" required>
+                                                        </div>
+                                                        <div class="col-md-3 mb-3">
+                                                            <label for="weight" class="form-label">Weight (kg)</label>
+                                                            <input type="number" step="0.01" class="form-control" id="weight" name="weight" value="{{ old('weight', optional($dimensions)->weight ?? '') }}" placeholder="Enter weight" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
                                             </div>
                                         </div>
                                     </div>

@@ -120,6 +120,8 @@ class SuperUserProductController extends Controller
             ->where('user_id', $user->id)
             ->firstOrFail();
 
+        $dimensions = PackageDimension::where('product_id', $product->id)->first(); //  Get the dimension record
+
         $categories = Category::all();
         $brands = Brand::all();
         $collections = Collection::all();
@@ -127,7 +129,7 @@ class SuperUserProductController extends Controller
 
         $subcategories = SubCategory::where('category_id', $selected_category->id)->get();
         $sizes = Size::all();
-        return view('superuser.products.edit', compact('categories', 'product', 'subcategories', 'sizes', 'brands', 'collections', 'groupedSizes')); // Create this view for product info
+        return view('superuser.products.edit', compact('categories', 'product', 'subcategories', 'sizes', 'brands', 'collections', 'groupedSizes', 'dimesnsions')); // Create this view for product info
     }
 
     public function edit_image($id) {
@@ -226,7 +228,7 @@ class SuperUserProductController extends Controller
             'is_active' => true,
         ]);
 
-        $this->storePackageDimension($request, $product);
+        $this->storeOrUpdatePackageDimension($request, $product);
 
         if ($request->has('brand')) {
             $this->handleBrand($product->id, $request->brand);
@@ -338,6 +340,9 @@ class SuperUserProductController extends Controller
             'short_description' => $request->short_description,
             'full_details' => $request->full_details,
         ]);
+
+        $this->storeOrUpdatePackageDimension($request, $product);
+
 
         // Handle image uploads
         // if ($request->hasFile('images')) {
@@ -679,9 +684,9 @@ class SuperUserProductController extends Controller
         }
     }
 
-    private function storePackageDimension($request, $product)
+    private function storeOrUpdatePackageDimension($request, $product)
     {
-        PackageDimension::create([
+        PackageDimension::updateOrCreate([
             'product_id' => $product->id,
             'length' => $request->length,
             'width' => $request->width,
