@@ -21,8 +21,9 @@ class SellerController extends Controller
 
         // Fetch seller's products
         $products = Product::where('user_id', $seller->user_id)
-            ->with(['categoryDetails', 'productImages', 'reviews'])
-            ->get();
+                            ->where('is_active', '1')
+                            ->with(['categoryDetails', 'productImages', 'reviews'])
+                            ->get();
 
         // Calculate total products
         $totalProducts = $products->count();
