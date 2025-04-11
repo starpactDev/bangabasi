@@ -29,10 +29,10 @@
 
     {{-- {{ $products }} --}}
     @php
-    // Check if the images collection is not empty and get the first image URL, or set a fallback.
-        $firstImageUrl = $images->isNotEmpty() 
-            ? asset('user/uploads/products/images/' . $images->first()->image) 
-            : asset('images/products/1.jpg');
+        // Check if the images collection is not empty and get the first image URL, or set a fallback.
+            $firstImageUrl = $images->isNotEmpty()
+                ? asset('user/uploads/products/images/' . $images->first()->image)
+                : asset('images/products/1.jpg');
     @endphp
     <div class="grid grid-cols-12 container mx-auto my-6 gap-x-6">
         <div class="col-span-12 lg:col-span-9 grid grid-cols-12 gap-x-8">
@@ -78,12 +78,12 @@
                     </div>
                     @if ($isYouTubeUrl)
                         <button yt-url="" id="playBtn"
-                            class="hidden xyz bg-blue-500 text-white rounded-full px-4 py-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-lg">&#9654;</button>
+                                class="hidden xyz bg-blue-500 text-white rounded-full px-4 py-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-lg">&#9654;</button>
                         <iframe id="ytFrame"
-                            class="hidden border-2 mx-auto cursor-pointer absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-                            width="100%" height="50%" src="{{ $embedURL }}" frameborder="0"
-                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen
-                            data-type="youtube" data-src="{{ $embedURL }}">
+                                class="hidden border-2 mx-auto cursor-pointer absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                                width="100%" height="50%" src="{{ $embedURL }}" frameborder="0"
+                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen
+                                data-type="youtube" data-src="{{ $embedURL }}">
                         </iframe>
                     @endif
                     @if ($isVideo)
@@ -124,7 +124,7 @@
                                     @endif
                                     <div class="swiper-slide">
                                         <x-product-card :image="$image" :category="$product->categoryDetails->name" :title="$product['name']" :rating="$ratings"
-                                            :originalPrice="$product['original_price']" :discountedPrice="$product['offer_price']" :id="$product->id" :inStock="$product->in_stock" class="swiper-slide" />
+                                                        :originalPrice="$product['original_price']" :discountedPrice="$product['offer_price']" :id="$product->id" :inStock="$product->in_stock" class="swiper-slide" />
                                     </div>
                                 @endforeach
                             @else
@@ -153,7 +153,7 @@
                 </div>
                 <div class="flex justify-between items-center py-2 border-b">
                     <div>
-                    <h3 class="text-slate-800">Category : <span class="text-slate-500">{{ $category }}</span></h3>
+                        <h3 class="text-slate-800">Category : <span class="text-slate-500">{{ $category }}</span></h3>
                         <h3 class="text-slate-800">Sub-Category : <span class="text-slate-500">{{ $sub_category }}</span></h3>
                         <h3 class="text-slate-800">Tags : <span class="text-slate-500">{{ $sub_category }}</span></h3>
                     </div>
@@ -202,6 +202,7 @@
                             @endif
                         @endforeach
                     </div>
+                    <p class="text-red-500" id="size_alert"></p>
                 @endif
                 @if ($in_stock)
                     <div class="my-4 w-fit px-4 border border-green-600 rounded-full">In Stock <span class="text-green-600 animate-ping">&#9679;</span></div>
@@ -212,7 +213,7 @@
                             <label for="pincode"><i class="fa-solid fa-map-marker-alt text-blue-600"></i></label>
                             <input type="hidden" name="delivery_postcode" value="{{ $seller->pickupAddress->pincode ?? '713125' }}">
                             <input type="number" name="pickup_postcode" id="pincode" value="700001" class="px-2 w-24 focus:outline-none" pattern="^\d{6}$" required>
-                            <input type="submit" value="Check Delivery" class="text-blue-600 cursor-pointer">
+                            <input type="submit" id="checkDeliveryBtn" value="Check Delivery" class="text-blue-600 cursor-pointer">
                         </form>
                         <h6 class="font-semibold" id="estDelivery"></h6>
                         <small id="cutOffTime"></small>
@@ -221,32 +222,32 @@
                     @php
                         $notBuyer = Auth::check() && Auth::user()->usertype !== 'user' ? true : false;
                     @endphp
-                    
+
                     <div class="pb-4 relative {{$notBuyer ? 'grayscale' : ''}}" id="actionArea">
-                        
+
                         <div class="flex justify-between py-4 px-4" >
                             <div class="w-1/4 flex h-8">
-                                <button class="w-1/4 border hover:bg-slate-200" onclick="downCount()">-</button>
+                                <button class="w-1/4 border hover:bg-slate-200" id="btn-decrease">-</button>
                                 <div class="w-1/4 text-center border leading-8" id="cartCount">1</div>
-                                <button class="w-1/4 border  hover:bg-slate-200" onclick="upCount()">+</button>
+                                <button class="w-1/4 border hover:bg-slate-200" id="btn-increase">+</button>
                             </div>
 
-                            
-                                <button id="toCartBtn" onclick="submitWishlistToCart({{ $p_id }}, {{ $price }});" class="w-3/4 bg-black text-white hover:bg-gray-900">Add To Cart</button>
 
-                                <form id="wishlist_addToCart_{{ $p_id }}" action="{{ route('wishlist.addToCart') }}"
-                                    method="POST" style="display: none;">
-                                    @csrf
-                                    <input type="hidden" name="product_id" value="{{ $p_id }}">
-                                    <input type="hidden" name="quantity" id="quantity_{{ $p_id }}" value="1">
-                                    <input type="hidden" name="size" id="selected_size_{{ $p_id }}">
-                                    <input type="hidden" name="unit_price" id="unit_price_{{ $p_id }}" value="{{ $price }}">
-                                    <input type="hidden" name="total_price" id="total_price_{{ $p_id }}" value="{{ $price }}">
-                                </form>
+                            <button id="toCartBtn" onclick="submitWishlistToCart({{ $p_id }}, {{ $price }});" class="w-3/4 bg-black text-white hover:bg-gray-900">Add To Cart</button>
 
-                            
+                            <form id="wishlist_addToCart_{{ $p_id }}" action="{{ route('wishlist.addToCart') }}"
+                                  method="POST" style="display: none;">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ $p_id }}">
+                                <input type="hidden" name="quantity" id="quantity_{{ $p_id }}" value="1">
+                                <input type="hidden" name="size" id="selected_size_{{ $p_id }}">
+                                <input type="hidden" name="unit_price" id="unit_price_{{ $p_id }}" value="{{ $price }}">
+                                <input type="hidden" name="total_price" id="total_price_{{ $p_id }}" value="{{ $price }}">
+                            </form>
+
+
                         </div>
-                        
+
                         @if($notBuyer)
                             <div class="py-4 w-full"></div>
                         @else
@@ -257,14 +258,14 @@
                                 <img src="/images/icons/shopping-cart.png" alt="" class="h-6 mr-3 inline invert">
                                 Buy Now
                             </button>
-                            @if ($wishlist)
-                                <!-- Product is already in the wishlist, no click event will be attached -->
+                        @if ($wishlist)
+                            <!-- Product is already in the wishlist, no click event will be attached -->
                                 <h3 class="py-4 px-4 border border-red-600 hover:bg-red-50 text-center text-red-600 font-semibold rounded-md cursor-pointer max-w-xs inline-flex items-center justify-center text-lg" data-product-id="{{ $p_id }}">
                                     <img src="/images/icons/heart_fill.svg" alt="" class="h-6 mr-3">
                                     Wishlisted
                                 </h3>
-                            @else     
-                                <!-- Product is not in the wishlist, attach click event -->
+                        @else
+                            <!-- Product is not in the wishlist, attach click event -->
                                 <button class="py-4 px-6 border-2 border-green-100 bg-green-600 hover:bg-green-700 text-center text-slate-50 font-semibold rounded-md cursor-pointer  max-w-xs text-lg add-to-wishlist" data-product-id="{{ $p_id }}">
                                     <img src="/images/icons/heart.svg" alt="" class="h-6 mr-3 inline invert">
                                     Add to wishlist
@@ -337,112 +338,112 @@
                         <p class="text-slate-900 my-6">There are no reviews yet.</p>
                     @else
                         @foreach ($review_info as $review)
-                        <div class="my-4 bg-slate-100">
-                            <div class="flex justify-start items-center gap-4 p-4 ">
-                            <img src="/user/uploads/profile/{{ $review->user->image ?? 'default_dp.png' }}" alt="" class="h-16 rounded-full">
-                                <div>
-                                    <h6 class="text-slate-800 font-medium py-2"> {{ $review->name }}</h6>
-                                    <?php
-                                    $review_rating = $review->rating; // The rating value from your data
-                                    $totalStars = 5; // Total number of stars
-                                    ?>
-                                    <?php for ($i = 1; $i <= $totalStars; $i++): ?>
-                                    <span class="<?php echo $i <= $review_rating ? 'text-yellow-500' : 'text-gray-400'; ?>">
+                            <div class="my-4 bg-slate-100">
+                                <div class="flex justify-start items-center gap-4 p-4 ">
+                                    <img src="/user/uploads/profile/{{ $review->user->image ?? 'default_dp.png' }}" alt="" class="h-16 rounded-full">
+                                    <div>
+                                        <h6 class="text-slate-800 font-medium py-2"> {{ $review->name }}</h6>
+                                        <?php
+                                        $review_rating = $review->rating; // The rating value from your data
+                                        $totalStars = 5; // Total number of stars
+                                        ?>
+                                        <?php for ($i = 1; $i <= $totalStars; $i++): ?>
+                                        <span class="<?php echo $i <= $review_rating ? 'text-yellow-500' : 'text-gray-400'; ?>">
                                         &#9733; <!-- Filled star -->
                                     </span>
-                                    <?php endfor; ?>
-                                    <p class="text-sm text-slate-700">{{ $review->review_message }}</p>
+                                        <?php endfor; ?>
+                                        <p class="text-sm text-slate-700">{{ $review->review_message }}</p>
+                                    </div>
                                 </div>
-                            </div>
 
-                            @if(count($review->review_images) > 0)
-                                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
-                                    @foreach($review->review_images as $image)
-                                        <div class="w-full aspect-square bg-gray-300 rounded-md">
-                                            <img src="{{ asset('user/uploads/review_images/'.$image->image_path) }}" alt="Placeholder Image" class="object-cover w-full h-full rounded-md">
-                                        </div>
-                                    @endforeach 
-                                </div>
-                            @endif
-                        </div>
+                                @if(count($review->review_images) > 0)
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+                                        @foreach($review->review_images as $image)
+                                            <div class="w-full aspect-square bg-gray-300 rounded-md">
+                                                <img src="{{ asset('user/uploads/review_images/'.$image->image_path) }}" alt="Placeholder Image" class="object-cover w-full h-full rounded-md">
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @endif
+                            </div>
                         @endforeach
                     @endif
                 </div>
                 @php
                     $buyer = Auth::check() && Auth::user()->usertype == 'user' ? true : false;
                 @endphp
-                
+
                 @if($buyer)
-                <div class="col-span-2 lg:col-span-1 ">
-                    <h6 class="my-4">
-                        @if ($reviewCount < 1)
-                            Be the first to review
-                        @else
-                            Give your review
-                        @endif “{{ $xpage }}”
-                    </h6>
-                    <hr />
-                    <form id="reviewForm">
-                        <p class="text-slate-900 my-6">Your email address will not be published. Required fields are marked.</p>
-                        <p>Your Rating <span class="text-red-700">*</span></p>
-                        <p class="space-x-4">
-                            <!-- Loop through ratings 1 to 5 -->
-                            @for ($rating = 1; $rating <= 5; $rating++)
-                                <span>
+                    <div class="col-span-2 lg:col-span-1 ">
+                        <h6 class="my-4">
+                            @if ($reviewCount < 1)
+                                Be the first to review
+                            @else
+                                Give your review
+                            @endif “{{ $xpage }}”
+                        </h6>
+                        <hr />
+                        <form id="reviewForm">
+                            <p class="text-slate-900 my-6">Your email address will not be published. Required fields are marked.</p>
+                            <p>Your Rating <span class="text-red-700">*</span></p>
+                            <p class="space-x-4">
+                                <!-- Loop through ratings 1 to 5 -->
+                                @for ($rating = 1; $rating <= 5; $rating++)
+                                    <span>
                                     <input type="radio" name="rating" value="{{ $rating }}"
-                                        id="rating-{{ $rating }}">
+                                           id="rating-{{ $rating }}">
                                     <label for="rating-{{ $rating }}">
                                         <!-- Display star images equal to the current rating -->
                                         @for ($i = 0; $i < $rating; $i++)
                                             <img src="/images/icons/star.svg" alt="Star"
-                                                class="h-3 inline mx-[-1px]">
+                                                 class="h-3 inline mx-[-1px]">
                                         @endfor
                                     </label>
                                 </span>
-                            @endfor
-                        </p>
-                        <div id="rating-error" class="text-red-500"></div>
+                                @endfor
+                            </p>
+                            <div id="rating-error" class="text-red-500"></div>
 
-                        <label for="review" class="block mt-4">Your Review <span class="text-red-600">*</span></label>
-                        <textarea name="review" id="review" class="border w-full min-h-40"></textarea>
-                        <div id="review-error" class="text-red-500"></div>
-                        <input type="text" name="p_id" id="p_id" value="{{ $p_id }}" hidden>
-                        <label for="name" class="block mt-4">Your Name <span class="text-red-600">*</span></label>
-                        <input type="text" name="name" id="name" class="w-full border leading-8 ">
-                        <div id="name-error" class="text-red-500"></div>
+                            <label for="review" class="block mt-4">Your Review <span class="text-red-600">*</span></label>
+                            <textarea name="review" id="review" class="border w-full min-h-40"></textarea>
+                            <div id="review-error" class="text-red-500"></div>
+                            <input type="text" name="p_id" id="p_id" value="{{ $p_id }}" hidden>
+                            <label for="name" class="block mt-4">Your Name <span class="text-red-600">*</span></label>
+                            <input type="text" name="name" id="name" class="w-full border leading-8 ">
+                            <div id="name-error" class="text-red-500"></div>
 
-                        <label for="email" class="block mt-4">Your Email <span class="text-red-600">*</span></label>
-                        <input type="email" name="email" id="email" class="w-full border leading-8 ">
-                        <div id="email-error" class="text-red-500"></div>
-                        <!-- Image upload section -->
-                        <div id="imageUploadSection" class="mt-6">
-                            <label class="block mb-2">Upload Images</label>
-                            <div id="imageFields" class="flex flex-wrap gap-4">
-                                <!-- Initial field -->
-                                <div class="relative w-24 h-24 border border-gray-300 rounded flex items-center justify-center overflow-hidden">
-                                    <input type="file" name="images[]" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer" onchange="previewImage(event, this)">
-                                    <img class="w-full h-full object-cover hidden" alt="Preview">
-                                    <span class="text-gray-400 text-sm">+</span>
+                            <label for="email" class="block mt-4">Your Email <span class="text-red-600">*</span></label>
+                            <input type="email" name="email" id="email" class="w-full border leading-8 ">
+                            <div id="email-error" class="text-red-500"></div>
+                            <!-- Image upload section -->
+                            <div id="imageUploadSection" class="mt-6">
+                                <label class="block mb-2">Upload Images</label>
+                                <div id="imageFields" class="flex flex-wrap gap-4">
+                                    <!-- Initial field -->
+                                    <div class="relative w-24 h-24 border border-gray-300 rounded flex items-center justify-center overflow-hidden">
+                                        <input type="file" name="images[]" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer" onchange="previewImage(event, this)">
+                                        <img class="w-full h-full object-cover hidden" alt="Preview">
+                                        <span class="text-gray-400 text-sm">+</span>
+                                    </div>
+                                    <!-- Add More Images Button -->
+                                    <button type="button" id="addImageFieldBtn" class="relative w-24 h-24 border border-dashed border-blue-500 rounded flex items-center justify-center overflow-hidden bg-blue-100 text-blue-500">
+                                        <span class="text-sm">+ Add</span>
+                                    </button>
                                 </div>
-                                <!-- Add More Images Button -->
-                                <button type="button" id="addImageFieldBtn" class="relative w-24 h-24 border border-dashed border-blue-500 rounded flex items-center justify-center overflow-hidden bg-blue-100 text-blue-500">
-                                    <span class="text-sm">+ Add</span>
-                                </button>
                             </div>
-                        </div>
 
 
 
-                        <button type="button" id="submitBtn" class="block my-8 bg-black text-white px-8 py-2 hover:bg-gray-800">Submit</button>
-                    </form>
+                            <button type="button" id="submitBtn" class="block my-8 bg-black text-white px-8 py-2 hover:bg-gray-800">Submit</button>
+                        </form>
 
 
-                </div>
+                    </div>
                 @else
-                <div class="col-span-2 lg:col-span-1 border p-4">
-                    <p class="text-center">Please login to add review</p>
-                    <a href="{{route('login')}}" class="mx-auto w-fit px-4 py-2 my-4 block bg-orange-500 text-white hover:bg-orange-600">Login</a>
-                </div>
+                    <div class="col-span-2 lg:col-span-1 border p-4">
+                        <p class="text-center">Please login to add review</p>
+                        <a href="{{route('login')}}" class="mx-auto w-fit px-4 py-2 my-4 block bg-orange-500 text-white hover:bg-orange-600">Login</a>
+                    </div>
                 @endif
             </div>
         </div>
@@ -450,6 +451,7 @@
             <div id="sidebar" class="order-3 lg:order-1">
 
             </div>
+            @if( $seller->id != null)
             <div class="order-1 lg:order-2 border p-4 ">
                 <h6 class="font-semibold ">Sold By</h6>
                 <div class="flex justify-between items-center gap-x-2 my-2">
@@ -470,14 +472,15 @@
 
                 </div>
 
-                @if($seller)
+
                     <a href="{{ route('seller.shop', ['sellerId' => $seller->id]) }}" class="mx-auto block w-fit px-6 py-2 font-semibold border rounded border-violet-500 group hover:bg-violet-600 hover:text-white">
                         <img src="{{ asset('images/icons/store.png') }}" alt="" class="h-4 mr-4 inline group-hover:invert">
                         View Shop
                     </a>
-                @endif
+
 
             </div>
+            @endif
             <div class="order-2 lg:order-3 border p-4 my-4">
                 <h4 class="text-lg font-semibold text-indigo-900 mb-4">Shipping Information</h4>
                 <h6 class="font-semibold text-base"><span class="text-neutral-500">City : </span> {{$seller->pickupAddress->city ?? 'Unknown'}}, {{ $seller->pickupAddress->street ?? 'Unknown'}}</h6>
@@ -491,6 +494,21 @@
 @endsection
 
 @push('scripts')
+    <script>
+        $(document).ready(function() {
+            $('#btn-increase').click(function() {
+                let count = parseInt($('#cartCount').text().trim()) || 1;
+                $('#cartCount').text(count + 1);
+            });
+
+            $('#btn-decrease').click(function() {
+                let count = parseInt($('#cartCount').text().trim()) || 1;
+                if (count > 1) {
+                    $('#cartCount').text(count - 1);
+                }
+            });
+        });
+    </script>
     <script id="descriptionToggle">
         function descriptionToggle(event) {
             const clickedTab = event.currentTarget; // The clicked <li> element
@@ -512,10 +530,13 @@
     <script>
         function submitWishlistToCart(id, discountedPrice) {
             const selectedSize = document.querySelector('input[name="size"]:checked');
-            
+
             const quantity = parseInt(document.getElementById('cartCount').textContent);
+            const sizeAlert = document.getElementById('size_alert');
 
             if (!selectedSize) {
+                sizeAlert.textContent = 'Please select a size';
+
                 Swal.fire({
                     title: 'Size Required',
                     text: 'Please select a size before adding the product to the cart.',
@@ -524,7 +545,7 @@
                 });
                 return;
             }
-
+            sizeAlert.textContent = '';
             const availableQuantity = parseInt(selectedSize.dataset.quantity);
             console.log(availableQuantity);
             if (quantity > availableQuantity) {
@@ -537,7 +558,7 @@
                 return;
             }
 
-        @auth
+            @auth
             // If user is logged in, proceed with adding the item to the cart
             document.getElementById('quantity_' + id).value = quantity;
             document.getElementById('selected_size_' + id).value = selectedSize.value;
@@ -545,7 +566,7 @@
             const totalPrice = quantity * unitPrice;
             document.getElementById('total_price_' + id).value = totalPrice;
 
-            
+
             Swal.fire({
                 title: 'Product added to cart!',
                 text: 'Click OK to view your cart page.',
@@ -561,32 +582,22 @@
                     });
                 }
             });
-        @endauth
+            @endauth
 
-        @guest
-        Swal.fire({
-            title: 'You need to login first!',
-            text: 'Please log in to add the product to your cart.',
-            icon: 'warning',
-            confirmButtonText: 'Login',
-            preConfirm: () => {
-                window.location.href = "{{ route('login') }}";
-            }
-        });
-        @endguest
+            @guest
+            Swal.fire({
+                title: 'You need to login first!',
+                text: 'Please log in to add the product to your cart.',
+                icon: 'warning',
+                confirmButtonText: 'Login',
+                preConfirm: () => {
+                    window.location.href = "{{ route('login') }}";
+                }
+            });
+            @endguest
         }
 
-        function downCount() {
-            let count = parseInt(document.getElementById('cartCount').textContent);
-            if (count > 1) {
-                document.getElementById('cartCount').textContent = count - 1;
-            }
-        }
 
-        function upCount() {
-            let count = parseInt(document.getElementById('cartCount').textContent);
-            document.getElementById('cartCount').textContent = count + 1;
-        }
     </script>
     <script id="submitReview">
         $(document).ready(function() {
@@ -765,11 +776,14 @@
                     return;
                 }
 
-                const selectedSize = document.querySelector('input[name="size"]:checked');               
+                const selectedSize = document.querySelector('input[name="size"]:checked');
                 const quantity = parseInt(document.getElementById('cartCount').textContent);
-                
+
+                const sizeAlert = document.getElementById('size_alert');
 
                 if (!selectedSize) {
+                    sizeAlert.textContent = 'Please select a size first';
+
                     Swal.fire({
                         title: 'Size Required',
                         text: 'Please select a size before buying the product.',
@@ -778,6 +792,7 @@
                     });
                     return;
                 }
+                sizeAlert.textContent = '';
 
                 const availableQuantity = parseInt(selectedSize.dataset.quantity);
                 console.log(availableQuantity);
@@ -875,15 +890,20 @@
                 imageFieldsContainer.insertBefore(newField, addImageFieldBtn);
             });
         }
-        
+
 
     </script>
     <script id="serviceAbility">
         const checkPinCode = document.querySelector('#checkPinCode');
-        if(checkPinCode){
+        if (checkPinCode) {
             checkPinCode.addEventListener('submit', async (e) => {
                 e.preventDefault();
 
+                const checkBtn = document.getElementById('checkDeliveryBtn');
+                if(checkBtn){
+                    checkBtn.value = 'Checking...'; 
+                }
+                
                 const pickupPostcode = document.querySelector('input[name="pickup_postcode"]').value;
                 const deliveryPostcode = document.querySelector('input[name="delivery_postcode"]').value;
                 const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -906,20 +926,15 @@
                     const estDelivery = document.getElementById('estDelivery');
                     const cutOffTime = document.getElementById('cutOffTime');
                     const courierError = document.getElementById('courierError');
-                    const actionArea = document.querySelector('#actionArea')
-                    const toCartBtn = document.querySelector('#toCartBtn')
-
+                    const actionArea = document.querySelector('#actionArea');
+                    const toCartBtn = document.querySelector('#toCartBtn');
 
                     if (data.status === 200) {
-                        // Handle available couriers
                         let courier;
                         const recommendedCourierId = data.shiprocket_recommended_courier_id;
-
                         if (recommendedCourierId) {
                             courier = data.data.available_courier_companies.find(c => c.courier_company_id === recommendedCourierId);
                         }
-
-                        // If no recommended courier, pick the first one
                         if (!courier) {
                             courier = data.data.available_courier_companies[0];
                         }
@@ -934,26 +949,23 @@
                             courierError.textContent = '';
                         }
                     } else {
-                        // Handle error response
-                        if (data.message) {
-                            estDelivery.textContent = '';
-                            cutOffTime.textContent = '';
-                            courierError.textContent = `${data.message}`;
-                            actionArea.style.pointerEvents = 'none';
-                            actionArea.classList.add('grayscale', 'bg-gray-100');
-                            toCartBtn.classList.add('bg-neutral-600');
-                            toCartBtn.classList.remove('bg-black');
-                        }
-                        else{
-                            courierError.textContent = 'Something went wrong. Please try again later.';
-                        }
+                        estDelivery.textContent = '';
+                        cutOffTime.textContent = '';
+                        courierError.textContent = data.message || 'Something went wrong. Please try again later.';
+                        actionArea.style.pointerEvents = 'none';
+                        actionArea.classList.add('grayscale', 'bg-gray-100');
+                        toCartBtn.classList.add('bg-neutral-600');
+                        toCartBtn.classList.remove('bg-black');
                     }
+
                 } catch (error) {
                     console.error('Unexpected error:', error);
-                    courierError.textContent = 'Internal server error. ';
+                    document.getElementById('courierError').textContent = 'Internal server error.';
+                } finally {
+                    checkBtn.value = 'Check Delivery'; // Reset the button text
                 }
             });
         }
-        
+
     </script>
 @endpush
