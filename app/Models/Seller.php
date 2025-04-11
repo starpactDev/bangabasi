@@ -28,7 +28,17 @@ class Seller extends Model
     {
         return $this->belongsTo(User::class);
     }
-
+    
+    public function bank()
+    {
+        return $this->hasOne(Bank::class, 'user_id', 'user_id');
+    }
+    
+    public function gstDetail()
+    {
+        return $this->hasOne(GstDetail::class, 'user_id', 'user_id');
+    }
+    
     public function pickupAddress()
     {
         return $this->hasOne(PickupAddress::class, 'user_id', 'user_id');

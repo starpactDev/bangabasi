@@ -4,11 +4,12 @@ namespace App\Http\Controllers\Backend;
 
 use App\Models\User;
 use App\Models\Order;
+use App\Models\Seller;
+use App\Models\Product;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -75,11 +76,27 @@ class AdminDashboardController extends Controller
         return view('admin.pages.dashboard', compact('userCount', 'orderCount', 'totalSales', 'purchasedProducts', 'usersWithSalesAndPrice', 'sellerCount', 'newSellers',  'orders', 'orderItems'));
     }
 
+    
     public function profile()
     {
         $user = Auth::user();
-        return view('superuser.profile.profile', compact('user'));
+    
+        $bank = null;
+        $gst = null;
+        $pickupAddress = null;
+    
+        if ($user->usertype === 'seller') {
+            $seller = Seller::with(['bank', 'gstDetail', 'pickupAddress'])->where('user_id', $user->id)->first();
+    
+            $bank = $seller->bank;
+            $gst = $seller->gstDetail;
+            $pickupAddress = $seller->pickupAddress;
+        }
+
+        return view('superuser.profile.profile', compact('user', 'bank', 'gst', 'pickupAddress'));
     }
+    
+    
     public function updateProfile(Request $request)
     {
         $user = Auth::user();

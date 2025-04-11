@@ -15,7 +15,7 @@
                     </p>
                 </div>
                 <div>
-                    <a href="" class="btn btn-primary">Edit</a>
+                    
                 </div>
             </div>
             <div class="card bg-white profile-content">
@@ -25,8 +25,7 @@
                             <div class="text-center widget-profile px-0 border-0">
                                 <div class="card-img mx-auto rounded-circle">
                                     <!-- Check if the user has an image; if not, show default image -->
-                                    <img src="{{ $user->image ? asset('user/uploads/profile/' . $user->image) : asset('admin/assets/img/user/u1.jpg') }}"
-                                        alt="user image" class="rounded-circle">
+                                    <img src="{{ $user->image ? asset('user/uploads/profile/' . $user->image) : asset('admin/assets/img/user/u1.jpg') }}" alt="user image" class="rounded-circle">
                                 </div>
                                 <div class="card-body">
                                     <!-- Check if the user has a first and last name -->
@@ -63,6 +62,52 @@
                                 @endif
                             </div>
                         </div>
+                        <div class="profile-content-left profile-left-spacing mt-4">
+                            <div class="text-center widget-profile px-0 border-0">
+                                <div class="card-img mx-auto rounded-circle">
+                                    <!-- Check if the seller has a logo; if not, show a default image -->
+                                    <img src="{{ optional($user->seller)->logo ? asset('user/uploads/seller/logo/' . optional($user->seller)->logo) : asset('admin/assets/img/default-store.png') }}" alt="store logo" class="rounded-circle" height="100">                                </div>
+                                <div class="card-body">
+                                    <!-- Store Name -->
+                                    @if(optional($user->seller)->store_name)
+                                        <h4 class="py-2 text-dark">{{ optional($user->seller)->store_name }}</h4>
+                                    @else
+                                        <h4 class="py-2 text-dark">No Store Name</h4>
+                                    @endif
+                        
+                                    <!-- Store Email -->
+                                    @if(optional($user->seller)->email)
+                                        <p>{{ optional($user->seller)->email }}</p>
+                                    @else
+                                        <p>No Seller Email</p>
+                                    @endif
+                                </div>
+                            </div>
+                        
+                            <hr class="w-100">
+                        
+                            <div class="contact-info pt-4">
+                                <h5 class="text-dark">Seller Details</h5>
+                        
+                                @if(optional($user->seller)->description)
+                                    <p class="text-dark font-weight-medium pt-24px mb-2">Description</p>
+                                    <p>{{ optional($user->seller)->description }}</p>
+                                @endif
+                        
+                                <p class="text-dark font-weight-medium pt-24px mb-2">Registration Step</p>
+                                <p>{{ optional($user->seller)->registration_step ?? 'Not Started' }}</p>
+                        
+                                <p class="text-dark font-weight-medium pt-24px mb-2">Status</p>
+                                <p>
+                                    @if(optional($user->seller)->is_active)
+                                        <span class="badge badge-success">Active</span>
+                                    @else
+                                        <span class="badge badge-secondary">Inactive</span>
+                                    @endif
+                                </p>
+                            </div>
+                        </div>
+                        
 
                     </div>
 
@@ -125,6 +170,144 @@
                                                 <input type="text" class="form-control" id="phoneNumber" name="phone_number" value="{{ $user->phone_number }}">
                                             </div>
 
+                                            @if($user->usertype === 'seller')
+                                                <hr>
+                                                <h4 class="mb-3">Seller Information</h4>
+                                                
+                                                <!-- Store Name -->
+                                                <div class="form-group mb-4">
+                                                    <label for="store_name">Store Name</label>
+                                                    <input type="text" class="form-control" id="store_name" name="store_name" value="{{ optional($user->seller)->store_name ?? '' }}">
+                                                </div>
+                                                
+                                                <!-- Seller Email -->
+                                                <div class="form-group mb-4">
+                                                    <label for="seller_email">Seller Email</label>
+                                                    <input type="email" class="form-control" id="seller_email" name="seller_email" value="{{ optional($user->seller)->email ?? '' }}">
+                                                </div>
+                                                
+                                                <!-- Description -->
+                                                <div class="form-group mb-4">
+                                                    <label for="description">Store Description</label>
+                                                    <textarea class="form-control" id="description" name="description" rows="3">{{ optional($user->seller)->description ?? '' }}</textarea>
+                                                </div>
+                                                
+                                                <!-- Seller Logo Upload -->
+                                                <div class="form-group row mb-6">
+                                                    <label for="logo" class="col-sm-4 col-lg-2 col-form-label">Store Logo</label>
+                                                    <div class="col-sm-8 col-lg-10">
+                                                        <div class="custom-file mb-1">
+                                                            <input type="file" class="custom-file-input" id="logo" name="logo">
+                                                            <label class="custom-file-label" for="logo">Choose file...</label>
+                                                            <div class="invalid-feedback">Please upload a valid logo file.</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+
+                                                <!-- GST Details -->
+                                                @if($gst)
+                                                    <h5 class="mt-4">GST Details</h5>
+                                                    <div class="form-group mb-3">
+                                                        <label for="gst_number">GST Number</label>
+                                                        <input type="text" class="form-control" id="gst_number" name="gst_number" value="{{ optional($gst)->gst_number ?? '' }}">
+                                                    </div>
+
+                                                    <div class="form-group mb-3">
+                                                        <label for="business_name">Business Name</label>
+                                                        <input type="text" class="form-control" id="business_name" name="business_name" value="{{ optional($gst)->business_name ?? '' }}">
+                                                    </div>
+
+                                                    <div class="form-group mb-3">
+                                                        <label for="business_type">Business Type</label>
+                                                        <input type="text" class="form-control" id="business_type" name="business_type" value="{{ optional($gst)->business_type ?? '' }}">
+                                                    </div>
+
+                                                    <div class="form-group mb-4">
+                                                        <label for="legal_name">Legal Name</label>
+                                                        <input type="text" class="form-control" id="legal_name" name="legal_name" value="{{ optional($gst)->legal_name ?? '' }}">
+                                                    </div>
+                                                @endif
+
+                                                <!-- Bank Details -->
+                                                @if($bank)
+                                                    <h5 class="mt-4">Bank Details</h5>
+                                                    <div class="form-group mb-3">
+                                                        <label for="bank_name">Bank Name</label>
+                                                        <input type="text" class="form-control" id="bank_name" name="bank_name" value="{{ optional($bank)->bank_name ?? '' }}">
+                                                    </div>
+
+                                                    <div class="form-group mb-3">
+                                                        <label for="branch_name">Branch Name</label>
+                                                        <input type="text" class="form-control" id="branch_name" name="branch_name" value="{{ optional($bank)->branch_name ?? '' }}">
+                                                    </div>
+
+                                                    <div class="form-group mb-3">
+                                                        <label for="ifsc_code">IFSC Code</label>
+                                                        <input type="text" class="form-control" id="ifsc_code" name="ifsc_code" value="{{ optional($bank)->ifsc_code ?? '' }}">
+                                                    </div>
+
+                                                    <div class="form-group mb-3">
+                                                        <label for="account_number">Account Number</label>
+                                                        <input type="text" class="form-control" id="account_number" name="account_number" value="{{ optional($bank)->account_number ?? '' }}">
+                                                    </div>
+
+                                                    <div class="form-group mb-4">
+                                                        <label for="account_holder_name">Account Holder Name</label>
+                                                        <input type="text" class="form-control" id="account_holder_name" name="account_holder_name" value="{{ optional($bank)->account_holder_name ?? '' }}">
+                                                    </div>
+                                                @endif
+
+                                                <!-- Pickup Address -->
+                                                @if($pickupAddress)
+                                                    <h5 class="mt-4">Pickup Address</h5>
+                                                
+                                                    <!-- Building -->
+                                                    <div class="form-group mb-3">
+                                                        <label for="building">Building</label>
+                                                        <input type="text" class="form-control" id="building" name="building" value="{{ optional($pickupAddress)->building ?? '' }}">
+                                                    </div>
+                                                
+                                                    <!-- Street -->
+                                                    <div class="form-group mb-3">
+                                                        <label for="street">Street</label>
+                                                        <input type="text" class="form-control" id="street" name="street" value="{{ optional($pickupAddress)->street ?? '' }}">
+                                                    </div>
+                                                
+                                                    <!-- Locality -->
+                                                    <div class="form-group mb-3">
+                                                        <label for="locality">Locality</label>
+                                                        <input type="text" class="form-control" id="locality" name="locality" value="{{ optional($pickupAddress)->locality ?? '' }}">
+                                                    </div>
+                                                
+                                                    <!-- Landmark (Optional) -->
+                                                    <div class="form-group mb-3">
+                                                        <label for="landmark">Landmark (Optional)</label>
+                                                        <input type="text" class="form-control" id="landmark" name="landmark" value="{{ optional($pickupAddress)->landmark ?? '' }}">
+                                                    </div>
+                                                
+                                                    <!-- Pincode -->
+                                                    <div class="form-group mb-3">
+                                                        <label for="pincode">Pincode</label>
+                                                        <input type="text" class="form-control" id="pincode" name="pincode" value="{{ optional($pickupAddress)->pincode ?? '' }}">
+                                                    </div>
+                                                
+                                                    <!-- City -->
+                                                    <div class="form-group mb-3">
+                                                        <label for="city">City</label>
+                                                        <input type="text" class="form-control" id="city" name="city" value="{{ optional($pickupAddress)->city ?? '' }}">
+                                                    </div>
+                                                
+                                                    <!-- State -->
+                                                    <div class="form-group mb-4">
+                                                        <label for="state">State</label>
+                                                        <input type="text" class="form-control" id="state" name="state" value="{{ optional($pickupAddress)->state ?? '' }}">
+                                                    </div>
+                                                @endif
+                                            
+                                            @endif
+
+                                        
                                             <!-- Old Password -->
                                             <div class="form-group mb-4">
                                                 <label for="oldPassword">Old Password</label>
