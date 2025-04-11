@@ -190,10 +190,12 @@
                             <td class="text-sm text-neutral-700" colspan="4">Discount</td>
                             <td class="py-1 px-2 text-right text-sm text-green-600">{{ '- ₹' .$original_price - $total_price}}</td>
                         </tr>
+                        @if($coupon_discount > 0)
                         <tr>
                             <td class="text-sm text-neutral-700" colspan="4">Coupons for you </td>
-                            <td class="py-1 px-2 text-right text-sm text-green-600"> {{ '-₹' . 0 }} </td>
+                            <td class="py-1 px-2 text-right text-sm text-green-600"> {{ '-₹' . $coupon_discount }} </td>
                         </tr>
+                        @endif
                         <tr>
                             <td class="text-sm text-neutral-700" colspan="4">Secured Packaging Fee</td>
                             <td class="py-1 px-2 text-right text-sm text-neutral-800"> {{ '₹' . $shipping_fee }} </td>
