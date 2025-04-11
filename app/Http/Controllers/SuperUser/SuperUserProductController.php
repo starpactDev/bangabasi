@@ -15,6 +15,7 @@ use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use App\Helpers\ReviewHelper;
 use App\Models\ProductColour;
+use App\Models\PackageDimension;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -196,30 +197,18 @@ class SuperUserProductController extends Controller
 
 
 
-    public function submit(Request $request) {
-
+    public function submit(Request $request)
+    {
         $user = Auth::user();
-
+    
         // Validate form data
-        $validator = \Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'categories' => 'required|string|max:255',
-            'subcategories' => 'required|string|max:255',
-            'original_price' => 'required|numeric|min:0',
-            'offer_price' => 'nullable|numeric|min:0',
-            'short_description' => 'nullable|string',
-            'full_details' => 'nullable|string',
-
-        ]);
-
+        $validator = $this->validateProductRequest($request);
         if ($validator->fails()) {
-            return response()->json([
-                'errors' => $validator->errors()
-            ], 422);
+            return response()->json(['errors' => $validator->errors()], 422);
         }
-
-        $category = Category::where('id', $request->categories)->first();
-
+    
+        $category = Category::find($request->categories);
+    
         // Store product details
         $product = Product::create([
             'user_id' => $user->id,
@@ -234,95 +223,27 @@ class SuperUserProductController extends Controller
             'discount_percentage' => $request->discount_percentage,
             'short_description' => $request->short_description,
             'full_details' => $request->full_details,
-            'is_active' => true, // Default value
+            'is_active' => true,
         ]);
 
+        $this->storePackageDimension($request, $product);
+
         if ($request->has('brand')) {
-            BrandProduct::create([
-                'product_id' => $product->id,
-                'brand_id' => $request->brand,
-            ]);
-
-            // Update the total product count for the brand
-            $brand = Brand::find($request->brand);
-
-            $brand->total_listing_products = $brand->products()->count();
-            $brand->save();
+            $this->handleBrand($product->id, $request->brand);
         }
-
-        // Store images or YouTube URL
-
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $uploadedFile) {
-                $extension = $uploadedFile->getClientOriginalExtension();
-                $imageName = time() . '_' . uniqid() . '.' . $uploadedFile->getClientOriginalExtension();
-                $destinationPath = public_path('/user/uploads/products/images');
-
-                // Check if the file is an image or a video
-                if (in_array(strtolower($extension), ['jpg', 'jpeg', 'png', 'gif', 'webp'])) {
-                    // Store image
-                    $uploadedFile->move($destinationPath, $imageName);
-                    
-                    ProductImage::create([
-                        'product_id' => $product->id,
-                        'image' => $imageName,
-                    ]);
-                }
-
-                if (in_array(strtolower($extension), ['mp4', 'mkv', 'avi'])) {
-                    // Store video
-                    $uploadedFile->move($destinationPath, $imageName);
-                    ProductImage::create([
-                        'product_id' => $product->id,
-                        'image' => $imageName,  // Assuming you have a 'video' field
-                    ]);
-                }
-            }
-        }
-
-        // Step 2: Store YouTube URLs
-        if ($request->has('images')) {
-            foreach ($request->input('images') as $image) {
-                // Check if the input is a valid YouTube URL
-                if (is_string($image) && $this->isValidYouTubeURL($image)) {
-                    ProductImage::create([
-                        'product_id' => $product->id,
-                        'image' => $image, // Store the YouTube URL in the 'video' field
-                    ]);
-                }
-            }
-        }
-
-        // Store sizes
-        // Get the sizes and their quantities
-        $sizes = $request->input('sizes', []); // Array of selected sizes
-        $sizeQuantities = $request->input('size_quantity', []); // Array of quantities keyed by size
-
-        // Loop through each selected size
-        foreach ($sizes as $size) {
-            // Check if the size is in the size_quantity array and has a value
-            if (isset($sizeQuantities[$size])) {
-                // Create a new ProductSize entry
-                ProductSize::create([
-                    'product_id' => $product->id,
-                    'size' => $size,
-                    'quantity' => $sizeQuantities[$size],
-                ]);
-            }
-        }
-
-        // Store colors
+    
+        $this->handleSizes($product->id, $request->input('sizes', []), $request->input('size_quantity', []));
+        $this->updateStockStatus($product->id);
+    
         if ($request->has('colors')) {
-            foreach ($request->colors as $color) {
-                ProductColour::create([
-                    'product_id' => $product->id,
-                    'colour_name' => $color,
-                ]);
-            }
+            $this->handleColors($product->id, $request->colors);
         }
-
+    
+        $this->handleUploads($request, $product->id);
+    
         return response()->json(['message' => 'Product created successfully']);
     }
+    
 
     public function generateItemCode(Request $request) {
         // Fetch the category and subcategory names based on the IDs
@@ -646,4 +567,130 @@ class SuperUserProductController extends Controller
         $youtubeRegex = '/^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/';
         return preg_match($youtubeRegex, $url);
     }
+
+
+    private function validateProductRequest(Request $request)
+    {
+        return \Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'categories' => 'required|string|max:255',
+            'subcategories' => 'required|string|max:255',
+            'original_price' => 'required|numeric|min:0',
+            'offer_price' => 'nullable|numeric|min:0',
+            'short_description' => 'nullable|string',
+            'full_details' => 'nullable|string',
+            'length' => 'required|numeric|min:0.01',
+            'width' => 'required|numeric|min:0.01',
+            'height' => 'required|numeric|min:0.01',
+            'weight' => 'required|numeric|min:0.01',
+
+        ]);
+    }
+
+    private function handleBrand($productId, $brandId)
+    {
+        BrandProduct::updateOrCreate(
+            ['product_id' => $productId],
+            ['brand_id' => $brandId]
+        );
+    
+        $brand = Brand::find($brandId);
+        $brand->total_listing_products = $brand->products()->count();
+        $brand->save();
+    }
+    
+
+    private function handleSizes($productId, $sizes, $sizeQuantities)
+    {
+        ProductSize::where('product_id', $productId)->delete();
+
+        foreach ($sizes as $size) {
+            if (isset($sizeQuantities[$size])) {
+                ProductSize::create([
+                    'product_id' => $productId,
+                    'size' => $size,
+                    'quantity' => $sizeQuantities[$size],
+                ]);
+            }
+        }
+    }
+
+    private function updateStockStatus($productId)
+    {
+        $sizesLeft = ProductSize::where('product_id', $productId)
+            ->where('quantity', '>', 0)
+            ->count();
+
+        $product = Product::find($productId);
+        $product->in_stock = $sizesLeft > 0 ? 1 : 0;
+        $product->save();
+    }
+
+    private function handleColors($productId, $colors)
+    {
+        $existingColors = ProductColour::where('product_id', $productId)->pluck('colour_name')->toArray();
+    
+        // Add or update colors
+        foreach ($colors as $color) {
+            ProductColour::updateOrCreate(
+                [
+                    'product_id' => $productId,
+                    'colour_name' => $color,
+                ],
+                [] // No additional fields to update here
+            );
+        }
+    
+        // Optionally: Remove colors that are no longer present
+        $colorsToDelete = array_diff($existingColors, $colors);
+        if (!empty($colorsToDelete)) {
+            ProductColour::where('product_id', $productId)
+                ->whereIn('colour_name', $colorsToDelete)
+                ->delete();
+        }
+    }
+    
+
+    private function handleUploads(Request $request, $productId)
+    {
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $uploadedFile) {
+                $extension = strtolower($uploadedFile->getClientOriginalExtension());
+                $imageName = time() . '_' . uniqid() . '.' . $extension;
+                $destinationPath = public_path('/user/uploads/products/images');
+                $uploadedFile->move($destinationPath, $imageName);
+
+                ProductImage::create([
+                    'product_id' => $productId,
+                    'image' => $imageName,
+                ]);
+            }
+        }
+
+        if ($request->has('images')) {
+            foreach ($request->input('images') as $image) {
+                if (is_string($image) && $this->isValidYouTubeURL($image)) {
+                    ProductImage::create([
+                        'product_id' => $productId,
+                        'image' => $image,
+                    ]);
+                }
+            }
+        }
+    }
+
+    private function storePackageDimension($request, $product)
+    {
+        PackageDimension::create([
+            'product_id' => $product->id,
+            'length' => $request->length,
+            'width' => $request->width,
+            'height' => $request->height,
+            'weight' => $request->weight,
+            // No need to set volumetric_weight manually; handled by model's boot method
+        ]);
+    }
+
+
+
 }
