@@ -129,7 +129,7 @@ class SuperUserProductController extends Controller
 
         $subcategories = SubCategory::where('category_id', $selected_category->id)->get();
         $sizes = Size::all();
-        return view('superuser.products.edit', compact('categories', 'product', 'subcategories', 'sizes', 'brands', 'collections', 'groupedSizes', 'dimesnsions')); // Create this view for product info
+        return view('superuser.products.edit', compact('categories', 'product', 'subcategories', 'sizes', 'brands', 'collections', 'groupedSizes', 'dimensions')); // Create this view for product info
     }
 
     public function edit_image($id) {
@@ -686,15 +686,18 @@ class SuperUserProductController extends Controller
 
     private function storeOrUpdatePackageDimension($request, $product)
     {
-        PackageDimension::updateOrCreate([
-            'product_id' => $product->id,
-            'length' => $request->length,
-            'width' => $request->width,
-            'height' => $request->height,
-            'weight' => $request->weight,
-            // No need to set volumetric_weight manually; handled by model's boot method
-        ]);
+        PackageDimension::updateOrCreate(
+            ['product_id' => $product->id], // Only match by product_id
+            [
+                'length' => $request->length,
+                'width' => $request->width,
+                'height' => $request->height,
+                'weight' => $request->weight,
+                // volumetric_weight will be calculated automatically
+            ]
+        );
     }
+    
 
 
 
