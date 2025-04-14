@@ -94,7 +94,7 @@
                                     @endif
                                 </div>
                                 <div class="card-footer  text-muted">
-                                    Sent at: {{ $msg->created_at->format('Y-m-d H:i') }}
+                                    Received at: {{ $msg->created_at->format('Y-m-d H:i') }}
                                 </div>
                             </div>
                         </div>
