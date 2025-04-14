@@ -15,7 +15,7 @@ class AdminConfigurationController extends Controller
         $coupons = Coupon::all();
 
         // Fetch all platform fees
-        $platformFees = PlatformFee::all();
+        $platformFees = PlatformFee::orderBy('created_at', 'desc')->get();
 
         // Return view with the coupons data
         return view('admin.pages.configuration.index', compact('coupons', 'platformFees'));

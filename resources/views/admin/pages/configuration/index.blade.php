@@ -144,11 +144,12 @@
                     <hr>
             
                     <!-- Display Platform Fees -->
-                    <h5 class="mt-4">Existing Platform Fees</h5>
+                    <h5 class="my-4">Existing Platform Fees</h5>
                     <div class="row">
-                        @foreach($platformFees as $platformFee)
+                        @foreach($platformFees as $index => $platformFee)
                             <div class="col-md-4 mb-3">
-                                <div class="card">
+                                <!-- Apply 'bg-success' and 'text-white' only to the first one (latest) -->
+                                <div class="card {{ $index === 0 ? 'bg-success text-white' : '' }}">
                                     <div class="card-body">
                                         <h6 class="card-title">Fee Id: {{ $platformFee->id }}</h6>
                                         <p class="card-text">Amount: ₹{{ number_format($platformFee->amount, 2) }}</p>
