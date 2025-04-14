@@ -9,7 +9,8 @@
 		<div class="content">
 			<!-- Top Statistics -->
 			<div class="row">
-				<div class="col-xl-4 col-sm-6 p-b-15 lbl-card">
+
+				<div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
 					<div class="card card-mini dash-card card-1" style="background-color: aliceblue; border:none;">
 						<div class="card-body">
 							<h2 class="mb-1">{{ number_format($userCount) }}</h2>
@@ -18,8 +19,7 @@
 						</div>
 					</div>
 				</div>
-
-				<div class="col-xl-4 col-sm-6 p-b-15 lbl-card">
+				<div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
 					<div class="card card-mini dash-card card-3" style="background-color: beige; border:none;">
 						<div class="card-body">
 							<h2 class="mb-1">{{ number_format($orderCount ?? 0)}}</h2>
@@ -28,7 +28,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-xl-4 col-sm-6 p-b-15 lbl-card">
+				<div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
 					<div class="card card-mini dash-card card-4" style="background-color: lavenderblush; border:none;">
 						<div class="card-body">
 							<h2 class="mb-1">&#8377;{{ number_format($totalSales ?? 00)}}</h2>
@@ -37,6 +37,17 @@
 						</div>
 					</div>
 				</div>
+				<div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
+					<div class="card card-mini dash-card card-5" style="background-color: honeydew; border:none;">
+						<div class="card-body">
+							<h2 class="mb-1">{{ number_format($sellerCount) }}</h2>
+							<p>Total Sellers</p>
+							<span class="mdi mdi-store"></span>
+						</div>
+					</div>
+				</div>
+				
+
 			</div>
 
 
