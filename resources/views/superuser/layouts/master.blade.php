@@ -119,7 +119,7 @@
 					<p>
 						Copyright &copy; <span id="ec-year"></span><a class="text-primary"
 						href="" target="_blank"> Starpact Admin Dashboard</a>. All Rights Reserved.
-					  </p>
+					</p>
 				</div>
 			</footer>
 			<!-- End Footer -->

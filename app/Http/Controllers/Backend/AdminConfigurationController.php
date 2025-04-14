@@ -57,6 +57,19 @@ class AdminConfigurationController extends Controller
 
     }
 
+
+    public function couponDestroy($id)
+    {
+        // Ensure the coupon exists
+        $coupon = Coupon::findOrFail($id);
+
+        // Delete the coupon
+        $coupon->delete();
+
+        // Return a success response or redirect
+        return redirect()->route('admin.configuration')->with('success', 'Coupon deleted successfully');
+    }
+
     public function platformFeeStore(Request $request)
     {
         // Validate the incoming request

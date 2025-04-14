@@ -39,8 +39,16 @@
                             $isActive = \Carbon\Carbon::parse($coupon->expiration_date)->isFuture();  // Check if the coupon is active
                         @endphp
                         <div class="col-md-4 mb-4">
-                            <div class="card" style="border-left: 5px solid {{ $isActive ? '#28a745' : '#dc3545' }};">
+                            <div class="card overflow-hidden position-relative" style="border-left: 5px solid {{ $isActive ? '#28a745' : '#dc3545' }};">
                                 <div class="card-body">
+
+                                    <!-- Delete Button (Top Right) -->
+                                    <form action="{{ route('admin.coupon.destroy', $coupon->id) }}" method="POST" class="position-absolute top-0 end-0 p-2 delete-form" data-coupon-id="{{ $coupon->id }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-outline-danger btn-sm rounded-circle deleteBtn" data-coupon-id="{{ $coupon->id }}">Delete</button>
+                                    </form>
+
                                     <h5 class="card-title">{{ $coupon->coupon_code }}</h5>
                                     <p class="card-text">
                                         @if ($coupon->discount_amount)
@@ -158,5 +166,40 @@
 @endsection
 
 @push('script')
+<!-- Delete Button (Top Right) -->
+<form id="deleteForm-{{ $coupon->id }}" action="{{ route('admin.coupon.destroy', $coupon->id) }}" method="POST" class="position-absolute top-0 end-0 p-2">
+    @csrf
+    @method('DELETE')
+    <button type="button" class="btn btn-outline-danger btn-sm rounded-circle" id="deleteBtn-{{ $coupon->id }}">
+        Delete
+    </button>
+</form>
 
+<script>
+    $(document).ready(function() {
+        // Event delegation to handle all delete buttons dynamically
+        $(document).on('click', '.deleteBtn', function(e) {
+            e.preventDefault(); // Prevent default form submission
+
+            var couponId = $(this).data('coupon-id'); // Get coupon ID from button data attribute
+            var deleteForm = $('form[data-coupon-id="' + couponId + '"]'); // Get the corresponding form
+
+            // SweetAlert2 confirmation
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'This coupon will be permanently deleted!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Submit the form if confirmed
+                    deleteForm.submit();
+                }
+            });
+        });
+    });
+</script>
 @endpush
