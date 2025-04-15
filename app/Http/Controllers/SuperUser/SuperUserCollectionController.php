@@ -1,23 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Backend;
+namespace App\Http\Controllers\SuperUser;
 
-use App\Models\Collection;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\Collection;
 use Illuminate\Support\Facades\Validator;
 
-class AdminCollectionController extends Controller
+class SuperUserCollectionController extends Controller
 {
-
     public function index()
     {
-
-        // Update the total product count for the brand
-
-
         $collections = Collection::all();
-        return view('admin.pages.collection.index', compact('collections'));
+        return view('superuser.collection.index', compact('collections'));
     }
 
     public function destroy($id)

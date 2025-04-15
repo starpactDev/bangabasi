@@ -63,6 +63,7 @@ use App\Http\Controllers\SuperUser\SuperUserOrderController;
 use App\Http\Controllers\Backend\AdminConfigurationController;
 use App\Http\Controllers\SuperUser\SuperUserProductController;
 use App\Http\Controllers\Backend\AdminProductSectionController;
+use App\Http\Controllers\SuperUser\SuperUserCollectionController;
 use App\Http\Controllers\Frontend\SellerController as FrontendSellerController;
 
 //Seller Routes
@@ -292,11 +293,6 @@ Route::group(['middleware' =>  [AdminCheckMiddleware::class]], function () {
     Route::post('/update-image', [CategoryController::class, 'updateImage'])->name('image.update');
     Route::get('/get-categories', [CategoryController::class, 'getCategories'])->name('categories.list');
 
-    //Collection
-    Route::get('/collections', [AdminCollectionController::class, 'index'])->name('admin.collections.index');
-    Route::put('/collections/{id}', [AdminCollectionController::class, 'update'])->name('admin.collections.update');
-    Route::delete('/collections/{id}', [AdminCollectionController::class, 'destroy'])->name('admin.collections.destroy');
-    Route::post('/collections/store', [AdminCollectionController::class, 'store'])->name('admin.collections.store');
 
     Route::get('/admin-view-all-product-list', [AdminProductController::class, 'view'])->name('admin_viewproduct');
     Route::get('/purchased-products/view-more', [AdminProductController::class, 'viewMore'])->name('purchasedProducts.viewMore');
@@ -404,6 +400,12 @@ Route::group(['middleware' =>  [AdminCheckMiddleware::class]], function () {
 
 //SuperUser Routes
 Route::group(['middleware' =>  [SuperUserMiddleware::class]], function () {
+
+    //Collection
+    Route::get('/collections', [SuperUserCollectionController::class, 'index'])->name('admin.collections.index');
+    Route::put('/collections/{id}', [SuperUserCollectionController::class, 'update'])->name('admin.collections.update');
+    Route::delete('/collections/{id}', [SuperUserCollectionController::class, 'destroy'])->name('admin.collections.destroy');
+    Route::post('/collections/store', [SuperUserCollectionController::class, 'store'])->name('admin.collections.store');
 
     Route::get('/products/my-products', [SuperUserProductController::class, 'myProducts'])->name('admin.my_products');
     Route::get('/products/{id}/info', [SuperUserProductController::class, 'show'])->name('admin_products.info');
