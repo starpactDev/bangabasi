@@ -116,7 +116,7 @@
                 </li>
                 <li class="{{ request()->routeIs('admin.collections.index') ? 'active' : '' }}">
                     <a class="sidenav-item-link" href="{{ route('admin.collections.index') }}">
-                        <i class="mdi mdi-home"></i>
+                        <i class="mdi mdi-rhombus-split"></i>
                         <span class="nav-text">Collections</span>
                     </a>
                     <hr>

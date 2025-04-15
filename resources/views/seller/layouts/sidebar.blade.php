@@ -26,6 +26,14 @@
                     <hr>
                 </li>
 
+                <!-- Collections -->
+				<li>
+					<a class="sidenav-item-link" href="{{ route('admin.collections.index') }}">
+						<i class="mdi mdi-rhombus-split"></i>
+						<span class="nav-text">Collections</span>
+					</a>
+				</li>
+
                 
                 <!-- Products -->
                 <li class="has-sub">
