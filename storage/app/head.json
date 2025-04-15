@@ -34,11 +34,11 @@
         },
         "foodItem": {
             "stickerOne": {
-                "subCategory": "Food Items",
+                "subCategory": "Food Items XYZ",
                 "image": "food_items.png"
             },
             "stickerTwo": {
-                "subCategory": "Muri",
+                "subCategory": "Muri Edited",
                 "image": "muri.png"
             },
             "stickerThree": {
