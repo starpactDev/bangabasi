@@ -57,6 +57,7 @@ use App\Http\Controllers\ShipRocket\ShipRocketController;
 use App\Http\Controllers\Backend\AdminDashboardController;
 use App\Http\Controllers\Frontend\FilterProductController;
 use App\Http\Controllers\Seller\SellerDashboardController;
+use App\Http\Controllers\SuperUser\SuperUserHsnController;
 use App\Http\Controllers\Backend\AdminCollectionController;
 use App\Http\Controllers\Backend\AdminNewsLetterController;
 use App\Http\Controllers\SuperUser\SuperUserOrderController;
@@ -407,6 +408,8 @@ Route::group(['middleware' =>  [SuperUserMiddleware::class]], function () {
     Route::delete('/collections/{id}', [SuperUserCollectionController::class, 'destroy'])->name('admin.collections.destroy');
     Route::post('/collections/store', [SuperUserCollectionController::class, 'store'])->name('admin.collections.store');
 
+    //HSN Codes
+    Route::get('/hsn-codes', [SuperUserHsnController::class, 'index'])->name('admin.hsn.index');
     Route::get('/products/my-products', [SuperUserProductController::class, 'myProducts'])->name('admin.my_products');
     Route::get('/products/{id}/info', [SuperUserProductController::class, 'show'])->name('admin_products.info');
 

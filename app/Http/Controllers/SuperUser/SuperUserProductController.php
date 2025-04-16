@@ -307,6 +307,7 @@ class SuperUserProductController extends Controller
         // Validate form data
         $validator = \Validator::make($request->all(), [
             'name' => 'required|string|max:255',
+            'hsn_code' => 'required|string|max:255',
             'categories' => 'required|string|max:255',
             'subcategories' => 'required|string|max:255',
             'original_price' => 'required|numeric|min:0',
@@ -328,6 +329,7 @@ class SuperUserProductController extends Controller
         // Update product details
         $category = Category::where('id', $request->categories)->first();
         $product->update([
+            'hsn_id' => $request->hsn_code,
             'name' => $request->name,
             'tags' => $request->tags,
             'category' => $category->id,

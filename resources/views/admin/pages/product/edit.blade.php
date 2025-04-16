@@ -340,31 +340,24 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-md-12 mb-3 mt-3">
+                                                    <label for="gst_rate" class="form-label">GST Rate</label>
+                                                    <input type="text" class="form-control slug-title" name="gst_rate" value="{{ old('gst_rate', $product->gst_rate) }}" id="gst_rate" readonly>
+                                                </div>
+                                                <div class="col-md-12 mb-3 mt-3">
                                                     <label for="item_code" class="form-label">Item Code</label>
-                                                    <input type="text" class="form-control slug-title"
-                                                        name="item_code"
-                                                         value="{{ old('item_code', $product->item_code) }}"
-                                                        id="item_code" readonly>
+                                                    <input type="text" class="form-control slug-title" name="item_code" value="{{ old('item_code', $product->item_code) }}" id="item_code" readonly>
                                                 </div>
                                                 <div class="col-md-6 mb-3 mt-3">
-                                                    <label class="form-label">Original Price <span>( In Rupee
-                                                            )</span></label>
-                                                    <input type="number" name="original_price" class="form-control"
-                                                        id="price1"
-                                                        value="{{ old('original_price', $product->original_price) }}">
+                                                    <label class="form-label">Original Price <span>( In Rupee )</span></label>
+                                                    <input type="number" name="original_price" class="form-control" id="price1" value="{{ old('original_price', $product->original_price) }}">
                                                 </div>
                                                 <div class="col-md-6 mb-3 mt-3">
-                                                    <label class="form-label">Offer Price <span>( In Rupee
-                                                            )</span></label>
-                                                    <input type="number" name="offer_price" class="form-control"
-                                                        id="offerPrice"
-                                                        value="{{ old('offer_price', $product->offer_price) }}">
+                                                    <label class="form-label">Offer Price <span>( In Rupee )</span></label>
+                                                    <input type="number" name="offer_price" class="form-control" id="offerPrice" value="{{ old('offer_price', $product->offer_price) }}">
                                                 </div>
                                                 <div class="col-md-6 mb-3 mt-3">
-                                                    <label class="form-label">Discount Percentage <span>( %
-                                                            )</span></label>
-                                                    <input type="number" name="discount_percentage" class="form-control"
-                                                        id="discountPercentage" readonly value="{{ old('discount_percentage', $product->discount_percentage) }}">
+                                                    <label class="form-label">Discount Percentage <span>( % )</span></label>
+                                                    <input type="number" name="discount_percentage" class="form-control" id="discountPercentage" readonly value="{{ old('discount_percentage', $product->discount_percentage) }}">
                                                 </div>
 
 

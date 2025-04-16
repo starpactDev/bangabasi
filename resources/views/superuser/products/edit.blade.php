@@ -277,13 +277,11 @@
                                             <div class="row">
                                                 <div class="col-md-12 mb-3 mt-3">
                                                     <label for="inputEmail4" class="form-label">Product Name</label>
-                                                    <input type="text" class="form-control slug-title" name="name"
-                                                        value="{{ old('name', $product->name) }}" id="inputEmail4">
+                                                    <input type="text" class="form-control slug-title" name="name" value="{{ old('name', $product->name) }}" id="inputEmail4">
                                                 </div>
                                                 <div class="col-md-12 mb-3 mt-3">
                                                     <label for="tags" class="form-label">Product Tags</label>
-                                                    <input type="text" class="form-control slug-title" name="tags"
-                                                        value="{{ old('tags', $product->tags) }}" id="tags">
+                                                    <input type="text" class="form-control slug-title" name="tags" value="{{ old('tags', $product->tags) }}" id="tags">
                                                 </div>
                                                 <div class="col-md-6 mb-3 mt-3">
                                                     <label class="form-label">Select Categories</label>
@@ -295,18 +293,13 @@
                                                                 {{ $cat->name }}
                                                             </option>
                                                         @endforeach
-
-
                                                     </select>
                                                 </div>
                                                 <div class="col-md-6 mb-3 mt-3">
                                                     <label class="form-label">Select Sub Categories</label>
                                                     <select name="subcategories" id="subCategories" class="form-select">
                                                         @foreach ($subcategories as $subcat)
-                                                            <option value="{{ $subcat->id }}"
-                                                                {{ $subcat->id == $product->subcategory ? 'selected' : '' }}>
-                                                                {{ $subcat->name }}
-                                                            </option>
+                                                            <option value="{{ $subcat->id }}" {{ $subcat->id == $product->subcategory ? 'selected' : '' }}> {{ $subcat->name }} </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -315,13 +308,8 @@
                                                     <select name="brand" id="brand" class="form-select">
                                                         <option selected disabled> -- Select -- </option>
                                                         @foreach ($brands as $brand)
-                                                            <option value="{{ $brand->id }}"
-                                                                @if ($product->productBrand) {{ $brand->id == $product->productBrand->brand_id ? 'selected' : '' }} @endif>
-                                                                {{ $brand->brand_name }}
-                                                            </option>
+                                                            <option value="{{ $brand->id }}" @if ($product->productBrand) {{ $brand->id == $product->productBrand->brand_id ? 'selected' : '' }} @endif> {{ $brand->brand_name }} </option>
                                                         @endforeach
-
-
                                                     </select>
                                                 </div>
                                                 <div class="col-md-6 mb-3 mt-3">
@@ -336,77 +324,58 @@
                                                                 {{ $collection->collection_name }}
                                                             </option>
                                                         @endforeach
-
                                                     </select>
                                                 </div>
                                                 <div class="col-md-12 mb-3 mt-3">
+                                                    <label class="form-label">Select HSN Code </label>
+                                                    <select name="hsn_code" id="hsn_code" class="form-select">
+                                                        <option selected disabled> -- Select -- </option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-6 mb-3 mt-3">
+                                                    <label for="gst_rate" class="form-label">GST Rate (%)</label>
+                                                    <input type="text" class="form-control slug-title" name="gst_rate" value="{{ old('gst_rate', $product->gst_rate) }}" id="gst_rate" readonly>
+                                                </div>
+                                                <div class="col-md-6 mb-3 mt-3">
                                                     <label for="item_code" class="form-label">Item Code</label>
-                                                    <input type="text" class="form-control slug-title"
-                                                        name="item_code"
-                                                         value="{{ old('item_code', $product->item_code) }}"
-                                                        id="item_code" readonly>
+                                                    <input type="text" class="form-control slug-title" name="item_code" value="{{ old('item_code', $product->item_code) }}" id="item_code" readonly>
                                                 </div>
                                                 <div class="col-md-6 mb-3 mt-3">
-                                                    <label class="form-label">Original Price <span>( In Rupee
-                                                            )</span></label>
-                                                    <input type="number" name="original_price" class="form-control"
-                                                        id="price1"
-                                                        value="{{ old('original_price', $product->original_price) }}">
+                                                    <label class="form-label">Original Price <span>( In Rupee )</span></label>
+                                                    <input type="number" name="original_price" class="form-control" id="price1" value="{{ old('original_price', $product->original_price) }}">
                                                 </div>
                                                 <div class="col-md-6 mb-3 mt-3">
-                                                    <label class="form-label">Offer Price <span>( In Rupee
-                                                            )</span></label>
-                                                    <input type="number" name="offer_price" class="form-control"
-                                                        id="offerPrice"
-                                                        value="{{ old('offer_price', $product->offer_price) }}">
+                                                    <label class="form-label">Offer Price <span>( In Rupee )</span></label>
+                                                    <input type="number" name="offer_price" class="form-control" id="offerPrice" value="{{ old('offer_price', $product->offer_price) }}">
                                                 </div>
                                                 <div class="col-md-6 mb-3 mt-3">
-                                                    <label class="form-label">Discount Percentage <span>( %
-                                                            )</span></label>
-                                                    <input type="number" name="discount_percentage" class="form-control"
-                                                        id="discountPercentage" readonly value="{{ old('discount_percentage', $product->discount_percentage) }}">
+                                                    <label class="form-label">Discount Percentage <span>( % )</span></label>
+                                                    <input type="number" name="discount_percentage" class="form-control" id="discountPercentage" readonly value="{{ old('discount_percentage', $product->discount_percentage) }}">
                                                 </div>
-
-
                                                 <div class="col-md-12 mb-3 mt-3">
                                                     <label class="form-label">Short Description</label>
-
                                                     <textarea class="form-control summernote" rows="4" id="summernote" name="short_description">{{ old('short_description', $product->short_description) }}</textarea>
                                                 </div>
-                                                
-
                                                 <div class="col-md-12 mb-25 mb-3 mt-3">
                                                     <label class="form-label">Selected Colors</label>
                                                     <div id="colorInputsContainer">
                                                         @if ($product->productColours)
                                                             @foreach ($product->productColours as $color)
-                                                                <div class="color-input-group mb-2"
-                                                                    id="color-{{ $loop->index }}">
-                                                                    <input type="color"
-                                                                        class="form-control form-control-color"
-                                                                        name="colors[]" value="{{ $color->colour_name }}"
-                                                                        title="Choose your color">
-                                                                    <button type="button"
-                                                                        class="btn btn-sm btn-danger remove-color-btn mt-2"
-                                                                        data-index="{{ $loop->index }}">Remove</button>
+                                                                <div class="color-input-group mb-2" id="color-{{ $loop->index }}">
+                                                                    <input type="color" class="form-control form-control-color" name="colors[]" value="{{ $color->colour_name }}" title="Choose your color">
+                                                                    <button type="button" class="btn btn-sm btn-danger remove-color-btn mt-2" data-index="{{ $loop->index }}">Remove</button>
                                                                 </div>
                                                             @endforeach
                                                         @endif
                                                     </div>
-                                                    <button type="button" class="btn btn-sm btn-primary mt-2"
-                                                        id="addColorInput">Add Color</button>
+                                                    <button type="button" class="btn btn-sm btn-primary mt-2" id="addColorInput">Add Color</button>
                                                 </div>
 
                                                 <div class="col-md-12 mb-25">
                                                     <label class="form-label">Size</label>
                                                     <br>
-                                                    <button type="button" class="btn btn-sm btn-info mt-2 mb-4"
-                                                        id="addSizeInput">Add More Size option</button>
-                                                    <button type="button" class="btn btn-sm btn-success mt-2 mb-4"
-                                                        id="manageSizeInput" data-bs-toggle="modal"
-                                                        data-bs-target="#sizeModal">
-                                                        Manage Size
-                                                    </button>
+                                                    <button type="button" class="btn btn-sm btn-info mt-2 mb-4" id="addSizeInput">Add More Size option</button>
+                                                    <button type="button" class="btn btn-sm btn-success mt-2 mb-4" id="manageSizeInput" data-bs-toggle="modal" data-bs-target="#sizeModal"> Manage Size </button>
                                                     <div class="form-checkbox-box">
                                                         <table class="custom-table">
                                                             <thead>
@@ -420,9 +389,7 @@
                                                                 <tr>
                                                                     @foreach ($groupedSizes as $sizes)
                                                                         <td>
-                                                                    
                                                                             @foreach ($sizes as $size)
-                                                                           
                                                                                 <div class="form-check-2">
                                                                                     <input type="checkbox" name="sizes[]"
                                                                                         value="{{ $size->name }}"
@@ -441,7 +408,6 @@
                                                 </div>
                                                 <!-- Container to display size and quantity inputs -->
                                                 <div class="col-md-12" id="sizeQuantityContainer">
-
                                                     @foreach ($product->productSizes as $key => $size)
                                                         <div class="row mb-3 size-quantity"
                                                             id="size-{{ $size->size }}">
@@ -449,21 +415,16 @@
                                                                 <label>Size: {{ $size->size }}</label>
                                                             </div>
                                                             <div class="col-md-6">
-                                                                <input type="number"
-                                                                    name="size_quantity[{{ $size->size }}]"
-                                                                    class="form-control" value="{{ $size->quantity }}"
-                                                                    placeholder="Quantity for {{ $size }}">
+                                                                <input type="number" name="size_quantity[{{ $size->size }}]" class="form-control" value="{{ $size->quantity }}" placeholder="Quantity for {{ $size }}">
                                                             </div>
                                                         </div>
                                                     @endforeach
-
                                                 </div>
 
 
                                                 <div class="col-md-12 mb-3 mt-3">
                                                     <label class="form-label">Full Details</label>
                                                     <textarea class="form-control summernote" rows="4" id="full_summernote" name="full_details">{{ old('full_details', $product->full_details) }}</textarea>
-
                                                 </div>
                                                 <input type="hidden" id="product_id" name="product_id" value="{{ $product->id }}">
                                                 <div class="col-md-12 mb-3 mt-3">
@@ -519,10 +480,8 @@
                                 <select name="key" id="newCategories" class="form-select">
                                     <option selected disabled> -- Select -- </option>
                                     @foreach ($categories as $cat)
-                                        <option value="{{ $cat->id }}">{{ $cat->name }}
-                                        </option>
+                                        <option value="{{ $cat->id }}">{{ $cat->name }} </option>
                                     @endforeach
-
                                 </select>
                             </div>
                             <div class="mb-3">
@@ -565,7 +524,8 @@
     </div>
 @endsection
 
-@push('script')\<script>
+@push('script')
+<script>
     // for discount
     $(document).ready(function() {
         function calculateDiscount() {
@@ -603,220 +563,222 @@
 
     });
 </script>
-    <script>
-        // for videos/ youtube url
 
-        $(document).ready(function() {
+<script>
+    // for videos/ youtube url
 
-            // Validate video duration for the file input
-            $(document).on('change', '#videoUpload', function() {
-                let file = this.files[0];
-                let videoMessage = $('#videoMessage');
+    $(document).ready(function() {
 
-                // Validate if the user selects a file
-                if (file) {
-                    let video = document.createElement('video');
-                    video.preload = 'metadata';
+        // Validate video duration for the file input
+        $(document).on('change', '#videoUpload', function() {
+            let file = this.files[0];
+            let videoMessage = $('#videoMessage');
 
-                    video.onloadedmetadata = function() {
-                        window.URL.revokeObjectURL(video.src);
+            // Validate if the user selects a file
+            if (file) {
+                let video = document.createElement('video');
+                video.preload = 'metadata';
 
-                        // Check the duration
-                        if (video.duration > 15) {
-                            videoMessage.text('The video duration should not be more than 15 seconds.')
-                                .show();
-                            $('#videoUpload').val(''); // Clear the file input
-                        } else {
-                            videoMessage
-                                .hide(); // Hide the message if the video is within the allowed duration
-                        }
-                    };
+                video.onloadedmetadata = function() {
+                    window.URL.revokeObjectURL(video.src);
 
-                    video.src = URL.createObjectURL(file);
-                }
-            });
-        });
+                    // Check the duration
+                    if (video.duration > 15) {
+                        videoMessage.text('The video duration should not be more than 15 seconds.')
+                            .show();
+                        $('#videoUpload').val(''); // Clear the file input
+                    } else {
+                        videoMessage
+                            .hide(); // Hide the message if the video is within the allowed duration
+                    }
+                };
 
-        // for color
-
-        $(document).ready(function() {
-            // Remove color input
-            $(document).on('click', '.remove-color-btn', function() {
-                let index = $(this).data('index');
-                $('#color-' + index).remove();
-            });
-            $('#addColorInput').click(function() {
-                // Add a new color input
-                $('#colorInputsContainer').append(`
-            <div class="color-input-wrapper mt-2">
-                <input type="color" class="form-control form-control-color" name="colors[]" value="#33317d" title="Choose your color">
-                <button type="button" class="btn btn-sm btn-danger remove-color-input">Remove</button>
-            </div>
-                                              `);
-            });
-
-            // Remove color input when the "Remove" button is clicked
-            $(document).on('click', '.remove-color-input', function() {
-                $(this).closest('.color-input-wrapper').remove();
-            });
-
-            // Update input value when a new color is selected from the color picker
-            $(document).on('input', '.form-control-color', function() {
-                $(this).attr('value', $(this).val()); // Update the value attribute dynamically
-            });
-        });
-
-
-
-        // for size
-        $(document).ready(function() {
-            let freeCheckbox = $('.size-checkbox[value="FREE"]');
-            let otherCheckboxes = $('.size-checkbox').not('[value="FREE"]');
-            let sizeContainer = $('#sizeQuantityContainer');
-
-            // On page load, check if "FREE" is selected and disable other checkboxes
-            if (freeCheckbox.is(':checked')) {
-                otherCheckboxes.prop('disabled', true);
+                video.src = URL.createObjectURL(file);
             }
-            let freeAlertShown = false;
-            // Handle checkbox change events
-            $(document).on('change', '.size-checkbox', function() {
-                let size = $(this).val();
-                let sizeId = `size-${size.replace(/\s+/g, "_")}`; // Sanitize the 'size' value to create a valid ID
-
-                let freeCheckbox = $('.free-checkbox');
-                let sizeContainer = $('#sizeQuantityContainer');
-                let anyOtherChecked = $('.size-checkbox').not('.free-checkbox').is(':checked');
-
-                if (size === "FREE") {
-                    if ($(this).is(':checked')) {
-                        // Disable all other checkboxes and uncheck them
-                        $('.size-checkbox').not(this).prop('disabled', true).prop('checked', false);
-                        Swal.fire({
-                            icon: 'warning',
-                            title: 'Selection Alert',
-                            text: 'You cannot select other sizes when "FREE" is selected.'
-                        });
-
-                        // Add quantity input for "FREE" size
-                        let quantityInput = `
-                <div class="row mb-3 size-quantity" id="${sizeId}" >
-                    <div class="col-md-6">
-                        <label>Size: ${size}</label>
-                    </div>
-                    <div class="col-md-6">
-                        <input type="number" name="size_quantity[${size}]" class="form-control" placeholder="Quantity for ${size}">
-                    </div>
-                </div>
-                `;
-                        sizeContainer.append(quantityInput);
-                    } else {
-                        // Re-enable all checkboxes when "FREE" is unchecked
-                        $('.size-checkbox').prop('disabled', false);
-                        // Remove the quantity input for "FREE" size
-                        $(`#${sizeId}`).remove();
-                    }
-                } else {
-                    // Disable the "FREE" checkbox and show message when any other size is selected
-                    if (freeCheckbox.is(':checked')) {
-                        freeCheckbox.prop('checked', false).prop('disabled', true);
-                        Swal.fire({
-                            icon: 'warning',
-                            title: 'Selection Alert',
-                            text: 'Selecting another size disables the "FREE" option.'
-                        });
-                    }
-
-                    // Disable the "FREE" checkbox
-                    if (!freeAlertShown) {
-                        freeCheckbox.prop('disabled', true);
-                        Swal.fire({
-                            icon: 'warning',
-                            title: 'Selection Alert',
-                            text: 'Selecting another size disables the "FREE" option.'
-                        });
-                        freeAlertShown = true; // Set the flag to prevent further alerts
-                    }
-                    // Add quantity input for selected size
-                    if ($(this).is(':checked')) {
-                       
-                        let quantityInput = `
-                <div class="row mb-3 size-quantity" id="${sizeId}">
-                    <div class="col-md-6">
-                        <label>Size: ${size}</label>
-                    </div>
-                    <div class="col-md-6">
-                        <input type="number" name="size_quantity[${size}]" class="form-control" placeholder="Quantity for ${size}">
-                    </div>
-                </div>
-                `;
-                        sizeContainer.append(quantityInput);
-                    } else {
-                        // Remove quantity input when size is unchecked
-                        $(`#${sizeId}`).remove();
-                    }
-                }
-
-                // Check if any checkbox other than "FREE" is checked
-                if ($('.size-checkbox').not('.free-checkbox').is(':checked')) {
-                    // Ensure the "FREE" checkbox remains disabled
-                    freeCheckbox.prop('disabled', true);
-                } else {
-                    // If no checkboxes are selected, enable the "FREE" checkbox
-                    freeCheckbox.prop('disabled', false);
-                }
-            });
         });
-    </script>
+    });
 
-    <script>
-        $(document).ready(function() {
+    // for color
 
-            $('#Categories').on('change', function() {
-                var categoryId = $(this).val();
-                // Define the route URL with a placeholder for the category_id
-                var fetchSubcategoriesUrl =
-                    '{{ route('subcategories.fetch', ['category_id' => ':category_id']) }}';
-                if (categoryId) {
-                    // Replace the placeholder with the actual category ID
-                    var url = fetchSubcategoriesUrl.replace(':category_id', categoryId);
+    $(document).ready(function() {
+        // Remove color input
+        $(document).on('click', '.remove-color-btn', function() {
+            let index = $(this).data('index');
+            $('#color-' + index).remove();
+        });
+        $('#addColorInput').click(function() {
+            // Add a new color input
+            $('#colorInputsContainer').append(`
+        <div class="color-input-wrapper mt-2">
+            <input type="color" class="form-control form-control-color" name="colors[]" value="#33317d" title="Choose your color">
+            <button type="button" class="btn btn-sm btn-danger remove-color-input">Remove</button>
+        </div>
+                                            `);
+        });
 
-                    $.ajax({
-                        url: url,
-                        type: 'GET',
-                        dataType: 'json',
-                        success: function(data) {
-                            var $subCategorySelect = $('#subCategories');
+        // Remove color input when the "Remove" button is clicked
+        $(document).on('click', '.remove-color-input', function() {
+            $(this).closest('.color-input-wrapper').remove();
+        });
+
+        // Update input value when a new color is selected from the color picker
+        $(document).on('input', '.form-control-color', function() {
+            $(this).attr('value', $(this).val()); // Update the value attribute dynamically
+        });
+    });
+
+
+
+    // for size
+    $(document).ready(function() {
+        let freeCheckbox = $('.size-checkbox[value="FREE"]');
+        let otherCheckboxes = $('.size-checkbox').not('[value="FREE"]');
+        let sizeContainer = $('#sizeQuantityContainer');
+
+        // On page load, check if "FREE" is selected and disable other checkboxes
+        if (freeCheckbox.is(':checked')) {
+            otherCheckboxes.prop('disabled', true);
+        }
+        let freeAlertShown = false;
+        // Handle checkbox change events
+        $(document).on('change', '.size-checkbox', function() {
+            let size = $(this).val();
+            let sizeId = `size-${size.replace(/\s+/g, "_")}`; // Sanitize the 'size' value to create a valid ID
+
+            let freeCheckbox = $('.free-checkbox');
+            let sizeContainer = $('#sizeQuantityContainer');
+            let anyOtherChecked = $('.size-checkbox').not('.free-checkbox').is(':checked');
+
+            if (size === "FREE") {
+                if ($(this).is(':checked')) {
+                    // Disable all other checkboxes and uncheck them
+                    $('.size-checkbox').not(this).prop('disabled', true).prop('checked', false);
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Selection Alert',
+                        text: 'You cannot select other sizes when "FREE" is selected.'
+                    });
+
+                    // Add quantity input for "FREE" size
+                    let quantityInput = `
+            <div class="row mb-3 size-quantity" id="${sizeId}" >
+                <div class="col-md-6">
+                    <label>Size: ${size}</label>
+                </div>
+                <div class="col-md-6">
+                    <input type="number" name="size_quantity[${size}]" class="form-control" placeholder="Quantity for ${size}">
+                </div>
+            </div>
+            `;
+                    sizeContainer.append(quantityInput);
+                } else {
+                    // Re-enable all checkboxes when "FREE" is unchecked
+                    $('.size-checkbox').prop('disabled', false);
+                    // Remove the quantity input for "FREE" size
+                    $(`#${sizeId}`).remove();
+                }
+            } else {
+                // Disable the "FREE" checkbox and show message when any other size is selected
+                if (freeCheckbox.is(':checked')) {
+                    freeCheckbox.prop('checked', false).prop('disabled', true);
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Selection Alert',
+                        text: 'Selecting another size disables the "FREE" option.'
+                    });
+                }
+
+                // Disable the "FREE" checkbox
+                if (!freeAlertShown) {
+                    freeCheckbox.prop('disabled', true);
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Selection Alert',
+                        text: 'Selecting another size disables the "FREE" option.'
+                    });
+                    freeAlertShown = true; // Set the flag to prevent further alerts
+                }
+                // Add quantity input for selected size
+                if ($(this).is(':checked')) {
+                    
+                    let quantityInput = `
+            <div class="row mb-3 size-quantity" id="${sizeId}">
+                <div class="col-md-6">
+                    <label>Size: ${size}</label>
+                </div>
+                <div class="col-md-6">
+                    <input type="number" name="size_quantity[${size}]" class="form-control" placeholder="Quantity for ${size}">
+                </div>
+            </div>
+            `;
+                    sizeContainer.append(quantityInput);
+                } else {
+                    // Remove quantity input when size is unchecked
+                    $(`#${sizeId}`).remove();
+                }
+            }
+
+            // Check if any checkbox other than "FREE" is checked
+            if ($('.size-checkbox').not('.free-checkbox').is(':checked')) {
+                // Ensure the "FREE" checkbox remains disabled
+                freeCheckbox.prop('disabled', true);
+            } else {
+                // If no checkboxes are selected, enable the "FREE" checkbox
+                freeCheckbox.prop('disabled', false);
+            }
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+
+        $('#Categories').on('change', function() {
+            var categoryId = $(this).val();
+            // Define the route URL with a placeholder for the category_id
+            var fetchSubcategoriesUrl =
+                '{{ route('subcategories.fetch', ['category_id' => ':category_id']) }}';
+            if (categoryId) {
+                // Replace the placeholder with the actual category ID
+                var url = fetchSubcategoriesUrl.replace(':category_id', categoryId);
+
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        var $subCategorySelect = $('#subCategories');
+                        $subCategorySelect.empty();
+
+                        if (data.length) {
+                            // Clear existing options
                             $subCategorySelect.empty();
 
-                            if (data.length) {
-                                // Clear existing options
-                                $subCategorySelect.empty();
+                            // Add default option for selecting a subcategory
+                            $subCategorySelect.append('<option value="" disabled selected>Select Subcategory</option>');
 
-                                // Add default option for selecting a subcategory
-                                $subCategorySelect.append('<option value="" disabled selected>Select Subcategory</option>');
-
-                                // Append subcategory options
-                                $.each(data, function(key, subcategory) {
-                                    $subCategorySelect.append('<option value="' + subcategory.id + '">' + subcategory.name + '</option>');
-                                });
-                            } else {
-                                // Clear existing options and show no subcategories available
-                                $subCategorySelect.empty();
-                                $subCategorySelect.append('<option value="" selected disabled>No Subcategories Available</option>');
-                            }
-                        },
-                        error: function(xhr) {
-                            console.error(xhr.responseText);
+                            // Append subcategory options
+                            $.each(data, function(key, subcategory) {
+                                $subCategorySelect.append('<option value="' + subcategory.id + '">' + subcategory.name + '</option>');
+                            });
+                        } else {
+                            // Clear existing options and show no subcategories available
+                            $subCategorySelect.empty();
+                            $subCategorySelect.append('<option value="" selected disabled>No Subcategories Available</option>');
                         }
-                    });
-                } else {
-                    $('#subCategories').html(
-                        '<option value="" selected disabled>Choose Category First</option>');
-                }
-            });
+                    },
+                    error: function(xhr) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            } else {
+                $('#subCategories').html(
+                    '<option value="" selected disabled>Choose Category First</option>');
+            }
         });
-    </script>
+    });
+</script>
+
 <script>
     $(document).ready(function() {
         $("form").submit(function(event) {
@@ -828,6 +790,7 @@
 
             // Get form values
             var productName = $("#inputEmail4").val().trim();
+            var hsnCode = $("#hsn_code").val();
             var category = $("#Categories").val();
             var subcategory = $("#subCategories").val();
             var brand = $("#brand").val();
@@ -836,7 +799,6 @@
             var discount_percentage = $("#discountPercentage").val().trim();
             var shortDescription = $("textarea").val().trim();
             var product_id = $("#product_id").val(); // Add this if you need the product ID for updating
-
 
 
 
@@ -918,6 +880,7 @@
                 $("#loaderOverlay").fadeIn(); // Show the loader overlay
                 // Collect form data
                 var formData = new FormData(this);
+                console.log(formData);
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -968,7 +931,8 @@
             }
         });
     });
-    </script>
+</script>
+
 <script>
     $(document).ready(function() {
         $('#Categories, #subCategories').change(function() {
@@ -991,231 +955,231 @@
         });
     });
 </script>
-<script>
-        $(document).ready(function() {
-            // Show the modal when the button is clicked
-            $('#addSizeInput').on('click', function() {
-                $('#addSizeModal').modal('show');
-            });
-
-            // Handle the form submission via AJAX
-            $('#addSizeButton').click(function() {
-              
-
-                // Get the size name from the input field
-                let sizeName = $('#sizeName').val();
-                let key = $('#newCategories').val();
-
-                // Clear previous error message
-                $('#error-message').addClass('d-none').text('');
-
-                // Perform AJAX request to add the size
-                $.ajax({
-                    url: '{{ route('sizes.store') }}', // Assuming a route named sizes.store
-                    type: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        name: sizeName,
-                        key : key
-                    },
-                    success: function(response) {
-
-                        // Close the modal
-                        $('#addSizeModal').modal('hide');
-
-                        
-
-                        // Show success Swal alert
-                        Swal.fire({
-                            title: 'Success!',
-                            text: 'New size has been added successfully.',
-                            icon: 'success',
-                            confirmButtonText: 'OK'
-                        });
-                       // Extract the size and key from the response
-    // Extract the size and key from the response
-    let size = response.size;
-    let categoryId = size.key;
-
-    // Find the table column with matching data-key
-    let categoryColumn = $(`table.custom-table thead th[data-key="${categoryId}"]`);
-
-    if (categoryColumn.length > 0) {
-        // Find the corresponding <td> in the table body
-        let columnIndex = categoryColumn.index();
-        let targetCell = $(`table.custom-table tbody tr td`).eq(columnIndex);
-
-        // Append the new size to the found <td>
-        targetCell.append(`
-            <div class="form-check-2">
-                <input type="checkbox" name="sizes[]"
-                    value="${size.name}"
-                    class="size-checkbox ${size.name === 'FREE' ? 'free-checkbox' : ''}">
-                <label>${size.name}</label>
-            </div>
-        `);
-    } else {
-        // Log error if the category is not found
-        console.error(`Category column with ID "${categoryId}" not found.`);
-    }
-
-                    },
-                    error: function(xhr) {
-                        if (xhr.status === 422) {
-                            // Validation error occurred
-                            let errors = xhr.responseJSON.errors;
-                            $('#error-message').removeClass('d-none').text(errors.name[0]);
-                        } else {
-                            // Handle other errors
-                            Swal.fire({
-                                title: 'Error!',
-                                text: 'An error occurred. Please try again.',
-                                icon: 'error',
-                                confirmButtonText: 'OK'
-                            });
-                        }
-                    }
-                });
-            });
-        });
-    </script>
-
 
 <script>
-        $(document).ready(function() {
-            $('#manageSizeInput').on('click', function() {
-                fetchSizesAndUpdateCheckboxes();
-            });
-
-            // Handle delete button click
-            $(document).on('click', '.delete-size-btn', function() {
-                let sizeId = $(this).data('id');
-                let sizeName = $(this).data('name');
-                let deleteUrl = `{{ route('sizes.delete', ':id') }}`;
-                deleteUrl = deleteUrl.replace(':id', sizeId);
-                // AJAX call to delete the size
-                $.ajax({
-                    url: deleteUrl,
-                    type: 'DELETE',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function(response) {
-                        // Remove the quantity field for the deleted size
-                      $(`button[data-id="${sizeId}"]`).closest('tr').remove();
-
-                      // Find the corresponding checkbox and label in the table
-                let categoryId = response.size.key; // Extract categoryId from response
-                let sizeName = response.size.name;  // Extract size name from response
-
-                console.log(`categoryId: ${categoryId}, sizeName: ${sizeName}`);
-
-                // Find the table column with matching data-key
-                let categoryColumn = $(`table.custom-table thead th[data-key="${categoryId}"]`);
-
-                if (categoryColumn.length > 0) {
-                    // Find the corresponding <td> in the table body
-                    let columnIndex = categoryColumn.index();
-                    let targetCells = $(`table.custom-table tbody tr td:nth-child(${columnIndex + 1})`); // +1 for 1-based index
-                    
-                    // Loop through each cell in the column and remove the checkbox if it matches the size
-                    targetCells.each(function() {
-                        let cell = $(this);
-                        let checkbox = cell.find(`.size-checkbox[value="${sizeName}"]`);
-                        
-                        if (checkbox.length > 0) {
-                            checkbox.closest('.form-check-2').remove();  // Remove the checkbox and label wrapper
-                        }
-                    });
-                } else {
-                    console.error(`Category column with ID "${categoryId}" not found.`);
-                }
-
-                
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Deleted!',
-                            text: 'The size has been deleted.',
-                        });
-                       // Close the modal
-                $('#sizeModal').modal('hide');
-                       
-                    },
-                    error: function() {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error!',
-                            text: 'There was a problem deleting the size.',
-                        });
-                    }
-                });
-            });
+    $(document).ready(function() {
+        // Show the modal when the button is clicked
+        $('#addSizeInput').on('click', function() {
+            $('#addSizeModal').modal('show');
         });
 
+        // Handle the form submission via AJAX
+        $('#addSizeButton').click(function() {
+            
 
-        // Function to update the size checkboxes in the form
-        function updateModalTable(sizes) {
-            let sizesTableBody = $('#sizesTableBody');
-            sizesTableBody.empty(); // Clear the existing rows
+            // Get the size name from the input field
+            let sizeName = $('#sizeName').val();
+            let key = $('#newCategories').val();
 
-            // Group sizes by key
-            let groupedSizes = sizes.reduce((groups, size) => {
-                let key = size.key; // Assuming 'key' is the grouping property in your Size model
-                if (!groups[key]) {
-                    groups[key] = [];
-                }
-                groups[key].push(size);
-                return groups;
-            }, {});
+            // Clear previous error message
+            $('#error-message').addClass('d-none').text('');
 
-            // Loop through the grouped sizes and render them
-            Object.keys(groupedSizes).forEach(function(key) {
-                // Add a heading for the group
-                let headingHtml = `
-                    <tr>
-                        <th colspan="2" class="text-center" style="background-color: #f8f9fa;">
-                            <strong>${key}</strong>
-                        </th>
-                    </tr>
-                `;
-                sizesTableBody.append(headingHtml);
-
-                // Render each size in the group
-                groupedSizes[key].forEach(function(size) {
-                    let rowHtml = `
-                        <tr>
-                            <td class="text-center">${size.name}</td>
-                            <td class="text-center">
-                                <button class="btn btn-danger btn-sm delete-size-btn" data-id="${size.id}" data-name="${size.name}">Delete</button>
-                            </td>
-                        </tr>
-                    `;
-                    sizesTableBody.append(rowHtml);
-                });
-            });
-        }
-
-        let getSizesUrl = @json(route('sizes.index'));
-        // Function to fetch the updated sizes and update the checkboxes
-        function fetchSizesAndUpdateCheckboxes() {
+            // Perform AJAX request to add the size
             $.ajax({
-                url: getSizesUrl,
-                type: 'GET',
-                success: function(sizes) {
-                    updateModalTable(sizes); // Update the checkboxes with the new data
+                url: '{{ route('sizes.store') }}', // Assuming a route named sizes.store
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    name: sizeName,
+                    key : key
+                },
+                success: function(response) {
+
+                    // Close the modal
+                    $('#addSizeModal').modal('hide');
+
+                    
+
+                    // Show success Swal alert
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'New size has been added successfully.',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+                    // Extract the size and key from the response
+                    // Extract the size and key from the response
+                    let size = response.size;
+                    let categoryId = size.key;
+
+                    // Find the table column with matching data-key
+                    let categoryColumn = $(`table.custom-table thead th[data-key="${categoryId}"]`);
+
+                    if (categoryColumn.length > 0) {
+                        // Find the corresponding <td> in the table body
+                        let columnIndex = categoryColumn.index();
+                        let targetCell = $(`table.custom-table tbody tr td`).eq(columnIndex);
+
+                        // Append the new size to the found <td>
+                        targetCell.append(`
+                            <div class="form-check-2">
+                                <input type="checkbox" name="sizes[]"
+                                    value="${size.name}"
+                                    class="size-checkbox ${size.name === 'FREE' ? 'free-checkbox' : ''}">
+                                <label>${size.name}</label>
+                            </div>
+                        `);
+                    } else {
+                        // Log error if the category is not found
+                        console.error(`Category column with ID "${categoryId}" not found.`);
+                    }
+
                 },
                 error: function(xhr) {
-                    console.error('Error fetching sizes:', xhr);
+                    if (xhr.status === 422) {
+                        // Validation error occurred
+                        let errors = xhr.responseJSON.errors;
+                        $('#error-message').removeClass('d-none').text(errors.name[0]);
+                    } else {
+                        // Handle other errors
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'An error occurred. Please try again.',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    }
                 }
             });
-        }
-        // Function to update the table inside the modal
-        function updateModalTable(sizes) {
+        });
+    });
+</script>
 
-            let sizesTableBody = $('#sizesTableBody');
-            sizesTableBody.empty(); // Clear the existing rows
-            // Group sizes by key
-            let groupedSizes = sizes.reduce((groups, size) => {
+<script>
+    $(document).ready(function() {
+        $('#manageSizeInput').on('click', function() {
+            fetchSizesAndUpdateCheckboxes();
+        });
+
+        // Handle delete button click
+        $(document).on('click', '.delete-size-btn', function() {
+            let sizeId = $(this).data('id');
+            let sizeName = $(this).data('name');
+            let deleteUrl = `{{ route('sizes.delete', ':id') }}`;
+            deleteUrl = deleteUrl.replace(':id', sizeId);
+            // AJAX call to delete the size
+            $.ajax({
+                url: deleteUrl,
+                type: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    // Remove the quantity field for the deleted size
+                    $(`button[data-id="${sizeId}"]`).closest('tr').remove();
+
+                    // Find the corresponding checkbox and label in the table
+            let categoryId = response.size.key; // Extract categoryId from response
+            let sizeName = response.size.name;  // Extract size name from response
+
+            console.log(`categoryId: ${categoryId}, sizeName: ${sizeName}`);
+
+            // Find the table column with matching data-key
+            let categoryColumn = $(`table.custom-table thead th[data-key="${categoryId}"]`);
+
+            if (categoryColumn.length > 0) {
+                // Find the corresponding <td> in the table body
+                let columnIndex = categoryColumn.index();
+                let targetCells = $(`table.custom-table tbody tr td:nth-child(${columnIndex + 1})`); // +1 for 1-based index
+                
+                // Loop through each cell in the column and remove the checkbox if it matches the size
+                targetCells.each(function() {
+                    let cell = $(this);
+                    let checkbox = cell.find(`.size-checkbox[value="${sizeName}"]`);
+                    
+                    if (checkbox.length > 0) {
+                        checkbox.closest('.form-check-2').remove();  // Remove the checkbox and label wrapper
+                    }
+                });
+            } else {
+                console.error(`Category column with ID "${categoryId}" not found.`);
+            }
+
+            
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Deleted!',
+                        text: 'The size has been deleted.',
+                    });
+                    // Close the modal
+            $('#sizeModal').modal('hide');
+                    
+                },
+                error: function() {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'There was a problem deleting the size.',
+                    });
+                }
+            });
+        });
+    });
+
+
+    // Function to update the size checkboxes in the form
+    function updateModalTable(sizes) {
+        let sizesTableBody = $('#sizesTableBody');
+        sizesTableBody.empty(); // Clear the existing rows
+
+        // Group sizes by key
+        let groupedSizes = sizes.reduce((groups, size) => {
+            let key = size.key; // Assuming 'key' is the grouping property in your Size model
+            if (!groups[key]) {
+                groups[key] = [];
+            }
+            groups[key].push(size);
+            return groups;
+        }, {});
+
+        // Loop through the grouped sizes and render them
+        Object.keys(groupedSizes).forEach(function(key) {
+            // Add a heading for the group
+            let headingHtml = `
+                <tr>
+                    <th colspan="2" class="text-center" style="background-color: #f8f9fa;">
+                        <strong>${key}</strong>
+                    </th>
+                </tr>
+            `;
+            sizesTableBody.append(headingHtml);
+
+            // Render each size in the group
+            groupedSizes[key].forEach(function(size) {
+                let rowHtml = `
+                    <tr>
+                        <td class="text-center">${size.name}</td>
+                        <td class="text-center">
+                            <button class="btn btn-danger btn-sm delete-size-btn" data-id="${size.id}" data-name="${size.name}">Delete</button>
+                        </td>
+                    </tr>
+                `;
+                sizesTableBody.append(rowHtml);
+            });
+        });
+    }
+
+    let getSizesUrl = @json(route('sizes.index'));
+    // Function to fetch the updated sizes and update the checkboxes
+    function fetchSizesAndUpdateCheckboxes() {
+        $.ajax({
+            url: getSizesUrl,
+            type: 'GET',
+            success: function(sizes) {
+                updateModalTable(sizes); // Update the checkboxes with the new data
+            },
+            error: function(xhr) {
+                console.error('Error fetching sizes:', xhr);
+            }
+        });
+    }
+    // Function to update the table inside the modal
+    function updateModalTable(sizes) {
+
+        let sizesTableBody = $('#sizesTableBody');
+        sizesTableBody.empty(); // Clear the existing rows
+        // Group sizes by key
+        let groupedSizes = sizes.reduce((groups, size) => {
             let categoryName = size.category_details ? size.category_details.name : 'Uncategorized'; // Group by category name or fallback to 'Uncategorized'
 
 
@@ -1251,6 +1215,52 @@
                 sizesTableBody.append(rowHtml);
             });
         });
-            }
-    </script>
+    }
+</script>
+
+<script id="populate-hsn-codes" type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+        const hsnSelect = document.getElementById('hsn_code');
+        const gstInput = document.getElementById('gst_rate');
+
+        // Prevent fetching multiple times
+        let fetched = false;
+
+        hsnSelect.addEventListener('click', function () {
+            if (fetched) return;
+            fetched = true;
+
+            fetch('/hsn-codes')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch HSN codes');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Clear previous options (except first)
+                    hsnSelect.length = 1;
+
+                    data.forEach(hsn => {
+                        const option = document.createElement('option');
+                        option.value = hsn.id;
+                        option.textContent = `${hsn.hsn_code} - ${hsn.description} (${hsn.gst}%)`;
+                        option.dataset.gst = hsn.gst;
+                        hsnSelect.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert('Could not load HSN codes. Please try again later.');
+                });
+        });
+
+        hsnSelect.addEventListener('change', function () {
+            const selectedOption = this.options[this.selectedIndex];
+            const gst = selectedOption.dataset.gst;
+            gstInput.value = gst ? gst : '';
+        });
+    });
+</script>
+
 @endpush
