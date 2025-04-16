@@ -59,41 +59,59 @@
 						{{ session('success') }}
 					</div>
 				@endif
-
-				<!-- GST Number Section -->
-				<label class="block text-sm font-medium text-gray-700">Enter GST Number</label>
-				<div class="flex items-center space-x-2 mt-1">
-					<input id="gstNumber" name="gst_number" type="text" placeholder="Enter GST Number" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" />
-					<button class="bg-orange-500 text-white px-4 py-2 w-36 rounded-md hover:bg-orange-600" type="button" onclick="verifyGSTNumber(event)">Verify</button>
-				</div>
-				<p class="text-xs text-red-500 mt-1 hidden" id="error-message">This field is required.</p>
-
-				<!-- Business Details Section -->
-				<div id="businessDetails" class="mt-6 p-4 rounded-lg animate-pulse bg-gray-50 relative">
-					<div class="space-y-4" id="successContainer">
-						<div class="flex flex-col gap-1">
-							<label for="businessName" class="text-sm text-gray-500">Business Name:</label>
-							<input id="businessName" name="business_name" type="text" class="text-sm font-semibold w-72 h-4 bg-neutral-300 rounded focus:outline-none" readonly />
-						</div>
-
-						<div class="flex flex-col gap-1">
-							<label for="legalName" class="text-sm text-gray-500">Legal Name:</label>
-							<input id="legalName" name="legal_name" type="text" class="text-sm font-semibold w-64 h-4 bg-neutral-300 rounded focus:outline-none" readonly />
-						</div>
-
-						<div class="flex flex-col gap-1">
-							<label for="businessType" class="text-sm text-gray-500">Business Type:</label>
-							<input id="businessType" name="business_type" type="text" class="text-sm font-semibold w-40 h-4 bg-neutral-300 rounded focus:outline-none" readonly />
-						</div>
-
-						<div class="flex flex-col gap-1 pb-4">
-							<label for="businessAddress" class="text-sm text-gray-500">Address:</label>
-							<input id="businessAddress" name="address"  class="text-sm font-semibold w-80 h-4 bg-neutral-300 rounded focus:outline-none" readonly />
-						</div>
+				<label class="block text-sm font-medium text-gray-700 mb-2">Choose Verification Method</label>
+                <div class="flex space-x-4 mb-4">
+                    <label class="flex items-center space-x-2">
+                        <input type="radio" name="verification_type" value="gst" checked onchange="toggleVerificationMethod()">
+                        <span>Verify with GST</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="radio" name="verification_type" value="uain" onchange="toggleVerificationMethod()">
+                        <span>Proceed without GST (UID)</span>
+                    </label>
+                </div>
+				<div id="gstSection">
+					<!-- GST Number Section -->
+					<label class="block text-sm font-medium text-gray-700">Enter GST Number</label>
+					<div class="flex items-center space-x-2 mt-1">
+						<input id="gstNumber" name="gst_number" type="text" placeholder="Enter GST Number" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" />
+						<button class="bg-orange-500 text-white px-4 py-2 w-36 rounded-md hover:bg-orange-600" type="button" onclick="verifyGSTNumber(event)">Verify</button>
 					</div>
-					<div class="absolute top-10 right-4 w-2 h-2 rounded-full bg-neutral-300 animate-pulse " id="gst_status"></div>
+					<p class="text-xs text-red-500 mt-1 hidden" id="error-message">This field is required.</p>
+
+					<!-- Business Details Section -->
+					<div id="businessDetails" class="mt-6 p-4 rounded-lg animate-pulse bg-gray-50 relative">
+						<div class="space-y-4" id="successContainer">
+							<div class="flex flex-col gap-1">
+								<label for="businessName" class="text-sm text-gray-500">Business Name:</label>
+								<input id="businessName" name="business_name" type="text" class="text-sm font-semibold w-72 h-4 bg-neutral-300 rounded focus:outline-none" readonly />
+							</div>
+
+							<div class="flex flex-col gap-1">
+								<label for="legalName" class="text-sm text-gray-500">Legal Name:</label>
+								<input id="legalName" name="legal_name" type="text" class="text-sm font-semibold w-64 h-4 bg-neutral-300 rounded focus:outline-none" readonly />
+							</div>
+
+							<div class="flex flex-col gap-1">
+								<label for="businessType" class="text-sm text-gray-500">Business Type:</label>
+								<input id="businessType" name="business_type" type="text" class="text-sm font-semibold w-40 h-4 bg-neutral-300 rounded focus:outline-none" readonly />
+							</div>
+
+							<div class="flex flex-col gap-1 pb-4">
+								<label for="businessAddress" class="text-sm text-gray-500">Address:</label>
+								<input id="businessAddress" name="address"  class="text-sm font-semibold w-80 h-4 bg-neutral-300 rounded focus:outline-none" readonly />
+							</div>
+						</div>
+						<div class="absolute top-10 right-4 w-2 h-2 rounded-full bg-neutral-300 animate-pulse " id="gst_status"></div>
+					</div>
 				</div>
 
+				{{-- UAIN Section --}}
+				<div id="uainSection" class="hidden">
+					<label class="block text-sm font-medium text-gray-700">Enter UID Number</label>
+					<input type="text" name="uain" placeholder="Enter UID" class="w-full border border-gray-300 rounded-md p-2 mb-2">
+					<a href="https://reg.gst.gov.in/registration/generateuid" target="_blank" class="text-sm text-blue-600 underline">How to get UID?</a>
+				</div>
 				<button type="submit" class="w-full my-6 p-4 text-white font-semibold bg-orange-600 hover:bg-orange-500">Continue</button>
 				
 			</form>
@@ -242,7 +260,16 @@
 			}
 		}
 	</script>
+    <script>
+        function toggleVerificationMethod() {
+            const method = document.querySelector('input[name="verification_type"]:checked').value;
+            document.getElementById('gstSection').classList.toggle('hidden', method !== 'gst');
+            document.getElementById('uainSection').classList.toggle('hidden', method !== 'uain');
+        }
 
+        // Initialize based on default selection
+        toggleVerificationMethod();
+    </script>
 </body>
 
 </html>

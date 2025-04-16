@@ -70,7 +70,7 @@ class SellerController extends Controller
             'phone_number' => 'required|digits:10|unique:users,phone_number',
             'otp' => 'required|digits:4',
             'email' => 'required|email|unique:users,email',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:1024',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:1024',
             'password' => 'required|min:8',
             'confirm_password' => 'required|same:password', // Confirm password validation
         ]);
@@ -79,16 +79,16 @@ class SellerController extends Controller
         if ($validatedData['otp'] !== '1234') {
             return back()->withErrors(['otp' => 'Invalid OTP.']);
         }
-
+        $imageName = 'bangabasi_logo_short.png';
         // Handle logo upload
         if ($request->hasFile('image')) {
             // Get the file extension
             $extension = $request->file('image')->getClientOriginalExtension();
-        
+
             // Generate a unique name using timestamp and random number
             $imageName = time() . '_' . rand(1000, 9999) . '.' . $extension;
-        
-            // Move the file to the 'public/logos' directory
+
+            // Move the file to the 'public/user/uploads/profile' directory
             $request->file('image')->move(public_path('user/uploads/profile'), $imageName);
         }
 
@@ -141,48 +141,44 @@ class SellerController extends Controller
 
     public function submitGstDetails(Request $request)
     {
-        // Check if the user is authenticated
         if (!Auth::check()) {
             abort(403, 'You must be logged in to submit GST details.');
         }
 
         $user = Auth::user();
 
-
-        // Validate the GST details
         $validatedData = $request->validate([
-            'gst_number' => 'required|string|size:15|unique:gst_details,gst_number',
-            'business_name' => 'required|string|max:255',
-            'legal_name' => 'required|string|max:100|',
-            'business_type' => 'required|string|max:100',
-            'address' => 'required|string',
+            'verification_type' => 'required|in:gst,uain',
+            'gst_number' => 'nullable|required_if:verification_type,gst|string|size:15|unique:gst_details,gst_number',
+            'business_name' => 'nullable|required_if:verification_type,gst|string|max:255',
+            'legal_name' => 'nullable|required_if:verification_type,gst|string|max:100',
+            'business_type' => 'nullable|required_if:verification_type,gst|string|max:100',
+            'address' => 'nullable|required_if:verification_type,gst|string',
+            'uain' => 'nullable|required_if:verification_type,uain|string|max:20'
         ]);
 
-
-        // Check if the user is already associated with GST details
-        if (GstDetail::where('user_id', $user->id)->exists()) {
-            return back()->withErrors(['error' => 'GST details already submitted.']);
+        if ($validatedData['verification_type'] === 'gst') {
+            GstDetail::create([
+                'user_id' => $user->id,
+                'gst_number' => $validatedData['gst_number'],
+                'business_name' => $validatedData['business_name'],
+                'legal_name' => $validatedData['legal_name'],
+                'business_type' => $validatedData['business_type'],
+                'address' => $validatedData['address'],
+            ]);
+        } else {
+            GstDetail::create([
+                'user_id' => $user->id,
+                'uin' => $validatedData['uain'],
+            ]);
         }
 
-        // Save GST details
-        GstDetail::create([
-            'user_id' => $user->id,
-            'gst_number' => $validatedData['gst_number'],
-            'business_name' => $validatedData['business_name'],
-            'legal_name' => $validatedData['legal_name'],
-            'business_type' => $validatedData['business_type'],
-            'address' => $validatedData['address'],
-        ]);
-
-            // Create or update the Seller record
-        $seller = Seller::updateOrCreate(
-            ['user_id' => $user->id], 
-            [
-                'registration_step' => 2  // Set registration step to 2 after GST details submission
-            ]
+        Seller::updateOrCreate(
+            ['user_id' => $user->id],
+            ['registration_step' => 2]
         );
 
-        return redirect()->route('seller_pickupverification')->with('success', 'GST details submitted successfully!');
+        return redirect()->route('seller_pickupverification')->with('success', 'Details submitted successfully. Our team will verify and notify you shortly.');
     }
 
     public function showPickupVerification()
