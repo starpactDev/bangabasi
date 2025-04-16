@@ -1,21 +1,4 @@
 
-Conversation opened. 1 read message. 
-
-Skip to content
-Using Gmail with screen readers
-
-1 of 1,056
-seller verification
-Inbox
-
-Nilanjana Bera
-Attachments
-08:57 (56 minutes ago)
-to me
-
-
-One attachment
-  • Scanned by Gmail
 <!DOCTYPE html>
 <html lang="en">
 
