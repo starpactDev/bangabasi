@@ -108,8 +108,7 @@
                     </p>
                 </div>
                 <div>
-                    <a href="{{ route('admin_viewproduct') }}" class="btn btn-primary"> View All
-                    </a>
+                    <a href="{{ route('admin_viewproduct') }}" class="btn btn-primary"> View All </a>
                 </div>
             </div>
             <div class="row">
@@ -317,10 +316,7 @@
                                                     <select name="collection" id="collection" class="form-select">
                                                         <option selected disabled> -- Select -- </option>
                                                         @foreach ($collections as $collection)
-
-                                                            <option value="{{ $collection->id }}"
-                                                                @if ($product->collections) {{ $collection->id == $product->collection->id ? 'selected' : '' }} @endif
-                                                                >
+                                                            <option value="{{ $collection->id }}" @if ($product->collections) {{ $collection->id == $product->collection->id ? 'selected' : '' }} @endif >
                                                                 {{ $collection->collection_name }}
                                                             </option>
                                                         @endforeach
@@ -329,7 +325,6 @@
                                                 <div class="col-md-12 mb-3 mt-3">
                                                     <label class="form-label">Select HSN Code </label>
                                                     <select name="hsn_code" id="hsn_code" class="form-select">
-                                                        
                                                         @foreach ($hsnCodes as $hsn)
                                                             <option value="{{ $hsn->id }}" @if ($product->productHsn) {{ $hsn->id == $product->productHsn->hsn_code ? 'selected' : '' }} @endif data-gst="{{ $hsn->gst }}">
                                                                 {{ $hsn->hsn_code." - ".$hsn->description." (" .$hsn->gst. " %)" }}
