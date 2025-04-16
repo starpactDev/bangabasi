@@ -197,10 +197,6 @@ class SuperUserProductController extends Controller
     }
 
 
-
-
-
-
     public function submit(Request $request)
     {
         $user = Auth::user();
@@ -348,21 +344,6 @@ class SuperUserProductController extends Controller
         $this->storeOrUpdatePackageDimension($request, $product);
 
 
-        // Handle image uploads
-        // if ($request->hasFile('images')) {
-        //     // Delete old images
-        //     ProductImage::where('product_id', $product->id)->delete();
-        //     foreach ($request->file('images') as $image) {
-        //         $imageName = time() . '_' . $image->getClientOriginalName();
-        //         $destinationPath = public_path('/user/uploads/products/images');
-        //         $image->move($destinationPath, $imageName);
-
-        //         ProductImage::create([
-        //             'product_id' => $product->id,
-        //             'image' => $imageName,
-        //         ]);
-        //     }
-        // }
         if ($request->has('brand')) {
             $existBrand = Brandproduct::where('product_id', $product->id)->first();
             if ($existBrand) {
