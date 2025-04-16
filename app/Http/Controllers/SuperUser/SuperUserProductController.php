@@ -17,6 +17,7 @@ use App\Helpers\ReviewHelper;
 use App\Models\ProductColour;
 use App\Models\PackageDimension;
 use App\Http\Controllers\Controller;
+use App\Models\HsnCode;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
@@ -125,11 +126,12 @@ class SuperUserProductController extends Controller
         $categories = Category::all();
         $brands = Brand::all();
         $collections = Collection::all();
+        $hsnCodes = HsnCode::all();
         $selected_category = Category::where('id', $product->category)->first();
 
         $subcategories = SubCategory::where('category_id', $selected_category->id)->get();
         $sizes = Size::all();
-        return view('superuser.products.edit', compact('categories', 'product', 'subcategories', 'sizes', 'brands', 'collections', 'groupedSizes', 'dimensions')); // Create this view for product info
+        return view('superuser.products.edit', compact('categories', 'product', 'subcategories', 'sizes', 'brands', 'collections', 'groupedSizes', 'dimensions', 'hsnCodes')); // Create this view for product info
     }
 
     public function edit_image($id) {

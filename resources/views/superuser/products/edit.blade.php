@@ -329,12 +329,20 @@
                                                 <div class="col-md-12 mb-3 mt-3">
                                                     <label class="form-label">Select HSN Code </label>
                                                     <select name="hsn_code" id="hsn_code" class="form-select">
-                                                        <option selected disabled> -- Select -- </option>
+                                                        
+                                                        @foreach ($hsnCodes as $hsn)
+                                                            <option value="{{ $hsn->id }}" @if ($product->productHsn) {{ $hsn->id == $product->productHsn->hsn_code ? 'selected' : '' }} @endif data-gst="{{ $hsn->gst }}">
+                                                                {{ $hsn->hsn_code." - ".$hsn->description." (" .$hsn->gst. " %)" }}
+                                                            </option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
+                                                @php
+                                                    $gstRate = $hsnCodes->where('id', $product->hsn_id)->first()->gst;
+                                                @endphp
                                                 <div class="col-md-6 mb-3 mt-3">
                                                     <label for="gst_rate" class="form-label">GST Rate (%)</label>
-                                                    <input type="text" class="form-control slug-title" name="gst_rate" value="{{ old('gst_rate', $product->gst_rate) }}" id="gst_rate" readonly>
+                                                    <input type="text" class="form-control slug-title" name="gst_rate" value="{{ old('gst_rate', $gstRate) }}" id="gst_rate" readonly>
                                                 </div>
                                                 <div class="col-md-6 mb-3 mt-3">
                                                     <label for="item_code" class="form-label">Item Code</label>
@@ -1224,7 +1232,7 @@
         const gstInput = document.getElementById('gst_rate');
 
         // Prevent fetching multiple times
-        let fetched = false;
+        let fetched = {{ $hsnCodes->isEmpty() ? 'false' : 'true' }};
 
         hsnSelect.addEventListener('click', function () {
             if (fetched) return;
