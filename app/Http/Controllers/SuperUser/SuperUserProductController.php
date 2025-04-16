@@ -56,7 +56,8 @@ class SuperUserProductController extends Controller
        
         $brands = Brand::all();
         $collections = Collection::all();
-        return view('superuser.products.addproduct', compact('categories', 'sizes', 'brands', 'collections','groupedSizes'));
+        $hsnCodes = HsnCode::all();
+        return view('superuser.products.addproduct', compact('categories', 'sizes', 'brands', 'collections','groupedSizes', 'hsnCodes')); // Create this view for product info
     }
 
     //Populate the view for inactive products
@@ -212,6 +213,7 @@ class SuperUserProductController extends Controller
         // Store product details
         $product = Product::create([
             'user_id' => $user->id,
+            'hsn_id' => $request->hsn_code,
             'name' => $request->name,
             'tags' => $request->tags,
             'category' => $category->id,

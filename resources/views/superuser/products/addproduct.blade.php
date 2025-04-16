@@ -253,6 +253,23 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-md-12 mb-3 mt-3">
+                                                    <label class="form-label">Select HSN Code </label>
+                                                    <select name="hsn_code" id="hsn_code" class="form-select">
+                                                        @foreach ($hsnCodes as $hsn)
+                                                            <option value="{{ $hsn->id }}" data-gst="{{ $hsn->gst }}">
+                                                                {{ $hsn->hsn_code." - ".$hsn->description." (" .$hsn->gst. " %)" }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                @php
+                                                    $gstRate = $hsnCodes->first()->gst;
+                                                @endphp
+                                                <div class="col-md-6 mb-3 mt-3">
+                                                    <label for="gst_rate" class="form-label">GST Rate (%)</label>
+                                                    <input type="text" class="form-control slug-title" name="gst_rate" value="{{ old('gst_rate', $gstRate) }}" id="gst_rate" readonly>
+                                                </div>
+                                                <div class="col-md-6 mb-3 mt-3">
                                                     <label for="item_code" class="form-label">Item Code</label>
                                                     <input type="text" class="form-control slug-title" name="item_code" id="item_code" readonly>
                                                 </div>
@@ -702,6 +719,7 @@
 
                 // Get form values
                 var productName = $("#inputEmail4").val().trim();
+                var hsnCode = $("#hsn_code").val();
                 var category = $("#Categories").val();
                 var subcategory = $("#subCategories").val();
                 var originalPrice = $("#price1").val().trim();
@@ -913,32 +931,32 @@
                             icon: 'success',
                             confirmButtonText: 'OK'
                         });
-                       // Extract the size and key from the response
-    // Extract the size and key from the response
-    let size = response.size;
-    let categoryId = size.key;
+                        // Extract the size and key from the response
+                        // Extract the size and key from the response
+                        let size = response.size;
+                        let categoryId = size.key;
 
-    // Find the table column with matching data-key
-    let categoryColumn = $(`table.custom-table thead th[data-key="${categoryId}"]`);
+                        // Find the table column with matching data-key
+                        let categoryColumn = $(`table.custom-table thead th[data-key="${categoryId}"]`);
 
-    if (categoryColumn.length > 0) {
-        // Find the corresponding <td> in the table body
-        let columnIndex = categoryColumn.index();
-        let targetCell = $(`table.custom-table tbody tr td`).eq(columnIndex);
+                        if (categoryColumn.length > 0) {
+                            // Find the corresponding <td> in the table body
+                            let columnIndex = categoryColumn.index();
+                            let targetCell = $(`table.custom-table tbody tr td`).eq(columnIndex);
 
-        // Append the new size to the found <td>
-        targetCell.append(`
-            <div class="form-check-2">
-                <input type="checkbox" name="sizes[]"
-                    value="${size.name}"
-                    class="size-checkbox ${size.name === 'FREE' ? 'free-checkbox' : ''}">
-                <label>${size.name}</label>
-            </div>
-        `);
-    } else {
-        // Log error if the category is not found
-        console.error(`Category column with ID "${categoryId}" not found.`);
-    }
+                            // Append the new size to the found <td>
+                            targetCell.append(`
+                                <div class="form-check-2">
+                                    <input type="checkbox" name="sizes[]"
+                                        value="${size.name}"
+                                        class="size-checkbox ${size.name === 'FREE' ? 'free-checkbox' : ''}">
+                                    <label>${size.name}</label>
+                                </div>
+                            `);
+                        } else {
+                            // Log error if the category is not found
+                            console.error(`Category column with ID "${categoryId}" not found.`);
+                        }
 
                     },
                     error: function(xhr) {
@@ -1155,6 +1173,51 @@
                         }
                     });
                 }
+            });
+        });
+    </script>
+
+    <script id="populate-hsn-codes" type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            const hsnSelect = document.getElementById('hsn_code');
+            const gstInput = document.getElementById('gst_rate');
+
+            // Prevent fetching multiple times
+            let fetched = {{ $hsnCodes->isEmpty() ? 'false' : 'true' }};
+
+            hsnSelect.addEventListener('click', function () {
+                if (fetched) return;
+                fetched = true;
+
+                fetch('/hsn-codes')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Failed to fetch HSN codes');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        // Clear previous options (except first)
+                        hsnSelect.length = 1;
+
+                        data.forEach(hsn => {
+                            const option = document.createElement('option');
+                            option.value = hsn.id;
+                            option.textContent = `${hsn.hsn_code} - ${hsn.description} (${hsn.gst}%)`;
+                            option.dataset.gst = hsn.gst;
+                            hsnSelect.appendChild(option);
+                        });
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        alert('Could not load HSN codes. Please try again later.');
+                    });
+            });
+
+            hsnSelect.addEventListener('change', function () {
+                const selectedOption = this.options[this.selectedIndex];
+                const gst = selectedOption.dataset.gst;
+                gstInput.value = gst ? gst : '';
             });
         });
     </script>
