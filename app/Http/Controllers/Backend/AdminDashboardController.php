@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Models\Bank;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\Seller;
 use App\Models\Product;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
+use App\Models\PickupAddress;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -99,6 +101,7 @@ class AdminDashboardController extends Controller
     
     public function updateProfile(Request $request)
     {
+       
         $user = Auth::user();
 
         // Validate inputs
@@ -123,6 +126,71 @@ class AdminDashboardController extends Controller
         $user->email = $request->email;
         $user->contact_number = $request->contact_number;
         $user->phone_number = $request->phone_number;
+
+        
+
+        // Update store details
+        $sellers = Seller::where('user_id',$user->id)->first();
+        $sellers->store_name = $request->store_name;
+        $sellers->email = $request->seller_email;
+        $sellers->description = $request->description;
+        
+
+        // Handle logo upload
+        if ($request->hasFile('logo')) {
+            $logoName = time() . '.' . $request->logo->extension();
+            $request->logo->move(public_path('user/uploads/store_logo'), $logoName);
+            $sellers->logo = $logoName;
+        }
+
+        $sellers->save();
+        $bank = Bank::where('user_id',$user->id)->first();
+
+        // Update bank details
+        if ($request->filled('bank_name')) {
+            $bank->bank_name = $request->bank_name;
+        }
+        if ($request->filled('branch_name')) {
+            $bank->branch_name = $request->branch_name;
+        }
+        if ($request->filled('ifsc_code')) {
+            $bank->ifsc_code = $request->ifsc_code;
+        }
+        if ($request->filled('account_number')) {
+            $bank->account_number = $request->account_number;
+        }
+        if ($request->filled('account_holder_name')) {
+            $bank->account_holder_name = $request->account_holder_name;
+        }
+
+        $bank->save();
+
+        $address = PickupAddress::where('user_id',$user->id)->first();
+         // Update pickup address
+         if ($request->filled('building')) {
+            $address->building = $request->building;
+        }
+        if ($request->filled('street')) {
+            $address->street = $request->street;
+        }
+        if ($request->filled('locality')) {
+            $address->locality = $request->locality;
+        }
+        if ($request->filled('landmark')) {
+            $address->landmark = $request->landmark;
+        }
+        if ($request->filled('pincode')) {
+            $address->pincode = $request->pincode;
+        }
+        if ($request->filled('city')) {
+            $address->city = $request->city;
+        }
+        if ($request->filled('state')) {
+            $address->state = $request->state;
+        }
+
+        $address->save();
+
 
         // Check if the old password is provided and matches
         if ($request->filled('old_password') && Hash::check($request->old_password, $user->password)) {

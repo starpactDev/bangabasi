@@ -122,7 +122,9 @@
                             <div class="tab-content px-3 px-xl-5" id="myTabContent">
                                 <div class="tab-pane fade  show active" id="settings" role="tabpanel" aria-labelledby="settings-tab">
                                     <div class="tab-pane-content mt-5">
-                                        <form id="updateProfileForm">
+                                        <form id="updateProfileForm" method="POST" action="{{ route('superuser.updateProfile') }}" enctype="multipart/form-data">
+
+                                            @csrf
                                             <!-- User Image -->
                                             <div class="form-group row mb-6">
                                                 <label for="coverImage" class="col-sm-4 col-lg-2 col-form-label">User Image</label>
@@ -206,27 +208,38 @@
                                                 
 
                                                 <!-- GST Details -->
-                                                @if($gst)
-                                                    <h5 class="mt-4">GST Details</h5>
-                                                    <div class="form-group mb-3">
-                                                        <label for="gst_number">GST Number</label>
-                                                        <input type="text" class="form-control" id="gst_number" name="gst_number" value="{{ optional($gst)->gst_number ?? '' }}">
-                                                    </div>
-
-                                                    <div class="form-group mb-3">
-                                                        <label for="business_name">Business Name</label>
-                                                        <input type="text" class="form-control" id="business_name" name="business_name" value="{{ optional($gst)->business_name ?? '' }}">
-                                                    </div>
-
-                                                    <div class="form-group mb-3">
-                                                        <label for="business_type">Business Type</label>
-                                                        <input type="text" class="form-control" id="business_type" name="business_type" value="{{ optional($gst)->business_type ?? '' }}">
-                                                    </div>
-
-                                                    <div class="form-group mb-4">
-                                                        <label for="legal_name">Legal Name</label>
-                                                        <input type="text" class="form-control" id="legal_name" name="legal_name" value="{{ optional($gst)->legal_name ?? '' }}">
-                                                    </div>
+                                                @if ($gst)
+                                                    <h5 class="mt-4">GST / UID Details</h5>
+                                                    @if ($gst->gst_number)
+                                                        <div class="form-group mb-3">
+                                                            <label for="gst_number">GST Number</label>
+                                                            <input type="text" class="form-control" id="gst_number" name="gst_number" value="{{ optional($gst)->gst_number ?? '' }}">
+                                                        </div>
+                                                    @endif
+                                                    @if ($gst->business_name)
+                                                        <div class="form-group mb-3">
+                                                            <label for="business_name">Business Name</label>
+                                                            <input type="text" class="form-control" id="business_name" name="business_name" value="{{ optional($gst)->business_name ?? '' }}">
+                                                        </div>
+                                                    @endif
+                                                    @if ($gst->business_type)
+                                                        <div class="form-group mb-3">
+                                                            <label for="business_type">Business Type</label>
+                                                            <input type="text" class="form-control" id="business_type" name="business_type" value="{{ optional($gst)->business_type ?? '' }}">
+                                                        </div>
+                                                    @endif
+                                                    @if ($gst->legal_name)
+                                                        <div class="form-group mb-4">
+                                                            <label for="legal_name">Legal Name</label>
+                                                            <input type="text" class="form-control" id="legal_name" name="legal_name" value="{{ optional($gst)->legal_name ?? '' }}">
+                                                        </div>
+                                                    @endif
+                                                    @if ($gst->uin)
+                                                        <div class="form-group mb-4 mt-4">
+                                                            <label for="legal_name">UID Number</label>
+                                                            <input type="text" class="form-control" id="legal_name" name="legal_name" value="{{ optional($gst)->uin ?? '' }}">
+                                                        </div>
+                                                    @endif
                                                 @endif
 
                                                 <!-- Bank Details -->
@@ -354,108 +367,128 @@
             var fileLabel = document.querySelector('label.custom-file-label[for="coverImage"]');
             
 
-            fileInput.addEventListener('change', function() {
-                var fileName = fileInput.files.length > 0 ? fileInput.files[0].name : 'Choose file...';
-                fileLabel.textContent = fileName;
-            });
+        fileInput.addEventListener('change', function() {
+            var fileName = fileInput.files.length > 0 ? fileInput.files[0].name : 'Choose file...';
+            fileLabel.textContent = fileName;
         });
-        $(document).ready(function() {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    });
+    $(document).ready(function() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        // Handle form submission
+        $('#updateProfileForm').on('submit', function(e) {
+            e.preventDefault();
+            const url = $(this).attr('action');
+
+            const oldPassword = $('#oldPassword').val().trim();
+            const newPassword = $('#newPassword').val().trim();
+            const conPassword = $('#conPassword').val().trim();
+
+            //  Only validate if any password field is touched
+            const isChangingPassword = oldPassword || newPassword || conPassword;
+
+            if (isChangingPassword) {
+                if (!oldPassword) {
+                    return Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Please enter your old password to change the password!',
+                    });
+                }
+
+                if (newPassword.length < 6) {
+                    return Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'New password must be at least 6 characters long!',
+                    });
+                }
+
+                if (newPassword !== conPassword) {
+                    return Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'New password and confirm password do not match!',
+                    });
+                    }
+                    }
+                
+            
+
+            // 🔃 Loading Spinner
+            Swal.fire({
+                title: 'Updating...',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
                 }
             });
-            // Handle form submission
-            $('#updateProfileForm').on('submit', function(e) {
-                e.preventDefault();
 
-                // Basic validation
-                var oldPassword = $('#oldPassword').val();
-                var newPassword = $('#newPassword').val();
-                var conPassword = $('#conPassword').val();
+            // Prepare form data
+            const formData = new FormData(this);
 
-                if (newPassword || conPassword) {
-                    if (!oldPassword) {
+            // Submit the form using AJAX
+            $.ajax({
+                url: url,
+
+                method: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),},
+                success: function(response) {
+                    console.log("AJAX Success Response:", response); // 
+                    if (response.success) {
+                        console.log(response.message);
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Profile Updated',
+                            text: response.message,
+                        }).then(() => {
+                            // Optionally reload or redirect after success
+                            window.location.reload();
+                        });
+                    } else {
                         Swal.fire({
                             icon: 'error',
                             title: 'Error',
-                            text: 'Please enter your old password to change the password!',
+                            text: response.message,
                         });
-                        return;
                     }
+                },
+                error: function(xhr) {
+                    if (xhr.status === 422) {
+                        var errors = xhr.responseJSON.errors;
+                        console.log(xhr.responseJSON);
 
-                    if (newPassword !== conPassword) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: 'New password and confirm password do not match!',
-                        });
-                        return;
-                    }
-
-                    if (newPassword.length < 6) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: 'New password must be at least 6 characters long!',
-                        });
-                        return;
-                    }
-                }
-
-                // Prepare form data
-                var formData = new FormData(this);
-
-                // Submit the form using AJAX
-                $.ajax({
-                    url: '{{ route('admin.updateProfile') }}', // The route where form will be submitted
-                    method: 'POST',
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    success: function(response) {
-                        if (response.success) {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Profile Updated',
-                                text: response.message,
-                            }).then(() => {
-                                // Optionally reload or redirect after success
-                                window.location.reload();
-                            });
-                        } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Error',
-                                text: response.message,
-                            });
-                        }
-                    },
-                    error: function(xhr) {
-                        if (xhr.status === 422) {
-                            var errors = xhr.responseJSON.errors;
+                            var errorMessages = '';
                             var errorMessages = '';
 
-                            $.each(errors, function(key, value) {
-                                errorMessages += value[0] +
-                                '\n'; // Concatenate all error messages
-                            });
+                        var errorMessages = '';
 
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Validation Errors',
-                                text: errorMessages,
-                            });
-                        } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Error',
-                                text: 'An error occurred while updating your profile.',
-                            });
-                        }
+                        $.each(errors, function(key, value) {
+                            errorMessages += value[0] + '<br>';
+                        });
+
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Validation Errors',
+                            html: errorMessages,
+                        });
+
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'An error occurred while updating your profile.',
+                        });
                     }
-                });
+                }
             });
         });
-    </script>
+    });
+</script>
 @endpush

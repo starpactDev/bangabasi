@@ -442,6 +442,7 @@ Route::group(['middleware' =>  [SuperUserMiddleware::class]], function () {
     Route::get('/orders/shiprocket/show', [SuperUserOrderController::class, 'shiprocketShowOrder'])->name('superuser_orders.shiprocket.show');
 
     Route::get('/superuser-profile', [AdminDashboardController::class, 'profile'])->name('admin_profile');
+    Route::post('/user/admin-update-profile', [AdminDashboardController::class, 'updateProfile'])->name('superuser.updateProfile');
 });
 
 Route::get('/test-order', [SuperUserOrderController::class, 'createAdHocOrder'])->name('test_order');
