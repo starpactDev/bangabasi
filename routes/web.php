@@ -409,7 +409,12 @@ Route::group(['middleware' =>  [SuperUserMiddleware::class]], function () {
     Route::post('/collections/store', [SuperUserCollectionController::class, 'store'])->name('admin.collections.store');
 
     //HSN Codes
-    Route::get('/hsn-codes', [SuperUserHsnController::class, 'index'])->name('admin.hsn.index');
+    Route::get('/hsn-codes', [SuperUserHsnController::class, 'index'])->name('superuser.hsn.index');
+    Route::get('/superuser/hsn-codes', [SuperUserHsnController::class, 'show'])->name('superuser.hsn.index');
+    Route::post('/superuser/hsn-code/store', [SuperUserHsnController::class, 'store'])->name('superuser.hsn.store');
+    Route::put('/superuser/hsn-code/update/{id}', [SuperUserHsnController::class, 'update'])->name('superuser.hsn.update');
+    Route::delete('/hsn-codes/{id}', [SuperUserHsnController::class, 'destroy'])->name('superuser.hsn.destroy');
+
     Route::get('/products/my-products', [SuperUserProductController::class, 'myProducts'])->name('admin.my_products');
     Route::get('/products/{id}/info', [SuperUserProductController::class, 'show'])->name('admin_products.info');
 
