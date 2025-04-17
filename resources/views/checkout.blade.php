@@ -83,31 +83,21 @@
                         {{-- <option value="" class="">Country Name</option> --}}
                         <option value="India" class="" selected> India </option>
                     </select>
-                    <input type="text" name="state" id="" value = "{{ old('state_name') }}"
-                        class="w-full my-4 px-4 leading-8 border focus:outline-none"
-                        placeholder="State Name">
+                    <input type="text" name="state" id="" value = "{{ old('state_name') }}" class="w-full my-4 px-4 leading-8 border focus:outline-none" placeholder="State Name">
                     <p id="state_name_error" class="text-red-500 text-sm "></p>
-                    <input type="text" name="street_name" id="" value = "{{ old('street_name') }}"
-                        class="w-full my-4 px-4 leading-8 border focus:outline-none"
-                        placeholder="House number and street name">
+                    <input type="text" name="street_name" id="" value = "{{ old('street_name') }}" class="w-full my-4 px-4 leading-8 border focus:outline-none" placeholder="House number and street name">
                     <p id="street_name_error" class="text-red-500 text-sm "></p>
-                    <input type="text" name="apartment" id="" value = "{{ old('apartment') }}"
-                        class="w-full my-4 px-4 leading-8 border focus:outline-none"
-                        placeholder="Apartment, suite, unit, etc (optional)">
+                    <input type="text" name="apartment" id="" value = "{{ old('apartment') }}" class="w-full my-4 px-4 leading-8 border focus:outline-none" placeholder="Apartment, suite, unit, etc (optional)">
 
-                    <input type="text" name="city" id="" value = "{{ old('city') }}"
-                        class="w-full my-4 px-4 leading-8 border focus:outline-none" placeholder="Town / City">
+                    <input type="text" name="city" id="" value = "{{ old('city') }}" class="w-full my-4 px-4 leading-8 border focus:outline-none" placeholder="Town / City">
                     <p id="city_error" class="text-red-500 text-sm "></p>
                     {{-- <input type="text" name="apartment" id=""
                     class="w-full my-4 px-4 leading-8 border focus:outline-none" placeholder="Country (optional)"> --}}
-                    <input type="tel" name="phone" id="" value = "{{ old('phone') }}"
-                        class="w-full my-4 px-4 leading-8 border focus:outline-none" placeholder="Phone">
+                    <input type="tel" name="phone" id="" value = "{{ old('phone') }}" class="w-full my-4 px-4 leading-8 border focus:outline-none" placeholder="Phone">
                     <p id="phone_error" class="text-red-500 text-sm "></p>
-                    <input type="number" name="pin" id="" value = "{{ old('pin') }}"
-                        class="w-full my-4 px-4 leading-8 border focus:outline-none" placeholder="Postcode">
+                    <input type="number" name="pin" id="" value = "{{ old('pin') }}" class="w-full my-4 px-4 leading-8 border focus:outline-none" placeholder="Postcode">
                     <p id="pin_error" class="text-red-500 text-sm "></p>
-                    <input type="email" name="email" id="" value = "{{ old('email') }}"
-                        class="w-full my-4 px-4 leading-8 border focus:outline-none" placeholder="Email">
+                    <input type="email" name="email" id="" value = "{{ old('email') }}" class="w-full my-4 px-4 leading-8 border focus:outline-none" placeholder="Email">
                     <p id="email_error" class="text-red-500 text-sm "></p>
                 </form>
             </div>
@@ -228,6 +218,12 @@
                             <td class="text-sm text-neutral-700" colspan="4">Platform Fee</td>
                             <td class="py-1 px-2 text-right text-sm text-neutral-800"> {{ '₹' . $platform_fee }} </td>
                         </tr>
+                        @if($gst_amount > 0)
+                        <tr>
+                            <td class="text-sm text-neutral-700" colspan="4">GST</td>
+                            <td class="py-1 px-2 text-right text-sm text-neutral-800"> {{ '₹' . $gst_amount }} </td>
+                        </tr>
+                        @endif
 						<tr class="border-t-2 border-neutral-300 border-dotted">
 							<td class="p-2 text-left text-lg font-medium uppercase" colspan="4">Total Amount</td>
 							<td class="p-2 text-right text-lg"> {{ ' ₹' . $total_amount }} </td>

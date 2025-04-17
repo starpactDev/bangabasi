@@ -282,6 +282,24 @@ class OrderController extends Controller
             $order_item->quantity = $item->quantity;
             $order_item->unit_price = $item->unit_price;
             $order_item->status = 0;
+            
+             // Default GST amount
+            $gst_amount = 0;
+
+            // Try to calculate GST if applicable
+            $product = \App\Models\Product::find($item->product_id);
+
+            if ($product && $product->hsn_id) {
+                $hsn = \App\Models\HsnCode::find($product->hsn_id);
+
+                if ($hsn && $hsn->gst) {
+                    $item_total = $item->unit_price * $item->quantity;
+                    $gst_amount = round(($item_total * $hsn->gst) / 100, 2);
+                }
+            }
+            
+            // Set GST (0 if not applicable)
+             $order_item->gst = $gst_amount;
             $order_item->save();
 
             // Update stock levels
@@ -375,7 +393,24 @@ class OrderController extends Controller
             $order_item->sku = $item->sku;
             $order_item->quantity = $item->quantity;
             $order_item->unit_price = $request->total_price;
-            $order_item->save();
+            
+            
+          // ðŸ§® Default GST amount
+        $gst_amount = 0;
+
+        // âœ… GST calculation if applicable
+        $product = \App\Models\Product::find($item->product_id);
+        if ($product && $product->hsn_id) {
+            $hsn = \App\Models\HsnCode::find($product->hsn_id);
+            if ($hsn && $hsn->gst) {
+                $item_total = $order_item->unit_price * $order_item->quantity;
+                $gst_amount = round(($item_total * $hsn->gst) / 100, 2);
+                
+            }
+        }
+
+        $order_item->gst = $gst_amount; // Store GST amount
+        $order_item->save();
 
             // Update stock
             $this->_updateStock($item);

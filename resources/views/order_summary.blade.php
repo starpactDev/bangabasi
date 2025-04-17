@@ -55,6 +55,7 @@
                         <th class="p-3 border-b">SKU</th>
                         <th class="p-3 border-b text-right">Quantity</th>
                         <th class="p-3 border-b text-right">Unit Price</th>
+                        <th class="p-3 border-b text-right">GST</th>
                         <th class="p-3 border-b text-right">Total</th>
                     </tr>
                 </thead>
@@ -70,7 +71,11 @@
                         <td class="p-3 border-b">{{ $item->sku ?? 'N/A' }}</td>
                         <td class="p-3 border-b text-right">{{ $item->quantity ?? 0 }}</td>
                         <td class="p-3 border-b text-right">₹{{ number_format($item->unit_price ?? 0, 2) }}</td>
-                        <td class="p-3 border-b text-right">₹{{ number_format(($item->unit_price ?? 0) * ($item->quantity ?? 0), 2) }}</td>
+                        <td class="p-3 border-b text-right">₹{{ number_format($item->gst ?? 0, 2) }}</td>
+                        @php
+                            $total = ($item->unit_price ?? 0) * ($item->quantity ?? 0) + ($item->gst ?? 0);
+                        @endphp
+                        <td class="p-3 border-b text-right">₹{{ number_format($total, 2) }}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -89,7 +94,12 @@
                 </p>
             </div>
             <div class="space-y-2 text-right">
-                <p><span class="font-medium">Subtotal:</span> ₹{{ number_format(collect($order->orderItems ?? [])->sum(fn($item) => ($item->unit_price ?? 0) * ($item->quantity ?? 0)), 2) }}</p>
+                @php
+                    $subtotal = collect($order->orderItems ?? [])->sum(function ($item) {
+                        return (($item->unit_price ?? 0) * ($item->quantity ?? 0)) + ($item->gst ?? 0);
+                    });
+                @endphp
+                <p><span class="font-medium">Subtotal (Incl. GST):</span> ₹{{ number_format($subtotal, 2) }}</p>
                 <p><span class="font-medium">Coupon Discount:</span> -₹{{ number_format($order->amountBreakdown->coupon_discount ?? 0, 2) }}</p>
                 <p><span class="font-medium">Shipping Charge:</span> ₹{{ number_format($order->amountBreakdown->shipping_charge ?? 0, 2) }}</p>
                 <p><span class="font-medium">Platform Fee:</span> ₹{{ number_format($order->amountBreakdown->platform_fee ?? 0, 2) }}</p>

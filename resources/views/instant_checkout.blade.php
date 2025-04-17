@@ -193,17 +193,24 @@
                         @if($coupon_discount > 0)
                         <tr>
                             <td class="text-sm text-neutral-700" colspan="4">Coupons for you </td>
-                            <td class="py-1 px-2 text-right text-sm text-green-600"> {{ '-₹' . $coupon_discount }} </td>
+                            <td class="py-1 px-2 text-right text-sm text-green-600"> {{ '-₹ ' . $coupon_discount }} </td>
                         </tr>
                         @endif
                         <tr>
                             <td class="text-sm text-neutral-700" colspan="4">Secured Packaging Fee</td>
-                            <td class="py-1 px-2 text-right text-sm text-neutral-800"> {{ '₹' . $shipping_fee }} </td>
+                            <td class="py-1 px-2 text-right text-sm text-neutral-800"> {{ '₹ ' . $shipping_fee }} </td>
                         </tr>
                         <tr>
                             <td class="text-sm text-neutral-700" colspan="4">Platform Fee</td>
-                            <td class="py-1 px-2 text-right text-sm text-neutral-800"> {{ '₹' . $platform_fee }} </td>
+                            <td class="py-1 px-2 text-right text-sm text-neutral-800"> {{ '₹ ' . $platform_fee }} </td>
                         </tr>
+                        
+                        @if($gst > 0)
+                          <tr>
+                            <td class="text-sm text-neutral-700" colspan="4">GST ({{ $gst }}%)</td>
+                            <td class="py-1 px-2 text-right text-sm text-neutral-800"> {{  '₹ ' .$gst_amount}} </td>
+                        </tr>
+                        @endif
 						<tr class="border-t-2 border-neutral-300 border-dotted">
 							<td class="p-2 text-left text-lg font-medium uppercase" colspan="4">Total Amount</td>
 							<td class="p-2 text-right text-lg"> {{ ' ₹' . $total_amount }} </td>
