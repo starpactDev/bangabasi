@@ -333,7 +333,7 @@
                                                     </select>
                                                 </div>
                                                 @php
-                                                    $gstRate = $hsnCodes->where('id', $product->hsn_id)->first()->gst;
+                                                    $gstRate = $hsnCodes->where('id', $product->hsn_id)->first()->gst ?? '0.00';
                                                 @endphp
                                                 <div class="col-md-6 mb-3 mt-3">
                                                     <label for="gst_rate" class="form-label">GST Rate (%)</label>
