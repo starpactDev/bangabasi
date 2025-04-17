@@ -470,4 +470,3 @@ Route::get('shiprocket/fetch-tracking', [ShipRocketController::class, 'fetchTrac
 //Test Mail Routes
 
 Route::get('/send-test-email', [MailController::class, 'sendTestEmail']);
-
