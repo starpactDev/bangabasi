@@ -263,7 +263,7 @@
                                                     </select>
                                                 </div>
                                                 @php
-                                                    $gstRate = $hsnCodes->first()->gst;
+                                                    $gstRate = $hsnCodes->first()->gst ?? 0.00;
                                                 @endphp
                                                 <div class="col-md-6 mb-3 mt-3">
                                                     <label for="gst_rate" class="form-label">GST Rate (%)</label>
