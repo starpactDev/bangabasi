@@ -18,7 +18,6 @@
     <div class="min-h-24 py-1 px-2 bg-white">
         <h2 class="font-semibold text-gray-600">{{ $title }}</h2>
         <div class="flex items-center justify-between">
-
             <div class="text-[#388e3c] text-sm font-bold pr-4">{{ $discount }} % OFF</div>
         </div>
         <div class="flex gap-4">
@@ -27,10 +26,7 @@
         </div>
         <div class="mx-auto w-full flex justify-around my-2 border-t">
             @if ($inStock)
-                <button onclick="showSizeModal({{ $id }})"
-                    class="bg-orange-600 text-white my-2 w-3/6 leading-8 hover:bg-orange-800">
-                    Cart
-                </button>
+                <button onclick="showSizeModal({{ $id }})" class="bg-orange-600 text-white my-2 w-3/6 leading-8 hover:bg-orange-800"> Cart </button>
 
                 <!-- Hidden form that will be submitted after size selection -->
                 <form id="wishlist_addToCart_{{ $id }}" action="{{ route('wishlist.addToCart') }}"
@@ -59,30 +55,19 @@
                                 @foreach ($sizes as $size)
                                     @if ($size->quantity > 0)
                                         <label class="inline-flex items-center cursor-pointer">
-                                            <input type="radio" name="size" value="{{ $size->size }}"
-                                                data-quantity="{{ $size->quantity }}" class="sr-only peer size-radio" />
-                                            <span
-                                                class="w-12 h-12 flex items-center justify-center border-2 border-gray-300 rounded-full hover:border-orange-500 peer-checked:bg-orange-500 peer-checked:text-white peer-checked:border-transparent cursor-pointer">
-                                                {{ $size->size }}
-                                            </span>
+                                            <input type="radio" name="size" value="{{ $size->size }}" data-quantity="{{ $size->quantity }}" class="sr-only peer size-radio" />
+                                            <span class="px-2 h-8 flex items-center justify-center border-2 border-gray-300  hover:border-orange-500 peer-checked:bg-orange-500 peer-checked:text-white peer-checked:border-transparent cursor-pointer"> {{ $size->size }} </span>
                                         </label>
                                     @else
-                                        <span
-                                            class="w-12 h-12 flex items-center justify-center border-2 border-gray-300 rounded-full bg-gray-200 text-gray-500 cursor-not-allowed">
-                                            {{ $size->size }}
-                                        </span>
+                                        <span class="w-12 h-12 flex items-center justify-center border-2 border-gray-300 rounded-full bg-gray-200 text-gray-500 cursor-not-allowed"> {{ $size->size }} </span>
                                     @endif
                                 @endforeach
                             </div>
                         @endif
 
                         <div class="mt-6 flex justify-center">
-                            <button onclick="submitSize({{ $id }}, {{ $discountedPrice }})" class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-700">
-                                Done
-                            </button>
-                            <button onclick="closeSizeModal({{ $id }})" class="bg-gray-300 text-black px-6 py-2 rounded ml-4">
-                                Cancel
-                            </button>
+                            <button onclick="submitSize({{ $id }}, {{ $discountedPrice }})" class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-700"> Done </button>
+                            <button onclick="closeSizeModal({{ $id }})" class="bg-gray-300 text-black px-6 py-2 rounded ml-4"> Cancel </button>
                         </div>
                     </div>
                 </div>
@@ -138,13 +123,10 @@
                 </script>
             @endif
 
-            <button onclick="document.getElementById('wishlist_delete_{{ $id }}').submit()"
-                class=" {{ $inStock ? 'bg-neutral-100' : 'bg-neutral-500' }} text-red-600 my-2 {{ $inStock ? 'w-2/6' : 'w-5/6' }} leading-8 hover:bg-red-600 hover:text-white "
-                data-wishlist_id = "{{ $id }}"> &#10008; </button>
+            <button onclick="document.getElementById('wishlist_delete_{{ $id }}').submit()" class=" {{ $inStock ? 'bg-neutral-100' : 'bg-neutral-500' }} text-red-600 my-2 {{ $inStock ? 'w-2/6' : 'w-5/6' }} leading-8 hover:bg-red-600 hover:text-white " data-wishlist_id = "{{ $id }}"> &#10008; </button>
             <form id="wishlist_delete_{{ $id }}" action="{{ route('wishlist.delete') }}" method="POST">
                 @csrf
                 <input type="hidden" name="wishlist_id" value="{{ $id }}">
-
             </form>
         </div>
     </div>
