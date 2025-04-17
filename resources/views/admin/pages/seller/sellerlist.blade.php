@@ -52,12 +52,6 @@
 												<td>
 													<div class="btn-group">
 														<a href="{{ route('admin_seller.details', ['id' => $seller->seller_id])}}" class="btn btn-outline-info py-0">Info</a>
-														
-														<form action="" method="POST" onsubmit="return confirm('Are you sure you want to delete this seller?');">
-															@csrf
-															@method('DELETE')
-															<button type="submit" class="btn btn-outline-danger">Delete</button>
-														</form>
 													</div>
 												</td>
 											</tr>
