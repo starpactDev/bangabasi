@@ -28,6 +28,7 @@
 											<th>Join On</th>
 											<th>Sold</th>
 											<th>Earning</th>
+											<th>Status</th>
 											<th>Action</th>
 										</tr>
 									</thead>
@@ -41,15 +42,22 @@
 												<td>{{ $seller->total_products_sold }}</td>
 												<td>{{ $seller->total_earnings }}</td>
 												<td>
-													<div class="btn-group">
-														<a href="{{ route('admin_seller.details', ['id' => $seller->seller_id])}}" class="btn btn-outline-success">Info</a>
-														<button type="button" class="btn btn-outline-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-															<span class="sr-only">Info</span>
-														</button>
-														<div class="dropdown-menu">
-															<a class="dropdown-item" href="{{ route('admin_sellerlist.toggle_status', ['id' => $seller->seller_id]) }}"onclick="return confirm('Are you sure you want to toggle the status?');">Toggle Status </a>
-															<a class="dropdown-item" href="#">Delete</a>
+													<form action="{{ route('admin_sellerlist.toggle_status', $seller->seller_id) }}" method="POST" id="toggleForm-{{ $seller->seller_id }}">
+														@csrf
+														<div class="form-check form-switch">
+															<input class="form-check-input {{ $seller->status ? 'bg-success' : '' }}" type="checkbox" role="switch" id="statusSwitch-{{ $seller->seller_id }}" name="status" {{ $seller->status ? 'checked' : '' }} onchange="document.getElementById('toggleForm-{{ $seller->seller_id }}').submit();">
 														</div>
+													</form>
+												</td>
+												<td>
+													<div class="btn-group">
+														<a href="{{ route('admin_seller.details', ['id' => $seller->seller_id])}}" class="btn btn-outline-info py-0">Info</a>
+														
+														<form action="" method="POST" onsubmit="return confirm('Are you sure you want to delete this seller?');">
+															@csrf
+															@method('DELETE')
+															<button type="submit" class="btn btn-outline-danger">Delete</button>
+														</form>
 													</div>
 												</td>
 											</tr>
