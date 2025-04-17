@@ -122,6 +122,15 @@
                     <hr>
                 </li>
 
+                <!-- HSN Codes -->
+                <li>
+                    <a class="sidenav-item-link" href="{{ route('superuser.hsn.index') }}">
+                        <i class="mdi mdi-format-list-bulleted-type"></i>
+                        <span class="nav-text">HSN Codes</span>
+                    </a>
+                    <hr>
+                </li>
+
                 <!-- create a side bar for this route ('admin.homepage') -->
                 <li class="has-sub {{ request()->routeIs('admin.homepage', 'admin.header', 'admin_sale', 'admin.aboutus', 'admin.logo.index', 'admin.configuration') ? 'active expand' : '' }}">
                     <a class="sidenav-item-link" href="javascript:void(0)">

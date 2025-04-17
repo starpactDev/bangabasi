@@ -34,6 +34,13 @@
 					</a>
 				</li>
 
+                <!-- HSN Codes -->
+                <li>
+                    <a class="sidenav-item-link" href="{{ route('superuser.hsn.index') }}">
+                        <i class="mdi mdi-format-list-bulleted-type"></i>
+                        <span class="nav-text">HSN Codes</span>
+                    </a>
+                </li>
                 
                 <!-- Products -->
                 <li class="has-sub">
