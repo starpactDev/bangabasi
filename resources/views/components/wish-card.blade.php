@@ -1,5 +1,4 @@
 @php
-
     $discount = 0;
     if ($originalPrice && $discountedPrice) {
         $discount = ceil((($originalPrice - $discountedPrice) / $originalPrice) * 100);
@@ -8,8 +7,7 @@
 
 <div class="col-span-4 min-h-64 border border-orange-400 shadow-sm hover:shadow-md {{ $inStock ? '' : 'bnw' }}">
     <div class="card-img min-h-80 relative  border">
-        <img src="{{ asset('user/uploads/products/images/' . $image->image) }}" alt="{{ $title }}"
-            class="absolute h-full w-full object-cover">
+        <img src="{{ asset('user/uploads/products/images/' . $image->image) }}" alt="{{ $title }}" class="absolute h-full w-full object-cover">
         @if (!$inStock)
             <p class="absolute p-2 text-center w-full bg-white bg-opacity-60">Out of Stock <span class="px-4 cursor-pointer">&#10007;</span></p>
         @endif
@@ -82,43 +80,75 @@
                     }
 
                     function submitSize(id, discountedPrice) {
-                        // Get the selected size
-                        let selectedSize = document.querySelector('input[name="size"]:checked');
-                        
-                        if (selectedSize) {
-                            // Set the selected size in the hidden input field
-                            document.getElementById('selected_size_' + id).value = selectedSize.value;
+                        const selectedSize = document.querySelector('#sizeModal_' + id + ' input[name="size"]:checked');
+                        const availableQuantity = selectedSize ? parseInt(selectedSize.dataset.quantity) : 0;
+                        const quantity = 1;
 
-                            // Close the modal
-                            closeSizeModal(id);
-
-                            // Show SweetAlert and submit the form
-                            Swal.fire({
-                                title: 'Product switched to cart!',
-                                text: 'Click OK to view your cart page.',
-                                icon: 'success',
-                                confirmButtonText: 'OK',
-                                preConfirm: () => {
-                                    // Submit the form
-                                    document.getElementById('wishlist_addToCart_' + id).submit();
-                                    // Redirect to cart after form submission
-                                    return new Promise((resolve) => {
-                                        setTimeout(() => {
-                                            window.location.href = "{{ route('cart') }}";
-                                            resolve();
-                                        }, 500);
-                                    });
-                                }
-                            });
-                        } else {
-                            // If no size is selected, show a warning
+                        if (!selectedSize) {
                             Swal.fire({
                                 title: 'No size selected',
                                 text: 'Please select a size before proceeding.',
                                 icon: 'warning',
                                 confirmButtonText: 'OK'
                             });
+                            return;
                         }
+
+                        if (quantity > availableQuantity) {
+                            Swal.fire({
+                                title: 'Insufficient Stock',
+                                text: `Only ${availableQuantity} item(s) available for this size.`,
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                            return;
+                        }
+
+                        // Prepare data for AJAX
+                        const formData = new FormData();
+                        formData.append('_token', '{{ csrf_token() }}');
+                        formData.append('wishlist_id', id);
+                        formData.append('quantity', quantity);
+                        formData.append('size', selectedSize.value);
+                        formData.append('unit_price', discountedPrice);
+
+                        fetch("{{ route('wishlist.addToCart') }}", {
+                            method: 'POST',
+                            body: formData,
+                        })
+                        .then(response => {
+                            if (!response.ok) throw new Error("Network error");
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data.success) {
+                                closeSizeModal(id);
+                                Swal.fire({
+                                    title: 'Product added to cart!',
+                                    text: 'Click OK to view your cart page.',
+                                    icon: 'success',
+                                    confirmButtonText: 'OK'
+                                }).then(() => {
+                                    window.location.href = "{{ route('cart') }}";
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: data.message || 'Something went wrong!',
+                                    icon: 'error',
+                                    confirmButtonText: 'OK'
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            console.error(error);
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'Could not add to cart. Please try again.',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        });
                     }
                 </script>
             @endif
