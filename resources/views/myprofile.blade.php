@@ -105,7 +105,7 @@
                 </form>
             </div>
 
-            <div class="col-span-12 lg:col-span-7  w-fit">
+            <div class="col-span-12 lg:col-span-7 w-fit">
                 <div class="flex md:p-4 justify-between items-center min-h-20 max-w-sm">
                     <h2 class="text-lg font-medium">Address</h2>
                     <button id="open-form-button" class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-700 focus:outline-none"> Add Address </button>
