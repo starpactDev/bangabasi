@@ -130,11 +130,9 @@
                                 <table id="responsive-data-table" class="table" style="width:100%">
                                     <thead>
                                         <tr>
-                                            
                                             <th>Product</th>
                                             <th>Name</th>
                                             <th>Customer Name</th>
-                                            <th>Customer Email</th>
                                             <th>Reviews</th>
                                             <th>Ratings</th>
                                             <th>Images</th>
@@ -150,32 +148,26 @@
                                             
                                                 <td>
                                                     @if ($review->product && $review->product->productImages->isNotEmpty())
-                                                        <img class="tbl-thumb"
-                                                            src="{{ asset('user/uploads/products/images/' . $review->product->productImages->first()->image) }}"
-                                                            alt="Product Image">
+                                                        <img class="tbl-thumb" src="{{ asset('user/uploads/products/images/' . $review->product->productImages->first()->image) }}" alt="Product Image">
                                                     @else
                                                         <span>No Image Available</span>
                                                     @endif
                                                 </td>
-                                                <td  class="name-field">{{ $review->product->name }}</td>
-                                                <td>{{ $review->name }}</td>
-                                                <td>{{ $review->email }}</td>
+                                                <td class="name-field">{{ $review->product->name }}</td>
+                                                <td title="{{ $review->email }}">{{ $review->name }}</td>
                                                 <td>{{ $review->review_message }}</td>
 
                                                 <td>
                                                     <div class="ec-t-rate">
                                                         @for ($i = 1; $i <= 5; $i++)
-                                                            <i
-                                                                class="mdi mdi-star {{ $i <= $review->rating ? 'is-rated' : '' }}"></i>
+                                                            <i class="mdi mdi-star {{ $i <= $review->rating ? 'is-rated' : '' }}"></i>
                                                         @endfor
                                                     </div>
                                                 </td>
                                                 <td>
                                                     @if($review->review_images)
                                                         @foreach ($review->review_images as $image)
-                                                            <img class="tbl-thumb"
-                                                                src="{{ asset('user/uploads/review_images/' . $image->image_path) }}"
-                                                                alt="Review Image">
+                                                            <img class="tbl-thumb" src="{{ asset('user/uploads/review_images/' . $image->image_path) }}" alt="Review Image">
                                                         @endforeach
                                                     @endif
                                                 </td>
@@ -191,9 +183,7 @@
                                                 <td>{{ $review->created_at->format('Y-m-d') }}</td>
                                                 <td>
                                                     <div class="btn-group mb-1">
-                                                        <button type="button" class="btn btn-outline-danger"
-                                                            onclick="confirmDelete('{{ route('admin_review.delete', ['id' => $review->id]) }}')"
-                                                            style="border-top-left-radius: 0; border-bottom-left-radius: 0;">Delete
+                                                        <button type="button" class="btn btn-outline-danger" onclick="confirmDelete('{{ route('admin_review.delete', ['id' => $review->id]) }}')" style="border-top-left-radius: 0; border-bottom-left-radius: 0;">Delete
                                                         </button>
                                                     </div>
                                                 </td>
