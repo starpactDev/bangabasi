@@ -61,7 +61,7 @@
 												<td>{{$order->unique_id}}</td>
 												
 												
-												<td class="d-none d-lg-table-cell" title="$order->created_at">{{ date('M d, Y', strtotime($order->created_at)) }}</td>
+												<td class="d-none d-lg-table-cell" title="{{ $order->created_at }}">{{ date('M d, Y', strtotime($order->created_at)) }}</td>
 												<td class="d-none d-lg-table-cell">{{'₹'.$order->price}}</td>
 												<td>
 													<span class="badge d-inline-block {{$badgeClass}}" style=" min-width: 18ch;">{{$order->status }}</span>
