@@ -326,6 +326,7 @@ Route::group(['middleware' =>  [AdminCheckMiddleware::class]], function () {
 
     //Transaction
     Route::get('/admin/transaction', [AdminOrderController::class, 'transaction'])->name('admin_transaction');
+    Route::get('/admin/transaction/{order}', [AdminOrderController::class, 'viewTransaction'])->name('admin_transaction_view');
 
     Route::get('/admin-sellerlist', [AdminSellerController::class, 'index'])->name('admin_sellerlist');
     Route::get('/admin-seller/{id}', [AdminSellerController::class, 'getSellerDetails'])->name('admin_seller.details');

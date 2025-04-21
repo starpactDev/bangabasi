@@ -69,7 +69,7 @@
 												<td class="d-none d-lg-table-cell text-uppercase">{{$order->payment_method	}}</td>
 												<td class="text-center">
 													<div class="show d-inline-block ">
-														<a class="" href="" role="button" id="dropdown-recent-order1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">View</a>
+														<a class="" href="{{ route('admin_transaction_view', ['order' => $order->id])}}" >View</a>
 													</div>
 												</td>
 											</tr>

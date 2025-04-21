@@ -47,6 +47,15 @@ class AdminOrderController extends Controller
         $transactions = Order::all();
         return view('admin.pages.transaction.index', compact('transactions'));
     }
+
+    public function viewTransaction($orderId)
+    {
+        $transaction = Order::with(['amountBreakdown', 'orderItems.product.seller.user', 'orderItems.breakdown', 'user', 'address'])
+                                ->where('id', $orderId)
+                                ->firstOrFail(); // Throws 404 if not found
+
+        return view('admin.pages.transaction.view', compact('transaction'));
+    }
     
 
     public function myOrders(){
