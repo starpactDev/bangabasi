@@ -123,7 +123,7 @@
                 </li>
 
                 <!-- HSN Codes -->
-                <li>
+                <li class="{{ request()->routeIs('superuser.hsn.index') ? 'active' : '' }}">
                     <a class="sidenav-item-link" href="{{ route('superuser.hsn.index') }}">
                         <i class="mdi mdi-format-list-bulleted-type"></i>
                         <span class="nav-text">HSN Codes</span>
