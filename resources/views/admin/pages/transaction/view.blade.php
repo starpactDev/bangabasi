@@ -53,7 +53,7 @@
 		<div class="container mt-4">
 			<div class="row">
 				<!-- Order Details -->
-				<div class="col-md-6">
+				<div class="col-md-12">
 					<div class="card shadow-sm border-0">
 						<div class="card-header bg-primary text-white">
 							<h5 class="mb-0"><i class="fas fa-receipt me-2"></i> Order Details</h5>
@@ -92,105 +92,9 @@
 					</div>
 				</div>
 			
-				<!-- Amount Breakdown -->
-				<div class="col-md-6">
-					<div class="card shadow-sm border-0">
-						<div class="card-header bg-success text-white">
-							<h5 class="mb-0"><i class="fas fa-chart-line me-2"></i> Amount Breakdown</h5>
-						</div>
-						<div class="card-body">
-							<ul class="list-group list-group-flush">
-								<li class="list-group-item d-flex justify-content-between align-items-center">
-									Platform Fee 
-									<span class="fw-bold text-danger">₹{{ number_format(optional($transaction->amountBreakdown)->platform_fee, 2) }}</span>
-								</li>
-								<li class="list-group-item d-flex justify-content-between align-items-center">
-									Shipping Charge 
-									<span class="fw-bold">₹{{ number_format(optional($transaction->amountBreakdown)->shipping_charge, 2) }}</span>
-								</li>
-								<li class="list-group-item d-flex justify-content-between align-items-center text-danger">
-									Coupon Discount 
-									<span class="fw-bold text-primary">- ₹{{ number_format(optional($transaction->amountBreakdown)->coupon_discount, 2) }}</span>
-								</li>
-								<li class="list-group-item d-flex justify-content-between align-items-center">
-									Admin Fee 
-									<span class="fw-bold text-danger">₹{{ number_format(optional($transaction->amountBreakdown)->admin_fee, 2) }}</span>
-								</li>
-								<li class="list-group-item d-flex justify-content-between align-items-center">
-									Amount to Seller 
-									<span class="fw-bold text-success">₹{{ number_format(optional($transaction->amountBreakdown)->amount_to_seller, 2) }}</span>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
 			</div>
 			
 		
-			<!-- Order Items -->
-			<div class="row mt-4">
-				<div class="col-md-12">
-					<div class="card shadow-sm">
-						<div class="card-header bg-info text-white">
-							<h5 class="mb-0">Order Items Breakdown</h5>
-						</div>
-						<div class="card-body">
-							<div class="table-responsive">
-								<table class="table table-hover table-bordered align-middle">
-									<thead class="">
-										<tr>
-											<th>Product</th>
-											<th class="d-none d-md-table-cell">Size</th>
-											<th>Seller</th>
-											<th>Quantity</th>
-											<th>Total Price</th>
-											<th>Amount to Seller</th>
-											<th class="d-none d-md-table-cell">Commission</th>
-											<th class="d-none d-md-table-cell">Status</th>
-										</tr>
-									</thead>
-									<tbody>
-										@foreach($transaction->orderItems as $item)
-											<tr>
-												<td>
-													<strong>{{ $item->product->name ?? 'N/A' }}</strong> <br>
-													<small class="text-muted">₹{{ number_format($item->unit_price, 2) }}</small>
-												</td>
-												<td class="d-none d-md-table-cell">{{ $item->sku ?? 'N/A' }}</td>
-												<td>{{ $item->product->seller->store_name ?? 'Unknown Seller' }}</td>
-												<td>{{ $item->quantity }}</td>
-												<td>₹{{ number_format($item->unit_price * $item->quantity, 2) }}</td>
-												<td>₹{{ number_format(optional($item->breakdown)->amount_to_seller, 2) ?? '0.00' }}</td>
-												<td class="d-none d-md-table-cell">
-													₹{{ number_format(optional($item->breakdown)->item_total - optional($item->breakdown)->amount_to_seller, 2) ?? '0.00' }}
-												</td>
-												<td class="d-none d-md-table-cell">
-													<span class="badge {{ $item->order_status == 'pending' ? 'bg-warning' : 'bg-success' }}">{{ ucfirst($item->order_status) }}</span>
-												</td>
-											</tr>
-										@endforeach
-									</tbody>
-									<tfoot class="table-light">
-										<tr>
-											<th colspan="4" class="text-end">Products Total:</th>
-											<th>
-												₹{{ number_format($transaction->orderItems->sum(fn($item) => $item->unit_price * $item->quantity), 2) }}
-											</th>
-											<th>
-												₹{{ number_format($transaction->orderItems->sum(fn($item) => optional($item->breakdown)->amount_to_seller), 2) }}
-											</th>
-											<th class="d-none d-md-table-cell">
-												₹{{ number_format($transaction->orderItems->sum(fn($item) => optional($item->breakdown)->item_total - optional($item->breakdown)->amount_to_seller), 2) }}
-											</th>
-											<th class="d-none d-md-table-cell"></th>
-										</tr>
-									</tfoot>
-								</table>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
 			
 			
 			
