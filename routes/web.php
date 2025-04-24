@@ -149,7 +149,7 @@ Route::get('/contact-us', function () {
     return view('contact');
 })->name('contact-us');
 
-Route::get('terms', function () {
+Route::get('/privacy-policy', function () {
     return view('termsandcondition');
 })->name('terms');
 
