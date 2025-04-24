@@ -95,6 +95,9 @@ Route::post('seller/bankverification', [SellerController::class, 'submitBankDeta
 Route::get('seller/sellerverification', [SellerController::class, 'sellerVerification'])->name('seller_sellerverification');
 Route::post('seller/details', [SellerController::class, 'storeSellerDetails'])->name('seller_verify');
 
+Route::get('seller/terms-and-condition', function(){
+    return view('sellertnc');
+})->name('seller_terms');
 
 Route::get('seller/success', function(){
     return view('seller.success');
