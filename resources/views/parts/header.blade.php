@@ -384,11 +384,10 @@ $products = $subCategories;
                             $cat_id = $activeCategory->get(0)->id;
                         @endphp
                         <div class=" relative w-1/5   hover:cursor-pointer p-holder">
-                            <a href="/products?category=1&sub_category=18">
+                            <a href="/products?category=1&sub_category={{ $subCategories[0]->id }}">
 
                                 <img src="{{ asset('images/men_clothing.jpg') }}" class="h-full w-full p-image" alt="mens product">
-                                <div
-                                    class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text white z-10 w-[110%] bg-white py-4 text-center bg-opacity-80">
+                                <div class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text white z-10 w-[110%] bg-white py-4 text-center bg-opacity-80">
                                     <div class="text-lg font-bold text-black">
                                         {{$subCategories[0]->name}}
                                     </div>
@@ -412,8 +411,7 @@ $products = $subCategories;
 
                         <div class=" relative w-1/5   hover:cursor-pointer p-holder">
                             <img src="{{ asset('images/women_clothing.jpg') }}" class=" w-full p-image" alt="mens product">
-                            <div
-                                class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text white z-10 w-[110%] bg-white py-4 text-center bg-opacity-80">
+                            <div class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text white z-10 w-[110%] bg-white py-4 text-center bg-opacity-80">
                                 <div class="text-lg font-bold text-black">
                                     {{$subCategories[1]->name}}
                                 </div>
@@ -435,7 +433,7 @@ $products = $subCategories;
                         </div>
 
                         <div class=" relative w-1/5  hover:cursor-pointer p-holder text-center">
-                            <div cl[110%]"text-xl  text-black font-bold pl-2 mb-6">
+                            <div class="text-xl  text-black font-bold pl-2 mb-6">
                                 {{ $activeCategory->get(0)->name }}
                             </div>
                             @foreach ($randomSubCategories as $value)
@@ -451,8 +449,7 @@ $products = $subCategories;
 
                         <div class=" relative w-1/5  hover:cursor-pointer p-holder">
                             <img src="{{ asset('images/kids_clothing_2.jpg') }}" class=" w-full p-image " alt="mens product">
-                            <div
-                                class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text white z-10 w-[110%] bg-white py-4 text-center bg-opacity-80">
+                            <div class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text white z-10 w-[110%] bg-white py-4 text-center bg-opacity-80">
                                 <div class="text-lg font-bold text-black">
                                     {{$subCategories[2]->name}}
                                 </div>
@@ -475,8 +472,7 @@ $products = $subCategories;
                             <a href="/products?category=1&sub_category=18">
 
                                 <img src="{{ asset('images/men_clothing.jpg') }}" class="h-full w-full p-image" alt="mens product">
-                                <div
-                                    class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text white z-10 w-[110%] bg-white py-4 text-center bg-opacity-80">
+                                <div class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text white z-10 w-[110%] bg-white py-4 text-center bg-opacity-80">
                                     <div class="text-lg font-bold text-black">
                                         {{$subCategories[3]->name}}
                                     </div>
