@@ -23,7 +23,7 @@
             </div>
         </div>
         <div>
-            <img src="{{ asset('user/uploads/about/Bangabasi_Team.png') }}" alt="Office Image" class="rounded-lg shadow-lg">
+            <img src="{{ asset('user/uploads/about/bb_contact.png') }}" alt="Office Image" class="rounded-lg shadow-sm ">
         </div>
     </div>
 
