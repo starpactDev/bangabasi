@@ -357,7 +357,7 @@
 				<div class="w-fit mx-auto">
 					<h6 class="text-lg  font-semibold my-6" >Sell On Bangabasi</h6>
 					<ul>
-						<li class="py-1"><a href="" class="hover:text-orange-600 text-neutral-900">Sell Online</a></li>
+						<li class="py-1"><a href="{{ route('seller_terms')}}" class="hover:text-orange-600 text-neutral-900">Terms and Condition</a></li>
 						<li class="py-1"><a href="" class="hover:text-orange-600 text-neutral-900">Pricing & Commission</a></li>
 						<li class="py-1"><a href="" class="hover:text-orange-600 text-neutral-900">How it works</a></li>
 						<li class="py-1"><a href="" class="hover:text-orange-600 text-neutral-900">Shipping & Returns</a></li>
