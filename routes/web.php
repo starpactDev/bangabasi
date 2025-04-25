@@ -96,7 +96,7 @@ Route::get('seller/sellerverification', [SellerController::class, 'sellerVerific
 Route::post('seller/details', [SellerController::class, 'storeSellerDetails'])->name('seller_verify');
 
 Route::get('seller/terms-and-condition', function(){
-    return view('sellertnc');
+    return view('seller.sellertnc');
 })->name('seller_terms');
 
 Route::get('seller/success', function(){
