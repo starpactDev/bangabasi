@@ -292,6 +292,10 @@ Route::group(['middleware' =>  [AdminCheckMiddleware::class]], function () {
     Route::get('/category/{id}', [CategoryController::class, 'destroy'])->name('admin_category.delete');
     Route::get('/category/{id}/images', [CategoryController::class, 'getCategoryImages'])->name('category.images');
     Route::get('/get-image-details/{id}', [CategoryController::class, 'getImageDetails'])->name('image.details');
+
+
+    Route::get('/category/manage-images/{category}', [CategoryController::class, 'manageImages'])->name('category.manage.images');
+    Route::post('/category/{category}/update-images', [CategoryController::class, 'updateImages'])->name('category.update.images');
     //Route::get('/subcategories/{categoryId}', [CategoryController::class, 'getSubCategoriesByCategory'])->name('subcategories.byCategory');
 
     Route::post('/update-image', [CategoryController::class, 'updateImage'])->name('image.update');

@@ -22,10 +22,66 @@ class CategoryController extends Controller
 
     public function header_images()
     {
-        $categories = Category::all();
+        $categories = Category::where('status', 'active')->get();
 
         return view('admin.pages.category.header_images', compact('categories'));
     }
+    public function manageImages(Category $category, Request $request)
+    {
+        $index = $request->query('index');
+
+        $limitMap = [
+            0 => 4,  // First Category (0th in array)
+            1 => 2,  // Second Category (1st in array)
+            2 => 5,  // Third Category (2nd in array)
+            5 => 5,  // Sixth Category (5th in array)
+            6 => 2,  // Seventh Category (6th in array)
+        ];
+
+        $categories = Category::where('status', 'active')->get();
+        $category = $categories->get($index);
+        if (!$category) {
+            abort(404, 'Category not found.');
+        }
+        $limit = $limitMap[$index] ?? 0;
+
+        // Fetch subcategories with limit
+        $subCategories = $category->subCategories()->take($limit)->get();
+
+        return view('admin.pages.category.manage_header_images', compact('category', 'subCategories'));
+    }  
+    
+    public function updateImages(Request $request, Category $category)
+    {
+      
+        $request->validate([
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+        if ($request->has('images')) {
+            foreach ($request->images as $subCategoryId => $imageFile) {
+                if ($imageFile) {
+                    $fileName = time().'_'.$subCategoryId.'.'.$imageFile->getClientOriginalExtension();
+                    $destinationPath = public_path('user/uploads/category/header_image');
+                    $imageFile->move($destinationPath, $fileName);
+                 
+                    // Update or create the CategoryHeaderImage
+                    CategoryHeaderImage::updateOrCreate(
+                        [
+                            'category_id' => $category->id,
+                            'sub_category' => $subCategoryId,
+                        ],
+                        [
+                            'title' => $fileName,
+                        ]
+                    );
+                }
+            }
+        }
+
+        return redirect()->back()->with('success', 'Images updated successfully!');
+    }
+
 
     public function product_show($id)
     {
