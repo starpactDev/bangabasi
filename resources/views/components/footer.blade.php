@@ -47,7 +47,7 @@
                         <a href="https://in.pinterest.com/bangabasiindia/" class="p-2 bg-orange-500 hover:bg-orange-700" target="_blank">
                             <img src="{{ asset('images/icons/pinterest_bangabasi.png') }}" alt="" class="w-4 invert">
                         </a>
-                        <a href="https://maps.app.goo.gl/BekqTPMAGE6CqbfC8" class="p-2 bg-orange-500" target="_blank">
+                        <a href="https://maps.app.goo.gl/BekqTPMAGE6CqbfC8" class="p-2 bg-orange-500 hover:bg-orange-700" target="_blank">
                             <img src="{{ asset('images/icons/location_bangabasi.png') }}" alt="" class="w-4 invert">
                         </a>
                         <a href="https://whatsapp.com/channel/0029VakhvrpL2AU4lilJCV3R" class="p-2 bg-orange-500 hover:bg-orange-700" target="_blank">
