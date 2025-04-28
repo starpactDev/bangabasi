@@ -14,7 +14,7 @@
 
 <section class="p-4 my-12">
 	<div class="flex flex-wrap justify-center gap-x-8 gap-y-8  ">
-		<img src="{{ asset('images/site-images/'.$about->stories->image1)}}" alt="" class="w-36 h-36 object-cover border" style="border-radius: 100% 1rem 1rem 1rem">
+		<img src="{{ asset('user/uploads/about/'.$about->stories->image1)}}" alt="" class="w-36 h-36 object-cover border" style="border-radius: 100% 1rem 1rem 1rem">
 		<img src="{{ asset('user/uploads/about/'.$about->stories->image2)}}" alt="" class="w-96 h-36 object-cover border" style="border-radius: 18rem">
 		<img src="{{ asset('user/uploads/about/'.$about->stories->image3)}}" alt="" class="w-36 h-36 object-cover border" style="border-radius: 1rem">
 		<img src="{{ asset('user/uploads/about/'.$about->stories->image4)}}" alt="" class="w-36 h-36 object-cover border" style="border-radius: 18rem">
