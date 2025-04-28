@@ -301,7 +301,7 @@
                     </div>
 
                     <div class="menu-item text-white">
-                        <a href="{{ route('contact-us') }}">Contacts</a>
+                        <a href="{{ route('contact-us') }}">Contact US</a>
                     </div>
 
                 </div>
@@ -927,17 +927,16 @@
                                 <div>
                                     <img src="{{ asset('images/beauty_saloon.png') }}" class="w-4/6 mx-auto" />
                                 </div>
-                                <div>
+                                <div class="text-center">
                                     {{ $fourthSubCategories[0]->name ?? '' }}
                                 </div>
                             </div>
 
-                            <div
-                                class="w-full flex flex-col items-center justify-center border-t border-b py-3 gap-y-2">
+                            <div class="w-full flex flex-col items-center justify-center border-t border-b py-3 gap-y-2">
                                 <div>
                                     <img src="{{ asset('images/badge.png') }}" class="w-4/6 mx-auto" />
                                 </div>
-                                <div>
+                                <div class="text-center">
                                     {{ $fourthSubCategories[1]->name ?? '' }}
                                 </div>
                             </div>
@@ -946,7 +945,7 @@
                                 <div class="">
                                     <img src="{{ asset('images/surprise.png') }}" class="w-4/6 mx-auto" />
                                 </div>
-                                <div>
+                                <div class="text-center">
                                     {{ $fourthSubCategories[2]->name ?? '' }}
                                 </div>
                             </div>
@@ -1259,9 +1258,7 @@
                                 </a>
                             @endforeach
                         </div>
-                        <a href="mailto:info.bangabasi@gmail.com"
-                            class="w-5/6 mx-auto py-4 border hover:bg-neutral-50 text-center"><i
-                                class="fa fa-envelope px-4 text-lg"></i>Mail Us</a>
+                        <a href="mailto:info.bangabasi@gmail.com" class="w-5/6 mx-auto py-4 border hover:bg-neutral-50 text-center"><i class="fa fa-envelope px-4 text-lg"></i>Mail Us</a>
                     </div>
                 </div>
 
