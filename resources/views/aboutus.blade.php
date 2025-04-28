@@ -15,9 +15,9 @@
 <section class="p-4 my-12">
 	<div class="flex flex-wrap justify-center gap-x-8 gap-y-8  ">
 		<img src="{{ asset('images/site-images/'.$about->stories->image1)}}" alt="" class="w-36 h-36 object-cover border" style="border-radius: 100% 1rem 1rem 1rem">
-		<img src="{{ asset('images/'.$about->stories->image2)}}" alt="" class="w-96 h-36 object-cover border" style="border-radius: 18rem">
-		<img src="{{ asset('images/'.$about->stories->image3)}}" alt="" class="w-36 h-36 object-cover border" style="border-radius: 1rem">
-		<img src="{{ asset('images/'.$about->stories->image4)}}" alt="" class="w-36 h-36 object-cover border" style="border-radius: 18rem">
+		<img src="{{ asset('user/uploads/about/'.$about->stories->image2)}}" alt="" class="w-96 h-36 object-cover border" style="border-radius: 18rem">
+		<img src="{{ asset('user/uploads/about/'.$about->stories->image3)}}" alt="" class="w-36 h-36 object-cover border" style="border-radius: 1rem">
+		<img src="{{ asset('user/uploads/about/'.$about->stories->image4)}}" alt="" class="w-36 h-36 object-cover border" style="border-radius: 18rem">
 		<div class="w-80 h-36 object-cover p-4 bg-amber-600 border" style="border-radius: 1rem">
 			<p style="color:#b56405 ">SINCE</p>
 			<h2 class="ml-8 font-bold"  style="color:#f3d2a4; font-size: 6.5rem;line-height: 5.5rem;">2024</h2>
@@ -26,10 +26,10 @@
 			<p class="text-fuchsia-950 text-xl tracking-wide ">Meet Our Pandavas</p>
 			<p class="text-fuchsia-950 text-3xl text-right mt-8">↓</p>
 		</div>
-		<img src="{{ asset('images/'.$about->stories->image5)}}" alt="" class="w-36 h-36 object-cover border" style="border-radius: 18rem">
-		<img src="{{ asset('images/'.$about->stories->image6)}}" alt="" class="w-36 h-36 object-cover border" style="border-radius: 1rem">
-		<img src="{{ asset('images/'.$about->stories->image7)}}" alt="" class="w-96 h-36 object-cover border" style="border-radius: 18rem">
-		<img src="{{ asset('images/'.$about->stories->image8)}}" alt="" class="w-36 h-36 object-cover border" style="border-radius: 1rem 100% 1rem 1rem">
+		<img src="{{ asset('user/uploads/about/'.$about->stories->image5)}}" alt="" class="w-36 h-36 object-cover border" style="border-radius: 18rem">
+		<img src="{{ asset('user/uploads/about/'.$about->stories->image6)}}" alt="" class="w-36 h-36 object-cover border" style="border-radius: 1rem">
+		<img src="{{ asset('user/uploads/about/'.$about->stories->image7)}}" alt="" class="w-96 h-36 object-cover border" style="border-radius: 18rem">
+		<img src="{{ asset('user/uploads/about/'.$about->stories->image8)}}" alt="" class="w-36 h-36 object-cover border" style="border-radius: 1rem 100% 1rem 1rem">
 	</div>
 </section>
 
