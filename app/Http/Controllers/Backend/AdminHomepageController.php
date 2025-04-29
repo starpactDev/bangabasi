@@ -4,12 +4,13 @@ namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Marquee;
 use Illuminate\Support\Facades\Storage;
 
 class AdminHomepageController extends Controller
 {
     public function index(){
-            $path = storage_path('app/data.json'); // Use the correct path
+        $path = storage_path('app/data.json'); // Use the correct path
 
         if (file_exists($path)) {
             $content = file_get_contents($path);
@@ -21,9 +22,12 @@ class AdminHomepageController extends Controller
         } else {
             $homepage = []; // Handle missing file
         }
-        
-        return view('admin.pages.homepage.main', compact('homepage'));
+
+        $marquees = Marquee::all(); 
+
+        return view('admin.pages.homepage.main', compact('homepage', 'marquees'));
     }
+
     public function getSectionData(string $section)
     {
         try {
@@ -122,5 +126,24 @@ class AdminHomepageController extends Controller
             return response()->json(['error' => 'Parent key not found'], 404);
         }
     }
+
+    public function updateMarquee(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:marquees,id',
+            'text' => 'required|string|max:1000',
+        ]);
+    
+        try {
+            $marquee = Marquee::findOrFail($request->id);
+            $marquee->text = $request->text;
+            $marquee->save();
+    
+            return redirect()->back()->with('success', 'Marquee updated successfully.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Something went wrong while updating the marquee.');
+        }
+    }
+    
 
 }

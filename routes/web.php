@@ -375,6 +375,8 @@ Route::group(['middleware' =>  [AdminCheckMiddleware::class]], function () {
     Route::get('/admin/homepage/section-data/{section}', [AdminHomepageController::class, 'getSectionData'])->name('admin.homepage.section.data');
     Route::post('/admin/homepage/update-section', [AdminHomepageController::class, 'updateSection'])->name('admin.homepage.update');
 
+    Route::put('/admin/homepage/update-marquee', [AdminHomepageController::class, 'updateMarquee'])->name('admin.homepage.update.marquee');
+
     //Header
     Route::get('/admin/header', [AdminHeaderController::class, 'index'])->name('admin.header');
     Route::post('/admin/header/update', [AdminHeaderController::class, 'update'])->name('admin.header.update');

@@ -22,6 +22,27 @@
             </div>
 
 			<div class="row gap-4">
+                @if (session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+                
+                @if (session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ session('error') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+                
+                @if ($errors->any())
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>Validation Error:</strong> {{ $errors->first() }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+                
                 <div class="py-4 col-lg-12" >
 					@php
 						
@@ -52,7 +73,6 @@
 
 					</form>
 				</div>
-
                 <div class="py-4 col-lg-12 row" > 
                     <div class="py-4 col-lg-4" >
                         @php
@@ -697,7 +717,100 @@
                         </div>
                     </form>
                 </div>
+                <div class="col-lg-12 p-4 ">
+                    @php
+                        $image = $homepage['heroSideSection']['image'];
+                        $head = $homepage['heroSideSection']['head'];
+                        $description = $homepage['heroSideSection']['description'];
+                        $button = $homepage['heroSideSection']['button'];
+                        $redirect = $homepage['heroSideSection']['redirect'];
+                    @endphp
+                    <form  class="border rounded shadow-sm form-submit bg-light p-4 row" method="POST" enctype="multipart/form-data" action="{{ route('admin.homepage.update') }}">
+                        <div class="col-md-12 col-lg-8">
+                            <h4 class="pb-4">Hero Side Section</h4>
+                            <div class="position-relative d-inline-block" style="width : fit-content">
+                                <input type="hidden" name="parentKey" value="heroSideSection">
+                                <img id="uploadedImage-{{$image}}" src="/user/uploads/homepage/{{$image}}" alt="Uploaded Image" class="img-thumbnail " style=" object-fit: cover; width: 100%; height: 100%; background-color:gray">
+                                <button type="button" class="btn btn-primary btn-sm position-absolute top-50 start-50 translate-middle" onclick="document.getElementById('imageUpload-{{$image}}').click()" style="opacity: 0.8;">
+                                    Select
+                                </button>
+                                <input type="file" name="image" id="imageUpload-{{$image}}" class="d-none" accept="image/*" onchange="previewImage(event, 'uploadedImage-{{$image}}')">
+                            </div>
+                            
+                        </div>
+                        <div class="col-md-12 col-lg-4">
+                            <div class="py-2">
+                                <label for="head" class="form-label py-2">Head</label>
+                                <input type="text" name="heroSideSection.head" id="head" value="{{$head}}" class="form-control" placeholder="Enter head">
+                            </div>
+                            <div class="py-2">
+                                <label for="description" class="form-label py-2">Description</label>
+                                <input type="text" name="heroSideSection.description" id="description" value="{{$description}}" class="form-control" placeholder="Enter description">
+                            </div>
+                            <div class="py-2">
+                                <label for="button" class="form-label py-2">Button</label>
+                                <input type="text" name="heroSideSection.button" id="" value="{{$button}}" class="form-control" placeholder="Enter button text">  
+                            </div>
+                            <div class="py-2">
+                                <div class="row align-items-end" >
+                                    <div class="col-md-8">
+                                        <label for="redirect" class="form-label py-2">Redirect</label>
+                                        <input type="text" name="heroSideSection.redirect" id="" value="{{$redirect}}" class="form-control" placeholder="Enter redirect link">  
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button type="submit" class="btn btn-primary submit-button px-4">Save</button>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-lg-12 p-4 my-4">
+                    <h4 class="mb-3">Manage Marquees</h4>
+                    @if (session('success'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ session('success') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+                    
+                    @if (session('error'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ session('error') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+                    
+                    @if ($errors->any())
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <strong>Validation Error:</strong> {{ $errors->first() }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
                 
+                    {{-- Loop through each marquee --}}
+                    @foreach($marquees as $marquee)
+                    <form action="{{ route('admin.homepage.update.marquee') }}" method="POST" class="mb-3 marquee-form">
+                        @csrf
+                        @method('PUT')
+                
+                        <input type="hidden" name="id" value="{{ $marquee->id }}">
+                
+                        <div class="row g-2 align-items-start">
+                            <div class="col-lg-9 col-md-8 col-12">
+                                <input type="text" name="text" class="form-control" value="{{ $marquee->text }}" required>
+                            </div>
+                
+                            <div class="col-lg-3 col-md-4 col-12 d-grid d-md-flex gap-2">
+                                <button type="submit" class="btn btn-primary w-100 w-md-auto">Update</button>
+                            </div>
+                        </div>
+                    </form>
+                    @endforeach
+                </div>
+                                              
 
 			</div>
         </div> <!-- End Content -->
