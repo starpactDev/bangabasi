@@ -25,11 +25,11 @@ use App\Http\Controllers\Frontend\AboutController;
 use App\Http\Controllers\Frontend\OrderController;
 use App\Http\Controllers\Frontend\TopbarController;
 use App\Http\Controllers\Backend\CategoryController;
+
 use App\Http\Controllers\Frontend\ContactController;
+
 use App\Http\Controllers\Frontend\ProductController;
-
 use App\Http\Controllers\Frontend\ProfileController;
-
 use App\Http\Controllers\Frontend\SidebarController;
 use App\Http\Controllers\Backend\AdminBlogController;
 use App\Http\Controllers\Backend\AdminLogoController;
@@ -47,11 +47,10 @@ use App\Http\Controllers\Backend\AdminSellerController;
 use App\Http\Controllers\Backend\AdminTopbarController;
 use App\Http\Controllers\Frontend\NewsletterController;
 
-
 use App\Http\Controllers\Backend\AdminContactController;
 use App\Http\Controllers\Backend\AdminProductController;
-
 use App\Http\Controllers\Backend\AdminSidebarController;
+use App\Http\Controllers\Frontend\BlogCommentController;
 use App\Http\Controllers\Backend\AdminHomepageController;
 use App\Http\Controllers\ShipRocket\ShipRocketController;
 use App\Http\Controllers\Backend\AdminDashboardController;
@@ -159,6 +158,8 @@ Route::get('/blogs/tags/{tagName}', [BlogController::class, 'findBlogsWithSameTa
 
 Route::get('/blogs/related/{baseBlogId}', [BlogController::class, 'getRelatedBlogs']);
 Route::post('/blog/update-view-count', [BlogController::class, 'updateViewCount'])->name('blogs.updateViewCount');
+
+Route::post('/blog/{id}/comment', [BlogCommentController::class, 'store'])->name('blog_comments.store');
 
 
 //indirect route, to be called by ajax

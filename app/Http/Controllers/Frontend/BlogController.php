@@ -16,45 +16,32 @@ class BlogController extends Controller
 
     public function view($id = null, $slug = null)
     {
-        //retrive the blog with the id or slug passed by the url parameter
+        // Fetch the blog by ID or slug, eager load comments
+        $mainBlog = Blog::with(['comments.user']) // Load comments and each comment's user
+            ->when($id, fn($query) => $query->where('id', $id))
+            ->when(!$id && $slug, fn($query) => $query->where('slug', $slug))
+            ->first();
 
-        if($id){
-            $mainBlog = Blog::where('id', $id)->first();
-        }
-        elseif($slug){
-            $mainBlog = Blog::where('slug', $slug)->first();
-        }
-        if (!$mainBlog) {
+        // Abort if not found or unpublished
+        if (!$mainBlog || $mainBlog->status !== 'published') {
             abort(404);
         }
-        if ($mainBlog->status !== 'published') {
-            abort(404); // Triggers the default 404 page
-        }
 
-        //Recomanded Blogs
+        // Extract tags and find related blogs
+        $baseTags = collect(explode(',', $mainBlog->tags))->map(fn($tag) => trim($tag))->filter();
 
-        // Step 1: Get the tags of the base blog and convert CSV to an array
-        $baseBlog = Blog::find($mainBlog->id);
-        if (!$baseBlog) {
-            return response()->json(['error' => 'Blog not found'], 404);
-        }
-
-        $baseTags = explode(',', $baseBlog->tags);
-
-        // Step 2: Retrieve all other blogs and calculate tag matches
-        $relatedBlogs = Blog::where('id', '!=', $id)
-            ->get()
-            ->map(function ($blog) use ($baseTags) {
-                $blogTags = explode(',', $blog->tags);
-                $commonTagsCount = count(array_intersect($baseTags, $blogTags));
-                $blog->tag_match_count = $commonTagsCount; // Store match count for sorting
-                return $blog;
-            })
-            // Step 3: Filter blogs with no matching tags, sort by match count, and limit to top 10
-            ->filter(fn($blog) => $blog->tag_match_count > 0)
-            ->sortByDesc('tag_match_count')
-            ->take(10)
-            ->values(); // Reindex the collection
+        $relatedBlogs = Blog::where('id', '!=', $mainBlog->id)
+                                ->where('status', 'published')
+                                ->get()
+                                ->map(function ($blog) use ($baseTags) {
+                                    $blogTags = collect(explode(',', $blog->tags))->map(fn($tag) => trim($tag));
+                                    $blog->tag_match_count = $baseTags->intersect($blogTags)->count();
+                                    return $blog;
+                                })
+                                ->filter(fn($blog) => $blog->tag_match_count > 0)
+                                ->sortByDesc('tag_match_count')
+                                ->take(10)
+                                ->values();
 
         return view('blog', compact('mainBlog', 'relatedBlogs'));
     }

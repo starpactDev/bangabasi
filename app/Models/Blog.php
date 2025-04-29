@@ -19,4 +19,9 @@ class Blog extends Model
         'view_count',
         'published_at',
     ];
+
+    public function comments()
+    {
+        return $this->hasMany(BlogComment::class);
+    }
 }

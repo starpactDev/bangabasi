@@ -72,37 +72,42 @@
 					</div>
 				</article>
 				<div class="space-y-4 my-6 px-4">
-					<h4>All Comments</h4>
-					<div class="flex items-start p-4 bg-gray-100 rounded">
-						<img src="https://via.placeholder.com/40" alt="Profile Image" class="w-10 h-10 rounded-full mr-3">
-						<div>
-							<p class="text-gray-800 font-medium">John Doe</p>
-							<p class="text-gray-600 text-sm">"Great blog post! Very informative."</p>
-						</div>
-					</div>
-					
-					<div class="flex items-start p-4 bg-gray-100 rounded">
-						<img src="https://via.placeholder.com/40" alt="Profile Image" class="w-10 h-10 rounded-full mr-3">
-						<div>
-							<p class="text-gray-800 font-medium">Jane Smith</p>
-							<p class="text-gray-600 text-sm">"Looking forward to reading more from you. Thanks for sharing!"</p>
-						</div>
-					</div>
-					
-					<div class="flex items-start p-4 bg-gray-100 rounded">
-						<img src="https://via.placeholder.com/40" alt="Profile Image" class="w-10 h-10 rounded-full mr-3">
-						<div>
-							<p class="text-gray-800 font-medium">Alex Johnson</p>
-							<p class="text-gray-600 text-sm">"This was exactly what I needed. Keep up the great work!"</p>
-						</div>
-					</div>
+					@if($mainBlog->comments->isEmpty())
+						<h4>No comments yet</h4>
+						<p class="text-gray-600">Be the first to comment!</p>
+					@else
+						<h4>All Comments</h4>
+						@foreach($mainBlog->comments as $comment)
+							<div class="flex items-start p-4 bg-gray-100 rounded">
+								<img src="{{ asset('user/uploads/profile/'. ($comment->user->image ?? 'default_dp.png') )}}" alt="Profile Image" class="w-10 h-10 rounded-full mr-3">
+								<div>
+									<p class="text-gray-800 font-medium">{{ $comment->user->firstname.' '.$comment->user->lastname }}</p>
+									<p class="text-gray-600 text-sm">{{ $comment->comment }}</p>
+								</div>
+							</div>
+						@endforeach
+					@endif
 				</div>
-				<form method="POST" action="">
+				<form method="POST" action="{{ route('blog_comments.store', ['id' => $mainBlog->id]) }}">
 					@csrf
 					<div class="p-4 my-4">
+						@if (session('success'))
+							<div class="mb-4 p-3 bg-green-100 text-green-700 rounded">
+								{{ session('success') }}
+							</div>
+						@endif
+				
+						@if (session('error'))
+							<div class="mb-4 p-3 bg-red-100 text-red-700 rounded">
+								{{ session('error') }}
+							</div>
+						@endif
 						<input type="hidden" name="blogId" value="{{$mainBlog->id}}">
 						<textarea name="comment" rows="3" class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-orange-500" placeholder="Add a comment..."></textarea>
-						<button type="submit" class="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition duration-300">Submit</button>
+						<button type="submit" class=" text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition duration-300  {{ !auth()->check() ? 'opacity-50 cursor-not-allowed bg-gray-500' : 'bg-orange-500' }}" {{ !auth()->check() ? 'disabled' : '' }}>Submit</button>
+						@guest
+							<p class="text-sm text-red-500 mt-2">You must be <a href="{{ route('login') }}" class="underline">logged in</a> to post a comment.</p>
+						@endguest
 					</div>
 				</form>
 			</div>
