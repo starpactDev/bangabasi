@@ -40,6 +40,12 @@ return [
     'razorpay' => [
     'key' => env('RAZORPAY_KEY'),
     'secret' => env('RAZORPAY_KEY_SECRET'),
-],
+    ],
+    'msg91' => [
+        'auth_key' => env('MSG91_AUTH_KEY'),
+        'template_id' => env('MSG91_TEMPLATE_ID'),
+        'otp_expiry' => env('MSG91_OTP_EXPIRY', 5),
+    ],
+
 
 ];

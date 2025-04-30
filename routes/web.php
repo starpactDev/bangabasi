@@ -1,20 +1,21 @@
 <?php
 
+use App\Services\OtpService;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Route;
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OTPController;
 use App\Http\Controllers\MailController;
 use App\Http\Middleware\GuestMiddleware;
 use App\Http\Middleware\SellerMiddleware;
 use App\Http\Middleware\UserAuthMiddleware;
+
+
 use App\Http\Controllers\RazorpayController;
-
-
 use App\Http\Middleware\SuperUserMiddleware;
 use App\Http\Middleware\AdminCheckMiddleware;
-use App\Http\Controllers\InstantBuyController;
 
+use App\Http\Controllers\InstantBuyController;
 use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\HomeController;
@@ -24,10 +25,10 @@ use App\Http\Middleware\CustomRedirectMiddleware;
 use App\Http\Controllers\Frontend\AboutController;
 use App\Http\Controllers\Frontend\OrderController;
 use App\Http\Controllers\Frontend\TopbarController;
+
 use App\Http\Controllers\Backend\CategoryController;
 
 use App\Http\Controllers\Frontend\ContactController;
-
 use App\Http\Controllers\Frontend\ProductController;
 use App\Http\Controllers\Frontend\ProfileController;
 use App\Http\Controllers\Frontend\SidebarController;
@@ -45,8 +46,8 @@ use App\Http\Controllers\Backend\AdminHeaderController;
 use App\Http\Controllers\Backend\AdminReviewController;
 use App\Http\Controllers\Backend\AdminSellerController;
 use App\Http\Controllers\Backend\AdminTopbarController;
-use App\Http\Controllers\Frontend\NewsletterController;
 
+use App\Http\Controllers\Frontend\NewsletterController;
 use App\Http\Controllers\Backend\AdminContactController;
 use App\Http\Controllers\Backend\AdminProductController;
 use App\Http\Controllers\Backend\AdminSidebarController;
@@ -481,3 +482,17 @@ Route::get('shiprocket/fetch-tracking', [ShipRocketController::class, 'fetchTrac
 //Test Mail Routes
 
 Route::get('/send-test-email', [MailController::class, 'sendTestEmail']);
+
+
+// Test OTP Routes
+Route::get('/send-otp', function (OtpService $otpService) {
+    $mobile = '7601915855'; // replace with your test mobile
+    $params = [
+        'var' => '9630', // Replace Param1..3 with values matching your template
+        'otp' => '6784',
+        'realTimeResponse' => 1,
+    ];
+
+    $response = $otpService->sendOtp($mobile, $params);
+    dd($response);
+});
