@@ -134,8 +134,8 @@
 <section class="mt-8 bg-sky-50 kaleidoscopic">
 	<div class="container grid grid-cols-12 min-h-48 ">
 		<div class="col-span-12 lg:col-span-3 h-full py-4">
-			<h3 class="text-xl font-semibold leading-[2rem]">You will find a kaleidoscopic of handcrafted trendy garments.</h3>
-			<p class="text-slate-600 my-3">Give a pinch of aestheticism to your thoughts.</p>
+			<h3 class="text-xl font-semibold leading-[2rem]">{{ $homeData['subCategorySection']['head'] ?? '' }}</h3>
+			<p class="text-slate-600 my-3">{{ $homeData['subCategorySection']['description'] ?? '' }}</p>
 		</div>
 		<div class="col-span-12 lg:col-span-9 h-full py-4 grid grid-cols-12 gap-4">
 			@foreach ($activeCategories as $category)
