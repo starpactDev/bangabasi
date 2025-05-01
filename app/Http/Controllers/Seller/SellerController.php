@@ -77,8 +77,8 @@ class SellerController extends Controller
             'otp' => $otp,
         ];
 
-        //$response = $otpService->sendOtp($mobile, $params);
-        $response = 'OTP sent successfully!'; // Placeholder for actual response
+        $response = $otpService->sendOtp($mobile, $params);
+        //$response = 'OTP sent successfully!'; // Placeholder for actual response
 
         Cache::put('otp_' . $mobile, $otp, now()->addMinutes(5));
         
