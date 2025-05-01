@@ -53,10 +53,14 @@
 		@endphp
 		<div class="col-span-12 lg:col-span-5 flex items-center justify-center bg-slate-100 max-h-screen overflow-y-auto">
 			<div class="w-full max-w-md p-6" >
-				
 				<h1 class="text-2xl font-bold text-gray-800 mb-2">Welcome to Bangabasi</h1>
 				<p class="text-gray-600 mb-6">Create your account to start selling</p>
-				
+				@if (session('otp_message'))
+					<div class="text-green-500 text-xs mb-4">
+						{{ session('otp_message') }}
+					</div>
+				@endif
+
 				<!-- Show error message if it exists -->
 				@if (session('error'))
 					<div class="text-red-500 text-xs mb-4">
@@ -75,6 +79,7 @@
 						<p class="text-xs text-red-500 mt-1 ">{{$message}}</p>
 					@enderror
 					<p id="validationError" class="hidden text-sm text-red-600"></p>
+					<small id="resendMessage" class="hidden text-sm text-red-600"></small>
 				</form>
 
 				<!-- OTP Section -->
@@ -216,6 +221,22 @@
 	</section>
 </body>
 <script id="otpInteraction" type="module">
+	const otpSent = {{ $otpSent ? 'true' : 'false' }};
+	const resendMessage = document.getElementById('resendMessage');
+
+	if(otpSent){
+
+		resendMessage.textContent = "You can resend OTP after 4:59 seconds.";
+		resendMessage.classList.remove('hidden');
+		startOtpCountdown(298); 
+		// Reactivate the button
+
+		setTimeout(() => {
+			reactivateSendOtpButton();
+		}, 60 * 5 * 1000); 
+		
+	}
+
 	document.addEventListener("DOMContentLoaded", function() {
 		const sendOtpButton = document.getElementById('send_otp'); // "Send OTP" button
 		const otpField = document.getElementById('otp_input'); // OTP input field
@@ -276,6 +297,14 @@
 					otpField.classList.remove("cursor-not-allowed");
 					verifyOtpButton.disabled = false;
 					verifyOtpButton.classList.remove("cursor-not-allowed", "bg-gray-400");
+
+					resendMessage.classList.remove('hidden');
+					startOtpCountdown(298); 
+
+					// Reactivate the button
+					setTimeout(() => {
+						reactivateSendOtpButton();
+					}, 60 * 5 * 1000);
 				}
 				else{
 					otpErrorMessage.textContent = error.message;
@@ -335,6 +364,40 @@
 			}
 		});
   	});
+
+	function reactivateSendOtpButton() {
+		const sendOtpButton = document.getElementById('send_otp');
+
+		// Reactivate the button
+		sendOtpButton.disabled = false;
+
+		// Reset text
+		sendOtpButton.textContent = 'Res2962end OTP';
+
+		// Reset styles
+		sendOtpButton.classList.remove('bg-green-400', 'cursor-not-allowed');
+		sendOtpButton.classList.add('bg-orange-500', 'hover:bg-orange-600');
+	}
+
+
+	function startOtpCountdown(durationInSeconds = 300) {
+		let remainingTime = durationInSeconds;
+
+		const interval = setInterval(() => {
+			const minutes = Math.floor(remainingTime / 60);
+			const seconds = remainingTime % 60;
+			resendMessage.textContent = `You can resend OTP after ${minutes}:${seconds.toString().padStart(2, '0')} seconds.`;
+
+			if (remainingTime <= 0) {
+				clearInterval(interval);
+				resendMessage.classList.add('hidden');
+				reactivateSendOtpButton();
+			}
+
+			remainingTime--;
+		}, 1000);
+	}
+
 </script>
 
 

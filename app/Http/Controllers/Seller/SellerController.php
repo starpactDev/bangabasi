@@ -51,14 +51,31 @@ class SellerController extends Controller
         return redirect()->intended(route('seller_dashboard'))->with('success', 'Welcome back!');
     }
 
-    public function processPhoneNumber(Request $request)
+    public function processPhoneNumber(Request $request,  OtpService $otpService)
     {
         $request->validate([
             'phone' => 'required|digits:10',
         ]);
 
-        // Store phone number in session (or database if needed)
-        session(['phone_number' => $request->phone, 'otp_sent' => true]);
+        
+        $mobile = $request->phone;
+        $otp = rand(1000, 9999); 
+
+        $params = [
+            'otp' => $otp,
+        ];
+
+        $response = $otpService->sendOtp($mobile, $params);
+        //$response = 'OTP sent successfully!'; // Placeholder for actual response
+
+        // Store phone number, OTP status, and timestamp in the session
+        session([
+            'phone_number' => $request->phone,
+            'otp_sent' => true,
+            'otp_timestamp' => now() // Storing current timestamp
+        ]);
+
+        Cache::put('otp_' . $mobile, $otp, now()->addMinutes(5));
 
         // Redirect to the registration page
         return redirect()->route('seller_registration');
