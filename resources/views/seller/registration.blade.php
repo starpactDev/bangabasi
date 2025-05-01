@@ -52,8 +52,8 @@
 			$phoneNumber = session('phone_number', '');
 		@endphp
 		<div class="col-span-12 lg:col-span-5 flex items-center justify-center bg-slate-100 max-h-screen overflow-y-auto">
-			<form class="w-full max-w-md p-6" action="{{ route('seller.register') }}" method="POST" enctype="multipart/form-data">
-				@csrf
+			<div class="w-full max-w-md p-6" >
+				
 				<h1 class="text-2xl font-bold text-gray-800 mb-2">Welcome to Bangabasi</h1>
 				<p class="text-gray-600 mb-6">Create your account to start selling</p>
 				
@@ -63,90 +63,101 @@
 						{{ session('error') }}
 					</div>
 				@endif
-				
-				<!-- Mobile Number Section -->
-				<label class="block text-sm font-medium text-gray-700"></label>
-				<div class="flex items-center space-x-2 mt-1">
-					<input type="text" placeholder="Enter Mobile Number" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" name="phone_number" value="{{ $phoneNumber }}"/>
-					<button class="bg-orange-500 text-white px-4 py-2 w-36 rounded-md hover:bg-orange-600" id="send_otp" @if($otpSent) disabled class="bg-green-400 cursor-not-allowed" @endif>{{ $otpSent ? 'OTP Sent!' : 'Send OTP' }}</button>
-				</div>
-				@error('phone_number')
-					<p class="text-xs text-red-500 mt-1 ">{{$message}}</p>
-				@enderror
+				<form action="{{ route('seller.send-otp') }}" method="POST" id="phone_number_section">
+					@csrf
+					<!-- Mobile Number Section -->
+					<label class="block text-sm font-medium text-gray-700"></label>
+					<div class="flex items-center space-x-2 mt-1">
+						<input type="text" placeholder="Enter Mobile Number" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" name="phone_number" value="{{ $phoneNumber }}"/>
+						<button type="{{ $otpSent ? 'button' : 'submit' }}" class="w-max whitespace-nowrap text-white px-4 py-2 rounded-md  {{ $otpSent ? 'bg-green-400 cursor-not-allowed hover:bg-green-600' : 'bg-orange-500 hover:bg-orange-600'}}" id="send_otp" @if($otpSent) disabled @endif>{{ $otpSent ? 'OTP Sent!' : 'Send OTP' }}</button>
+					</div>
+					@error('phone_number')
+						<p class="text-xs text-red-500 mt-1 ">{{$message}}</p>
+					@enderror
+					<p id="validationError" class="hidden text-sm text-red-600"></p>
+				</form>
 
 				<!-- OTP Section -->
-				<div id="otp_section" class="grayscale {{ $errors->has('otp') || $otpSent ? '' : 'hidden' }}">
+				<form action="{{ route('seller.verify-otp') }}" id="otp_section" class="grayscale {{ $errors->has('otp') || $otpSent ? '' : 'hidden' }}">
+					@csrf
+					<!-- Inside the #otp_section form -->
+					<input type="hidden" name="phone_number" id="hidden_phone_number" value="{{ $phoneNumber ?? '' }}">
 					<label class="block text-sm font-medium text-gray-700 mt-4"></label>
 					<div class="flex items-center space-x-2 mt-1 ">
 						<input type="text" id="otp_input" placeholder="Enter OTP" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500 {{ $otpSent ? '' :'cursor-not-allowed'}}" name="otp" {{ $otpSent ? '' : 'disabled' }}/>
-						<button class="bg-orange-500 text-white px-4 py-2 w-36 rounded-md hover:bg-orange-600 {{$otpSent ? '' : 'cursor-not-allowed'}}" id="verify_otp" {{ $otpSent ? '' : 'disabled' }}>Verify OTP</button>
+						<button type="submit" class="w-max whitespace-nowrap bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600 {{$otpSent ? '' : 'cursor-not-allowed'}}" id="verify_otp" {{ $otpSent ? '' : 'disabled' }}>Verify OTP</button>
 					</div>
 					<p class="text-xs text-red-500 mt-1 hidden" id="otp_error">OTP is not verified.</p>
 					@error('otp')
 						<p class="text-xs text-red-500 mt-1 ">{{$message}}</p>
 					@enderror
-				</div>
+				</form>
 				
-				<!-- Email Section -->
-				<label class="block text-sm font-medium text-gray-700 mt-4"></label>
-				<input type="email" placeholder="Email Id" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" name="email"/>
-				@error('email')
-					<p class="text-xs text-red-500 mt-1 ">{{$message}}</p>
-				@enderror
+				<form action="{{ route('seller.register') }}" method="POST" enctype="multipart/form-data">
+					@csrf
 
-				<!-- Image Upload Section -->
-				<label class="block text-sm font-medium text-gray-700 mt-4">Upload User Image</label>
-				<div class="flex items-center space-x-4 mt-2">
-					<div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden border">
-						<img id="logo_preview" src="{{ asset('images/bangabasi_logo_short.png') }}" alt="Logo Preview" class="object-cover w-full h-full">
+					<input type="hidden" name="phone_number" id="hidden_phone_number_at_main_form" value="{{ $phoneNumber ?? '' }}">
+					<!-- Email Section -->
+					<label class="block text-sm font-medium text-gray-700 mt-4"></label>
+					<input type="email" placeholder="Email Id" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" name="email"/>
+					@error('email')
+						<p class="text-xs text-red-500 mt-1 ">{{$message}}</p>
+					@enderror
+
+					<!-- Image Upload Section -->
+					<label class="block text-sm font-medium text-gray-700 mt-4">Upload User Image</label>
+					<div class="flex items-center space-x-4 mt-2">
+						<div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden border">
+							<img id="logo_preview" src="{{ asset('images/bangabasi_logo_short.png') }}" alt="Logo Preview" class="object-cover w-full h-full">
+						</div>
+						<input type="file" id="logo_input" class="hidden" name="image" accept="image/*">
+						<button type="button" class="bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600" onclick="document.getElementById('logo_input').click()">Choose Image</button>
 					</div>
-					<input type="file" id="logo_input" class="hidden" name="image" accept="image/*">
-					<button type="button" class="bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600" onclick="document.getElementById('logo_input').click()">Choose Image</button>
-				</div>
 
-				@error('logo')
-					<p class="text-xs text-gray-500 mt-1">Allowed formats: JPG, JPEG, PNG (Max: 1MB)</p>
-					<p class="text-xs text-red-500 mt-1">{{ $message }}</p>
-				@enderror
+					@error('logo')
+						<p class="text-xs text-gray-500 mt-1">Allowed formats: JPG, JPEG, PNG (Max: 1MB)</p>
+						<p class="text-xs text-red-500 mt-1">{{ $message }}</p>
+					@enderror
 
-				<!-- Password Section -->
-				<label class="block text-sm font-medium text-gray-700 mt-4"></label>
-				<div class="flex items-center space-x-2 mt-1 relative">
-					<input type="password" placeholder="Set Password" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" name="password"/>
-					<button class="text-gray-500 hover:text-orange-500  absolute right-2">👁</button>
-				</div>
-				@error('password')
-					<p class="text-xs text-red-500 mt-1 ">{{$message}}</p>
-					<ul class="text-xs text-gray-500 mt-2 space-y-1">
-						<li>Minimum 8 characters (letters & numbers)</li>
-						<li>Minimum 1 special character (@ # $ % ! ^ & *)</li>
-						<li>Minimum 1 capital letter (A-Z)</li>
-						<li>Minimum 1 number (0-9)</li>
-					</ul>
-				@enderror
+					<!-- Password Section -->
+					<label class="block text-sm font-medium text-gray-700 mt-4"></label>
+					<div class="flex items-center space-x-2 mt-1 relative">
+						<input type="password" placeholder="Set Password" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" name="password"/>
+						<button class="text-gray-500 hover:text-orange-500  absolute right-2">👁</button>
+					</div>
+					@error('password')
+						<p class="text-xs text-red-500 mt-1 ">{{$message}}</p>
+						<ul class="text-xs text-gray-500 mt-2 space-y-1">
+							<li>Minimum 8 characters (letters & numbers)</li>
+							<li>Minimum 1 special character (@ # $ % ! ^ & *)</li>
+							<li>Minimum 1 capital letter (A-Z)</li>
+							<li>Minimum 1 number (0-9)</li>
+						</ul>
+					@enderror
 
-				<!-- Confirm Password Section -->
-				<label class="block text-sm font-medium text-gray-700 mt-4"></label>
-				<div class="flex items-center space-x-2 mt-1 relative">
-					<input type="password" name="confirm_password" placeholder="Confirm Password" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" />
-				</div>
-				@error('confirm_password')
-					<p class="text-xs text-red-500 mt-1">{{$message}}</p>
-				@enderror
-				@if ($errors->has('confirm_password'))
-					<p class="text-xs text-red-500 mt-1">{{ $errors->first('confirm_password') }}</p>
-				@endif
+					<!-- Confirm Password Section -->
+					<label class="block text-sm font-medium text-gray-700 mt-4"></label>
+					<div class="flex items-center space-x-2 mt-1 relative">
+						<input type="password" name="confirm_password" placeholder="Confirm Password" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" />
+					</div>
+					@error('confirm_password')
+						<p class="text-xs text-red-500 mt-1">{{$message}}</p>
+					@enderror
+					@if ($errors->has('confirm_password'))
+						<p class="text-xs text-red-500 mt-1">{{ $errors->first('confirm_password') }}</p>
+					@endif
+					
+
+					
+
+					<!-- Terms and Conditions -->
+					<p class="text-xs text-gray-500 mt-4">
+						By clicking you agree to our <a href="#" class="text-orange-500 hover:underline">Terms & Conditions</a> and <a href="#" class="text-orange-500 hover:underline">Privacy Policy</a>
+					</p>
+					<button type="submit" class="w-full my-6 p-4 text-white font-semibold bg-orange-600 hover:bg-orange-500">Create Account</button>
 				
-
-				
-
-				<!-- Terms and Conditions -->
-				<p class="text-xs text-gray-500 mt-4">
-					By clicking you agree to our <a href="#" class="text-orange-500 hover:underline">Terms & Conditions</a> and <a href="#" class="text-orange-500 hover:underline">Privacy Policy</a>
-				</p>
-				<button type="submit" class="w-full my-6 p-4 text-white font-semibold bg-orange-600 hover:bg-orange-500">Create Account</button>
-				
-			</form>
+				</form>
+			</div>
 
 		</div>
 
@@ -204,7 +215,7 @@
 		</div>
 	</section>
 </body>
-<script id="otpInteraction">
+<script id="otpInteraction" type="module">
 	document.addEventListener("DOMContentLoaded", function() {
 		const sendOtpButton = document.getElementById('send_otp'); // "Send OTP" button
 		const otpField = document.getElementById('otp_input'); // OTP input field
@@ -215,42 +226,100 @@
 		otpSuccessMessage.textContent = "OTP Verified!";
 		otpSuccessMessage.classList.add('text-xs', 'text-green-500', 'mt-1'); // Style success message
 
+		const phoneNumberInput = document.querySelector('input[name="phone_number"]');
+		const phoneNumberForm = document.getElementById('phone_number_section');
+		const validationError = document.getElementById('validationError');
+
+		const hiddenPhoneInput = document.getElementById('hidden_phone_number');
+		const hidden_phone_number_at_main_form = document.getElementById('hidden_phone_number_at_main_form');
+
 		// Hide OTP input field initially
 		//otpField.disabled = true;
 
-
 		// Handle Send OTP button click
-		sendOtpButton.addEventListener("click", function(event) {
+		sendOtpButton.addEventListener("click", async function(event) {
 			event.preventDefault();
-			// Simulate sending OTP
-			sendOtpButton.textContent = "OTP Sent!";
-			sendOtpButton.disabled = true;
-			sendOtpButton.classList.add("bg-green-400", "cursor-not-allowed");
-			// Animate and enable OTP section
-			otpSection.classList.remove("hidden");
-			otpSection.classList.remove("grayscale", "cursor-not-allowed");
-			otpField.disabled = false;
-			otpField.classList.remove("cursor-not-allowed");
-			verifyOtpButton.disabled = false;
-			verifyOtpButton.classList.remove("cursor-not-allowed", "bg-gray-400");
+
+			const phoneNumber = phoneNumberInput.value;
+
+					// Basic frontend validation
+			if (!/^\d{10}$/.test(phoneNumber)) {
+				validationError.textContent = 'Please enter a valid 10-digit phone number.';
+				validationError.classList.remove('hidden');
+				return;
+			} 
+			else {
+				validationError.classList.add('hidden');
+				hiddenPhoneInput.value = phoneNumber;
+			}
+
+			try {
+				const response = await fetch(phoneNumberForm.action, {
+					method: 'POST',
+					headers : {
+						'Content-Type': 'application/json',
+						'X-CSRF-TOKEN': '{{ csrf_token() }}'
+					},
+					body: JSON.stringify({ phone_number: phoneNumber })
+				});
+
+				const data = await response.json();
+
+				if(response.ok){
+					sendOtpButton.textContent = "OTP Sent!";
+					sendOtpButton.disabled = true;
+					sendOtpButton.classList.add("bg-green-400", "cursor-not-allowed");
+
+					otpSection.classList.remove("hidden");
+					otpSection.classList.remove("grayscale", "cursor-not-allowed");
+					otpField.disabled = false;
+					otpField.classList.remove("cursor-not-allowed");
+					verifyOtpButton.disabled = false;
+					verifyOtpButton.classList.remove("cursor-not-allowed", "bg-gray-400");
+				}
+				else{
+					otpErrorMessage.textContent = error.message;
+					otpErrorMessage.classList.remove('hidden');
+				}
+			}
+			catch {
+				otpErrorMessage.textContent = error.message;
+				otpErrorMessage.classList.remove('hidden');
+			}
+
+
 		});
 
 
 		// Handle Verify OTP button click
-		verifyOtpButton.addEventListener("click", function(event) {
+		verifyOtpButton.addEventListener("click", async function(event) {
 			event.preventDefault();
 			// Check if OTP is correct
-			if (otpField.value === "1234") {
-				// Show success message
+
+			const response = await fetch(otpSection.action, {
+				method : 'POST',
+				headers : {
+					'Content-Type': 'application/json',
+					'X-CSRF-TOKEN': '{{ csrf_token() }}'
+				},
+				body: JSON.stringify({ otp: otpField.value, phone_number: hiddenPhoneInput.value })
+			})
+			const data = await response.json();
+
+			if(response.ok){
 				otpSection.appendChild(otpSuccessMessage);
 				verifyOtpButton.textContent = "Verified!";
 				verifyOtpButton.disabled = true;
 				verifyOtpButton.classList.add("bg-green-500", "cursor-not-allowed");
 				otpErrorMessage.classList.add('hidden'); // Hide error message if OTP is correct
-			} else {
-				// Show error message if OTP is incorrect
-				otpErrorMessage.classList.remove('hidden');
+				hidden_phone_number_at_main_form.value = hiddenPhoneInput.value;
 			}
+			else{
+				otpErrorMessage.textContent = data.message;
+				otpErrorMessage.classList.remove('hidden');
+				
+			}
+
 		});
 
 		

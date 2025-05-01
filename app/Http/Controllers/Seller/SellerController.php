@@ -6,11 +6,13 @@ use App\Models\Bank;
 use App\Models\User;
 use App\Models\Seller;
 use App\Models\GstDetail;
+use App\Services\OtpService;
 use Illuminate\Http\Request;
 use App\Models\PickupAddress;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Cache;
 
 class SellerController extends Controller
 {
@@ -62,23 +64,96 @@ class SellerController extends Controller
         return redirect()->route('seller_registration');
     }
 
+    public function sendOtp(Request $request, OtpService $otpService)
+    {
+        $request->validate([
+            'phone_number' => 'required|digits:10',
+        ]);
+
+        $mobile = $request->phone_number;
+        $otp = rand(1000, 9999); 
+
+        $params = [
+            'otp' => $otp,
+        ];
+
+        //$response = $otpService->sendOtp($mobile, $params);
+        $response = 'OTP sent successfully!'; // Placeholder for actual response
+
+        Cache::put('otp_' . $mobile, $otp, now()->addMinutes(5));
+        
+        return response()->json([
+            'status' => 'success',
+            'message' => $response,
+            'otp' => $otp, // For testing purposes, you can remove this in production
+        ]);
+
+    }
+
+    public function verifyOtp(Request $request)
+    {
+        $request->validate([
+            'phone_number' => 'required|digits:10',
+            'otp' => 'required|digits:4',
+        ]);
+
+        $mobile = $request->phone_number;
+        $userInputOtp = $request->otp;
+
+        $cachedOtp = Cache::get('otp_' . $mobile);
+
+        if (!$cachedOtp) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'OTP expired or not found.',
+            ], 422);
+        }
+
+        if ($cachedOtp != $userInputOtp) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Invalid OTP.',
+            ], 401);
+        }
+
+        // OTP is correct, you can now authenticate or mark as verified
+        Cache::forget('otp_' . $mobile); // Clear OTP
+
+        session(['otp_verified' => [
+            'phone_number' => $mobile,
+            'verified' => true,
+        ]]);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'OTP verified successfully.',
+        ]);
+    }
+
+
 
     public function register(Request $request)
     {
         // Validate phone number, OTP, and password
         $validatedData = $request->validate([
             'phone_number' => 'required|digits:10|unique:users,phone_number',
-            'otp' => 'required|digits:4',
             'email' => 'required|email|unique:users,email',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:1024',
             'password' => 'required|min:8',
             'confirm_password' => 'required|same:password', // Confirm password validation
         ]);
 
-        // Fake OTP validation
-        if ($validatedData['otp'] !== '1234') {
-            return back()->withErrors(['otp' => 'Invalid OTP.']);
+        $verifiedSession = session('otp_verified');
+
+        if (
+            !$verifiedSession ||
+            $verifiedSession['phone_number'] !== $validatedData['phone_number'] ||
+            !$verifiedSession['verified']
+        ) {
+            return back()->withErrors(['otp' => 'Phone number not verified via OTP.']);
         }
+
+
         $imageName = 'bangabasi_logo_short.png';
         // Handle logo upload
         if ($request->hasFile('image')) {
@@ -116,7 +191,7 @@ class SellerController extends Controller
         session(['user_id' => $user->id]);
         // Log the user in
         Auth::login($user);
-        session()->forget(['otp_sent', 'phone_number']);
+        session()->forget(['otp_sent', 'phone_number', 'otp_verified']);
 
         // Redirect with success message
         return redirect()->route('seller_gstverification')->with('success', 'Registration successful!');

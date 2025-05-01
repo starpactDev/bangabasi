@@ -78,6 +78,10 @@ Route::get('/seller/registration', function(){
 
 Route::get('/seller/login', function(){return view('seller.login');})->name('seller_login');
 Route::post('seller/login', [SellerController::class, 'loginSeller'])->name('seller_login_submit');
+
+Route::post('/seller/send-otp', [SellerController::class, 'sendOtp'])->name('seller.send-otp');
+Route::post('/seller/verify-otp', [SellerController::class, 'verifyOtp'])->name('seller.verify-otp');
+
 Route::post('/seller/register', [SellerController::class, 'register'])->name('seller.register');
 
 Route::post('/seller/phone-submit', [SellerController::class, 'processPhoneNumber'])->name('seller.phone.submit');
@@ -488,7 +492,6 @@ Route::get('/send-test-email', [MailController::class, 'sendTestEmail']);
 Route::get('/send-otp', function (OtpService $otpService) {
     $mobile = '7601915855'; // replace with your test mobile
     $params = [
-        'var' => '9630', // Replace Param1..3 with values matching your template
         'otp' => '6784',
         'realTimeResponse' => 1,
     ];
