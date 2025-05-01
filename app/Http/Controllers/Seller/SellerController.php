@@ -85,7 +85,6 @@ class SellerController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => $response,
-            'otp' => $otp, // For testing purposes, you can remove this in production
         ]);
 
     }
