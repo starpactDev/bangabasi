@@ -197,7 +197,7 @@ class SellerController extends Controller
         ]);
 
         // Create a seller record associated with the user
-        $seller = Seller::create([
+        Seller::create([
             'user_id' => $user->id,
             'registration_step' => 1, // Set registration step to 1
             'is_active' => 0,         // Set is_active to 0 (inactive)
