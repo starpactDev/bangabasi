@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use Carbon\Carbon;
 use App\Models\Bank;
 use App\Models\User;
 use App\Models\Order;
@@ -75,7 +76,29 @@ class AdminDashboardController extends Controller
 
         $orders = Order::all();
         $orderItems = OrderItem::with('order')->take(5)->get();
-        return view('admin.pages.dashboard', compact('userCount', 'orderCount', 'totalSales', 'purchasedProducts', 'usersWithSalesAndPrice', 'sellerCount', 'newSellers',  'orders', 'orderItems'));
+
+
+        // Step 1: Define the date range (you can adjust start & end as needed)
+        $startDate = Carbon::parse('2025-04-01');
+        $endDate = Carbon::now();
+
+        $allDates = collect();
+        for ($date = $startDate->copy(); $date <= $endDate; $date->addDay()) {
+            $allDates->push($date->toDateString());
+        }
+
+        // Step 2: Fetch sales grouped by date
+        $orders = Order::selectRaw('DATE(created_at) as date, SUM(price) as total_sales')
+            ->groupByRaw('DATE(created_at)')
+            ->pluck('total_sales', 'date'); // returns [ '2024-01-01' => 100, '2024-01-02' => 0, ... ]
+
+        // Step 3: Merge with full date range, fill missing with 0
+        $salesByDate = $allDates->mapWithKeys(function ($date) use ($orders) {
+            return [$date => $orders->get($date, 0)];
+        })->reverse();
+
+
+        return view('admin.pages.dashboard', compact('userCount', 'orderCount', 'totalSales', 'purchasedProducts', 'usersWithSalesAndPrice', 'sellerCount', 'newSellers',  'orders', 'orderItems', 'salesByDate'));
     }
 
     

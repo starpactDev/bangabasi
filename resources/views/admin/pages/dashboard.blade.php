@@ -47,7 +47,6 @@
 					</div>
 				</div>
 				
-
 			</div>
 
 
@@ -59,6 +58,7 @@
 							<h2>Recent Orders</h2>
 						</div>
 						<div class="card-body pt-0 pb-5">
+							@if(count($orderItems)>0)
 							<table class="table card-table table-responsive table-responsive-large" style="width:100%">
 								<thead>
 									<tr>
@@ -72,52 +72,50 @@
 									</tr>
 								</thead>
 								<tbody>
-									@if(count($orderItems)>0)
-										@foreach($orderItems as $order)
-											@php
-												$badgeClass = '';
+									@foreach($orderItems as $order)
+										@php
+											$badgeClass = '';
 
-												switch ($order->order_status) {
-													case 'Delayed':
-														$badgeClass = 'badge-primary';
-														break;
-													case 'On Hold':
-														$badgeClass = 'badge-warning';
-														break;
-													case 'Completed':
-														$badgeClass = 'badge-success';
-														break;
-													case 'Cancelled':
-														$badgeClass = 'badge-danger';
-														break;
-													default:
-														$badgeClass = 'badge-secondary'; // fallback for unknown status
-														break;
-												}
-											@endphp										
-											<tr>
-												<td>{{$order->order->unique_id}}</td>
-												<td>
-													<a class="text-dark" href="{{ route('superuser_orders.show', ['id' => $order->id])}}"> {{$order->product->name}}</a>
-												</td>
-												<td class="d-none d-lg-table-cell">{{$order->quantity}} Unit</td>
-												<td class="d-none d-lg-table-cell" title="$order->created_at">{{ date('M d, Y', strtotime($order->created_at)) }}</td>
-												<td class="d-none d-lg-table-cell">{{'₹'.number_format($order->unit_price*$order->quantity)}}</td>
-												<td>
-													<span class="badge d-inline-block {{$badgeClass}}" style=" min-width: 18ch;">{{$order->order_status }}</span>
-												</td>
-												<td class="d-none d-lg-table-cell text-uppercase">{{$order->order->payment_method	}}</td>
-											</tr>
-										@endforeach
-									@else
-										<h6>No Orders To Display</h6>
-									@endif
-									
+											switch ($order->order_status) {
+												case 'Delayed':
+													$badgeClass = 'badge-primary';
+													break;
+												case 'On Hold':
+													$badgeClass = 'badge-warning';
+													break;
+												case 'Completed':
+													$badgeClass = 'badge-success';
+													break;
+												case 'Cancelled':
+													$badgeClass = 'badge-danger';
+													break;
+												default:
+													$badgeClass = 'badge-secondary'; // fallback for unknown status
+													break;
+											}
+										@endphp										
+										<tr>
+											<td>{{$order->order->unique_id}}</td>
+											<td>
+												<a class="text-dark" href="{{ route('superuser_orders.show', ['id' => $order->id])}}"> {{$order->product->name}}</a>
+											</td>
+											<td class="d-none d-lg-table-cell">{{$order->quantity}} Unit</td>
+											<td class="d-none d-lg-table-cell" title="$order->created_at">{{ date('M d, Y', strtotime($order->created_at)) }}</td>
+											<td class="d-none d-lg-table-cell">{{'₹'.number_format($order->unit_price*$order->quantity)}}</td>
+											<td>
+												<span class="badge d-inline-block {{$badgeClass}}" style=" min-width: 18ch;">{{$order->order_status }}</span>
+											</td>
+											<td class="d-none d-lg-table-cell text-uppercase">{{$order->order->payment_method	}}</td>
+										</tr>
+									@endforeach
 								</tbody>
 							</table>
 							<div class="text-center mt-3">
-                                <a href="{{ route('admin_orderlist') }}" class="btn btn-info">  View More </a>
-                            </div>
+								<a href="{{ route('admin_orderlist') }}" class="btn btn-info">  View More </a>
+							</div>
+							@else
+								<h6 class="my-4 text-center">No Orders To Display</h6>
+							@endif
 						</div>
 					</div>
 				</div>
@@ -270,8 +268,33 @@
 				</div>
 
 				<div class="col-xl-6">
-					<!-- Top Products -->
-					
+					<div class="card card-default">
+                        <div class="card-header">
+                            <h2 class="card-title">Sales Summary (Date-wise)</h2>
+                        </div>
+            
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="responsive-data-table" class="table" style="width:100%">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Total Sales (₹)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($salesByDate as $date => $amount)
+                                            <tr>
+                                                <td>{{ $date }}</td>
+                                                <td>{{ number_format($amount, 2) }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
 				</div>
 			</div>
 		</div> <!-- End Content -->
@@ -292,4 +315,3 @@
 <script src="{{ url('/') }}/admin/assets/plugins/daterangepicker/daterangepicker.js"></script>
 <script src="{{ url('/') }}/admin/assets/js/date-range.js"></script>
 @endpush
-
