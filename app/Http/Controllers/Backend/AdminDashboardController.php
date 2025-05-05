@@ -74,6 +74,7 @@ class AdminDashboardController extends Controller
             $seller->total_sale_price = $totalSalePrice;
         }
 
+        //Collecting all orders
         $orders = Order::all();
         $orderItems = OrderItem::with('order')->take(5)->get();
 
