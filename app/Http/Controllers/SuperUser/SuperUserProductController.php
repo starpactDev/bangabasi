@@ -5,8 +5,10 @@ namespace App\Http\Controllers\SuperUser;
 use App\Models\Size;
 use App\Models\Brand;
 use App\Models\Review;
+use App\Models\HsnCode;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\OrderItem;
 use App\Models\Collection;
 use App\Models\ProductSize;
 use App\Models\SubCategory;
@@ -17,7 +19,6 @@ use App\Helpers\ReviewHelper;
 use App\Models\ProductColour;
 use App\Models\PackageDimension;
 use App\Http\Controllers\Controller;
-use App\Models\HsnCode;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
@@ -526,6 +527,13 @@ class SuperUserProductController extends Controller
             // Find the product
             if ($request->input('deleteConfirmation') == 'confirmed') {
                 $product = Product::where('id', $id)->where('user_id', $user->id)->firstOrFail();
+
+                // Check if this product exists in any order item
+                $isInOrder = OrderItem::where('product_id', $product->id)->exists();
+                if ($isInOrder) {
+                    return redirect()->route('admin.my_products')
+                        ->with('error', 'This product is part of an order and cannot be deleted.');
+                }
 
                 // Delete associated images from the folder
                 $productImages = ProductImage::where('product_id', $product->id)->get();

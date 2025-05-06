@@ -32,14 +32,11 @@
                                         <th>Product</th>
                                         <th>Name</th>
                                         <th>Category</th>
-                                        
                                         <th>Price &#8377;</th>
-
                                         <th>Purchased</th>
                                         <th>Size & Stock</th>
                                         <th>Colour</th>
                                         <th>Status</th>
-
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -242,9 +239,16 @@
     @if(session('success'))
     Swal.fire({
         title: 'Deleted!',
-        text: '{{ session('
-        success ') }}',
+        text: '{{ session('  success ') }}',
         icon: 'success',
+        confirmButtonText: 'OK'
+    });
+    @endif
+    @if(session('error'))
+    Swal.fire({
+        title: 'Not Deleted!',
+        text: '{{ session(' error ') }}',
+        icon: 'error',
         confirmButtonText: 'OK'
     });
     @endif
