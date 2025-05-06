@@ -4,6 +4,9 @@
 
 @section('content')
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+
     <style>
         .custom-table {
             width: 100%;
@@ -32,6 +35,11 @@
             cursor: pointer;
             font-size: 14px;
         }
+
+        .select2-results__option {
+            white-space: normal !important;
+        }
+
     </style>
 
     <style>
@@ -252,9 +260,9 @@
 
                                                     </select>
                                                 </div>
-                                                <div class="col-md-12 mb-3 mt-3">
+                                                <div class="col-md-12 mb-4 mt-3">
                                                     <label class="form-label">Select HSN Code </label>
-                                                    <select name="hsn_code" id="hsn_code" class="form-select">
+                                                    <select name="hsn_code" id="hsn_code" class="form-select select2">
                                                         @foreach ($hsnCodes as $hsn)
                                                             <option value="{{ $hsn->id }}" data-gst="{{ $hsn->gst }}">
                                                                 {{ $hsn->hsn_code." - ".$hsn->description." (" .$hsn->gst. " %)" }}
@@ -438,6 +446,28 @@
 @endsection
 
 @push('script')
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    
+    <script id="select2-initializer">
+        $(document).ready(function() {
+            $('#hsn_code').select2({
+                width: '100%',
+                templateResult: formatOption,    // for displaying with line breaks
+                templateSelection: formatOption // optional: same formatting for selected value
+            });
+        
+            function formatOption (data) {
+                if (!data.id) return data.text;
+        
+                // Optional: use custom line break formatting
+                const textParts = data.text.split(" - ");
+                const hsn = textParts[0];
+                const rest = textParts[1] || '';
+                return $('<span><strong>' + hsn + '</strong><br><small>' + rest + '</small></span>');
+            }
+        });
+    </script>
+    
     <script>
         function toggleVideoInput() {
             const uploadFromGallery = document.getElementById('uploadFromGallery').checked;
