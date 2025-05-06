@@ -97,7 +97,9 @@
 										<tr>
 											<td>{{$order->order->unique_id}}</td>
 											<td>
-												<a class="text-dark" href="{{ route('superuser_orders.show', ['id' => $order->id])}}"> {{$order->product->name}}</a>
+												@if(isset($order->product))
+													<a class="text-dark" href="{{ route('superuser_orders.show', ['id' => $order->id])}}"> {{$order->product->name}}</a>
+												@endif
 											</td>
 											<td class="d-none d-lg-table-cell">{{$order->quantity}} Unit</td>
 											<td class="d-none d-lg-table-cell" title="$order->created_at">{{ date('M d, Y', strtotime($order->created_at)) }}</td>
