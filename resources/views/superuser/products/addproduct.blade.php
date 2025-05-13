@@ -212,13 +212,11 @@
                                             <div class="row">
                                                 <div class="col-md-12 mb-3 mt-3">
                                                     <label for="inputEmail4" class="form-label">Product Name</label>
-                                                    <input type="text" class="form-control slug-title" name="name"
-                                                        id="inputEmail4">
+                                                    <input type="text" class="form-control slug-title" name="name" id="inputEmail4">
                                                 </div>
                                                 <div class="col-md-12 mb-3 mt-3">
                                                     <label for="tags" class="form-label">Product Tags</label>
-                                                    <input type="text" class="form-control slug-title" name="tags"
-                                                        id="tags">
+                                                    <input type="text" class="form-control slug-title" name="tags" id="tags">
                                                 </div>
                                                 <div class="col-md-6 mb-3 mt-3">
                                                     <label class="form-label">Select Categories</label>
@@ -1209,34 +1207,40 @@
 
     <script id="populate-hsn-codes" type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
-            const hsnSelect = document.getElementById('hsn_code');
+            const hsnSelect = $('#hsn_code'); // jQuery for Select2
             const gstInput = document.getElementById('gst_rate');
 
-            // Prevent fetching multiple times
+            // Initialize Select2
+            hsnSelect.select2();
+
+            // Prevent multiple fetches
             let fetched = {{ $hsnCodes->isEmpty() ? 'false' : 'true' }};
 
-            hsnSelect.addEventListener('click', function () {
+            // Dynamic fetching of HSN codes on first click
+            hsnSelect.on('select2:open', function () {
                 if (fetched) return;
                 fetched = true;
 
                 fetch('/hsn-codes')
                     .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Failed to fetch HSN codes');
-                        }
+                        if (!response.ok) throw new Error('Failed to fetch HSN codes');
                         return response.json();
                     })
                     .then(data => {
-                        // Clear previous options (except first)
-                        hsnSelect.length = 1;
+                        hsnSelect.empty(); // Clear existing options
 
                         data.forEach(hsn => {
-                            const option = document.createElement('option');
-                            option.value = hsn.id;
-                            option.textContent = `${hsn.hsn_code} - ${hsn.description} (${hsn.gst}%)`;
-                            option.dataset.gst = hsn.gst;
-                            hsnSelect.appendChild(option);
+                            const option = new Option(
+                                `${hsn.hsn_code} - ${hsn.description} (${hsn.gst}%)`,
+                                hsn.id,
+                                false,
+                                false
+                            );
+                            $(option).attr('data-gst', hsn.gst);
+                            hsnSelect.append(option);
                         });
+
+                        hsnSelect.trigger('change'); // Trigger change if needed
                     })
                     .catch(error => {
                         console.error(error);
@@ -1244,10 +1248,11 @@
                     });
             });
 
-            hsnSelect.addEventListener('change', function () {
-                const selectedOption = this.options[this.selectedIndex];
-                const gst = selectedOption.dataset.gst;
-                gstInput.value = gst ? gst : '';
+            // Update GST rate on selection
+            hsnSelect.on('change', function () {
+                const selectedOption = $(this).find('option:selected');
+                const gst = selectedOption.data('gst');
+                gstInput.value = gst ?? '';
             });
         });
     </script>
